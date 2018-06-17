@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import '../App.css';
 import Header from '../components/Header'
 import Aside from '../components/Aside';
 import Section from '../components/Section/Section';
+import Footer from '../components/Footer';
 
 class App extends Component {
     render() {
@@ -10,13 +11,11 @@ class App extends Component {
             <div>
                 <Header /> 
                 <div id="contents-wrapper">
-                    <Aside />
-                    <BrowserRouter>
-                        <Section/>
-                    </BrowserRouter>
+                    <Aside class="aside-left" />
+                    <Section/>
+                    <Aside class="aside-right" />
                 </div>
-                
-                
+                <Footer />
             </div>
         );
     }
