@@ -80,7 +80,7 @@ nav {
     color: aliceblue;
     background-color: #05070e;
 }
-
+ 
 
 nav ul li {
     display: inline;
@@ -104,6 +104,7 @@ aside {
     height: auto;
     font-family: 'Jeju Gothic';
     display: inline-block;
+    vertical-align: top;
 }
 
 .aside-left {
@@ -285,6 +286,27 @@ section {
 
 #sign-up-wrapper .input-text {
     height: 25px;
+}
+
+.intro-wrapper {
+    font-size: 14px; 
+    margin: 0 auto;
+    padding-left: 10%;
+    padding-right: 10%;
+    font-family: 'Jeju Gothic', serif;
+    }
+    
+.intro-div-wrapper {
+    padding-top: 30px;
+}
+
+.intro-title {
+font-size: 20px; 
+color: rgb(85, 150, 255); 
+}
+
+.intro-content {
+font-size: 14px;
 }
 
 /****** footer ******/

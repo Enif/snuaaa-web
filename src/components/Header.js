@@ -26,9 +26,9 @@ class Header extends React.Component {
                             <ul>
                                 <li className="menu-nav"><NavLink to="/" activeStyle={activeStyle}>★</NavLink></li>
                                 <li className="menu-nav"><NavLink to="/about" activeStyle={activeStyle}>동아리 소개</NavLink></li>
-                                <li className="menu-nav">별들의 알림</li>
-                                <li className="menu-nav">별들의 이야기</li>
-                                <li className="menu-nav">별들의 순간</li>
+                                <li className="menu-nav"><NavLink to="/notice" activeStyle={activeStyle}>별들의 알림</NavLink></li>
+                                <li className="menu-nav"><NavLink to="/board" activeStyle={activeStyle}>별들의 이야기</NavLink></li>
+                                <li className="menu-nav"><NavLink to="/album" activeStyle={activeStyle}>별들의 순간</NavLink></li>
                             </ul>
                         </nav>
                     </div>
