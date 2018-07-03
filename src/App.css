@@ -1,5 +1,6 @@
 @import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
 @import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic');
 
 
 /*** RESET ***/
@@ -13,7 +14,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     outline: none;
   }
   html { height: 101%; } /* always display scrollbars */
-  body { font-size: 100%; line-height: 1; font-family: 'Jeju Gothic', Arial, Tahoma, Verdana, sans-serif; }
+  body { font-size: 100%; line-height: 1; font-family: 'Nanum Gothic', Arial, Tahoma, Verdana, sans-serif; }
   
   article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
   ol, ul { list-style: none; }
@@ -29,6 +30,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   
   a { text-decoration: none; }
   a:hover { text-decoration: underline; }
+  a:visited { text-decoration: none; color: #05070e; }
 /*** RESET ***/
 
 /***** header *****/
@@ -75,6 +77,14 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     background-color: #05070e;
 }
 
+.menu-nav:hover {
+    background-color: #434343;
+}
+
+.menu-nav a:visited{
+    color: aliceblue;
+}
+
 nav {
     margin: 5px;
     color: aliceblue;
@@ -90,7 +100,7 @@ nav ul li {
 
 
 #contents-wrapper {
-    font-family: 'Jeju Gothic';
+   /* font-family: 'Jeju Gothic'; */
     width: 1200px;
     height: auto;
     margin: 0 auto;
@@ -102,7 +112,7 @@ aside {
 /*     float: left; */
     width: 200px;
     height: auto;
-    font-family: 'Jeju Gothic';
+    /* font-family: 'Jeju Gothic'; */
     display: inline-block;
     vertical-align: top;
 }
@@ -271,6 +281,24 @@ section {
     height: 250px;
 }
 
+.login-input-wrapper {
+    margin: auto;
+    width: 30em;
+}
+
+.login-input-wrapper button {
+    height: 3em;
+    width: 15em;
+    background-color: #54afff;
+}
+
+.login-input {
+    height: 3em;
+    width: 15em;
+    display: block;
+    margin: 1em;
+}
+
 #sign-up-wrapper table tr {
     border-top: 1px solid #9eb4b4;
     border-collapse: collapse;
@@ -289,7 +317,7 @@ section {
 }
 
 .intro-wrapper {
-    font-size: 14px; 
+    font-size: 13px; 
     margin: 0 auto;
     padding-left: 10%;
     padding-right: 10%;
@@ -297,17 +325,40 @@ section {
     }
     
 .intro-div-wrapper {
-    padding-top: 30px;
+    padding: 30px;
+}
+
+.intro-div-wrapper a p{
+    margin: 0.5em;
+}
+
+.intro-div-wrapper p {
+    line-height: 1.3em;
+    font-size: 14px;
+}
+
+.intro-div-wrapper h5 {
+    line-height: 2em;
+    font-weight: bold;
+}
+
+.intro-div-wrapper table,
+.intro-div-wrapper th,
+.intro-div-wrapper td{
+    font-size: 0.9em;
+    border: 1px solid black;
+    padding: 0.5em;
 }
 
 .intro-title {
-font-size: 20px; 
-color: rgb(85, 150, 255); 
+font-size: 18px; 
+color: rgb(85, 150, 255);
 }
 
-.intro-content {
-font-size: 14px;
-}
+/* .intro-content {
+    font-size: 14px;
+    line-height: 1.3em;
+} */
 
 /****** footer ******/
 footer {

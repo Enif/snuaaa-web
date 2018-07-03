@@ -5,11 +5,11 @@ class History extends React.Component {
     render() {
         return(
             <div className="intro-div-wrapper" id="history">
-                <table border="0" cellPadding="5" cellSpacing="2" width="778" >
+                <table cellPadding="5" cellSpacing="2" width="750" >
                     <colgroup>
-                        <col width="70" />
-                        <col width="150" />
-                        <col width="558"/>
+                        <col width="90" />
+                        <col width="160" />
+                        <col width="500"/>
                     </colgroup>
                     <tbody>
                         <tr>

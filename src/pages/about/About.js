@@ -35,12 +35,13 @@ class About extends React.Component {
                 {
                     (() => {
                         console.log(this.state.aboutIndex);
-                        if (this.state.aboutIndex == 0) return (<AboutAAA/>);
-                        if (this.state.aboutIndex == 1) return (<Contact/>);
-                        if (this.state.aboutIndex == 2) return (<Equipment/>);
-                        if (this.state.aboutIndex == 3) return (<Observation/>);
-                        if (this.state.aboutIndex == 4) return (<History/>);
-                        if (this.state.aboutIndex == 5) return (<Officers/>);
+                        if (this.state.aboutIndex === 0) return (<AboutAAA/>);
+                        else if (this.state.aboutIndex === 1) return (<Contact/>);
+                        else if (this.state.aboutIndex === 2) return (<Equipment/>);
+                        else if (this.state.aboutIndex === 3) return (<Observation/>);
+                        else if (this.state.aboutIndex === 4) return (<History/>);
+                        else if (this.state.aboutIndex === 5) return (<Officers/>);
+                        else return (<AboutAAA/>);
                     })()
                 }
             </div>

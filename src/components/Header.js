@@ -6,7 +6,7 @@ class Header extends React.Component {
     render() {
         const activeStyle = {
             fontWeight: 'bold',
-            color: '#FFFFFF'
+            color: '#54afff'
         };
 
         return (
@@ -17,7 +17,7 @@ class Header extends React.Component {
                             <p>
                                 <Link to="signup"> SIGN UP </Link>
                                 /
-                                <Link to="signin"> SIGN IN </Link>
+                                <Link to="login"> LOG IN </Link>
                             </p>
                         </div>
                     </div>
