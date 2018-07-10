@@ -23,7 +23,10 @@ class Header extends React.Component {
                     </div>
                     <div id="main-menu-nav-wrapper">
                         <nav>
-                            <ul>
+                            <input className="nav-toggle" id="nav-toggle" type="checkbox"/> 
+                            <label className="navicon" for="nav-toggle"><span class="navicon-bar"></span></label>
+                                
+                            <ul className="nav-items">
                                 <li className="menu-nav"><NavLink to="/" activeStyle={activeStyle}>★</NavLink></li>
                                 <li className="menu-nav"><NavLink to="/about" activeStyle={activeStyle}>동아리 소개</NavLink></li>
                                 <li className="menu-nav"><NavLink to="/notice" activeStyle={activeStyle}>별들의 알림</NavLink></li>
