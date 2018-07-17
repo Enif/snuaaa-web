@@ -9,7 +9,7 @@ class Contact extends React.Component {
                     <br />
                     <br />
                     별방 전화 : 02-874-9374<br />
-                    75대 윤지용 회장님 : 010-3545-3397</p>
+                    77대 이영준 회장님 : 010-0000-0000</p>
                 <a href="#intro-top"><p>top</p></a>    
             </div>
         )

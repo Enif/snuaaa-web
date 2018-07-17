@@ -87,7 +87,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 
 
 #main-menu-nav-wrapper {
-    height: 40px;
+    /* height: 40px; */
     position: relative;
     padding: 5px;
     background-color: #05070e;
@@ -306,6 +306,7 @@ section {
 
 .content {
     margin: 20px auto;
+    line-height: 1.5;
 }
 
 #soundbox-wrapper {
@@ -469,12 +470,11 @@ color: rgb(85, 150, 255);
 footer {
     background-color: #434343;
     color: white;
-    height: 200px;
     padding: 20px;
 }
 
 #footer-contents {
-    width: 500px;
+    width: 100%;
     text-align: center;
 }
 
@@ -491,7 +491,7 @@ footer {
         display: none;
     }
     section {
-        width: 360px;
+        width: 100%;
         display: block;
     }
     #main-header {
@@ -504,12 +504,21 @@ footer {
         /* background-size: cover; */
         /* background-position: center; */
     }
+
+    nav {
+        margin: 0;
+        background-color: #05070e;
+    }
     
     .nav-items {
         display: none;
       }
     .navicon {
         display: block;
+    }
+
+    .menu-nav {
+        margin: 0;
     }
 
 
@@ -525,6 +534,11 @@ footer {
     }
     .nav-items > li > a {
         line-height: 50px;
+    }
+
+
+    #contents-wrapper {
+        width: 100%;
     }
 
     #calendar-wrapper {
@@ -543,9 +557,10 @@ footer {
     }
     
     #calendar-tb {
-        width: 90%;
+        width: 100%;
         border-collapse: collapse;
         color: #909090;
+        margin: auto;
     }
     
     #calendar-tb, #calendar-tb th, #calendar-tb td {
@@ -570,6 +585,23 @@ footer {
         text-align: center;
         width: 14%;
         height: 50px;
+    }
+
+    #soundbox-wrapper {
+        width: 100%;
+    }
+
+    #soundbox-contents-wrapper {
+        width: 100%;
+    }
+
+    #soundbox-img {
+        width: 100%;
+        background-position: center;
+    }
+
+    .intro-div-wrapper {
+        overflow-x: auto;
     }
 
 }
