@@ -6,37 +6,74 @@ class SignUp extends React.Component {
     constructor(props){
         super(props);
         
-        /* userInfo = {
+        this.state = {
             id: '',
-            pw: ''
-        } */
+            password: '',
+            passwordCf: '',
+            username: '',
+            aaaNum: '',
+            schoolNum: '',
+            major: '',
+            email: '',
+            mobile: '',
+            introduction: ''
+        }
     }
 
-    userInfo = {
-        id: '',
-        pw: ''
+    handleChange = (e) => {
+        let nextState = {};
+        nextState[e.target.name] = e.target.value;
+        this.setState(nextState);
+    }
+
+
+    
+
+    postSignUp = async () => {
+        console.log('postSignUp');
+
+        let userInfo = {
+            id: this.state.id,
+            password: this.state.password,
+            passwordCf: this.state.passwordCf,
+            username: this.state.username,
+            aaaNum: this.state.aaaNum,
+            schoolNum: this.state.schoolNum,
+            major: this.state.major,
+            email: this.state.email,
+            mobile: this.state.mobile,
+            introduction: this.state.introduction
+        };
+
+        await service.postSignUp(userInfo)
+        .then((response) => {
+            console.log('Sign up Success!!');
+            console.log(response);
+        })
+        .catch((response) => {
+            console.log('Sign up Fail T-T')
+            console.log(response);
+        })
+    }
+
+
+
+     getBooks = async () => {
+        console.log('getBooks');
+        await service.getBooks()
+        .then((response) => {
+            console.log('getBooks Success!!');
+            console.log(response);
+        })
+        .catch((response) => {
+            console.log('getBooks Fail T-T')
+            console.log(response);
+        })
     }
  
 
-    fetchPostInfo = async (postId) => {
-        await service.postSignUp()
-        .then(() => {
-            console.log('Sign up Success!!')
-        })
-        .catch(() => {
-            console.log('Sign up Fail T-T')
-        })
-
-/*         const post = await service.getPost(postId);
-        console.log(post);
-        const comments = await service.getComments(postId);
-        console.log(comments); */
-    }
-
 
     render() {
-
-        const textContent = ""
 
         return(
             <div id="sign-up-wrapper">
@@ -100,11 +137,25 @@ class SignUp extends React.Component {
                         </tr>
                         <tr>
                             <td>아이디*</td>
-                            <td><input type="text" className="input-text" /></td>
+                            <td>
+                                <input 
+                                type="text"
+                                name="id"
+                                className="input-text"
+                                onChange={this.handleChange}
+                                value={this.state.id} />
+                            </td>
                         </tr>
                         <tr>
                             <td>비밀번호*</td>
-                            <td><input type="password" className="input-text" /></td>
+                            <td>
+                                <input
+                                type="password"
+                                name="password"
+                                className="input-text"
+                                onChange={this.handleChange}
+                                value={this.state.password} />
+                            </td>
                         </tr>
                         <tr>
                             <td>비밀번호 확인*</td>
@@ -147,8 +198,8 @@ class SignUp extends React.Component {
                             <td><textarea /></td>
                         </tr>
                         <tr>
-                            <td><button>뒤로가기</button></td>
-                            <td><button>회원가입</button></td>
+                            <td><button onClick={this.getBooks}>뒤로가기</button></td>
+                            <td><button onClick={this.postSignUp}>회원가입</button></td>
                         </tr>
                     </tbody>
                 </table>
