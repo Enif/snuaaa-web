@@ -6,6 +6,7 @@ class SignUp extends React.Component {
     constructor(props){
         super(props);
         
+        // [TODO] Make defalt state
         this.state = {
             id: '',
             password: '',
@@ -159,32 +160,80 @@ class SignUp extends React.Component {
                         </tr>
                         <tr>
                             <td>비밀번호 확인*</td>
-                            <td><input type="password" className="input-text" /></td>
+                            <td>
+                                <input
+                                type="password"
+                                name="passwordCf"
+                                className="input-text"
+                                onChange={this.handleChange}
+                                value={this.state.passwordCf} />
+                            </td>
                         </tr>
                         <tr>
                             <td>이름*</td>
-                            <td><input type="text" className="input-text" /></td>
+                            <td>
+                                <input
+                                type="text"
+                                name="username"
+                                className="input-text"
+                                onChange={this.handleChange}
+                                value={this.state.username} />
+                            </td>
                         </tr>
                         <tr>
-                            <td>동아리 가입번호*</td>
-                            <td><input type="text" className="input-text" /></td>
+                            <td>동아리 가입번호</td>
+                            <td>
+                                <input
+                                type="text"
+                                name="aaaNum"
+                                className="input-text"
+                                onChange={this.handleChange}
+                                value={this.state.aaaNum} />
+                            </td>
                         </tr>
                         <tr>
                             <td>학번</td>
-                            <td><input type="text" className="input-text" /></td>
+                            <td>
+                                <input
+                                type="text"
+                                name="schoolNum"
+                                className="input-text"
+                                onChange={this.handleChange}
+                                value={this.state.schoolNum} />
+                            </td>
                         </tr>
                         <tr>
                             <td>학과</td>
-                            <td><input type="text" className="input-text" /></td>
+                            <td>
+                                <input
+                                type="text"
+                                name="major"
+                                className="input-text"
+                                onChange={this.handleChange}
+                                value={this.state.major} />
+                            </td>
                         </tr>
                         <tr>
                             <td>E-mail*</td>
-                            <td><input type="email" className="input-text" /></td>
+                            <td>
+                                <input
+                                type="email"
+                                name="email"
+                                className="input-text"
+                                onChange={this.handleChange}
+                                value={this.state.email} />
+                            </td>
                         </tr>
                         <tr>
                             <td>Mobile*</td>
                             <td>
-                                <input type="text" className="input-text" />{/* -
+                                <input
+                                type="text"
+                                name="mobile"
+                                className="input-text"
+                                onChange={this.handleChange}
+                                value={this.state.mobile} />
+                                {/* -
                                 <input type="text" />-
                                 <input type="text" /> */}
                             </td>
