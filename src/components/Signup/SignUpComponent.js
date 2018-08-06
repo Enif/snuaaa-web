@@ -71,7 +71,8 @@ const SignUpComponent = ({id, password, passwordCf, username, aaaNum, schoolNum,
                                 name="id"
                                 className="input-text"
                                 onChange={handleChange}
-                                value={id} />
+                                value={id}
+                                required="required" />
                             </td>
                         </tr>
                         <tr>
@@ -82,7 +83,8 @@ const SignUpComponent = ({id, password, passwordCf, username, aaaNum, schoolNum,
                                 name="password"
                                 className="input-text"
                                 onChange={handleChange}
-                                value={password} />
+                                value={password}
+                                required="required" />
                             </td>
                         </tr>
                         <tr>
@@ -93,7 +95,8 @@ const SignUpComponent = ({id, password, passwordCf, username, aaaNum, schoolNum,
                                 name="passwordCf"
                                 className="input-text"
                                 onChange={handleChange}
-                                value={passwordCf} />
+                                value={passwordCf}
+                                required="required" />
                             </td>
                         </tr>
                         <tr>
@@ -104,7 +107,8 @@ const SignUpComponent = ({id, password, passwordCf, username, aaaNum, schoolNum,
                                 name="username"
                                 className="input-text"
                                 onChange={handleChange}
-                                value={username} />
+                                value={username}
+                                required="required" />
                             </td>
                         </tr>
                         <tr>
@@ -148,7 +152,8 @@ const SignUpComponent = ({id, password, passwordCf, username, aaaNum, schoolNum,
                                 name="email"
                                 className="input-text"
                                 onChange={handleChange}
-                                value={email} />
+                                value={email}
+                                required="required" />
                             </td>
                         </tr>
                         <tr>
@@ -159,7 +164,8 @@ const SignUpComponent = ({id, password, passwordCf, username, aaaNum, schoolNum,
                                 name="mobile"
                                 className="input-text"
                                 onChange={handleChange}
-                                value={mobile} />
+                                value={mobile}
+                                required="required" />
                                 {/* -
                                 <input type="text" />-
                                 <input type="text" /> */}

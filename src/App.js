@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Header from './components/Header'
 import Aside from './components/Aside';
-import Section from './components/Section/Section';
+import Section from './containers/Section/Section';
 import Footer from './components/Footer';
 
 class App extends Component {

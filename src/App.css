@@ -411,24 +411,27 @@ section {
 /***** SIGN UP *****/
 
 
-
+/***** LOG IN *****/
 .login-input-wrapper {
-    margin: auto;
-    width: 30em;
+    margin: 5em auto;
+    width: 21em;
+    text-align: center;
 }
 
-.login-input-wrapper button {
+.login-wrapper button {
     height: 3em;
-    width: 15em;
+    width: 20em;
+    margin: 1em auto;
     background-color: #54afff;
 }
 
 .login-input {
     height: 3em;
-    width: 15em;
+    width: 20em;
     display: block;
-    margin: 1em;
+    margin: 1em auto;
 }
+/***** LOG IN *****/
 
 .intro-wrapper {
     font-size: 13px; 

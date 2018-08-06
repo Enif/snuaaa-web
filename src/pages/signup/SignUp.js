@@ -1,15 +1,16 @@
 import React from 'react';
-import * as service from '../../services/test';
+import * as service from '../../services';
 import SignUpComponent from '../../components/Signup/SignUpComponent';
 import SignUpSuccess from '../../components/Signup/SignUpSuccess';
 import SignUpFailure from '../../components/Signup/SignUpFailure';
+
+const TAG = 'SINGUP'
 
 class SignUp extends React.Component {
 
     constructor(props){
         super(props);
         
-
         this.state = {
             id: '',
             password: '',
@@ -33,7 +34,7 @@ class SignUp extends React.Component {
     }
 
     postSignUp = async () => {
-        console.log('postSignUp');
+        console.log('[%s] postSignUp', TAG);
 
         let userInfo = {
             id: this.state.id,
