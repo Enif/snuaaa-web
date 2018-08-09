@@ -1,5 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
+
+const LOG = 'HEADER';
 
 class Header extends React.Component {
 
@@ -9,21 +12,36 @@ class Header extends React.Component {
             color: '#54afff'
         };
 
+        const { loginState } = this.props
+        console.log('[%s]' + JSON.stringify(this.props), LOG);
+        console.log('[%s]' + loginState, LOG);
+
         return (
             <div>
                 <div id="main-header-wrapper">
                     <div id="main-header">
                         <div id="header-sign">
-                            <p>
-                                <Link to="signup"> SIGN UP </Link>
-                                /
-                                <Link to="login"> LOG IN </Link>
-                            </p>
+                            {
+                                !loginState ?
+                                (<p>
+                                    <Link to="signup"> SIGN UP </Link>
+                                    /
+                                    <Link to="login"> LOG IN </Link>
+                                </p>)
+                                :
+                                (<p>
+                                    <Link to="userinfo"> INFO </Link>
+                                </p>)
+                            }
+                            
                         </div>
                     </div>
                     <div id="main-menu-nav-wrapper">
                         <nav>
-                            <ul>
+                            <input className="nav-toggle" id="nav-toggle" type="checkbox"/> 
+                            <label className="navicon" for="nav-toggle"><span class="navicon-bar"></span></label>
+                                
+                            <ul className="nav-items">
                                 <li className="menu-nav"><NavLink to="/" activeStyle={activeStyle}>★</NavLink></li>
                                 <li className="menu-nav"><NavLink to="/about" activeStyle={activeStyle}>동아리 소개</NavLink></li>
                                 <li className="menu-nav"><NavLink to="/notice" activeStyle={activeStyle}>별들의 알림</NavLink></li>
@@ -38,4 +56,11 @@ class Header extends React.Component {
     }
 }
 
-export default Header;
+//export default Header;
+
+const mapStateToProps = (state) => {
+    return {
+        loginState: state.authentication.isLoggedIn
+    }
+}
+export default connect(mapStateToProps, undefined)(Header);

@@ -33,6 +33,26 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   a:visited { text-decoration: none; color: #05070e; }
 /*** RESET ***/
 
+
+/**********  ENIF  **********/
+
+
+.enif-text-left {
+    text-align: left;
+}
+
+.enif-text-center {
+    text-align: center;
+}
+
+.enif-text-right {
+    text-align: right;
+}
+
+/**********  ENIF  **********/
+
+
+
 /***** header *****/
 #main-header-wrapper {
     width: 100%;
@@ -67,6 +87,8 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 
 
 #main-menu-nav-wrapper {
+    /* height: 40px; */
+    position: relative;
     padding: 5px;
     background-color: #05070e;
 }
@@ -81,7 +103,15 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     background-color: #434343;
 }
 
-.menu-nav a:visited{
+.menu-nav a {
+    color: aliceblue;
+}
+
+.menu-nav a:hover {
+    text-decoration: none;
+}
+
+.menu-nav a:visited {
     color: aliceblue;
 }
 
@@ -90,7 +120,69 @@ nav {
     color: aliceblue;
     background-color: #05070e;
 }
- 
+
+.nav-toggle {
+    display: none;
+}
+
+.navicon {
+    display: none;
+}
+
+/* navigation icon for Mobile Layout */
+.navicon {
+    cursor: pointer;
+    height: 60px;
+    padding: 28px 15px;
+    position: absolute;
+    top: 0; right: 0;
+
+    -webkit-user-select: none;  /* Chrome all / Safari all */
+    -moz-user-select: none;     /* Firefox all */
+    -ms-user-select: none;      /* IE 10+ */
+    user-select: none;          /* Likely future */
+}
+
+/* nav icon의 내부 막대 */
+.navicon-bar {
+    background-color: rgb(195, 194, 209);
+    display: block;
+    position: relative;
+    /* navigation icon animation */
+    transition: background-color .2s ease-out;
+    width: 20px;
+    height: 2px;
+}
+  .navicon-bar::before,
+  .navicon-bar::after {
+    background-color: rgb(255, 255, 255);
+    content: "";
+    display: block;
+    height: 100%;
+    position: absolute;
+    /* navigation icon animation */
+    transition: all .2s ease-out;
+    width: 100%;
+  }
+  .navicon-bar::before {
+    top: -7px;
+  }
+  .navicon-bar::after {
+    top: 7px;
+  }
+  /* toggle navigation icon */
+  .nav-toggle:checked ~ .navicon > .navicon-bar {
+    background: transparent;
+  }
+  .nav-toggle:checked ~ .navicon > .navicon-bar::before {
+    transform: rotate(45deg);
+    top: 0;
+  }
+  .nav-toggle:checked ~ .navicon > .navicon-bar::after {
+    transform: rotate(-45deg);
+    top: 0;
+  }
+
 
 nav ul li {
     display: inline;
@@ -222,6 +314,7 @@ section {
 
 .content {
     margin: 20px auto;
+    line-height: 1.5;
 }
 
 #soundbox-wrapper {
@@ -266,6 +359,9 @@ section {
     background-size: cover;
 }
 
+
+/***** SIGN UP *****/
+
 #sign-up-wrapper {
     margin: 30px;
 }
@@ -274,29 +370,24 @@ section {
     width: 100%;
 }
 
-#sign-up-wrapper textarea{
+/* #sign-up-wrapper textarea{
     resize: none;
     white-space: pre-line;
     width: 100%;
     height: 250px;
+} */
+
+#sign-up-wrapper .div-agreement {
+    height: 250px;
+    margin: 5px;
+    padding: 3px;
+    overflow: auto;
+    border: 1px solid #9eb4b4;
+    font-size: 0.85em;
 }
 
-.login-input-wrapper {
-    margin: auto;
-    width: 30em;
-}
-
-.login-input-wrapper button {
-    height: 3em;
-    width: 15em;
-    background-color: #54afff;
-}
-
-.login-input {
-    height: 3em;
-    width: 15em;
-    display: block;
-    margin: 1em;
+#sign-up-wrapper .div-agreement p {
+    line-height: 1.5;
 }
 
 #sign-up-wrapper table tr {
@@ -315,6 +406,32 @@ section {
 #sign-up-wrapper .input-text {
     height: 25px;
 }
+
+
+/***** SIGN UP *****/
+
+
+/***** LOG IN *****/
+.login-input-wrapper {
+    margin: 5em auto;
+    width: 21em;
+    text-align: center;
+}
+
+.login-wrapper button {
+    height: 3em;
+    width: 20em;
+    margin: 1em auto;
+    background-color: #54afff;
+}
+
+.login-input {
+    height: 3em;
+    width: 20em;
+    display: block;
+    margin: 1em auto;
+}
+/***** LOG IN *****/
 
 .intro-wrapper {
     font-size: 13px; 
@@ -364,12 +481,11 @@ color: rgb(85, 150, 255);
 footer {
     background-color: #434343;
     color: white;
-    height: 200px;
     padding: 20px;
 }
 
 #footer-contents {
-    width: 500px;
+    width: 100%;
     text-align: center;
 }
 
@@ -377,3 +493,126 @@ footer {
     margin: 10px;
 }
 
+
+
+/****** for mobile ~ 800px ******/
+@media screen and (max-width: 800px) {
+
+    aside {
+        display: none;
+    }
+    section {
+        width: 100%;
+        display: block;
+    }
+    #main-header {
+        width: 100%;
+        height: 50px;
+        margin: 0 auto;
+        background-color: #05070e;
+        background-image: none;
+        /* background-repeat: no-repeat; */
+        /* background-size: cover; */
+        /* background-position: center; */
+    }
+
+    nav {
+        margin: 0;
+        background-color: #05070e;
+    }
+    
+    .nav-items {
+        display: none;
+      }
+    .navicon {
+        display: block;
+    }
+
+    .menu-nav {
+        margin: 0;
+    }
+
+
+    /* View navigation item */
+    .nav-toggle:checked ~ .nav-items {
+        display: block;
+        width: 100%;
+        background-color: #fff;
+        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(0, 0, 0, 0.05);
+    }
+    .nav-items > li  {
+        display: block;
+    }
+    .nav-items > li > a {
+        line-height: 50px;
+    }
+
+
+    #contents-wrapper {
+        width: 100%;
+    }
+
+    #calendar-wrapper {
+        width: 100%;
+    }
+    
+    #calendar-wrapper h5 {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+        color: #808080;
+    }
+    
+    #calendar-wrapper .title-left, #calendar-wrapper .title-right {
+        display: inline-block;
+        width: 50%;
+    }
+    
+    #calendar-tb {
+        width: 100%;
+        border-collapse: collapse;
+        color: #909090;
+        margin: auto;
+    }
+    
+    #calendar-tb, #calendar-tb th, #calendar-tb td {
+        border: 1px solid #909090;
+        vertical-align: middle;
+    }
+    /* 
+    #calender-tb tbody {
+        
+    } */
+    
+    #calendar-tb th {
+        font-size: 0.6em;
+        width: 14%;
+        padding: 3px;
+        background-color: #f3eade;
+        font-weight: normal;
+    }
+    
+    #calendar-tb td {
+        font-size: 0.6em;
+        text-align: center;
+        width: 14%;
+        height: 50px;
+    }
+
+    #soundbox-wrapper {
+        width: 100%;
+    }
+
+    #soundbox-contents-wrapper {
+        width: 100%;
+    }
+
+    #soundbox-img {
+        width: 100%;
+        background-position: center;
+    }
+
+    .intro-div-wrapper {
+        overflow-x: auto;
+    }
+
+}

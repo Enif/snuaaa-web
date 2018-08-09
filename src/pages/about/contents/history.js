@@ -1,6 +1,12 @@
 import React from 'react';
 
 class History extends React.Component {
+    
+    //TODO : User who is admin can be edit data.
+    //TODO : convert json data
+
+    //IDEA : timeline UI
+
 
     render() {
         return(

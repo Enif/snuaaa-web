@@ -1,26 +1,82 @@
 import React from 'react';
+import { Redirect } from 'react-router'
+import * as service from '../../services';
+import { connect } from 'react-redux'
+import { authLogin } from '../../actions'
+import LogInComponent from '../../components/Login/LogInComponent';
+
+const TAG = 'LOGIN'
 
 class LogIn extends React.Component {
 
-/*     constructor(props){
+    constructor(props){
         super(props);
+
+        this.state = {
+            id: '',
+            password: '',
+        }
     }
- */
+
+    handleChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        });
+    }
+
+    postLogIn = async () => {
+        console.log('[%s] postLogIn', TAG);
+
+        let logInInfo = {
+            id: this.state.id,
+            password: this.state.password
+        }
+        
+        await service.postLogIn(logInInfo)
+        .then((res) => {
+            console.log('[%s] Log In Success', TAG)
+            console.log(res);
+            const { token } = res.data;
+            localStorage.setItem('token', token);
+            this.props.onAuthLogin();
+            alert("로그인에 성공하였습니다.")
+
+        })
+        .catch((res) => {
+            console.log('[%s] Log In Fail', TAG)
+            alert("로그인에 실패하였습니다.\n아이디나 비밀번호를 확인해주세요.")
+        })
+    }
+ 
     render() {
-        return(
-            <div>
-                <div className="login-input-wrapper">
-                    <input type="text" className="login-input"/>
-                    <input type="text" className="login-input"/>
-                    <button className="login-btn">로그인</button>
-                </div>
-                <div>
-                    <button>아이디 찾기</button>
-                    <button>비밀번호 찾기</button>
-                </div>
-            </div>
+
+        const { loginState } = this.props
+
+        return (
+            
+            loginState ?
+            (
+                <Redirect to='/' />
+            ) :
+            (
+                <LogInComponent
+                handleChange = {this.handleChange}
+                postLogIn = {this.postLogIn} />
+            )
         )
     }
 }
 
-export default LogIn
+const mapStateToProps = (state) => {
+    return {
+        loginState: state.authentication.isLoggedIn
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onAuthLogin: () => dispatch(authLogin())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LogIn);
