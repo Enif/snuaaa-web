@@ -1,5 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
+
+const LOG = 'HEADER';
 
 class Header extends React.Component {
 
@@ -9,16 +12,28 @@ class Header extends React.Component {
             color: '#54afff'
         };
 
+        const { loginState } = this.props
+        console.log('[%s]' + JSON.stringify(this.props), LOG);
+        console.log('[%s]' + loginState, LOG);
+
         return (
             <div>
                 <div id="main-header-wrapper">
                     <div id="main-header">
                         <div id="header-sign">
-                            <p>
-                                <Link to="signup"> SIGN UP </Link>
-                                /
-                                <Link to="login"> LOG IN </Link>
-                            </p>
+                            {
+                                !loginState ?
+                                (<p>
+                                    <Link to="signup"> SIGN UP </Link>
+                                    /
+                                    <Link to="login"> LOG IN </Link>
+                                </p>)
+                                :
+                                (<p>
+                                    <Link to="userinfo"> INFO </Link>
+                                </p>)
+                            }
+                            
                         </div>
                     </div>
                     <div id="main-menu-nav-wrapper">
@@ -41,4 +56,11 @@ class Header extends React.Component {
     }
 }
 
-export default Header;
+//export default Header;
+
+const mapStateToProps = (state) => {
+    return {
+        loginState: state.authentication.isLoggedIn
+    }
+}
+export default connect(mapStateToProps, undefined)(Header);

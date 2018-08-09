@@ -5,6 +5,7 @@ import Aside from './components/Aside';
 import Section from './containers/Section/Section';
 import Footer from './components/Footer';
 
+//[TODO] componentDidMount에서 token vaild 확인하여 login state 유지 시켜줘야함.(새로고침시 로그아웃 방지)
 class App extends Component {
     render() {
         return (
