@@ -1,10 +1,35 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
+import { loginCheck, authLogout } from '../actions';
 
-const LOG = 'HEADER';
+
+const TAG = 'HEADER';
 
 class Header extends React.Component {
+
+    constructor(props) {
+        console.log(`[%s] constructor`, TAG)
+        super(props);
+        this.checkToken();
+    }
+
+    componentDidMount() {
+        console.log(`[%s] componentDidMount`, TAG)
+    }
+
+    checkToken = () => {
+        console.log(`[%s] checkToken`, TAG)
+        const token = localStorage.getItem('token');
+        if(!token){
+            //토큰이 없으면 logout
+        }
+        else {
+            console.log(`[%s] Token exists`, TAG)
+            // 토큰valid 확인 , invalid => logout, valid => 로그인 유지(연장)
+            this.props.onLoginCheck();
+        }
+    }
 
     render() {
         const activeStyle = {
@@ -13,8 +38,8 @@ class Header extends React.Component {
         };
 
         const { loginState } = this.props
-        console.log('[%s]' + JSON.stringify(this.props), LOG);
-        console.log('[%s]' + loginState, LOG);
+        console.log('[%s]' + JSON.stringify(this.props), TAG);
+        console.log('[%s]' + loginState, TAG);
 
         return (
             <div>
@@ -31,6 +56,8 @@ class Header extends React.Component {
                                 :
                                 (<p>
                                     <Link to="userinfo"> INFO </Link>
+                                    /
+                                    <a onClick={this.props.onLogout}> LOG OUT </a>
                                 </p>)
                             }
                             
@@ -63,4 +90,13 @@ const mapStateToProps = (state) => {
         loginState: state.authentication.isLoggedIn
     }
 }
-export default connect(mapStateToProps, undefined)(Header);
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onLoginCheck: () => dispatch(loginCheck()),
+        onLogout: () => dispatch(authLogout())
+    }
+}
+
+//export default Header
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

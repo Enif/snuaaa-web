@@ -7,3 +7,7 @@ export const authLogin = () => ({
 export const authLogout = () => ({
     type: types.AUTH_LOGOUT
 });
+
+export const loginCheck = () => ({
+    type: types.AUTH_GET_STATUS
+});

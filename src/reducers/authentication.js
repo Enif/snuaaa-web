@@ -19,38 +19,21 @@ function authentication(state = initialState, action) {
             return {
                 ...state,
                 isLoggedIn: true
+            };
+        case types.AUTH_LOGOUT:
+            localStorage.removeItem('token')
+            return {
+                ...state,
+                isLoggedIn: false
             }
+        case types.AUTH_GET_STATUS:
+            return {
+                ...state,
+                isLoggedIn: true
+            };
         default:
             return state;
     }
 };
 
 export default authentication;
-
-    // switch(action.type) {
-    //     /* LOGIN */
-    //     case types.AUTH_LOGIN:
-    //         return update(state, {
-    //             login: {
-    //                 status: { $set: 'WAITING' }
-    //             }
-    //         });
-    //     case types.AUTH_LOGIN_SUCCESS:
-    //         return update(state, {
-    //             login: {
-    //                 status: { $set: 'SUCCESS' }
-    //             },
-    //             status: {
-    //                 isLoggedIn: { $set: true },
-    //                 currentUser: { $set: action.username }
-    //             }
-    //         });
-    //     case types.AUTH_LOGIN_FAILURE:
-    //         return update(state, {
-    //             login: {
-    //                 status: { $set: 'FAILURE' }
-    //             }
-    //         });
-    //     default:
-    //         return state;
-    // }
