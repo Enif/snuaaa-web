@@ -18,6 +18,7 @@ class Header extends React.Component {
         console.log(`[%s] componentDidMount`, TAG)
     }
 
+    // App.js에서 확인해야하나 router 문제로 header에 임시로 생성하였음.
     checkToken = () => {
         console.log(`[%s] checkToken`, TAG)
         const token = localStorage.getItem('token');
@@ -42,41 +43,39 @@ class Header extends React.Component {
         console.log('[%s]' + loginState, TAG);
 
         return (
-            <div>
-                <div id="main-header-wrapper">
-                    <div id="main-header">
-                        <div id="header-sign">
-                            {
-                                !loginState ?
-                                (<p>
-                                    <Link to="signup"> SIGN UP </Link>
-                                    /
-                                    <Link to="login"> LOG IN </Link>
-                                </p>)
-                                :
-                                (<p>
-                                    <Link to="userinfo"> INFO </Link>
-                                    /
-                                    <a onClick={this.props.onLogout}> LOG OUT </a>
-                                </p>)
-                            }
+            <div id="main-header-wrapper">
+                <div id="main-header">
+                    <div id="header-sign">
+                        {
+                            !loginState ?
+                            (<p>
+                                <Link to="signup"> SIGN UP </Link>
+                                /
+                                <Link to="login"> LOG IN </Link>
+                            </p>)
+                            :
+                            (<p>
+                                <Link to="userinfo"> INFO </Link>
+                                /
+                                <a onClick={this.props.onLogout}> LOG OUT </a>
+                            </p>)
+                        }
+                        
+                    </div>
+                </div>
+                <div id="main-menu-nav-wrapper">
+                    <nav>
+                        <input className="nav-toggle" id="nav-toggle" type="checkbox"/> 
+                        <label className="navicon" htmlFor="nav-toggle"><span className="navicon-bar"></span></label>
                             
-                        </div>
-                    </div>
-                    <div id="main-menu-nav-wrapper">
-                        <nav>
-                            <input className="nav-toggle" id="nav-toggle" type="checkbox"/> 
-                            <label className="navicon" for="nav-toggle"><span class="navicon-bar"></span></label>
-                                
-                            <ul className="nav-items">
-                                <li className="menu-nav"><NavLink to="/" activeStyle={activeStyle}>★</NavLink></li>
-                                <li className="menu-nav"><NavLink to="/about" activeStyle={activeStyle}>동아리 소개</NavLink></li>
-                                <li className="menu-nav"><NavLink to="/notice" activeStyle={activeStyle}>별들의 알림</NavLink></li>
-                                <li className="menu-nav"><NavLink to="/board" activeStyle={activeStyle}>별들의 이야기</NavLink></li>
-                                <li className="menu-nav"><NavLink to="/album" activeStyle={activeStyle}>별들의 순간</NavLink></li>
-                            </ul>
-                        </nav>
-                    </div>
+                        <ul className="nav-items">
+                            <li className="menu-nav"><NavLink to="/" activeStyle={activeStyle}>★</NavLink></li>
+                            <li className="menu-nav"><NavLink to="/about" activeStyle={activeStyle}>동아리 소개</NavLink></li>
+                            <li className="menu-nav"><NavLink to="/notice" activeStyle={activeStyle}>별들의 알림</NavLink></li>
+                            <li className="menu-nav"><NavLink to="/board" activeStyle={activeStyle}>별들의 이야기</NavLink></li>
+                            <li className="menu-nav"><NavLink to="/album" activeStyle={activeStyle}>별들의 순간</NavLink></li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
         );
