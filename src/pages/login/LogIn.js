@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { Redirect } from 'react-router'
 import * as service from '../../services';
 import { connect } from 'react-redux'
@@ -38,7 +39,9 @@ class LogIn extends React.Component {
             console.log(res);
             const { token } = res.data;
             localStorage.setItem('token', token);
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
             this.props.onAuthLogin();
+
             alert("로그인에 성공하였습니다.")
 
         })

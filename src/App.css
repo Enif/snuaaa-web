@@ -1,6 +1,7 @@
 @import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
 @import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
 @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic');
+@import url('https://fonts.googleapis.com/css?family=Jua');
 
 
 /*** RESET ***/
@@ -477,6 +478,46 @@ color: rgb(85, 150, 255);
     line-height: 1.3em;
 } */
 
+.board-wrapper {
+    margin: 20px;
+}
+
+.board-wrapper h2 {
+    font-size: 2rem;
+    font-family: 'Jua', sans-serif;
+}
+
+.post-list {
+    margin-top: 2rem;
+    background: #f5f5f5;
+}
+
+.post-wrapper {
+    /* margin: 1px; */
+    padding: 1rem;
+    border: 1px solid #05070e;
+    border-collapse: collapse;
+    /* border: #6e74a4; */
+}
+
+.post-wrapper > div {
+    display: inline-block;
+}
+
+.post-number {
+    width: 10%;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.post-title {
+    width: 70%
+}
+
+.post-author {
+    width: 20%
+}
+
 /****** footer ******/
 footer {
     background-color: #434343;
@@ -493,6 +534,59 @@ footer {
     margin: 10px;
 }
 
+
+/******* Loading ******/
+.box{
+    display: inline-block;
+    
+    width: 100%;
+    position: relative;
+    /*margin:0 -4px -5px -2px;*/
+    transition: all .2s ease;
+}
+
+.loader1{
+    position: relative;
+    height: 80px;
+    width: 80px;
+    border-radius: 80px;
+    border: 3px solid  rgba(128,128,128, .7);
+
+    top: 28%;
+    top: -webkit-calc(50% - 43px);
+    top: calc(50% - 43px);
+    left: 35%;
+    left: -webkit-calc(50% - 43px);
+    left: calc(50% - 43px);
+
+    -webkit-transform-origin: 50% 50%;
+            transform-origin: 50% 50%;
+    -webkit-animation: loader1 3s linear infinite;
+            animation: loader1 3s linear infinite;
+}
+
+.loader1:after{
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: 20px;
+    width: 11px;
+    height: 11px;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+@-webkit-keyframes loader1{
+    0%{-webkit-transform:rotate(0deg);}
+    100%{-webkit-transform:rotate(360deg);}
+}
+
+@keyframes loader1{
+    0%{transform:rotate(0deg);}
+    100%{transform:rotate(360deg);}
+}
+
+/******* Loading ******/
 
 
 /****** for mobile ~ 800px ******/

@@ -1,5 +1,6 @@
 import React from 'react';
 import * as service from '../../services';
+import Loading from '../../components/Common/Loading';
 
 const TAG = 'USERINFO'
 
@@ -19,7 +20,10 @@ class UserInfo extends React.Component {
             email: '',
             mobile: '',
             introduction: '',
+
+            isShow: false
         }
+  
 
         // this.setState({
         //     userInfo
@@ -53,6 +57,7 @@ class UserInfo extends React.Component {
                 email: account.email,
                 mobile: account.mobile,
                 introduction: account.introduction,
+                isShow: true
             });
         })
         .catch((response) => {
@@ -63,16 +68,29 @@ class UserInfo extends React.Component {
     }
     render(){
         console.log(this.state);
+        let { isShow } = this.state;
+
         return(
-            <div>
-                id : {this.state.id}
-                <br/>
-                username : {this.state.username}
-                <br/>
-                aaaNum : {this.state.aaaNum}
-                <br/>
-                schoolNum : {this.state.schoolNum}
-            </div>
+            <React.Fragment>
+            {
+                isShow ?
+                (
+                    <div>
+                        id : {this.state.id}
+                        <br/>
+                        username : {this.state.username}
+                        <br/>
+                        aaaNum : {this.state.aaaNum}
+                        <br/>
+                        schoolNum : {this.state.schoolNum}
+                    </div>
+                )
+                :
+                (
+                    <Loading/>
+                )
+            }
+            </React.Fragment>
         )
     }
 

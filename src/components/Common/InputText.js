@@ -16,5 +16,3 @@ const InputText = ({inputType, name, className, handleChange, value, placeholder
 }
 
 export default InputText;
-
-

@@ -20,4 +20,5 @@ class Section extends React.Component {
     }
 }
 
-export default withRouter(Section);
+export default Section;
+//export default withRouter(Section);

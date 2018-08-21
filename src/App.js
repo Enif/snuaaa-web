@@ -4,6 +4,7 @@ import Header from './components/Header'
 import Aside from './components/Aside';
 import Section from './containers/Section/Section';
 import Footer from './components/Footer';
+import { withRouter } from 'react-router';
 import { loginCheck } from './actions';
 import { connect } from 'react-redux';
 
@@ -16,7 +17,7 @@ class App extends Component {
     constructor(props) {
         console.log(`[%s] constructor`, TAG)
         super(props);
-//        this.checkToken();
+        this.checkToken();
     }
 
     
@@ -24,17 +25,17 @@ class App extends Component {
         console.log(`[%s] componentDidMount`, TAG)
     }
 
-    // checkToken = () => {
-    //     console.log(`[%s] checkToken`, TAG)
-    //     const token = localStorage.getItem('token')
-    //     if(!token){
-    //         //토큰이 없으면 logout
-    //     }
-    //     else {
-    //         // 서버에 토큰 확인 , invalid => logout, valid => 로그인 유지(연장)
-    //         this.props.onLoginCheck();
-    //     }
-    // }
+    checkToken = () => {
+        console.log(`[%s] checkToken`, TAG)
+        const token = localStorage.getItem('token')
+        if(!token){
+            //토큰이 없으면 logout
+        }
+        else {
+            // 서버에 토큰 확인 , invalid => logout, valid => 로그인 유지(연장)
+            this.props.onLoginCheck();
+        }
+    }
 
 
 
@@ -54,17 +55,17 @@ class App extends Component {
 }
 
 // not used
-// const mapStateToProps = (state) => {
-//     return {
-//         loginState: state.authentication.isLoggedIn
-//     }
-// }
+const mapStateToProps = (state) => {
+    return {
+        loginState: state.authentication.isLoggedIn
+    }
+}
 
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         onLoginCheck: () => dispatch(loginCheck())
-//     }
-// }
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onLoginCheck: () => dispatch(loginCheck())
+    }
+}
 
-export default App;
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
 //export default connect(undefined, mapDispatchToProps)(App);
