@@ -4,7 +4,6 @@ import Loading from '../../components/Common/Loading';
 
 const TAG = 'USERINFO'
 
-
 class UserInfo extends React.Component {
 
     constructor(props){
@@ -93,9 +92,6 @@ class UserInfo extends React.Component {
             </React.Fragment>
         )
     }
-
-    // 토큰을 보내면 되나??
-//    getUserInfo = 
 }
 
 export default UserInfo;
