@@ -1,6 +1,7 @@
 import React from 'react';
+import Post from '../../components/Board/Post';
 import PostList from '../../components/Board/PostList';
-import WritePost from '../../components/Common/WritePost';
+import WritePost from '../../components/Board/WritePost';
 
 class Board extends React.Component {
 
@@ -8,13 +9,20 @@ class Board extends React.Component {
         super(props);
 
         this.state = {
-            boardState: 0
+            boardState: 0,
+            postId: ''
         }
     }
 
     setBoardState = (index) => {
         this.setState({
             boardState: index
+        })
+    }
+
+    setPostId = (id) => {
+        this.setState({
+            postId: id
         })
     }
 
@@ -26,13 +34,12 @@ class Board extends React.Component {
                     {
                         (() => {
                             console.log(`[Board] ${this.state.boardState}`);
-                            if (this.state.boardState === 0) return (<PostList />);
-                            else if (this.state.boardState === 1) return (<WritePost />);
-                            else return (<div>error</div>);
+                            if (this.state.boardState === 0) return (<PostList setBoardState={this.setBoardState} setPostId={this.setPostId} />);
+                            else if (this.state.boardState === 1) return (<WritePost setBoardState={this.setBoardState}/>);
+                            else if (this.state.boardState === 2) return (<Post setBoardState={this.setBoardState} postId={this.state.postId} />);
+                            else return (<div>error page</div>);
                         })()
                     }
-
-                    <button onClick={() => this.setBoardState(1)}>글쓰기</button>
                 </div>
             </div>
         );

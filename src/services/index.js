@@ -15,12 +15,16 @@ export function getUserInfo(data) {
     return axios.get(SERVER_URL + 'api/userinfo/', data);
 }
 
-export function retrievePosts(data) {
-    return axios.get(SERVER_URL + 'api/post/retrieve', data);
+export function retrievePost(data) {
+     return axios.get(SERVER_URL + 'api/post/' + data);
 }
 
-export function postSavePost(data) {
-    return axios.post(SERVER_URL + 'api/post/save', data);
+export function retrievePosts(data) {
+    return axios.get(SERVER_URL + 'api/post/', data);
+}
+
+export function createPost(data) {
+    return axios.post(SERVER_URL + 'api/post/', data);
 }
 
 export function action1(data) {

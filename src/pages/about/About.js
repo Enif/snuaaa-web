@@ -23,13 +23,14 @@ class About extends React.Component {
     render() {
         return (
             <div>
+                <h2>동아리 소개</h2>
                 <div className="intro-div-wrapper" id="intro-top">
-                    <a onClick={(e) => this.setIndex(0)} className="intro-title"><p>AAA는?</p></a>
-                    <a onClick={(e) => this.setIndex(1)} className="intro-title"><p>찾아오는 길 &amp; 연락처</p></a>
-                    <a onClick={(e) => this.setIndex(2)} className="intro-title"><p>장비소개</p></a>
-                    <a onClick={(e) => this.setIndex(3)} className="intro-title"><p>김태영 기념관측소 소개</p></a>
-                    <a onClick={(e) => this.setIndex(4)} className="intro-title"><p>동아리발자취</p></a>
-                    <a onClick={(e) => this.setIndex(5)} className="intro-title"><p>역대 회장단 / 임원진</p></a>
+                    <p><a onClick={(e) => this.setIndex(0)} className="intro-title">AAA는?</a></p>
+                    <p><a onClick={(e) => this.setIndex(1)} className="intro-title">찾아오는 길 &amp; 연락처</a></p>
+                    <p><a onClick={(e) => this.setIndex(2)} className="intro-title">장비소개</a></p>
+                    <p><a onClick={(e) => this.setIndex(3)} className="intro-title">김태영 기념관측소 소개</a></p>
+                    <p><a onClick={(e) => this.setIndex(4)} className="intro-title">동아리발자취</a></p>
+                    <p><a onClick={(e) => this.setIndex(5)} className="intro-title">역대 회장단 / 임원진</a></p>
                 </div>
                 
                 {

@@ -446,13 +446,13 @@ section {
     padding: 30px;
 }
 
-.intro-div-wrapper a p{
-    margin: 0.5em;
+.intro-div-wrapper p a{
+    font-size: 14px;
 }
 
 .intro-div-wrapper p {
+    margin: 0.5em;
     line-height: 1.3em;
-    font-size: 14px;
 }
 
 .intro-div-wrapper h5 {
@@ -469,8 +469,13 @@ section {
 }
 
 .intro-title {
-font-size: 18px; 
-color: rgb(85, 150, 255);
+    font-size: 18px; 
+    color: rgb(85, 150, 255);
+    cursor: pointer;
+}
+
+.intro-title a:hover {
+    font-weight: bold;
 }
 
 /* .intro-content {
@@ -511,11 +516,12 @@ color: rgb(85, 150, 255);
 }
 
 .post-title {
-    width: 70%
+    width: 70%;
+    cursor: pointer;
 }
 
 .post-author {
-    width: 20%
+    width: 20%;
 }
 
 .writepost-wrapper {

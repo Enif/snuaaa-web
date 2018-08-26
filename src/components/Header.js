@@ -11,7 +11,7 @@ class Header extends React.Component {
     constructor(props) {
         console.log(`[%s] constructor`, TAG)
         super(props);
-        this.checkToken();
+        //this.checkToken();
     }
 
     componentDidMount() {
@@ -19,18 +19,18 @@ class Header extends React.Component {
     }
 
     // App.js에서 확인해야하나 router 문제로 header에 임시로 생성하였음.
-    checkToken = () => {
-        console.log(`[%s] checkToken`, TAG)
-        const token = localStorage.getItem('token');
-        if(!token){
-            //토큰이 없으면 logout
-        }
-        else {
-            console.log(`[%s] Token exists`, TAG)
-            // 토큰valid 확인 , invalid => logout, valid => 로그인 유지(연장)
-            this.props.onLoginCheck();
-        }
-    }
+    // checkToken = () => {
+    //     console.log(`[%s] checkToken`, TAG)
+    //     const token = localStorage.getItem('token');
+    //     if(!token){
+    //         //토큰이 없으면 logout
+    //     }
+    //     else {
+    //         console.log(`[%s] Token exists`, TAG)
+    //         // 토큰valid 확인 , invalid => logout, valid => 로그인 유지(연장)
+    //         this.props.onLoginCheck();
+    //     }
+    // }
 
     render() {
         const activeStyle = {
@@ -40,7 +40,6 @@ class Header extends React.Component {
 
         const { loginState } = this.props
         console.log('[%s]' + JSON.stringify(this.props), TAG);
-        console.log('[%s]' + loginState, TAG);
 
         return (
             <div id="main-header-wrapper">

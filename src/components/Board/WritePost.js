@@ -20,7 +20,7 @@ class WritePost extends React.Component {
         });
     }
 
-    postSavePost = async () => {
+    createPost = async () => {
         console.log('[%s] postLogIn', TAG);
 
         let postInfo = {
@@ -30,9 +30,10 @@ class WritePost extends React.Component {
 
         console.log(JSON.stringify(postInfo));
 
-        await service.postSavePost(postInfo)
+        await service.createPost(postInfo)
         .then((res) => {
             console.log('[%s] Save Post Success', TAG)
+            this.props.setBoardState(0);
         })
         .catch((res) => {
             console.log('[%s] Save Post Fail', TAG)
@@ -51,7 +52,7 @@ class WritePost extends React.Component {
                 </div>
                 <div>
                     <button> 취소 </button>
-                    <button onClick={this.postSavePost}> 확인 </button>
+                    <button onClick={this.createPost}> 확인 </button>
                 </div>
             </div>
         )
