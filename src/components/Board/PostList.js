@@ -33,7 +33,7 @@ class PostList extends React.Component {
                 return(
                     <div className="post-wrapper">
                         <div className="post-number">
-                            300
+                            {post.post_no}
                         </div>
                         <div className="post-title">
                             <h5 onClick={(e) => this.clickPostTitle(post._id, e)}>{post.title}</h5>

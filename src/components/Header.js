@@ -11,26 +11,26 @@ class Header extends React.Component {
     constructor(props) {
         console.log(`[%s] constructor`, TAG)
         super(props);
-        //this.checkToken();
+        this.state = {
+            isShowBoard: false
+        }
     }
 
     componentDidMount() {
         console.log(`[%s] componentDidMount`, TAG)
     }
 
-    // App.js에서 확인해야하나 router 문제로 header에 임시로 생성하였음.
-    // checkToken = () => {
-    //     console.log(`[%s] checkToken`, TAG)
-    //     const token = localStorage.getItem('token');
-    //     if(!token){
-    //         //토큰이 없으면 logout
-    //     }
-    //     else {
-    //         console.log(`[%s] Token exists`, TAG)
-    //         // 토큰valid 확인 , invalid => logout, valid => 로그인 유지(연장)
-    //         this.props.onLoginCheck();
-    //     }
-    // }
+    showBoardList = () => {
+        this.setState({
+            isShowBoard: true
+        })
+    }
+
+    hideBoardList = () => {
+        this.setState({
+            isShowBoard: false
+        })
+    }
 
     render() {
         const activeStyle = {
@@ -39,7 +39,6 @@ class Header extends React.Component {
         };
 
         const { loginState } = this.props
-        console.log('[%s]' + JSON.stringify(this.props), TAG);
 
         return (
             <div id="main-header-wrapper">
@@ -59,7 +58,6 @@ class Header extends React.Component {
                                 <a onClick={this.props.onLogout}> LOG OUT </a>
                             </p>)
                         }
-                        
                     </div>
                 </div>
                 <div id="main-menu-nav-wrapper">
@@ -71,7 +69,20 @@ class Header extends React.Component {
                             <li className="menu-nav"><NavLink to="/" activeStyle={activeStyle}>★</NavLink></li>
                             <li className="menu-nav"><NavLink to="/about" activeStyle={activeStyle}>동아리 소개</NavLink></li>
                             <li className="menu-nav"><NavLink to="/notice" activeStyle={activeStyle}>별들의 알림</NavLink></li>
-                            <li className="menu-nav"><NavLink to="/board" activeStyle={activeStyle}>별들의 이야기</NavLink></li>
+                            <li className="menu-nav" onMouseEnter={() => this.showBoardList()} onMouseLeave={() => this.hideBoardList()}>
+                                <NavLink to="/board" activeStyle={activeStyle}>별들의 이야기</NavLink>
+                                {
+                                    this.state.isShowBoard &&
+                                    <div className="menu-nav-sub">
+                                        <ul>
+                                            <li>천기누설</li>
+                                            <li>낡은읽기장</li>
+                                            <li>관측게시판</li>
+                                            <li>아고라</li>
+                                        </ul>
+                                    </div>
+                                }
+                            </li>
                             <li className="menu-nav"><NavLink to="/album" activeStyle={activeStyle}>별들의 순간</NavLink></li>
                         </ul>
                     </nav>
@@ -80,8 +91,6 @@ class Header extends React.Component {
         );
     }
 }
-
-//export default Header;
 
 const mapStateToProps = (state) => {
     return {
@@ -96,5 +105,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-//export default Header
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps, null, {pure: false})(Header);
