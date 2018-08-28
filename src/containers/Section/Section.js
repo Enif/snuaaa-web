@@ -10,7 +10,7 @@ class Section extends React.Component {
             <section>
                 <Route exact path="/" component={Home}/>
                 <Route path="/about" component={About}/>
-                <Route path="/board" component={Board}/>
+                <Route path="/board/:bNo" component={Board}/>
                 <Route path="/album" component={Album}/>
                 <Route path="/signup" component={SignUp}/>
                 <Route path="/login" component={LogIn}/>
