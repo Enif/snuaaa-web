@@ -23,6 +23,10 @@ export function retrievePosts(data) {
     return axios.get(SERVER_URL + 'api/post/', data);
 }
 
+export function retrievePostsInBoard(boardNo) {
+    return axios.get(SERVER_URL + `api/board/${boardNo}`);
+}
+
 export function createPost(data) {
     return axios.post(SERVER_URL + 'api/post/', data);
 }

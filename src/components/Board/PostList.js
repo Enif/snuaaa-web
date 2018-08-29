@@ -1,18 +1,42 @@
 import React from 'react';
 import * as service from '../../services';
+import Loading from '../Common/Loading';
 
 const TAG = 'POSTLIST'
 
 class PostList extends React.Component {
 
     constructor(props) {
+        console.log('[%s] constructor', TAG)
         super(props);
 
         this.state = {
-            posts: []
+            boardNo: this.props.boardNo,
+            isShow: false
+        }
+        this.retrievePosts(this.state.boardNo);
+    }
+
+    posts = [];    
+
+    static getDerivedStateFromProps(props, state) {
+        console.log('[%s] getDerivedStateFromProps', TAG);
+        return {
+            boardNo: props.boardNo,
+        }
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log('[%s] shouldComponentUpdate', TAG)
+        if(this.state.boardNo !== nextState.boardNo){
+            nextState.isShow = false;
+            this.retrievePosts(nextState.boardNo)
+            return true;
         }
 
-        this.retrievePosts();
+        if(nextState.isShow === true) {
+            return true;
+        }
     }
 
     clickPostTitle = (postId, e) => {
@@ -21,16 +45,16 @@ class PostList extends React.Component {
         this.props.setBoardState(2);
     }
 
-    retrievePosts = async () => {
+    retrievePosts = async (boardNo) => {
         console.log('[%s] Retrieve Posts', TAG);
 
-        await service.retrievePosts()
+        await service.retrievePostsInBoard(boardNo)
         .then((res) => {
             console.log('[%s] Retrieve Posts Success', TAG);
             console.log(res.data)
             const postData = res.data;
             let posts = postData.map(post => {
-                return(
+                return (
                     <div className="post-wrapper">
                         <div className="post-number">
                             {post.post_no}
@@ -44,8 +68,9 @@ class PostList extends React.Component {
                     </div>
                 )
             });
+            this.posts = posts;
             this.setState({
-                posts: posts
+                isShow: true
             })
         })
         .catch((res) => {
@@ -54,14 +79,33 @@ class PostList extends React.Component {
     }
 
     render() {
+        console.log('[%s] render', TAG)
+        
+        let { isShow } = this.state
         return (
-            <div>
-                <div className="post-list">
-                {this.state.posts}
-            </div>
-                <button onClick={() => this.props.setBoardState(1)}>글쓰기</button>
-            </div>
-        )
+            <React.Fragment>
+            {
+                isShow ?
+                (
+                    <div>
+                        <div className="post-list">
+                        {this.posts}
+                    </div>
+                        <button onClick={() => this.props.setBoardState(1)}>글쓰기</button>
+                    </div>       
+                )
+                :
+                (
+                    <Loading/>
+                )
+
+            }
+            </React.Fragment>
+        ) 
+    }
+
+    componentDidMount() {
+        console.log('[%s] componentDidMount', TAG)
     }
 }
 

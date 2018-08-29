@@ -24,6 +24,7 @@ class WritePost extends React.Component {
         console.log('[%s] postLogIn', TAG);
 
         let postInfo = {
+            boardNo: this.props.boardNo,
             title: this.state.title,
             contents: this.state.contents
         }

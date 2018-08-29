@@ -135,12 +135,14 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 }
 
 .menu-nav-sub > ul {
-    width: 150px;
+    width: 200px;
     padding: 10px
 }
 
 .menu-nav-sub > ul > li {
     width: 100%;
+    padding: 5px;
+    text-align: left;
 }
 
 nav {
@@ -213,7 +215,7 @@ nav {
 }
 
 nav > ul {
-    height: inherit;
+    height: 100%;
 }
 
 nav > ul > li {
