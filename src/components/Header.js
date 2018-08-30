@@ -47,13 +47,13 @@ class Header extends React.Component {
                         {
                             !loginState ?
                             (<p>
-                                <Link to="signup"> SIGN UP </Link>
+                                <Link to="/signup"> SIGN UP </Link>
                                 /
-                                <Link to="login"> LOG IN </Link>
+                                <Link to="/login"> LOG IN </Link>
                             </p>)
                             :
                             (<p>
-                                <Link to="userinfo"> INFO </Link>
+                                <Link to="/userinfo"> INFO </Link>
                                 /
                                 <a onClick={this.props.onLogout}> LOG OUT </a>
                             </p>)
@@ -70,15 +70,15 @@ class Header extends React.Component {
                             <li className="menu-nav"><NavLink to="/about" activeStyle={activeStyle}>동아리 소개</NavLink></li>
                             <li className="menu-nav"><NavLink to="/notice" activeStyle={activeStyle}>별들의 알림</NavLink></li>
                             <li className="menu-nav" onMouseEnter={() => this.showBoardList()} onMouseLeave={() => this.hideBoardList()}>
-                                <NavLink to="/board/b01" activeStyle={activeStyle}>별들의 이야기</NavLink>
+                                <NavLink to="/board" activeStyle={activeStyle}>별들의 이야기</NavLink>
                                 {
                                     this.state.isShowBoard &&
                                     <div className="menu-nav-sub">
                                         <ul>
-                                            <li><NavLink to='/board/b01'>천기누설</NavLink></li>
-                                            <li><NavLink to='/board/b02'>낡은읽기장</NavLink></li>
-                                            <li><NavLink to='/board/b03'>관측게시판</NavLink></li>
-                                            <li><NavLink to='/board/b04'>아고라</NavLink></li>
+                                            <li><NavLink to='/board/b01' proptest="ttt1">천기누설</NavLink></li>
+                                            <li><NavLink to='/board/b02' proptest="ttt2">낡은읽기장</NavLink></li>
+                                            <li><NavLink to='/board/b03' proptest="ttt3">관측게시판</NavLink></li>
+                                            <li><NavLink to='/board/b04' proptest="ttt4">아고라</NavLink></li>
                                         </ul>
                                     </div>
                                 }

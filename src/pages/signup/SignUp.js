@@ -8,6 +8,7 @@ const TAG = 'SINGUP'
 
 class SignUp extends React.Component {
 
+    
     constructor(props){
         super(props);
         
@@ -22,9 +23,16 @@ class SignUp extends React.Component {
             email: '',
             mobile: '',
             introduction: '',
-            
+            profile: null,
             signUpState: 'READY',
         }
+        //this.profileRef = React.createRef();
+        
+    }
+
+
+    uploadFile = (event) => {
+        this.state.profile = event.target.files[0];
     }
 
     handleChange = (e) => {
@@ -36,6 +44,10 @@ class SignUp extends React.Component {
     postSignUp = async () => {
         console.log('[%s] postSignUp', TAG);
 
+        // if(this.state.profile !== null) {
+        //     let Pfile = new File([]. );
+        // }
+
         let userInfo = {
             id: this.state.id,
             password: this.state.password,
@@ -46,10 +58,19 @@ class SignUp extends React.Component {
             major: this.state.major,
             email: this.state.email,
             mobile: this.state.mobile,
-            introduction: this.state.introduction
+            introduction: this.state.introduction,
+            profile: this.state.profile,
         };
 
-        await service.postSignUp(userInfo)
+        const data = new FormData();
+        data.append('id', this.state.id);
+        data.append('password', this.state.password);
+        if(this.state.profile) {
+            data.append('profile', this.state.profile);
+        }
+//        data.append('profile', this.profileRef.current.files[0]);
+
+        await service.postSignUp(data)
         .then((response) => {
             console.log('Sign up Success!!');
             console.log(response);
@@ -71,7 +92,9 @@ class SignUp extends React.Component {
                     if (this.state.signUpState === 'READY') return (
                     <SignUpComponent
                     handleChange = {this.handleChange}
-                    postSignUp = {this.postSignUp}  />);
+                    postSignUp = {this.postSignUp}
+                    uploadFile = {this.uploadFile}
+                    /* profileRef = {this.profileRef} */  />);
                     else if (this.state.signUpState === 'SUCCESS') return (<SignUpSuccess/>)
                     else return (<SignUpFailure/>)
                 })()

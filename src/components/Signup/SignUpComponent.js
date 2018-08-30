@@ -2,7 +2,7 @@ import React from 'react';
 
 // [TODO] Make defalt state & Make Oject contain UserInfo
 
-const SignUpComponent = ({id, password, passwordCf, username, aaaNum, schoolNum, major, email, mobile, handleChange, postSignUp }) => {
+const SignUpComponent = ({id, password, passwordCf, username, aaaNum, schoolNum, major, email, mobile, handleChange, postSignUp, profile, uploadFile }) => {
     return (
         <div id="sign-up-wrapper">
                 가입안내
@@ -173,7 +173,15 @@ const SignUpComponent = ({id, password, passwordCf, username, aaaNum, schoolNum,
                         </tr>
                         <tr>
                             <td>Profile</td>
-                            <td><input type="file" /></td>
+                            <td>
+                                <input
+                                type="file"
+                                name="profile"
+                                accept="image/*"
+                                onChange={(e) => uploadFile(e)}
+                                /* ref={profileRef} */
+                                value={profile}/>
+                            </td>
                         </tr>
                         <tr>
                             <td>자기소개</td>
@@ -188,5 +196,6 @@ const SignUpComponent = ({id, password, passwordCf, username, aaaNum, schoolNum,
             </div>
     )
 }
+
 
 export default SignUpComponent;
