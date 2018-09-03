@@ -54,6 +54,17 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     text-align: right;
 }
 
+.enif-section-wrapper { 
+    font-size: 13px; 
+    padding: 30px;
+}
+
+.enif-section-wrapper h2 {
+    font-size: 2rem;
+    font-family: 'Jua', sans-serif;
+}
+
+
 /**********  ENIF  **********/
 
 
@@ -588,6 +599,34 @@ footer {
     margin: 10px;
 }
 
+
+.userinfo-wrapper {
+    margin: 0 auto;
+    width: 300px;
+}
+
+.userinfo-wrapper img {
+    display: inline-block;
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+}
+
+.userinfo-wrapper h3 {
+    display: inline-block;
+    font-size: 1.75rem;
+    text-align: right;
+}
+
+.userinfo-wrapper table {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.userinfo-wrapper td {
+    padding: 5px;
+}
 
 /******* Loading ******/
 .box{

@@ -15,6 +15,10 @@ export function getUserInfo(data) {
     return axios.get(SERVER_URL + 'api/userinfo/', data);
 }
 
+export function getUserProfile(data) {
+    return axios.get(SERVER_URL + 'api/userinfo/profile', data)
+}
+
 export function retrievePost(data) {
      return axios.get(SERVER_URL + 'api/post/' + data);
 }
