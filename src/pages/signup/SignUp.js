@@ -48,23 +48,31 @@ class SignUp extends React.Component {
         //     let Pfile = new File([]. );
         // }
 
-        let userInfo = {
-            id: this.state.id,
-            password: this.state.password,
-            passwordCf: this.state.passwordCf,
-            username: this.state.username,
-            aaaNum: this.state.aaaNum,
-            schoolNum: this.state.schoolNum,
-            major: this.state.major,
-            email: this.state.email,
-            mobile: this.state.mobile,
-            introduction: this.state.introduction,
-            profile: this.state.profile,
-        };
+        // let userInfo = {
+        //     id: this.state.id,
+        //     password: this.state.password,
+        //     passwordCf: this.state.passwordCf,
+        //     username: this.state.username,
+        //     aaaNum: this.state.aaaNum,
+        //     schoolNum: this.state.schoolNum,
+        //     major: this.state.major,
+        //     email: this.state.email,
+        //     mobile: this.state.mobile,
+        //     introduction: this.state.introduction,
+        //     profile: this.state.profile,
+        // };
 
         const data = new FormData();
         data.append('id', this.state.id);
         data.append('password', this.state.password);
+        data.append('passwordCf', this.state.passwordCf);
+        data.append('username', this.state.username);
+        data.append('aaaNum', this.state.aaaNum);
+        data.append('schoolNum', this.state.schoolNum);
+        data.append('major', this.state.major);
+        data.append('email', this.state.email);
+        data.append('mobile', this.state.mobile);
+        data.append('introduction', this.state.introduction);
         if(this.state.profile) {
             data.append('profile', this.state.profile);
         }
