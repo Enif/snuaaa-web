@@ -35,7 +35,7 @@ class Header extends React.Component {
     render() {
         const activeStyle = {
             fontWeight: 'bold',
-            color: '#54afff'
+            color: '#FFEB3B'
         };
 
         const { loginState } = this.props

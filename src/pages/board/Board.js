@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router';
 import BoardEnum from '../../components/Board/BoardEnum';
 import Post from '../../components/Board/Post';
 import PostList from '../../components/Board/PostList';
@@ -59,7 +60,8 @@ class Board extends React.Component {
                             console.log(`[Board] ${this.state.boardState}`);
                             if (this.state.boardState === 0) return (<PostList boardNo={this.state.boardNo} setBoardState={this.setBoardState} setPostId={this.setPostId} />);
                             else if (this.state.boardState === 1) return (<WritePost boardNo={this.state.boardNo} setBoardState={this.setBoardState}/>);
-                            else if (this.state.boardState === 2) return (<Post boardNo={this.state.boardNo} setBoardState={this.setBoardState} postId={this.state.postId} />);
+                            // else if (this.state.boardState === 2) return (<Post boardNo={this.state.boardNo} setBoardState={this.setBoardState} postId={this.state.postId} />);
+                            else if (this.state.boardState === 2) return (<Redirect to={`/post/${this.state.postId}`}/>)
                             else return (<div>error page</div>);
                         })()
                     }
