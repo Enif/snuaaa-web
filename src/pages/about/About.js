@@ -18,19 +18,21 @@ class About extends React.Component {
         })
     }
 
-    //TODO : If aboutIndex doesn't change, component shouldn't update;
+    //TODO : make active style when intro-title is activated
     
     render() {
         return (
             <div>
                 <h2>동아리 소개</h2>
                 <div className="intro-div-wrapper" id="intro-top">
-                    <p><a onClick={(e) => this.setIndex(0)} className="intro-title">AAA는?</a></p>
-                    <p><a onClick={(e) => this.setIndex(1)} className="intro-title">찾아오는 길 &amp; 연락처</a></p>
-                    <p><a onClick={(e) => this.setIndex(2)} className="intro-title">장비소개</a></p>
-                    <p><a onClick={(e) => this.setIndex(3)} className="intro-title">김태영 기념관측소 소개</a></p>
-                    <p><a onClick={(e) => this.setIndex(4)} className="intro-title">동아리발자취</a></p>
-                    <p><a onClick={(e) => this.setIndex(5)} className="intro-title">역대 회장단 / 임원진</a></p>
+                    <ul>
+                        <li><a onClick={() => this.setIndex(0)}>AAA는?</a></li>
+                        <li><a onClick={() => this.setIndex(1)}>찾아오는 길 &amp; 연락처</a></li>
+                        <li><a onClick={() => this.setIndex(2)}>장비소개</a></li>
+                        <li><a onClick={() => this.setIndex(3)}>김태영 기념관측소 소개</a></li>
+                        <li><a onClick={() => this.setIndex(4)}>동아리발자취</a></li>
+                        <li><a onClick={() => this.setIndex(5)}>역대 회장단 / 임원진</a></li>
+                    </ul>
                 </div>
                 
                 {

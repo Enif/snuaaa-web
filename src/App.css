@@ -64,6 +64,22 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     font-family: 'Jua', sans-serif;
 }
 
+.enif-post-wrapper {
+    width: 90%;
+    margin: 0 auto;
+    padding: 1rem;
+    /* border: 1px solid #434343; */
+    background-color: #f1f3d7;
+}
+
+.enif-post-title {
+    font-size: 1.7rem;
+}
+
+.enif-post-content {
+    padding-top: 2rem;
+}
+
 
 /**********  ENIF  **********/
 
@@ -484,21 +500,30 @@ section {
     margin: 0 auto;
     padding-left: 10%;
     padding-right: 10%;
-    font-family: 'Jeju Gothic', serif;
+    /* font-family: 'Jeju Gothic', serif; */
     }
     
 .intro-div-wrapper {
-    padding: 30px;
-}
-
-.intro-div-wrapper p a{
-    font-size: 14px;
-}
-
-.intro-div-wrapper p {
-    margin: 0.5em;
+    padding: 10px;
     line-height: 1.3em;
 }
+
+.intro-div-wrapper ul {
+    list-style: inside;
+    color: rgb(85, 150, 255);
+    
+}
+
+.intro-div-wrapper ul li a {
+    font-size: 0.9rem;
+    line-height: 1.3em;
+    cursor: pointer;
+}
+
+.intro-div-wrapper ul li a:hover {
+    font-weight: bold;
+}
+
 
 .intro-div-wrapper h5 {
     line-height: 2em;
@@ -511,16 +536,6 @@ section {
     font-size: 0.9em;
     border: 1px solid black;
     padding: 0.5em;
-}
-
-.intro-title {
-    font-size: 18px; 
-    color: rgb(85, 150, 255);
-    cursor: pointer;
-}
-
-.intro-title a:hover {
-    font-weight: bold;
 }
 
 /* .intro-content {

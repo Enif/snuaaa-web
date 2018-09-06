@@ -68,7 +68,7 @@ class Header extends React.Component {
                         <ul className="nav-items">
                             <li className="menu-nav"><NavLink to="/" activeStyle={activeStyle}>★</NavLink></li>
                             <li className="menu-nav"><NavLink to="/about" activeStyle={activeStyle}>동아리 소개</NavLink></li>
-                            <li className="menu-nav"><NavLink to="/notice" activeStyle={activeStyle}>별들의 알림</NavLink></li>
+                            {/* <li className="menu-nav"><NavLink to="/notice" activeStyle={activeStyle}>별들의 알림</NavLink></li> */}
                             <li className="menu-nav" onMouseEnter={() => this.showBoardList()} onMouseLeave={() => this.hideBoardList()}>
                                 <NavLink to="/board" activeStyle={activeStyle}>별들의 이야기</NavLink>
                                 {
