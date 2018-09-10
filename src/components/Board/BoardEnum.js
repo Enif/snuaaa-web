@@ -1,4 +1,4 @@
-const BoardEnum = [
+export const BoardEnum = [
     {
         boardNo : 'b01',
         boardName : "천기누설"
@@ -21,4 +21,13 @@ const BoardEnum = [
     },
 ]
 
-export default BoardEnum;
+export const PhotoBoardEnum = [
+    {
+        boardNo : 'pb01',
+        boardName : '추억만들기'
+    },
+    {
+        boardNo : 'pb02',
+        boardName : '별사진'
+    }
+]

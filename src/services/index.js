@@ -35,6 +35,18 @@ export function createPost(data) {
     return axios.post(SERVER_URL + 'api/post/', data);
 }
 
+export function retrieveAlbumsInPhotoBoard(boardNo) {
+    return axios.get(SERVER_URL + `api/photoboard/${boardNo}`)
+}
+
+export function createAlbum(boardNo, data) {
+    return axios.post(SERVER_URL + `api/photoboard/${boardNo}`, data)
+}
+
+export function retrievePhotosInAlbum(albumNo) {
+    return axios.get(SERVER_URL + `api/album/${albumNo}`)
+}
+
 export function action1(data) {
     return axios.post(SERVER_URL + 'api/action/', data);
 }

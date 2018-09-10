@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router';
-import BoardEnum from '../../components/Board/BoardEnum';
+import { BoardEnum } from '../../components/Board/BoardEnum';
 //import Post from '../../components/Board/Post';
 import PostList from '../../components/Board/PostList';
 import WritePost from '../../components/Board/WritePost';

@@ -83,7 +83,7 @@ class Header extends React.Component {
                                     </div>
                                 }
                             </li>
-                            <li className="menu-nav"><NavLink to="/album" activeStyle={activeStyle}>별들의 순간</NavLink></li>
+                            <li className="menu-nav"><NavLink to="/photoboard/pb01" activeStyle={activeStyle}>별들의 순간</NavLink></li>
                         </ul>
                     </nav>
                 </div>

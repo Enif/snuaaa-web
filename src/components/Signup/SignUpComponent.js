@@ -5,7 +5,7 @@ import React from 'react';
 const SignUpComponent = ({id, password, passwordCf, username, aaaNum, schoolNum, major, email, mobile, handleChange, postSignUp, profile, uploadFile }) => {
     return (
         <div id="sign-up-wrapper">
-                가입안내
+                <h2>가입안내</h2>
                 <table>
                     <thead></thead>
                     <tbody>

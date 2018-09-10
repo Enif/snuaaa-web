@@ -3,7 +3,7 @@ import React from 'react';
 class Album extends React.Component {
     render() {
         return (
-            <div id="contents-center">
+            <div>
                 ALBUM
             </div>
         );
