@@ -9,15 +9,13 @@ class PostList extends React.Component {
     constructor(props) {
         console.log('[%s] constructor', TAG)
         super(props);
-
+        this.posts = [];
         this.state = {
             boardNo: this.props.boardNo,
             isShow: false
         }
         this.retrievePosts(this.state.boardNo);
     }
-
-    posts = [];    
 
     static getDerivedStateFromProps(props, state) {
         console.log('[%s] getDerivedStateFromProps', TAG);
@@ -89,8 +87,8 @@ class PostList extends React.Component {
                 (
                     <div>
                         <div className="post-list">
-                        {this.posts}
-                    </div>
+                            {this.posts}
+                        </div>
                         <button onClick={() => this.props.setBoardState(1)}>글쓰기</button>
                     </div>       
                 )

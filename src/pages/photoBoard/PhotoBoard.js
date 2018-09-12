@@ -1,9 +1,8 @@
 import React from 'react';
 import { PhotoBoardEnum } from '../../components/Board/BoardEnum';
-//import { Redirect } from 'react-router';
+import { Redirect } from 'react-router';
 import AlbumList from '../../components/PhotoBoard/AlbumList';
 import CreateAlbum from '../../components/PhotoBoard/CreateAlbum';
-//import PostList from '../../components/Board/PostList';
 
 const TAG = 'PHOTOBOARD'
 
@@ -15,7 +14,8 @@ class PhotoBoard extends React.Component {
         this.state = {
             boardState: 0,
             boardNo: this.props.match.params.pbNo,
-            popUpState: false
+            popUpState: false,
+            albumId: ''
         }
     }
 
@@ -44,6 +44,12 @@ class PhotoBoard extends React.Component {
         })
     }
 
+    setAlbumId = (id) => {
+        this.setState({
+            albumId: id
+        })
+    }
+
     togglePopUp = () => {
         this.setState({
             popUpState: !this.state.popUpState
@@ -59,10 +65,10 @@ class PhotoBoard extends React.Component {
                         {
                             (() => {
                                 console.log(`[PhotoBoard] ${this.state.boardState}`);
-                                if (this.state.boardState === 0) return (<AlbumList boardNo={this.state.boardNo} setBoardState={this.setBoardState} togglePopUp={this.togglePopUp}/>);
+                                if (this.state.boardState === 0) return (<AlbumList boardNo={this.state.boardNo} setBoardState={this.setBoardState} setAlbumId={this.setAlbumId} togglePopUp={this.togglePopUp}/>);
                                 // else if (this.state.boardState === 1) return (<WritePost boardNo={this.state.boardNo} setBoardState={this.setBoardState}/>);
                                 // // else if (this.state.boardState === 2) return (<Post boardNo={this.state.boardNo} setBoardState={this.setBoardState} postId={this.state.postId} />);
-                                // else if (this.state.boardState === 2) return (<Redirect to={`/post/${this.state.postId}`}/>)
+                                else if (this.state.boardState === 2) return (<Redirect to={`/album/${this.state.albumId}`}/>)
                                 else return (<div>error page</div>);
                             })()
                         }

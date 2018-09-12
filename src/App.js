@@ -46,7 +46,7 @@ class App extends Component {
                 <div id="contents-wrapper">
                     <Aside class="aside-left" />
                     <Section/>
-                    <Aside class="aside-right" />
+                    {/* <Aside class="aside-right" /> */}
                 </div>
                 <Footer />
             </div>

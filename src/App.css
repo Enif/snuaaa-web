@@ -62,6 +62,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 .enif-section-wrapper h2 {
     font-size: 2rem;
     font-family: 'Jua', sans-serif;
+    margin-bottom: 1rem;
 }
 
 .enif-post-wrapper {
@@ -644,6 +645,28 @@ section {
     resize: none;
 }
 
+
+/****** ALBUM *******/
+.album-list-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.album-wrapper {
+    width: 23%;
+    margin: 5px;
+    box-shadow: 3px 3px 7px 2px rgba(95, 95, 95, 0.2);
+}
+
+.album-wrapper:hover {
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(12%, #b3cae5), color-stop(46%, #dbdde4), color-stop(70%, #e4e3e4), color-stop(94%, #f7ddbb), color-stop(100%, #efcab2));
+}
+
+/****** ALBUM *******/
+
+
 /****** footer ******/
 footer {
     background-color: #434343;
@@ -690,56 +713,6 @@ footer {
 }
 
 /******* Loading ******/
-/* .box{
-    display: inline-block;
-    
-    width: 100%;
-    position: relative;
-    margin:0 -4px -5px -2px;
-    transition: all .2s ease;
-}
-
-.loader1{
-    position: relative;
-    height: 80px;
-    width: 80px;
-    border-radius: 80px;
-    border: 3px solid  rgba(0, 21, 141, 0.7);
-
-    margin-top: 50px;
-    top: 28%;
-    top: -webkit-calc(50% - 43px);
-    top: calc(50% - 43px);
-    left: 35%;
-    left: -webkit-calc(50% - 43px);
-    left: calc(50% - 43px);
-
-    -webkit-transform-origin: 50% 50%;
-            transform-origin: 50% 50%;
-    -webkit-animation: loader1 3s linear infinite;
-            animation: loader1 3s linear infinite;
-}
-
-.loader1:after{
-    content: "";
-    position: absolute;
-    top: -5px;
-    left: 20px;
-    width: 11px;
-    height: 11px;
-    border-radius: 10px;
-    background-color: rgba(99, 0, 0, 0.664);
-}
-
-@-webkit-keyframes loader1{
-    0%{-webkit-transform:rotate(0deg);}
-    100%{-webkit-transform:rotate(360deg);}
-}
-
-@keyframes loader1{
-    0%{transform:rotate(0deg);}
-    100%{transform:rotate(360deg);}
-} */
 
 .loading {
     position: fixed;
@@ -754,13 +727,9 @@ footer {
 
 @keyframes loading-background{
     0% { background-color: rgba(255, 255, 255, 0.8); }
-    50% {
-        background-color: rgba(127, 127, 127, .8);
-        /* box-shadow: 0 0 50px 10px rgba(127, 127, 127, .8); */
-    }
+    50% { background-color: rgba(127, 127, 127, .8); }
     100%{ background-color: rgba(255, 255, 255, .8); }
 }
-
 
 .loading-sun {
     position: relative;

@@ -12,7 +12,8 @@ class Header extends React.Component {
         console.log(`[%s] constructor`, TAG)
         super(props);
         this.state = {
-            isShowBoard: false
+            isShowBoard: false,
+            isShowPhotoBoard: false
         }
     }
 
@@ -26,9 +27,21 @@ class Header extends React.Component {
         })
     }
 
+    showPhotoBoardList = () => {
+        this.setState({
+            isShowPhotoBoard: true
+        })
+    }
+
     hideBoardList = () => {
         this.setState({
             isShowBoard: false
+        })
+    }
+
+    hidePhotoBoardList = () => {
+        this.setState({
+            isShowPhotoBoard: false
         })
     }
 
@@ -83,7 +96,18 @@ class Header extends React.Component {
                                     </div>
                                 }
                             </li>
-                            <li className="menu-nav"><NavLink to="/photoboard/pb01" activeStyle={activeStyle}>별들의 순간</NavLink></li>
+                            <li className="menu-nav" onMouseEnter={() => this.showPhotoBoardList()} onMouseLeave={() => this.hidePhotoBoardList()}>
+                                <NavLink to="/photoboard/pb01" activeStyle={activeStyle}>별들의 순간</NavLink>
+                                {
+                                    this.state.isShowPhotoBoard &&
+                                    <div className="menu-nav-sub">
+                                        <ul>
+                                            <li><NavLink to='/photoboard/pb01' proptest="ttt1">추억만들기</NavLink></li>
+                                            <li><NavLink to='/photoboard/pb02' proptest="ttt2">별사진</NavLink></li>
+                                        </ul>
+                                    </div>
+                                }
+                            </li>
                         </ul>
                     </nav>
                 </div>
