@@ -14,7 +14,7 @@ class Section extends React.Component {
                 <Route path="/board/:bNo" component={Board}/>
                 <Route path="/post/:pNo" component={Post}/>
                 <Route path="/photoboard/:pbNo" component={PhotoBoard}/>
-                <Route path="/album" component={Album}/>
+                <Route path="/album/:aNo" component={Album}/>
                 <Route path="/signup" component={SignUp}/>
                 <Route path="/login" component={LogIn}/>
                 <Route path="/userinfo" component={UserInfo}/>              

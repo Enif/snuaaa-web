@@ -3,7 +3,7 @@ import * as service from '../../services';
 
 const TAG = 'CREATEALBUM'
 
-class CreateAlbum extends React.Component {
+class CreatePhoto extends React.Component {
 
     constructor(props) {
         console.log('[%s] constructor', TAG)
@@ -45,15 +45,11 @@ class CreateAlbum extends React.Component {
         return (
             <div className="enif-popup">
                 <div className="enif-popup-content">
-                    <h3>앨범 생성</h3>
+                    <h3>사진 업로드</h3>
                     <button className="enif-btn-cancel" onClick={()=>this.props.togglePopUp()}> x </button>
-                    <div>
-                        <input type="text" name="title" placeholder="앨범 제목" onChange={(e) => this.handleChange(e)}/>
-                    </div>
-                    <div>
-                        <textarea name="desc" placeholder="앨범 설명"/>
-                    </div>
-                    <button className="enif-btn-common" onClick={() => this.createAlbum()}>확인</button>
+                    <input type="text" name="title" placeholder="앨범 제목" onChange={(e) => this.handleChange(e)}/>
+                    <input type="file" />
+                    <button onClick={() => this.createAlbum()}>확인</button>
                 </div>
             </div>            
         ) 
@@ -64,4 +60,4 @@ class CreateAlbum extends React.Component {
     }
 }
 
-export default CreateAlbum;
+export default CreatePhoto;

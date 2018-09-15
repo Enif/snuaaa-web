@@ -97,7 +97,25 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     height: 300px;
     margin: 0 auto;
     margin-top: 200px;
+    padding: 2rem;
     background-color: #ffffff;
+}
+
+.enif-popup-content h3 {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.enif-popup-content input {
+    height: 2rem;
+    width: 100%;
+}
+
+.enif-popup-content textarea {
+    height: 8rem;
+    width: 100%;
+    resize: none;
 }
 
 .enif-popup .enif-btn-cancel {
@@ -110,6 +128,12 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     color: #a0a0a0;
     font-size: 1.5rem;
     border: none;
+}
+
+.enif-popup .enif-btn-common {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
 }
 
 .enif-btn-cancel:hover {
@@ -126,6 +150,16 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     border: none;
     background: #00115e;
     color: #fff;
+}
+
+.enif-btn-common {
+    width: 130px;
+    height: 40px;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    background: #b3cae5;
 }
 
 /**********  ENIF  **********/
