@@ -19,8 +19,8 @@ export function getUserProfile(data) {
     return axios.get(SERVER_URL + 'api/userinfo/profile', data)
 }
 
-export function retrievePost(data) {
-     return axios.get(SERVER_URL + 'api/post/' + data);
+export function retrievePost(postNo) {
+     return axios.get(SERVER_URL + `api/post/${postNo}`);
 }
 
 export function retrievePosts(data) {
@@ -41,6 +41,10 @@ export function retrieveAlbumsInPhotoBoard(boardNo) {
 
 export function createAlbum(boardNo, data) {
     return axios.post(SERVER_URL + `api/photoboard/${boardNo}`, data)
+}
+
+export function createPhotos(albumNo, data) {
+    return axios.post(SERVER_URL + `api/album/${albumNo}`, data)
 }
 
 export function retrievePhotosInAlbum(albumNo) {

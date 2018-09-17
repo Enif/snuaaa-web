@@ -45,7 +45,7 @@ class Album extends React.Component {
                     </div>
                 </div>
                 {
-                    this.state.popUpState && <CreatePhoto boardNo={this.state.boardNo} togglePopUp={this.togglePopUp} />
+                    this.state.popUpState && <CreatePhoto albumNo={this.state.albumNo} togglePopUp={this.togglePopUp} />
                 }
             </React.Fragment>
         );

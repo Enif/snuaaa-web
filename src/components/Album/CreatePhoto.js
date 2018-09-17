@@ -1,7 +1,7 @@
 import React from 'react';
 import * as service from '../../services';
 
-const TAG = 'CREATEALBUM'
+const TAG = 'CREATEPHOTO'
 
 class CreatePhoto extends React.Component {
 
@@ -11,6 +11,7 @@ class CreatePhoto extends React.Component {
 
         this.state = {
             title: '',
+            uploadPhoto: null,
         }
     }
 
@@ -21,20 +22,30 @@ class CreatePhoto extends React.Component {
         console.log(this.state.title);
     }
 
-    createAlbum = async () => {
-        console.log('[%s] createAlbum', TAG);
-        let albumInfo = {
-            title: this.state.title
-        }
-        console.log(albumInfo);
+    uploadFile = (e) => {
+        this.state.uploadPhoto = e.target.files[0];
+    }
+
+    createPhotos = async () => {
+        console.log('[%s] createPhotos', TAG);
+        // let photoInfo = {
+        //     title: this.state.title,
+        //     albumNo: this.props.albumNo,
+        //     uploadPhoto: this.state.uploadPhoto
+        // }
+        const photoInfo = new FormData();
+        photoInfo.append('title', this.state.title);
+        photoInfo.append('albumNo', this.props.albumNo);
+        photoInfo.append('uploadPhoto', this.state.uploadPhoto);
+        console.log(photoInfo);
         
-        await service.createAlbum(this.props.boardNo, albumInfo)
+        await service.createPhotos(this.props.albumNo, photoInfo)
         .then(() => {
-            console.log('[%s] Create Album Success', TAG);
+            console.log('[%s] Create Photos Success', TAG);
             this.props.togglePopUp();
         })
         .catch(() => {
-            console.log('[%s] Create Album Success', TAG);
+            console.log('[%s] Create Photos Success', TAG);
             this.props.togglePopUp();
         })
     }
@@ -48,8 +59,8 @@ class CreatePhoto extends React.Component {
                     <h3>사진 업로드</h3>
                     <button className="enif-btn-cancel" onClick={()=>this.props.togglePopUp()}> x </button>
                     <input type="text" name="title" placeholder="앨범 제목" onChange={(e) => this.handleChange(e)}/>
-                    <input type="file" />
-                    <button onClick={() => this.createAlbum()}>확인</button>
+                    <input type="file" accept="image/*" onChange={(e) => this.uploadFile(e)} value={this.state.uploadPhoto}/>
+                    <button onClick={() => this.createPhotos()}>확인</button>
                 </div>
             </div>            
         ) 

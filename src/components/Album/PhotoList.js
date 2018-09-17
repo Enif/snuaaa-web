@@ -3,6 +3,7 @@ import * as service from '../../services';
 import Loading from '../Common/Loading';
 import defaultAlbumCover from '../../assets/img/default_photo_img.png'
 
+
 const TAG = 'PHOTOLIST'
 
 class PhotoList extends React.Component {
