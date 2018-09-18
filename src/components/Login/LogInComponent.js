@@ -25,6 +25,7 @@ const LogInComponent = ({id, password, handleChange, postLogIn }) => {
                     name="password"
                     value={password}
                     onChange={handleChange}
+                    onKeyDown={(e) => {if(e.keyCode == 13) postLogIn()}}
                     required />
 
                 {/* <input type="submit" value="LOGIN" /> */}

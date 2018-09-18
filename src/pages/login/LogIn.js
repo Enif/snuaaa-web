@@ -5,6 +5,7 @@ import * as service from '../../services';
 import { connect } from 'react-redux'
 import { authLogin } from '../../actions'
 import LogInComponent from '../../components/Login/LogInComponent';
+import Loading from '../../components/Common/Loading';
 
 const TAG = 'LOGIN'
 
@@ -16,6 +17,7 @@ class LogIn extends React.Component {
         this.state = {
             id: '',
             password: '',
+            isLoading: false
         }
     }
 
@@ -27,7 +29,9 @@ class LogIn extends React.Component {
 
     postLogIn = async () => {
         console.log('[%s] postLogIn', TAG);
-
+        this.setState({
+            isLoading: true
+        })
         let logInInfo = {
             id: this.state.id,
             password: this.state.password
@@ -37,6 +41,9 @@ class LogIn extends React.Component {
         .then((res) => {
             console.log('[%s] Log In Success', TAG)
             console.log(res);
+            this.setState({
+                isLoading: false
+            })
             const { token } = res.data;
             localStorage.setItem('token', token);
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
@@ -54,7 +61,8 @@ class LogIn extends React.Component {
     render() {
 
         const { loginState } = this.props
-
+        const { isLoading } = this.state
+        console.log(isLoading)
         return (
             
             loginState ?
