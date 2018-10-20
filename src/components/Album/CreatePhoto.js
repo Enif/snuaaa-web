@@ -59,7 +59,7 @@ class CreatePhoto extends React.Component {
                     <h3>사진 업로드</h3>
                     <button className="enif-btn-cancel" onClick={()=>this.props.togglePopUp()}> x </button>
                     <input type="text" name="title" placeholder="앨범 제목" onChange={(e) => this.handleChange(e)}/>
-                    <input type="file" accept="image/*" onChange={(e) => this.uploadFile(e)} value={this.state.uploadPhoto}/>
+                    <input type="file" accept="image/*" onChange={(e) => this.uploadFile(e)} /* value={this.state.uploadPhoto} *//>
                     <button onClick={() => this.createPhotos()}>확인</button>
                 </div>
             </div>            

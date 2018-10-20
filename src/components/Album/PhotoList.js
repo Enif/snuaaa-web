@@ -1,6 +1,7 @@
 import React from 'react';
 import * as service from '../../services';
 import Loading from '../Common/Loading';
+import Photo from './Photo';
 import defaultAlbumCover from '../../assets/img/default_photo_img.png'
 
 
@@ -14,7 +15,8 @@ class PhotoList extends React.Component {
         this.photos = [];
         this.state = {
             albumNo: this.props.albumNo,
-            isShow: false
+            isShow: false,
+            popUpState: false,
         }
         this.retrievePhotos(this.state.albumNo);
     }

@@ -1,5 +1,5 @@
-@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
-@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+/* @import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+@import url(http://fonts.googleapis.com/earlyaccess/hanna.css); */
 @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic');
 @import url('https://fonts.googleapis.com/css?family=Jua');
 
@@ -163,11 +163,43 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 }
 
 .enif-btn-common-rec {
-    font-size: 1rem;
-    font-weight: bold;
+    height: 3em;
+    width: 20em;
+    margin: 1em auto;
+    letter-spacing: 0.2rem;
+    color: white;
+    background-color: #005fb3;
     border: none;
-    background: #b3cae5;
+    font-weight: bold;
+    
 }
+.enif-input-field {
+    margin: 0 auto;
+    margin-top: 15px;
+    width: 300px;
+}
+
+.enif-input-field label {
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin: 3px;
+}
+
+.enif-input-field input {
+    height: 20px;
+    width: 100%;
+    display: block;
+}
+
+.enif-input-field textarea {
+    margin-top: 5px;
+    display: block;
+    width: 100%;
+    height: 100px;
+    resize: none;
+    overflow: auto;
+}
+
 
 /**********  ENIF  **********/
 
@@ -554,9 +586,21 @@ section {
 }
 
 #sign-up-wrapper .input-text {
-    height: 25px;
+    margin-top: 5px;
+    height: 35px;
 }
 
+.signup-input-wrapper {
+    width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 2px #d6d6d6 solid;
+    border-radius: 10px;
+}
+
+.signup-btn {
+    width: 100%;
+}
 
 /***** SIGN UP *****/
 
@@ -890,6 +934,18 @@ footer {
     }
     .nav-items > li > a {
         line-height: 40px;
+    }
+
+    .enif-section-wrapper {
+        padding: 10px;
+    }
+
+    .enif-input-field {
+        width: 100%;
+    }
+
+    .signup-input-wrapper {
+        width: 100%;
     }
 
 
