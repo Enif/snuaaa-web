@@ -171,8 +171,21 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     background-color: #005fb3;
     border: none;
     font-weight: bold;
-    
 }
+
+.enif-input {
+    height: 20px;
+    width: 100%;
+    display: block;
+}
+
+.enif-input-invalid {
+    height: 20px;
+    width: 100%;
+    display: block;
+    background-color: #ffe8e8;
+}
+
 .enif-input-field {
     margin: 0 auto;
     margin-top: 15px;
@@ -186,10 +199,21 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 }
 
 .enif-input-field input {
-    height: 20px;
+    margin-top: 5px;
+    height: 35px;
     width: 100%;
     display: block;
 }
+
+.enif-input-field p {
+    color: red;
+}
+
+
+/* .enif-input-field input:invalid {
+    background-color: #ffe8e8;
+    border-color: #ff7e7e;
+} */
 
 .enif-input-field textarea {
     margin-top: 5px;
@@ -810,36 +834,40 @@ footer {
     height: 100%;
     background-color: #999;
     padding-top: 100px;
-    animation: loading-background 5s ease-in-out infinite;
+    animation: loading-background 3s ease-in-out infinite;
 }
 
 @keyframes loading-background{
     0% { background-color: rgba(255, 255, 255, 0.8); }
-    50% { background-color: rgba(127, 127, 127, .8); }
-    100%{ background-color: rgba(255, 255, 255, .8); }
+    50% { background-color: rgba(100, 100, 100, 0.8); }
+    100%{ background-color: rgba(255, 255, 255, 0.8); }
 }
 
 .loading-sun {
-    position: relative;
-    width: 100px;
-    height: 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     background-color: gold;
     margin: 0 auto;
-    box-shadow: 0 0 50px 10px #fff;
+    margin-top: -60px;
+    margin-left: -60px;
+    box-shadow: 0 0 50px 10px rgb(255, 255, 255);
     z-index: 0;
 }
 .loading-sun:before {
     content: "";
     position: absolute;
     right: 0;
-    width: 100px;
-    height: 100px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     background-color: black;
     z-index: 1;
-    -webkit-animation: loadermy 5s ease-in-out infinite;
-    animation: loadermy 5s ease-in-out infinite;
+    -webkit-animation: loadermy 3s ease-in-out infinite;
+    animation: loadermy 3s ease-in-out infinite;
 }
 
 @-webkit-keyframes loadermy{
