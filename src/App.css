@@ -39,6 +39,16 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     box-sizing: border-box;
 }
 
+
+/*ffa5a5
+color1: #153450
+color2: #294052
+color3: #447294
+color4: #8FBCDB
+color5: #F4D6BC
+color6: #F8E4CC
+*/
+
 /**********  ENIF  **********/
 
 
@@ -168,7 +178,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     margin: 1em auto;
     letter-spacing: 0.2rem;
     color: white;
-    background-color: #005fb3;
+    background-color: #447294;
     border: none;
     font-weight: bold;
 }
@@ -289,10 +299,16 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     color: aliceblue;
 }
 
+.menu-nav li:hover {
+    background-color: #004b8d;
+}
+
 .menu-nav a:hover {
     text-decoration: none;
-    text-shadow: 0 0 25px white;
-    border-bottom: 3px solid #b5ced2;
+    /* text-shadow: 0 0 25px white; */
+    border-bottom: 3px solid #e5c8cc;
+    /* border-bottom: 3px solid #b5ced2; */
+    /* background-color: #00115e; */
 }
 
 .menu-nav a:visited {
@@ -302,7 +318,10 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 .menu-nav-sub {
     position: absolute;
     top: 100%;
-    background-color: #b5ced2;
+    background-color: #08253e;
+    /* background-color: #e5c8cc; */
+    /* 08253e */
+    /* fffced */
 }
 
 .menu-nav-sub > ul {
@@ -531,7 +550,7 @@ section {
     width: 160px;
     position: relative;
     z-index: 10;
-    background-color: #9eb4b4;
+    background-color: #e5c8cc;
     color: white;
     font-size: 2em;
     text-align: center;
@@ -549,9 +568,14 @@ section {
     /* padding-left: 60px;
     padding-right: 60px; */
     padding-bottom: 30px;
-    color: #276988;
+    color: #08253e;
     font-weight: 60;
-    background-color: #f6f2ed;
+    background-color: #fffced;
+}
+
+#soundbox-contents-wrapper h5 {
+    font-weight: bold;
+    font-size: 20px;
 }
 
 #soundbox-content{
@@ -897,9 +921,6 @@ footer {
         display: block;
     }
 
-    #main-header-wrapper {
-        /* position: fixed; */
-    }
 
     #main-menu-nav-wrapper {
         position: initial;

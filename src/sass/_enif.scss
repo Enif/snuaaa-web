@@ -1,0 +1,186 @@
+/**********  ENIF  **********/
+
+.enif-text-left {
+    text-align: left;
+}
+
+.enif-text-center {
+    text-align: center;
+}
+
+.enif-text-right {
+    text-align: right;
+}
+
+.enif-section-wrapper { 
+    font-size: 13px; 
+    padding: 30px;
+}
+
+.enif-section-wrapper h2 {
+    font-size: 2rem;
+    font-family: 'Jua', sans-serif;
+    margin-bottom: 1rem;
+}
+
+.enif-post-wrapper {
+    width: 90%;
+    margin: 0 auto;
+    padding: 1rem;
+    /* border: 1px solid #434343; */
+    background-color: #f1f3d7;
+}
+
+.enif-post-title {
+    font-size: 1.7rem;
+}
+
+.enif-post-content {
+    padding-top: 2rem;
+}
+
+.enif-popup {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.enif-popup-content {
+    position: relative;
+    width: 500px;
+    height: 300px;
+    margin: 0 auto;
+    margin-top: 200px;
+    padding: 2rem;
+    background-color: #ffffff;
+}
+
+.enif-popup-content h3 {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.enif-popup-content input {
+    height: 2rem;
+    width: 100%;
+}
+
+.enif-popup-content textarea {
+    height: 8rem;
+    width: 100%;
+    resize: none;
+}
+
+.enif-popup .enif-btn-cancel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    background-color: #ffffff;
+    color: #a0a0a0;
+    font-size: 1.5rem;
+    border: none;
+}
+
+.enif-popup .enif-btn-common {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+.enif-btn-cancel:hover {
+    font-weight: bold;
+    color: rgb(88, 88, 88);
+}
+
+.enif-btn-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 2rem;
+    /* font-weight: bold; */
+    border: none;
+    background: #00115e;
+    color: #fff;
+}
+
+.enif-btn-common {
+    width: 130px;
+    height: 40px;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    background: #b3cae5;
+}
+
+.enif-btn-common-rec {
+    height: 3em;
+    width: 20em;
+    margin: 1em auto;
+    letter-spacing: 0.2rem;
+    color: white;
+    background-color: #447294;
+    border: none;
+    font-weight: bold;
+}
+
+.enif-input {
+    height: 20px;
+    width: 100%;
+    display: block;
+}
+
+.enif-input-invalid {
+    height: 20px;
+    width: 100%;
+    display: block;
+    background-color: #ffe8e8;
+}
+
+.enif-input-field {
+    margin: 0 auto;
+    margin-top: 15px;
+    width: 300px;
+}
+
+.enif-input-field label {
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin: 3px;
+}
+
+.enif-input-field input {
+    margin-top: 5px;
+    height: 35px;
+    width: 100%;
+    display: block;
+}
+
+.enif-input-field p {
+    color: red;
+}
+
+
+/* .enif-input-field input:invalid {
+    background-color: #ffe8e8;
+    border-color: #ff7e7e;
+} */
+
+.enif-input-field textarea {
+    margin-top: 5px;
+    display: block;
+    width: 100%;
+    height: 100px;
+    resize: none;
+    overflow: auto;
+}
+
+
+/**********  ENIF  **********/

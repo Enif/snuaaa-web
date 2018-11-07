@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic');
+@import url('https://fonts.googleapis.com/css?family=Jua');
+
+
+@import 'sass/reset';
+@import 'sass/enif';
+@import 'sass/common/header';
+@import 'sass/common/aside';
+@import 'sass/common/footer';
+@import 'sass/common/loading';
+@import 'sass/section';
+@import 'sass/mobile';
+
+
+* {
+    box-sizing: border-box;
+}
+
+
+/*ffa5a5
+color1: #153450
+color2: #294052
+color3: #447294
+color4: #8FBCDB
+color5: #F4D6BC
+color6: #F8E4CC
+*/
+
+
