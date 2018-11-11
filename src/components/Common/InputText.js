@@ -1,24 +1,18 @@
 import React from 'react';
 
-class InputText extends React.Component {
-
-
-    constructor(props){
-        super(props);        
-    }
-
-    render() {
-        return (
-            <input type="text"
-                name={this.props.name}
-                className={this.props.className}
-                onChange={this.props.handleChange}
-                value={this.props.value}
-             />
-        )
-    }
+const InputText = ({inputType, name, className, handleChange, value, placeholder, pattern, isRequired }) => {
+    return (
+        <input
+            type={inputType}
+            name={name}
+            className={className}
+            onChange={handleChange}
+            value={value}
+            placeholder={placeholder}
+            pattern={pattern}
+            required={isRequired}
+        />
+    )
 }
 
 export default InputText;
-
-
