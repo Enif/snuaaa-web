@@ -3,6 +3,10 @@ import { SERVER_URL } from '../common/environment'
 
 axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
 
+export function updateToken() {
+    return axios.get(SERVER_URL + 'api/check')
+}
+
 export function postSignUp(data) {
     return axios.post(SERVER_URL + 'api/signup/', data);
 }
@@ -49,4 +53,8 @@ export function createPhotos(albumNo, data) {
 
 export function retrievePhotosInAlbum(albumNo) {
     return axios.get(SERVER_URL + `api/album/${albumNo}`)
+}
+
+export function retrieveSoundBox() {
+    return axios.get(SERVER_URL + `api/soundbox`);
 }

@@ -15,11 +15,6 @@ function authentication(state = initialState, action) {
                 ...state,
                 isLoggedIn: true
             };
-        case types.AUTH_LOGIN_SUCCESS:
-            return {
-                ...state,
-                isLoggedIn: true
-            };
         case types.AUTH_LOGOUT:
             localStorage.removeItem('token')
             return {
@@ -31,6 +26,12 @@ function authentication(state = initialState, action) {
                 ...state,
                 isLoggedIn: true
             };
+            
+        // case types.AUTH_LOGIN_SUCCESS:
+        // return {
+        //     ...state,
+        //     isLoggedIn: true
+        // };
         default:
             return state;
     }

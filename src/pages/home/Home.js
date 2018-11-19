@@ -1,6 +1,11 @@
 import React from 'react';
+import SoundBox from '../../components/Home/SoundBox';
 
 class Home extends React.Component {
+    constructor(props){
+        super(props)
+    }
+
     render() {
         return (
             <div id="contents-center">
@@ -35,21 +40,9 @@ class Home extends React.Component {
                         </tbody>
                     </table>
                 </div>
-                <div id="soundbox-wrapper" className="content">
-                    <div id="soundbox-title">NOTICE</div>
-                    <div id="soundbox-contents-wrapper">
-                        <div id="soundbox-content" className="content">    
-                            <h5>77대 총회 공지</h5>
-                            <p>다음주 토요일(5/26) 13시 30분부터 28동 101호에서 76대 정기총회가 있습니다. 
-                                77대 유세 13:30 기조 14:30 운영 15:00 행사 15:30 회계 16:30 
-                                관측부 1부 17:30 정회원 인준식 18:00~19:00 (고정) 저녁식사 19:00~19:30 (고정) 
-                                관측부 2부 19:30 디딤돌 21:00 개표 및 결과 공고 22:00 폐회 22:30 순으로 계획했고, 
-                                상황에 따라 유동적으로 진행할 수 있음에 유의해주세요. 많은 참여를 바랍니다.
-                            </p>
-                        </div>
-                    </div>
-                    <div id="soundbox-img"></div>
-                </div>
+
+                <SoundBox />
+                
             </div>
         );
     }

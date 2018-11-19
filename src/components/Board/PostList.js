@@ -89,7 +89,7 @@ class PostList extends React.Component {
                         <div className="post-list">
                             {this.posts}
                         </div>
-                        <button onClick={() => this.props.setBoardState(1)}>글쓰기</button>
+                        <button className="enif-btn-circle" onClick={() => this.props.setBoardState(1)}>+</button>
                     </div>       
                 )
                 :

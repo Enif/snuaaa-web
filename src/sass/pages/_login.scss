@@ -13,6 +13,9 @@
     color: white;
     background-color: #005fb3;
     border: none;
+    &:active {
+        background: #6d869c;
+    }
 }
 
 .login-input {
