@@ -58,3 +58,7 @@ export function retrievePhotosInAlbum(albumNo) {
 export function retrieveSoundBox() {
     return axios.get(SERVER_URL + `api/soundbox`);
 }
+
+export function retrieveProfile(path) {
+    return axios.get(SERVER_URL + `api/profile/${path}`)
+}

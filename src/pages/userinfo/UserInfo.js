@@ -1,7 +1,8 @@
 import React from 'react';
 import * as service from '../../services';
+import Image from '../../components/Common/Image';
 import Loading from '../../components/Common/Loading';
-import imgDefaultProfile from '../../assets/img/profile.png'
+import imgDefaultProfile from '../../assets/img/profile.png';
 
 const TAG = 'USERINFO'
 
@@ -21,6 +22,7 @@ class UserInfo extends React.Component {
             mobile: '',
             introduction: '',
             profileImg: null,
+            profilePath: '',
             isShow: false
         }
 
@@ -28,6 +30,8 @@ class UserInfo extends React.Component {
         .then(() =>{
             this.getUserProfile()
         })
+
+        // this.getUserProfile2()
     }
 
     getUserInfo = async () => {
@@ -47,6 +51,7 @@ class UserInfo extends React.Component {
                 email: account.email,
                 mobile: account.mobile,
                 introduction: account.introduction,
+                profilePath: account.profilePath,
                 isShow: true
             });
         })
@@ -58,8 +63,6 @@ class UserInfo extends React.Component {
 
     getUserProfile = async () => {
         console.log('[%s] getUserProfile', TAG);
-
-        
 
         await service.getUserProfile(localStorage.getItem("token"))
         .then((response) => {
@@ -79,8 +82,28 @@ class UserInfo extends React.Component {
         })
     }
 
+    getUserProfile2 = async () => {
+        console.log('[%s] getUserProfile2', TAG);
+
+        await service.retrieveProfile("profileTest-1.jpg")
+        .then((response) => {
+            console.log(response)
+            console.log('[%s] getUserProfile succeess', TAG);
+            this.setState({
+                profileImg: response
+            })
+        })
+        .catch((err) => {
+            console.log('[%s] getUserProfile fail', TAG);
+            console.log(err);
+        })
+    }
+
     render() {
         let { isShow } = this.state;
+
+        console.log('[%s] render..', TAG);
+        console.log(this.state.profilePath)
 
         return (
             <React.Fragment>
@@ -89,9 +112,12 @@ class UserInfo extends React.Component {
                 (
                     <div className="enif-section-wrapper">
                         <h2>UserInfo</h2>
+                        {/* <img src = "http://localhost:8080/api/profile/profileTest-1.jpg" /> */}
+                         
                         <div className="userinfo-wrapper">
+                            <Image imgSrc={this.state.profilePath} defaultImgSrc={imgDefaultProfile} />
                             {/* {this.state.profileImg ? this.state.profileImg : <img src={imgDefaultProfile} />} */}
-                            <img src={this.state.profileImg ? this.state.profileImg : imgDefaultProfile}/>
+                            {/* <img src={this.state.profileImg ? this.state.profileImg : imgDefaultProfile}/> */}
                             <h3>{this.state.id}</h3>
                             <table>
                                 <thead></thead>
