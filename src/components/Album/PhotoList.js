@@ -2,6 +2,7 @@ import React from 'react';
 import * as service from '../../services';
 import Loading from '../Common/Loading';
 import Photo from './Photo';
+import Image from '../Common/Image'
 import defaultAlbumCover from '../../assets/img/default_photo_img.png'
 
 
@@ -34,7 +35,8 @@ class PhotoList extends React.Component {
             let photos = photoData.map(photo => {
                 return (
                     <div className="album-wrapper" onClick={(e) => this.clickPhoto(photo._id, e)}>
-                        <img src={defaultAlbumCover} />
+                        {/* <img src={defaultAlbumCover} /> */}
+                        <Image imgSrc={photo.path}/>
                         {photo.title}
                     </div>
                 )

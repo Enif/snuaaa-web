@@ -23,20 +23,24 @@ export function getUserProfile(data) {
     return axios.get(SERVER_URL + 'api/userinfo/profile', data)
 }
 
-export function retrievePost(postNo) {
-     return axios.get(SERVER_URL + `api/post/${postNo}`);
+export function retrievePostsInBoard(boardNo) {
+    return axios.get(SERVER_URL + `api/board/${boardNo}`);
 }
 
 export function retrievePosts(data) {
     return axios.get(SERVER_URL + 'api/post/', data);
 }
 
-export function retrievePostsInBoard(boardNo) {
-    return axios.get(SERVER_URL + `api/board/${boardNo}`);
+export function retrievePost(postNo) {
+    return axios.get(SERVER_URL + `api/post/${postNo}`);
 }
 
 export function createPost(data) {
     return axios.post(SERVER_URL + 'api/post/', data);
+}
+
+export function createComment(postNo, data) {
+    return axios.post(SERVER_URL + `api/post/${postNo}/comment`, data);
 }
 
 export function retrieveAlbumsInPhotoBoard(boardNo) {

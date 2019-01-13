@@ -27,9 +27,9 @@ class UserInfo extends React.Component {
         }
 
         this.getUserInfo()
-        .then(() =>{
-            this.getUserProfile()
-        })
+        // .then(() =>{
+        //     this.getUserProfile()
+        // })
 
         // this.getUserProfile2()
     }
@@ -39,21 +39,24 @@ class UserInfo extends React.Component {
         await service.getUserInfo(localStorage.getItem("token"))
         .then((response) => {
             console.log('[%s] getUserInfo succeess', TAG);
-            console.log(response);
-            let { account } = response.data
+            console.log(response.data.userInfo);
+            let userInfo = response.data.userInfo
             this.setState({
                 ...this.state,
-                id: account.id,
-                username: account.username,
-                aaaNum: account.aaaNum,
-                schoolNum: account.schoolNum,
-                major: account.major,
-                email: account.email,
-                mobile: account.mobile,
-                introduction: account.introduction,
-                profilePath: account.profilePath,
+                id: userInfo.user_id,
+                username: userInfo.name,
+                aaaNum: userInfo.aaa_no,
+                schoolNum: userInfo.col_no,
+                major: userInfo.major,
+                email: userInfo.email,
+                mobile: userInfo.mobile,
+                introduction: userInfo.introduction,
+                // profilePath: userInfo.profilePath,
                 isShow: true
             });
+            if(userInfo.profilePath){
+                this.getUserProfile()
+            }
         })
         .catch((response) => {
             console.log('[%s] getUserInfo fail', TAG);

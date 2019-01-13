@@ -1,6 +1,7 @@
 import React from 'react';
 import * as service from '../../services';
 import Loading from '../Common/Loading';
+import { convertDate } from '../../utils/convertDate'
 
 const TAG = 'POSTLIST'
 
@@ -35,6 +36,7 @@ class PostList extends React.Component {
         if(nextState.isShow === true) {
             return true;
         }
+        return false
     }
 
     clickPostTitle = (postId, e) => {
@@ -54,14 +56,17 @@ class PostList extends React.Component {
             let posts = postData.map(post => {
                 return (
                     <div className="post-wrapper">
-                        <div className="post-number">
+                        {/* <div className="post-number">
                             {post.post_no}
-                        </div>
+                        </div> */}
                         <div className="post-title">
-                            <h5 onClick={(e) => this.clickPostTitle(post._id, e)}>{post.title}</h5>
+                            <h5 onClick={(e) => this.clickPostTitle(post.object_id, e)}>{post.title}</h5>
                         </div>
                         <div className="post-author">
-                            {post.author_name}
+                            {post.nickname}
+                        </div>
+                        <div className="post-number">
+                            {convertDate(post.created_at)}
                         </div>
                     </div>
                 )

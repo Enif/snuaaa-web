@@ -26,8 +26,8 @@ class Post extends React.Component {
 
     static getDerivedStateFromProps(props, state) {
         console.log('[%s] getDerivedStateFromProps', TAG);
-        console.log(props);
-        console.log(state);
+        // console.log(props);
+        // console.log(state);
         return {
             postNo: props.match.params.pNo
         }
@@ -73,8 +73,8 @@ class Post extends React.Component {
             this.setState({
                 postTitle: postData.title,
                 postContents: postData.contents,
-                postAuthor: postData.author_name,
-                postCreated: postData.created,    
+                postAuthor: postData.nickname,
+                postCreated: postData.created_at,    
                 isShow: true
             })
             console.log( postData.contents)
@@ -113,7 +113,7 @@ class Post extends React.Component {
                             })
                         }
                         </div>
-                        <Comment/>
+                        <Comment postNo={this.state.postNo}/>
                     </div>
                 )
                 :

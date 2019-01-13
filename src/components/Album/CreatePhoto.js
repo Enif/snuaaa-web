@@ -36,7 +36,9 @@ class CreatePhoto extends React.Component {
         const photoInfo = new FormData();
         photoInfo.append('title', this.state.title);
         photoInfo.append('albumNo', this.props.albumNo);
+        photoInfo.append('timestamp', (new Date).valueOf())
         photoInfo.append('uploadPhoto', this.state.uploadPhoto);
+
         console.log(photoInfo);
         
         await service.createPhotos(this.props.albumNo, photoInfo)
