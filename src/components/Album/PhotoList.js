@@ -29,14 +29,14 @@ class PhotoList extends React.Component {
 
         await service.retrievePhotosInAlbum(albumNo)
         .then((res) => {
-            console.log('[%s] Retrieve Albums Success', TAG);
+            console.log('[%s] Retrieve Photos Success', TAG);
             console.log(res.data)
             const photoData = res.data;
             let photos = photoData.map(photo => {
                 return (
                     <div className="album-wrapper" onClick={(e) => this.clickPhoto(photo._id, e)}>
                         {/* <img src={defaultAlbumCover} /> */}
-                        <Image imgSrc={photo.path}/>
+                        <Image imgSrc={photo.file_path}/>
                         {photo.title}
                     </div>
                 )

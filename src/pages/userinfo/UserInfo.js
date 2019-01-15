@@ -27,11 +27,6 @@ class UserInfo extends React.Component {
         }
 
         this.getUserInfo()
-        // .then(() =>{
-        //     this.getUserProfile()
-        // })
-
-        // this.getUserProfile2()
     }
 
     getUserInfo = async () => {
@@ -51,54 +46,13 @@ class UserInfo extends React.Component {
                 email: userInfo.email,
                 mobile: userInfo.mobile,
                 introduction: userInfo.introduction,
-                // profilePath: userInfo.profilePath,
+                profilePath: userInfo.profile_path,
                 isShow: true
             });
-            if(userInfo.profilePath){
-                this.getUserProfile()
-            }
         })
         .catch((response) => {
             console.log('[%s] getUserInfo fail', TAG);
             console.log(response);
-        })
-    }
-
-    getUserProfile = async () => {
-        console.log('[%s] getUserProfile', TAG);
-
-        await service.getUserProfile(localStorage.getItem("token"))
-        .then((response) => {
-            console.log('[%s] getUserProfile succeess', TAG);
-
-//            let profile = new Image();
-//            profile.src = response.data;
-//            profile.src = 'http://localhost:8080/api/userinfo/profile'
-
-            this.setState({
-                profileImg: response.data
-            })
-        })
-        .catch((response) => {
-            console.log('[%s] getUserProfile fail', TAG);
-            console.log(response);
-        })
-    }
-
-    getUserProfile2 = async () => {
-        console.log('[%s] getUserProfile2', TAG);
-
-        await service.retrieveProfile("profileTest-1.jpg")
-        .then((response) => {
-            console.log(response)
-            console.log('[%s] getUserProfile succeess', TAG);
-            this.setState({
-                profileImg: response
-            })
-        })
-        .catch((err) => {
-            console.log('[%s] getUserProfile fail', TAG);
-            console.log(err);
         })
     }
 
@@ -115,12 +69,9 @@ class UserInfo extends React.Component {
                 (
                     <div className="enif-section-wrapper">
                         <h2>UserInfo</h2>
-                        {/* <img src = "http://localhost:8080/api/profile/profileTest-1.jpg" /> */}
-                         
                         <div className="userinfo-wrapper">
                             <Image imgSrc={this.state.profilePath} defaultImgSrc={imgDefaultProfile} />
-                            {/* {this.state.profileImg ? this.state.profileImg : <img src={imgDefaultProfile} />} */}
-                            {/* <img src={this.state.profileImg ? this.state.profileImg : imgDefaultProfile}/> */}
+
                             <h3>{this.state.id}</h3>
                             <table>
                                 <thead></thead>

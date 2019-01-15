@@ -37,6 +37,7 @@ class AlbumList extends React.Component {
         if(nextState.isShow === true) {
             return true;
         }
+        return false;
     }
 
     clickAlbum = (albumId, e) => {
@@ -55,7 +56,7 @@ class AlbumList extends React.Component {
             const albumData = res.data;
             let albums = albumData.map(album => {
                 return (
-                    <div className="album-wrapper" onClick={(e) => this.clickAlbum(album._id, e)}>
+                    <div className="album-wrapper" onClick={(e) => this.clickAlbum(album.object_id, e)}>
                         <img src={this.state.boardNo === 'pb01' ? defaultAlbumCover : defaultStarAlbumCover} />
                         {album.title}
                     </div>

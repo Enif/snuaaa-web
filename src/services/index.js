@@ -48,11 +48,11 @@ export function retrieveAlbumsInPhotoBoard(boardNo) {
 }
 
 export function createAlbum(boardNo, data) {
-    return axios.post(SERVER_URL + `api/photoboard/${boardNo}`, data)
+    return axios.post(SERVER_URL + `api/photoboard/${boardNo}/album`, data)
 }
 
 export function createPhotos(albumNo, data) {
-    return axios.post(SERVER_URL + `api/album/${albumNo}`, data)
+    return axios.post(SERVER_URL + `api/album/${albumNo}/photo`, data)
 }
 
 export function retrievePhotosInAlbum(albumNo) {

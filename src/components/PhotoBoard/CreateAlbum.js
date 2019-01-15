@@ -11,6 +11,7 @@ class CreateAlbum extends React.Component {
 
         this.state = {
             title: '',
+            contents: '',
         }
     }
 
@@ -24,7 +25,8 @@ class CreateAlbum extends React.Component {
     createAlbum = async () => {
         console.log('[%s] createAlbum', TAG);
         let albumInfo = {
-            title: this.state.title
+            title: this.state.title,
+            contents: this.state.contents
         }
         console.log(albumInfo);
         
@@ -51,7 +53,7 @@ class CreateAlbum extends React.Component {
                         <input type="text" name="title" placeholder="앨범 제목" onChange={(e) => this.handleChange(e)}/>
                     </div>
                     <div>
-                        <textarea name="desc" placeholder="앨범 설명"/>
+                        <textarea name="contents" placeholder="앨범 설명" onChange={(e) => this.handleChange(e)}/>
                     </div>
                     <button className="enif-btn-common" onClick={() => this.createAlbum()}>확인</button>
                 </div>
