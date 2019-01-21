@@ -9,29 +9,26 @@
 .intro-div-wrapper {
     padding: 10px;
     line-height: 1.3em;
+    ul {
+        list-style: inside;
+        color: rgb(85, 150, 255);   
+        li {
+            a {
+                font-size: 0.9rem;
+                line-height: 1.3em;
+                cursor: pointer;
+                &:hover {
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+    h5 {
+        line-height: 2em;
+        font-weight: bold;
+    }
 }
 
-.intro-div-wrapper ul {
-    list-style: inside;
-    color: rgb(85, 150, 255);
-    
-}
-
-.intro-div-wrapper ul li a {
-    font-size: 0.9rem;
-    line-height: 1.3em;
-    cursor: pointer;
-}
-
-.intro-div-wrapper ul li a:hover {
-    font-weight: bold;
-}
-
-
-.intro-div-wrapper h5 {
-    line-height: 2em;
-    font-weight: bold;
-}
 
 .intro-div-wrapper table,
 .intro-div-wrapper th,

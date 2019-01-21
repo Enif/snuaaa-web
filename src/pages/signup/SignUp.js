@@ -9,10 +9,9 @@ const TAG = 'SINGUP'
 
 class SignUp extends React.Component {
 
-    
-    constructor(props){
+    constructor(props) {
         super(props);
-        
+
         this.state = {
             id: '',
             password: '',
@@ -28,8 +27,6 @@ class SignUp extends React.Component {
             signUpState: 'READY',
         }
         this.formRef = React.createRef();
-        // this.profileRef = React.createRef();
-        
     }
 
     componentDidMount() {
@@ -54,8 +51,8 @@ class SignUp extends React.Component {
 
         let validation = true;
 
-        for(let i = 0, max = this.formRef.current.childElementCount; i < max; i++){
-            if(!this.formRef.current[i].validity.valid) {
+        for (let i = 0, max = this.formRef.current.childElementCount; i < max; i++) {
+            if (!this.formRef.current[i].validity.valid) {
                 this.formRef.current[i].focus();
                 validation = false;
                 // alert("형식이 맞지 않습니다.")
@@ -63,13 +60,13 @@ class SignUp extends React.Component {
             }
         }
 
-        if(this.state.password !== this.state.passwordCf) {
+        if (this.state.password !== this.state.passwordCf) {
             this.formRef.current[2].focus();
             validation = false;
         }
 
-        if(validation) {
-            this.setState({ signUpState: 'LOADING'})
+        if (validation) {
+            this.setState({ signUpState: 'LOADING' })
             const data = new FormData();
             data.append('id', this.state.id);
             data.append('password', this.state.password);
@@ -82,62 +79,41 @@ class SignUp extends React.Component {
             data.append('mobile', this.state.mobile);
             data.append('introduction', this.state.introduction);
             data.append('timestamp', (new Date).valueOf());
-            if(this.state.profile) {
+            if (this.state.profile) {
                 data.append('profile', this.state.profile);
             }
-    //        data.append('profile', this.profileRef.current.files[0]);
-    
+
             await service.postSignUp(data)
-            .then((response) => {
-                console.log('Sign up Success!!');
-                console.log(response);
-                this.setState({ signUpState: 'SUCCESS'})
-            })
-            .catch((response) => {
-                console.log('Sign up Fail T-T')
-                console.log(response);
-                this.setState({ signUpState: 'FAILURE'})
-            })
+                .then((response) => {
+                    console.log('Sign up Success!!');
+                    console.log(response);
+                    this.setState({ signUpState: 'SUCCESS' })
+                })
+                .catch((response) => {
+                    console.log('Sign up Fail T-T')
+                    console.log(response);
+                    this.setState({ signUpState: 'FAILURE' })
+                })
         }
-
-        // if(this.state.profile !== null) {
-        //     let Pfile = new File([]. );
-        // }
-
-        // let userInfo = {
-        //     id: this.state.id,
-        //     password: this.state.password,
-        //     passwordCf: this.state.passwordCf,
-        //     username: this.state.username,
-        //     aaaNum: this.state.aaaNum,
-        //     schoolNum: this.state.schoolNum,
-        //     major: this.state.major,
-        //     email: this.state.email,
-        //     mobile: this.state.mobile,
-        //     introduction: this.state.introduction,
-        //     profile: this.state.profile,
-        // };
-
     }
 
     render() {
         return (
-            
             <div>
-            {
-                (() => {
-                    if (this.state.signUpState === 'READY') return (
-                    <SignUpComponent
-                    handleChange = {this.handleChange}
-                    postSignUp = {this.postSignUp}
-                    uploadFile = {this.uploadFile}
-                    formRef = {this.formRef}
-                    /* profileRef = {this.profileRef} */  />);
-                    else if (this.state.signUpState === 'LOADING') return (<Loading/>)
-                    else if (this.state.signUpState === 'SUCCESS') return (<SignUpSuccess/>)
-                    else return (<SignUpFailure/>)
-                })()
-            }
+                {
+                    (() => {
+                        if (this.state.signUpState === 'READY') return (
+                            <SignUpComponent
+                                handleChange={this.handleChange}
+                                postSignUp={this.postSignUp}
+                                uploadFile={this.uploadFile}
+                                formRef={this.formRef}
+                            />);
+                        else if (this.state.signUpState === 'LOADING') return (<Loading />)
+                        else if (this.state.signUpState === 'SUCCESS') return (<SignUpSuccess />)
+                        else return (<SignUpFailure />)
+                    })()
+                }
             </div>
         )
     }

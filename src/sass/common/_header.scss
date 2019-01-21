@@ -1,12 +1,11 @@
 /***** header *****/
-#main-header-wrapper {
+.main-header-wrapper {
     width: 100%;
     text-align: center;
     background-color: #05070e;
 }
 
-
-#main-header {
+.main-header {
     max-width: 1640px;
     width: 100%;
     height: 300px;
@@ -17,25 +16,18 @@
     background-position: center;
 }
 
-#header-sign {
+.header-sign {
     padding: 20px;
     color: white;
+    p {
+        text-align: right;
+    }
+    a {
+        color: white;
+    }
 }
 
-#header-sign p {
-    text-align: right;
-}
-
-#header-sign a {
-    color: white;
-}
-
-/* #main-menu-nav-wrapper {
-    position: static;
-    height: 30px;
-} */
-
-#main-menu-nav-wrapper {
+.main-menu-nav-wrapper {
     height: 30px;
     position: relative;
     background-color: #05070e;
@@ -45,10 +37,6 @@
     color: aliceblue;
     background-color: #05070e;
 }
-
-/* .menu-nav:hover {
-    
-} */
 
 .menu-nav > a {
     display: block;
@@ -85,6 +73,7 @@
 
 .menu-nav-sub > ul {
     width: 200px;
+    z-index: 10;
     // padding: 10px
 }
 
@@ -92,6 +81,7 @@
     width: 100%;
     padding: 10px;
     text-align: left;
+    z-index: 10;
 }
 
 nav {
@@ -124,7 +114,7 @@ nav {
 
 /* nav icon의 내부 막대 */
 .navicon-bar {
-    background-color: rgb(195, 194, 209);
+    background-color: rgb(255, 255, 255);
     display: block;
     position: relative;
     /* navigation icon animation */
@@ -172,3 +162,73 @@ nav > ul > li {
     display: inline-block;
 }
 /***** header *****/
+
+@media screen and (max-width: 800px) {
+
+    .main-menu-nav-wrapper {
+        position: initial;
+        height: inherit;
+    }
+
+    .main-header {
+        width: 100%;
+        height: 50px;
+        margin: 0 auto;
+        background-color: #05070e;
+        background-image: none;
+        /* background-repeat: no-repeat; */
+        /* background-size: cover; */
+        /* background-position: center; */
+    }
+
+    .menu-nav {
+        background-color: #000929d1;
+    }
+
+    .menu-nav a:hover {
+        text-decoration: none;
+        text-shadow: 0 0 25px white;
+        background-color: #004b8d;
+        border-bottom: none;
+    }
+    
+    .header-sign {
+        padding-right: 50px;
+    }
+
+    nav {
+        margin: 0;
+        height: inherit;
+        // background-color: #05070e;
+    }
+    
+    .nav-items {
+        display: none;
+        position: absolute;
+        height: 40px;
+        z-index: 99;
+    }
+    .navicon {
+        height: 15px;
+        display: block;
+    }
+
+    .menu-nav {
+        margin: 0;
+    }
+
+
+    /* View navigation item */
+    .nav-toggle:checked ~ .nav-items {
+        display: block;
+        width: 100%;
+        background-color: #fff;
+        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(0, 0, 0, 0.05);
+    }
+    .nav-items > li  {
+        display: block;
+    }
+    .nav-items > li > a {
+        line-height: 40px;
+    }
+}

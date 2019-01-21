@@ -49,11 +49,14 @@ class LogIn extends React.Component {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
             this.props.onAuthLogin();
 
-            alert("로그인에 성공하였습니다.")
+            // alert("로그인에 성공하였습니다.")
 
         })
         .catch((res) => {
             console.log('[%s] Log In Fail', TAG)
+            this.setState({
+                isLoading: false
+            })
             alert("로그인에 실패하였습니다.\n아이디나 비밀번호를 확인해주세요.")
         })
     }
@@ -62,18 +65,23 @@ class LogIn extends React.Component {
 
         const { loginState } = this.props
         const { isLoading } = this.state
-        console.log(isLoading)
         return (
-            
-            loginState ?
+            isLoading ?
             (
-                <Redirect to='/' />
+                <Loading/>
             ) :
             (
-                <LogInComponent
-                handleChange = {this.handleChange}
-                postLogIn = {this.postLogIn} />
+                loginState ?
+                (
+                    <Redirect to='/' />
+                ) :
+                (
+                    <LogInComponent
+                    handleChange = {this.handleChange}
+                    postLogIn = {this.postLogIn} />
+                )
             )
+
         )
     }
 }

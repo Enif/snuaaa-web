@@ -1,0 +1,34 @@
+/****** PHOTO *******/
+.photo-list-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.photo-wrapper {
+    width: 23%;
+    height: 200px;
+    margin: 5px;
+    position: relative;
+    box-shadow: 3px 3px 7px 2px rgba(95, 95, 95, 0.5);
+    img {
+        width: 100%;
+        height: 100%;
+    }
+    .photo-title {
+        position: absolute;
+        bottom: 0;
+        z-index: 1;
+        width: 100%;
+        padding: 10px;
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+}
+
+.photo-wrapper:hover {
+    background-color: rgba(100, 100, 100, 0.8);
+    // background: -webkit-gradient(linear, left top, right bottom, color-stop(12%, #b3cae5), color-stop(46%, #dbdde4), color-stop(70%, #e4e3e4), color-stop(94%, #f7ddbb), color-stop(100%, #efcab2));
+}
+
+/****** ALBUM *******/

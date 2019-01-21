@@ -54,9 +54,9 @@ class Header extends React.Component {
         const { loginState } = this.props
 
         return (
-            <div id="main-header-wrapper">
-                <div id="main-header">
-                    <div id="header-sign">
+            <div className="main-header-wrapper">
+                <div className="main-header">
+                    <div className="header-sign">
                         {
                             !loginState ?
                             (<p>
@@ -73,7 +73,7 @@ class Header extends React.Component {
                         }
                     </div>
                 </div>
-                <div id="main-menu-nav-wrapper">
+                <div className="main-menu-nav-wrapper">
                     <nav>
                         <input className="nav-toggle" id="nav-toggle" type="checkbox"/> 
                         <label className="navicon" htmlFor="nav-toggle"><span className="navicon-bar"></span></label>
@@ -81,7 +81,6 @@ class Header extends React.Component {
                         <ul className="nav-items">
                             <li className="menu-nav"><NavLink to="/" activeStyle={activeStyle}>★</NavLink></li>
                             <li className="menu-nav"><NavLink to="/about" activeStyle={activeStyle}>동아리 소개</NavLink></li>
-                            {/* <li className="menu-nav"><NavLink to="/notice" activeStyle={activeStyle}>별들의 알림</NavLink></li> */}
                             <li className="menu-nav" onMouseEnter={() => this.showBoardList()} onMouseLeave={() => this.hideBoardList()}>
                                 <NavLink to="/board/b01" activeStyle={activeStyle}>별들의 이야기</NavLink>
                                 {

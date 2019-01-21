@@ -25,19 +25,18 @@ class PhotoList extends React.Component {
 
     retrievePhotos = async(albumNo) => {
         console.log('[%s] Retrieve Photos', TAG);
-        console.log(this.props.albumNo);
 
         await service.retrievePhotosInAlbum(albumNo)
         .then((res) => {
             console.log('[%s] Retrieve Photos Success', TAG);
-            console.log(res.data)
             const photoData = res.data;
             let photos = photoData.map(photo => {
                 return (
-                    <div className="album-wrapper" onClick={(e) => this.clickPhoto(photo._id, e)}>
-                        {/* <img src={defaultAlbumCover} /> */}
+                    <div className="photo-wrapper" onClick={(e) => this.clickPhoto(photo._id, e)}>
                         <Image imgSrc={photo.file_path}/>
-                        {photo.title}
+                        <div className="photo-title">
+                            {photo.title}
+                        </div>
                     </div>
                 )
             })
@@ -47,7 +46,7 @@ class PhotoList extends React.Component {
             })
         })
         .catch((res) => {
-            console.log('[%s] Retrieve Albums Fail', TAG);
+            console.log('[%s] Retrieve Photos Fail', TAG);
         })
     }
 
@@ -60,7 +59,7 @@ class PhotoList extends React.Component {
                 isShow ?
                 (
                     <div>
-                        <div className="album-list-wrapper">
+                        <div className="photo-list-wrapper">
                             {this.photos}
                         </div>
                     </div>    

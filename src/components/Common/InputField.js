@@ -45,7 +45,6 @@ class InputField extends React.Component {
                     // value={this.props.value}
                     placeholder={this.props.placeholder}
                     pattern={this.props.pattern}
-                    // pattern={this.props.pattern}
                     required={this.props.required}
                 />
                 { !this.state.valid && <p>{this.props.invalidMessage}</p> }

@@ -2,6 +2,7 @@
   "name": "snuaa-react",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://52.78.161.191:8080/",
   "dependencies": {
     "axios": "^0.18.0",
     "node-sass": "^4.10.0",

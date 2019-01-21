@@ -15,14 +15,12 @@
 .enif-section-wrapper { 
     font-size: 13px; 
     padding: 30px;
+    h2 {
+        font-size: 2rem;
+        font-family: 'Jua', sans-serif;
+        margin-bottom: 1rem;
+    }
 }
-
-.enif-section-wrapper h2 {
-    font-size: 2rem;
-    font-family: 'Jua', sans-serif;
-    margin-bottom: 1rem;
-}
-
 
 .enif-popup {
     position: fixed;
@@ -42,24 +40,22 @@
     margin-top: 200px;
     padding: 2rem;
     background-color: #ffffff;
+    h3 {
+        font-size: 1.3rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+    input {
+        height: 2rem;
+        width: 100%;
+    }
+    textarea {
+        height: 8rem;
+        width: 100%;
+        resize: none;
+    }
 }
 
-.enif-popup-content h3 {
-    font-size: 1.3rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-}
-
-.enif-popup-content input {
-    height: 2rem;
-    width: 100%;
-}
-
-.enif-popup-content textarea {
-    height: 8rem;
-    width: 100%;
-    resize: none;
-}
 
 .enif-popup .enif-btn-cancel {
     position: absolute;
@@ -133,39 +129,35 @@
     margin: 0 auto;
     margin-top: 15px;
     width: 300px;
+    label {
+        font-size: 0.9rem;
+        font-weight: bold;
+        margin: 3px;
+    }
+    input {
+        margin-top: 5px;
+        height: 35px;
+        width: 100%;
+        display: block;
+    }
+    p {
+        color: red;
+    }
+    textarea {
+        margin-top: 5px;
+        display: block;
+        width: 100%;
+        height: 100px;
+        resize: none;
+        overflow: auto;
+    }
 }
-
-.enif-input-field label {
-    font-size: 0.9rem;
-    font-weight: bold;
-    margin: 3px;
-}
-
-.enif-input-field input {
-    margin-top: 5px;
-    height: 35px;
-    width: 100%;
-    display: block;
-}
-
-.enif-input-field p {
-    color: red;
-}
-
 
 /* .enif-input-field input:invalid {
     background-color: #ffe8e8;
     border-color: #ff7e7e;
 } */
 
-.enif-input-field textarea {
-    margin-top: 5px;
-    display: block;
-    width: 100%;
-    height: 100px;
-    resize: none;
-    overflow: auto;
-}
 
 
 /**********  ENIF  **********/

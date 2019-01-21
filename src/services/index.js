@@ -15,20 +15,12 @@ export function postLogIn(data) {
     return axios.post(SERVER_URL + 'api/login/', data);
 }
 
-export function getUserInfo(data) {
-    return axios.get(SERVER_URL + 'api/userinfo/', data);
-}
-
-export function getUserProfile(data) {
-    return axios.get(SERVER_URL + 'api/userinfo/profile', data)
+export function retrieveUserInfo() {
+    return axios.get(SERVER_URL + 'api/userinfo/');
 }
 
 export function retrievePostsInBoard(boardNo) {
     return axios.get(SERVER_URL + `api/board/${boardNo}`);
-}
-
-export function retrievePosts(data) {
-    return axios.get(SERVER_URL + 'api/post/', data);
 }
 
 export function retrievePost(postNo) {

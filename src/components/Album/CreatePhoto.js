@@ -28,18 +28,12 @@ class CreatePhoto extends React.Component {
 
     createPhotos = async () => {
         console.log('[%s] createPhotos', TAG);
-        // let photoInfo = {
-        //     title: this.state.title,
-        //     albumNo: this.props.albumNo,
-        //     uploadPhoto: this.state.uploadPhoto
-        // }
+
         const photoInfo = new FormData();
         photoInfo.append('title', this.state.title);
         photoInfo.append('albumNo', this.props.albumNo);
         photoInfo.append('timestamp', (new Date).valueOf())
         photoInfo.append('uploadPhoto', this.state.uploadPhoto);
-
-        console.log(photoInfo);
         
         await service.createPhotos(this.props.albumNo, photoInfo)
         .then(() => {

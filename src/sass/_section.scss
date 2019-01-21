@@ -3,6 +3,7 @@
 @import './pages/intro';
 @import './pages/board';
 @import './pages/userinfo';
+@import './pages/photo';
 
 
 #contents-wrapper {
@@ -11,9 +12,7 @@
      height: auto;
      margin: 0 auto;
  }
- 
- 
- 
+  
  section {
      width: 800px;
      padding-top: 20px;
@@ -23,13 +22,12 @@
  
  #calendar-wrapper {
      width: min-content;
- }
- 
- #calendar-wrapper h5 {
-     margin-top: 2em;
-     margin-bottom: 0.5em;
-     color: #808080;
- }
+     h5 {
+        margin-top: 2em;
+        margin-bottom: 0.5em;
+        color: #808080;
+    }
+}
  
  #calendar-wrapper .title-left, #calendar-wrapper .title-right {
      display: inline-block;
@@ -111,16 +109,16 @@
      color: #08253e;
      font-weight: 60;
      background-color: #fffced;
- }
+     h5 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+}
  
- #soundbox-contents-wrapper h5 {
-     font-weight: bold;
-     font-size: 20px;
- }
  
- #soundbox-content{
-     margin: 20px;
- }
+#soundbox-content{
+    margin: 20px;
+}
  
  #soundbox-img {
      width: 700px;

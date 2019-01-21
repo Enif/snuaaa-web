@@ -31,10 +31,9 @@ class UserInfo extends React.Component {
 
     getUserInfo = async () => {
         console.log('[%s] getUserInfo', TAG);
-        await service.getUserInfo(localStorage.getItem("token"))
+        await service.retrieveUserInfo(localStorage.getItem("token"))
         .then((response) => {
             console.log('[%s] getUserInfo succeess', TAG);
-            console.log(response.data.userInfo);
             let userInfo = response.data.userInfo
             this.setState({
                 ...this.state,
@@ -52,7 +51,6 @@ class UserInfo extends React.Component {
         })
         .catch((response) => {
             console.log('[%s] getUserInfo fail', TAG);
-            console.log(response);
         })
     }
 

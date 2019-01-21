@@ -1,10 +1,9 @@
 .board-wrapper {
     margin: 20px;
-}
-
-.board-wrapper h2 {
-    font-size: 2rem;
-    font-family: 'Jua', sans-serif;
+    h2 {
+        font-size: 2rem;
+        font-family: 'Jua', sans-serif;
+    }    
 }
 
 .post-list {
@@ -93,13 +92,14 @@
 
 /****** COMMENT *******/
 
-.comment-area-wapper {
+// .comment-area-wapper {
 
     
-}
+// }
 
 .comment-write {
     height: 80px;
+    display: flex;
     textarea {
         height: 100%;
         display: inline-block;
@@ -108,7 +108,6 @@
     }
     button {
         height: 100%;
-        float: right;
         display: inline-block;
         width: 20%;
         font-size: 1rem;
@@ -121,7 +120,6 @@
             background: #6d869c;
         }
     }
-
 }
 
 
@@ -140,7 +138,8 @@
 }
 
 .album-wrapper:hover {
-    background: -webkit-gradient(linear, left top, right bottom, color-stop(12%, #b3cae5), color-stop(46%, #dbdde4), color-stop(70%, #e4e3e4), color-stop(94%, #f7ddbb), color-stop(100%, #efcab2));
+    background-color: rgba(100, 100, 100, 0.8);
+    // background: -webkit-gradient(linear, left top, right bottom, color-stop(12%, #b3cae5), color-stop(46%, #dbdde4), color-stop(70%, #e4e3e4), color-stop(94%, #f7ddbb), color-stop(100%, #efcab2));
 }
 
 /****** ALBUM *******/
