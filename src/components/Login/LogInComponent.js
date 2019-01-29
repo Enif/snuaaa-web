@@ -3,7 +3,7 @@ import InputText from '../Common/InputText'
 import Footer from '../../components/Footer'
 import logo from '../../assets/img/login_logo.gif'
 
-const LogInComponent = ({id, password, handleChange, postLogIn, redirectToSignUp }) => {
+const LogInComponent = ({ handleChange, postLogIn, redirectToSignUp, checkAuto }) => {
     return (
         <div className="login-wrapper">
             <div className="logo-wrapper">
@@ -11,21 +11,19 @@ const LogInComponent = ({id, password, handleChange, postLogIn, redirectToSignUp
             </div>
             <div className="inputs-wrapper">
                 <div className="auto-checker">
-                    <input type="checkbox" /> <p>자동 로그인</p>
+                    <input type="checkbox" onChange={checkAuto} /> <p>자동 로그인</p>
                 </div>
                 <div className="login-inputs-wrapper">
                     <div className="login-inputs">
                         <InputText
                             className="login-input"
                             name="id"
-                            value={id}
                             handleChange={handleChange}
                             placeholder=" ID"
                             isRequired="true"
                         />
                         <input type="password" className="login-input" placeholder=" PASSWORD"
                             name="password"
-                            value={password}
                             onChange={handleChange}
                             onKeyDown={(e) => {if(e.keyCode == 13) postLogIn()}}
                             required />
