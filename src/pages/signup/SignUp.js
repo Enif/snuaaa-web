@@ -4,6 +4,8 @@ import SignUpComponent from '../../components/Signup/SignUpComponent';
 import SignUpSuccess from '../../components/Signup/SignUpSuccess';
 import SignUpFailure from '../../components/Signup/SignUpFailure';
 import Loading from '../../components/Common/Loading';
+import FullScreenPortal from '../../containers/FullScreenPortal';
+
 
 const TAG = 'SINGUP'
 
@@ -30,13 +32,19 @@ class SignUp extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.formRef)
     }
 
-
     uploadFile = (event) => {
-        this.state.profile = event.target.files[0];
-        console.log(this.state.profile)
+        if(event.target.files[0]){
+            this.setState({
+                profile: event.target.files[0]
+            })
+        }
+        else {
+            this.setState({
+                profile: undefined
+            })
+        }
     }
 
     handleChange = (e) => {
@@ -103,12 +111,16 @@ class SignUp extends React.Component {
                 {
                     (() => {
                         if (this.state.signUpState === 'READY') return (
-                            <SignUpComponent
-                                handleChange={this.handleChange}
-                                postSignUp={this.postSignUp}
-                                uploadFile={this.uploadFile}
-                                formRef={this.formRef}
-                            />);
+                            <FullScreenPortal>
+                                <SignUpComponent
+                                    handleChange={this.handleChange}
+                                    postSignUp={this.postSignUp}
+                                    uploadFile={this.uploadFile}
+                                    profile={this.state.profile}
+                                    formRef={this.formRef}
+                                />
+                            </FullScreenPortal>
+                            );
                         else if (this.state.signUpState === 'LOADING') return (<Loading />)
                         else if (this.state.signUpState === 'SUCCESS') return (<SignUpSuccess />)
                         else return (<SignUpFailure />)

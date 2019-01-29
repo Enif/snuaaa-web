@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { authLogin } from '../../actions'
 import LogInComponent from '../../components/Login/LogInComponent';
 import Loading from '../../components/Common/Loading';
+import FullScreenPortal from '../../containers/FullScreenPortal';
 
 const TAG = 'LOGIN'
 
@@ -17,7 +18,8 @@ class LogIn extends React.Component {
         this.state = {
             id: '',
             password: '',
-            isLoading: false
+            isLoading: false,
+            toSignUp: false,
         }
     }
 
@@ -25,6 +27,14 @@ class LogIn extends React.Component {
         this.setState({
             [e.target.name]: e.target.value
         });
+    }
+
+    redirectToSignUp = () => {
+        console.log('[%s] redirectToSignUp', TAG);
+        this.props.history.push('/login');
+        this.setState({
+            toSignUp: true
+        })
     }
 
     postLogIn = async () => {
@@ -64,24 +74,19 @@ class LogIn extends React.Component {
     render() {
 
         const { loginState } = this.props
-        const { isLoading } = this.state
+        const { isLoading, toSignUp } = this.state
         return (
-            isLoading ?
-            (
-                <Loading/>
-            ) :
-            (
-                loginState ?
-                (
-                    <Redirect to='/' />
-                ) :
-                (
+            <>
+                { loginState && <Redirect to='/' /> }
+                { toSignUp && <Redirect to='/signup' /> } 
+                { isLoading && <Loading/> }
+                <FullScreenPortal>
                     <LogInComponent
                     handleChange = {this.handleChange}
-                    postLogIn = {this.postLogIn} />
-                )
-            )
-
+                    postLogIn = {this.postLogIn}
+                    redirectToSignUp = {this.redirectToSignUp} />
+                </FullScreenPortal>
+            </>
         )
     }
 }

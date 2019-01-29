@@ -1,14 +1,13 @@
 import React from 'react';
 import InputText from '../Common/InputText'
-import logo from '../../assets/img/logo.png'
-// [TODO] Make defalt state & Make Oject contain UserInfo
+import Footer from '../../components/Footer'
+import logo from '../../assets/img/login_logo.gif'
 
-const LogInComponent = ({id, password, handleChange, postLogIn }) => {
+const LogInComponent = ({id, password, handleChange, postLogIn, redirectToSignUp }) => {
     return (
         <div className="login-wrapper">
             <div className="logo-wrapper">
                 <img src={logo} />
-                <h2>LOG IN</h2>
             </div>
             <div className="inputs-wrapper">
                 <div className="auto-checker">
@@ -34,26 +33,15 @@ const LogInComponent = ({id, password, handleChange, postLogIn }) => {
                     <button className="login-btn" onClick={postLogIn}>로그인</button>
                 </div>
                 <div>
-                    <button className="btn-guest">Geust</button>
-                    <p className="menu-txt">아이디 찾기 / 비밀번호 초기화</p>
+                    <button className="btn-guest">Guest</button>
                 </div>
-                
-
-                
-                {/* <input type="text" className="login-input" placeholder="ID"
-                    name="id"
-                    value={id}
-                    onChange={handleChange} /> */}
-                {/* <form> */}
-                
-
-                {/* <input type="submit" value="LOGIN" /> */}
-
-                
-                {/* </form> */}
-            </div>      
+                <div className="menu-txt-wrapper">
+                    <p className="menu-txt-signup" onClick={() => redirectToSignUp()}>회원가입</p>
+                    <p className="menu-txt-find">아이디 | 비밀번호 찾기</p>
+                </div>
+            </div>
+            <Footer></Footer>
         </div>
-
     )
 }
 

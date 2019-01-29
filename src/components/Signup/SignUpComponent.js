@@ -1,14 +1,29 @@
 import React from 'react';
 import InputField from '../Common/InputField';
 
-// [TODO] Make defalt state & Make Oject contain UserInfo
+const printProfile = function(profile) {
+    if(profile) {
+        if(profile.name.length > 10) {
+            return profile.name.substring(0, 10) + "...";
+        }
+        else {
+            return profile.name;
+        }
+    }
+    else {
+        return "선택된 파일 없음"
+    }
+}
 
-const SignUpComponent = ({id, password, passwordCf, username, aaaNum, schoolNum, major, email, mobile, handleChange, postSignUp, profile, uploadFile, formRef }) => {
+// [TODO] Make defalt state & Make Oject contain UserInfo
+const SignUpComponent = ({ handleChange, postSignUp, profile, uploadFile, formRef }) => {
+    
     return (
         <div className="sign-up-wrapper">
-            <h2>가입안내</h2>
+            <h2>JOIN</h2>
 
             <div className="div-agreement">
+                <h3>가입안내</h3>
                 <p>
                     안녕하세요? 서울대학교 아마추어 천문회 - AAA - 의 홈페이지에 오신것을 환영합니다!
                     <br/><br/>
@@ -57,10 +72,10 @@ const SignUpComponent = ({id, password, passwordCf, username, aaaNum, schoolNum,
                     문의사항이 있을 시에는 snuaaa@gmail.com 으로 메일 보내주십시오.
                 </p>
             </div>
-            <p className="enif-text-right">위의 가입 안내문을 모두 읽었습니다.<input type="checkBox" /></p>
 
             <div className="signup-input-wrapper">
                 <form ref={formRef} onSubmit={(e) => {e.preventDefault(); postSignUp()}}>
+                    <p className="enif-text-right">위의 가입 안내문을 모두 읽었습니다.<input className="checkbox-signup" type="checkBox" /></p>
 
                     <InputField label="아이디*" name="id" handleChange={handleChange} required={true} pattern="^[A-Za-z0-9]{4,12}$" 
                         invalidMessage="4-12자리의 영문 혹은 숫자"/>
@@ -76,120 +91,29 @@ const SignUpComponent = ({id, password, passwordCf, username, aaaNum, schoolNum,
                         invalidMessage="전화번호 형식에 맞게 입력해주세요(xxx-xxxx-xxxx)"/>
                     <InputField label="동아리 가입번호" name="aaaNum" handleChange={handleChange} pattern="^[0-9]{2}[Aa]{3}-[0-9]{1,3}$" 
                         invalidMessage="가입번호 형식에 맞게 입력해주세요. 동아리 회원이 아닌 경우, 입력하지 않으셔도 됩니다."/>
+                    <InputField label="학번" name="schoolNum" handleChange={handleChange} />
+                    <InputField label="학과" name="major" handleChange={handleChange} />
 
-                    {/* <div className="enif-input-field">
-                        <label>동아리 가입번호</label>
-                        <input
-                            type="text"
-                            name="aaaNum"
-                            className="input-text"
-                            onChange={handleChange}
-                            value={aaaNum} />
-                    </div> */}
-                    <div className="enif-input-field">
-                        <label>학번</label>
-                        <input
-                            type="text"
-                            name="schoolNum"
-                            className="input-text"
-                            onChange={handleChange}
-                            value={schoolNum} />
-                    </div>
-                    <div className="enif-input-field">
-                        <label>학과</label>
-                        <input
-                            type="text"
-                            name="major"
-                            className="input-text"
-                            onChange={handleChange}
-                            /* value={major} */ />
-                    </div>
-
-                    <div className="enif-input-field">
-                        <label>Profile</label>
-                        {profile}
-                        {profile && <img src={profile}/> }
+                    <div className="enif-input-field profile-signup">
+                        <label htmlFor="profile">
+                            <span>Profile</span>
+                            <span>{printProfile(profile)}</span>
+                            <div className="btn-profile">파일선택</div>
+                        </label>
                         <input
                             type="file"
+                            id="profile"
                             name="profile"
                             accept="image/*"
                             onChange={(e) => uploadFile(e)}
-                            /* ref={profileRef} */
-                            /* value={profile} *//>
+                        />
                     </div>
                     <div className="enif-input-field">
                         <label>자기소개</label>
                         <textarea />
                     </div>
-                    <div className="enif-input-field">
                         {/* <button className="enif-btn-common-rec signup-btn" onClick={postSignUp}>회원가입</button> */}
                         <input type="submit" value="회원가입 "className="enif-btn-common-rec signup-btn" ></input>
-                    </div>
-                    {/* <div className="enif-input-field">
-                        <label>아이디*</label>
-                        <input 
-                            type="text"
-                            name="id"
-                            className="input-text"
-                            onChange={handleChange}
-                            value={id}
-                            required="required"
-                            pattern="[A-Za-z0-9]{6}"                            
-                            />
-                    </div> */}
-                    {/* <div className="enif-input-field">
-                        <label>비밀번호*</label>
-                        <input
-                            type="password"
-                            name="password"
-                            className="input-text"
-                            onChange={handleChange}
-                            value={password}
-                            required="required" />
-                    </div> */}
-                    {/* <div className="enif-input-field">
-                        <label>비밀번호 확인*</label>
-                        <input
-                                type="password"
-                                name="passwordCf"
-                                className="input-text"
-                                onChange={handleChange}
-                                value={passwordCf}
-                                required="required" />
-                    </div> */}
-                    {/* <div className="enif-input-field">
-                        <label>이름*</label>
-                        <input
-                            type="text"
-                            name="username"
-                            className="input-text"
-                            onChange={handleChange}
-                            value={username}
-                            required="required" />
-                    </div> */}
-
-                    {/* <div className="enif-input-field">
-                        <label>E-mail*</label>
-                        <input
-                            type="email"
-                            name="email"
-                            className="input-text"
-                            onChange={handleChange}
-                            value={email}
-                            required="required" />
-                    </div> */}
-
-                    {/* <div className="enif-input-field">
-                        <label>Mobile*</label>
-                        <input
-                            type="text"
-                            name="mobile"
-                            className="input-text"
-                            onChange={handleChange}
-                            value={mobile}
-                            required="required" />
-                    </div> */}
-                    
                 </form>
             </div>
         </div>

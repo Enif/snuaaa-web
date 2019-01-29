@@ -1,35 +1,38 @@
 /***** LOG IN *****/
 
 .login-wrapper {
-    position: fixed;
+    // position: fixed;
+    position: absolute;
+    display: block;
     z-index: 1;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background-color: #182641;
+    background-image: url("./assets/img/login_background.jpg");
 
     .logo-wrapper {
         position: relative;
         // height: 250px;
         width: 100%;
-        padding-top: 3rem;
+        // padding-top: 1rem;
         text-align: center;
         img {
             margin: 0 auto;
-            height: 6rem;
-            width: 6rem;
+            height: 15rem;
+            width: 15rem;
         }
-        h2 {
-            padding: 2rem;
-            font-size: 2rem;
-            color: #fad55f;
-            font-family: 'NIXGONB-Vb';
-        }
+        // h2 {
+        //     padding: 2rem;
+        //     font-size: 2rem;
+        //     color: #fad55f;
+        //     font-family: 'NIXGONB-Vb';
+        // }
     }
 
     .inputs-wrapper {
-        margin: 1rem auto;
+        margin: 0 auto;
         width: 400px;
         text-align: center;
         .auto-checker {
@@ -70,8 +73,33 @@
                 border-radius: 0.5rem;
                 font-size: 1.1rem;
                 font-family: 'NIXGONM-Vb';
+                transition: all 1s;
+                &:hover {
+                    background-color: #57adb6a9;
+                }
                 &:active {
                     background: #6d869c;
+                }
+            }
+        }
+        .menu-txt-wrapper {
+            color: white;
+            font-size: 0.85rem;
+            margin-top: 1.5rem;
+            font-family: 'NIXGONM-Vb';
+
+            .menu-txt-signup {
+                float: left;
+                cursor: pointer;
+                &:hover {
+                    font-weight: bold;
+                }
+            }
+            .menu-txt-find {
+                float: right;
+                cursor: pointer;
+                &:hover {
+                    font-weight: bold;
                 }
             }
         }
@@ -87,21 +115,53 @@
         border: none;
         border-radius: 0.5rem;
         background-color: #596376;
+        // background: transparent;
+        // border: 1px solid #ffffff;
+        transition: all 1s;
+        &:hover {
+            background-color: #596376a0;
+        }
+    }
+    
+    footer {
+        position: absolute;
+        bottom: 0;
+        background-color: transparent;
+        color: white;
+        width: 100%;
+        font-family: 'NIXGONM-Vb';
     }
 
-    .menu-txt {
-        margin: 1.5rem;
-        color: white;
-        font-size: 0.8rem;
+    .footer-contents {
+        width: 100%;
+        text-align: center;
+        text-shadow: 0 0 10px;
+        p {
+            margin: 10px;
+            line-height: 1.5;
+        }
     }
-} 
+}
 
 /****** for mobile ~ 800px ******/
 @media screen and (max-width: 800px) {
 
     .login-wrapper {
+        background-image: url("./assets/img/login_background_m.jpg");
+        .logo-wrapper {
+            img {
+                height: 10rem;
+                width: 10rem;
+            }
+        }
         .inputs-wrapper {
             width: 75%;
+        }
+
+        .footer-contents {
+            p {
+                font-size: 0.8rem;
+            }
         }
     }
 }
