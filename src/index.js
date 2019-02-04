@@ -1,18 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import Root from './Root';
-import registerServiceWorker from './registerServiceWorker';
-
+import { BrowserRouter } from 'react-router-dom';
 import { createStore } from 'redux';
-import reducers from './reducers';
 import { Provider } from 'react-redux'
+// import { CookiesProvider } from 'react-cookie';
+
+import './index.css';
+import App from './App';
+import reducers from './reducers';
+import registerServiceWorker from './registerServiceWorker';
 
 const store = createStore(reducers);
 
 ReactDOM.render(
-    <Provider store={store}>
-        <Root />
-    </Provider>, 
+    // <CookiesProvider>
+        <Provider store={store}>
+            <BrowserRouter>
+                <App/>
+            </BrowserRouter>
+        </Provider>
+    // </CookiesProvider>
+    , 
     document.getElementById('root'));
 registerServiceWorker();
