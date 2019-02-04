@@ -32,11 +32,12 @@ class InputField extends React.Component {
     render() {
         return(
             <div className="enif-input-field">
-                <label>{this.props.label}</label>
+                <label htmlFor={this.props.name}>{this.props.label}</label>
                 <input
                     ref={this.inputRef}
                     type={this.props.type || "text"}
                     // className={this.state.valid ? null : "enif-input-invalid"}
+                    id={this.props.name}
                     name={this.props.name}
                     onChange={(e) => {
                         this.validate(e)
@@ -45,7 +46,6 @@ class InputField extends React.Component {
                     // value={this.props.value}
                     placeholder={this.props.placeholder}
                     pattern={this.props.pattern}
-                    // pattern={this.props.pattern}
                     required={this.props.required}
                 />
                 { !this.state.valid && <p>{this.props.invalidMessage}</p> }

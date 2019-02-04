@@ -1,0 +1,39 @@
+.intro-wrapper {
+    font-size: 13px; 
+    margin: 0 auto;
+    padding-left: 10%;
+    padding-right: 10%;
+    /* font-family: 'Jeju Gothic', serif; */
+    }
+    
+.intro-div-wrapper {
+    padding: 10px;
+    line-height: 1.3em;
+    ul {
+        list-style: inside;
+        color: rgb(85, 150, 255);   
+        li {
+            a {
+                font-size: 0.9rem;
+                line-height: 1.3em;
+                cursor: pointer;
+                &:hover {
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+    h5 {
+        line-height: 2em;
+        font-weight: bold;
+    }
+}
+
+
+.intro-div-wrapper table,
+.intro-div-wrapper th,
+.intro-div-wrapper td{
+    font-size: 0.9em;
+    border: 1px solid black;
+    padding: 0.5em;
+}

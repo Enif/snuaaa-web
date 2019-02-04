@@ -2,15 +2,17 @@
   "name": "snuaa-react",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://52.78.161.191:8080/",
   "dependencies": {
     "axios": "^0.18.0",
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0",
-    "react-redux": "^5.0.7",
+    "node-sass": "^4.10.0",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
+    "react-redux": "^5.1.0",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "1.1.4",
-    "redux": "^4.0.0",
+    "react-scripts": "2.1.1",
+    "redux": "^4.0.1",
     "symlink": "^2.1.0"
   },
   "scripts": {
@@ -18,5 +20,11 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

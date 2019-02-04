@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 import { loginCheck, authLogout } from '../actions';
-
+import UserContext from '../UserContext';
 
 const TAG = 'HEADER';
 
@@ -48,15 +48,15 @@ class Header extends React.Component {
     render() {
         const activeStyle = {
             fontWeight: 'bold',
-            color: '#FFEB3B'
+            color: '#e2ad5f'
         };
 
         const { loginState } = this.props
 
         return (
-            <div id="main-header-wrapper">
-                <div id="main-header">
-                    <div id="header-sign">
+            <div className="main-header-wrapper">
+                <div className="main-header">
+                    <div className="header-sign">
                         {
                             !loginState ?
                             (<p>
@@ -73,7 +73,7 @@ class Header extends React.Component {
                         }
                     </div>
                 </div>
-                <div id="main-menu-nav-wrapper">
+                <div className="main-menu-nav-wrapper">
                     <nav>
                         <input className="nav-toggle" id="nav-toggle" type="checkbox"/> 
                         <label className="navicon" htmlFor="nav-toggle"><span className="navicon-bar"></span></label>
@@ -81,9 +81,8 @@ class Header extends React.Component {
                         <ul className="nav-items">
                             <li className="menu-nav"><NavLink to="/" activeStyle={activeStyle}>★</NavLink></li>
                             <li className="menu-nav"><NavLink to="/about" activeStyle={activeStyle}>동아리 소개</NavLink></li>
-                            {/* <li className="menu-nav"><NavLink to="/notice" activeStyle={activeStyle}>별들의 알림</NavLink></li> */}
                             <li className="menu-nav" onMouseEnter={() => this.showBoardList()} onMouseLeave={() => this.hideBoardList()}>
-                                <NavLink to="/board" activeStyle={activeStyle}>별들의 이야기</NavLink>
+                                <NavLink to="/board/b01" activeStyle={activeStyle}>별들의 이야기</NavLink>
                                 {
                                     this.state.isShowBoard &&
                                     <div className="menu-nav-sub">
@@ -108,6 +107,7 @@ class Header extends React.Component {
                                     </div>
                                 }
                             </li>
+                            <li className="menu-nav"><a href="http://snuaaa.net">별들의 흔적</a></li>
                         </ul>
                     </nav>
                 </div>

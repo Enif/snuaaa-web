@@ -1,0 +1,145 @@
+.board-wrapper {
+    margin: 20px;
+    h2 {
+        font-size: 2rem;
+        font-family: 'Jua', sans-serif;
+    }    
+}
+
+.post-list {
+    margin-top: 2rem;
+    background: #f5f5f5;
+    border-top: 1px solid #9e9e9e;
+    border-collapse: collapse;
+}
+
+.post-wrapper {
+    /* margin: 1px; */
+    padding: 1rem;
+    border: 1px solid #9e9e9e;
+    border-collapse: collapse;
+    /* border: #6e74a4; */
+    border-top: none;
+    &:hover {
+        background: #e7f2ff;
+    }
+}
+
+.post-wrapper > div {
+    display: inline-block;
+}
+
+.post-number {
+    width: 10%;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.post-title {
+    width: 70%;
+    cursor: pointer;
+}
+
+.post-author {
+    width: 20%;
+}
+
+.writepost-wrapper {
+    margin: 20px;
+}
+
+.writepost-title input {
+    width: 100%;
+}
+
+.writepost-content textarea {
+    width: 100%;
+    height: 500px;
+    resize: none;
+}
+
+.enif-post-wrapper {
+    width: 90%;
+    margin: 0 auto;
+    border-top: 1px solid #c9c9c9;
+}
+
+.enif-post-title {
+    font-size: 1rem;
+    padding: 1rem;
+    border: 1px solid #c9c9c9;
+    border-top: none;
+    background-color: #fff6f6;
+    h5 {
+        display: inline;
+        font-weight: bold;
+    }
+    .post-title-info {
+        // display: inline;
+        float: right;
+    }
+}
+
+.enif-post-content {
+    padding-top: 1rem;
+    padding: 1rem;
+    border: 1px solid #c9c9c9;
+    min-height: 300px;
+    line-height: 200%;
+    border-top: none;
+
+}
+
+/****** COMMENT *******/
+
+// .comment-area-wapper {
+
+    
+// }
+
+.comment-write {
+    height: 80px;
+    display: flex;
+    textarea {
+        height: 100%;
+        display: inline-block;
+        width: 80%;
+        resize: none;
+    }
+    button {
+        height: 100%;
+        display: inline-block;
+        width: 20%;
+        font-size: 1rem;
+        font-weight: bold;
+        letter-spacing: 0.2rem;
+        color: white;
+        border: none;
+        background: #005fb3;
+        &:active {
+            background: #6d869c;
+        }
+    }
+}
+
+
+/****** ALBUM *******/
+.album-list-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.album-wrapper {
+    width: 23%;
+    margin: 5px;
+    box-shadow: 3px 3px 7px 2px rgba(95, 95, 95, 0.2);
+}
+
+.album-wrapper:hover {
+    background-color: rgba(100, 100, 100, 0.8);
+    // background: -webkit-gradient(linear, left top, right bottom, color-stop(12%, #b3cae5), color-stop(46%, #dbdde4), color-stop(70%, #e4e3e4), color-stop(94%, #f7ddbb), color-stop(100%, #efcab2));
+}
+
+/****** ALBUM *******/

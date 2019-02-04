@@ -21,8 +21,6 @@ class Board extends React.Component {
 
     static getDerivedStateFromProps(props, state) {
         console.log('[%s] getDerivedStateFromProps', TAG);
-        console.log(props);
-        console.log(state);
         return {
             boardNo: props.match.params.bNo
         }
@@ -36,6 +34,27 @@ class Board extends React.Component {
             }
         })
         return bName;
+    }
+
+    getCategory = (bNo) => {
+        let categorys = [];
+        BoardEnum.forEach((board) => {
+            if(board.boardNo === bNo) {
+                if (board.category) {
+                    board.category.forEach((category) => {
+                        categorys.push(category.categoryName)
+                    })
+    
+                }
+            }
+        })
+        if(categorys.length > 0) {
+            return (
+                <select>
+                    {categorys.map((cate) => (<option>{cate}</option>))}
+                </select>
+            )
+        }
     }
 
     setBoardState = (index) => {
@@ -55,9 +74,9 @@ class Board extends React.Component {
             <div id="contents-center">
                 <div className="board-wrapper">
                     <h2>{this.getBoardName(this.state.boardNo)}</h2>
+                    {this.getCategory(this.state.boardNo)}
                     {
                         (() => {
-                            console.log(`[Board] ${this.state.boardState}`);
                             if (this.state.boardState === 0) return (<PostList boardNo={this.state.boardNo} setBoardState={this.setBoardState} setPostId={this.setPostId} />);
                             else if (this.state.boardState === 1) return (<WritePost boardNo={this.state.boardNo} setBoardState={this.setBoardState}/>);
                             // else if (this.state.boardState === 2) return (<Post boardNo={this.state.boardNo} setBoardState={this.setBoardState} postId={this.state.postId} />);

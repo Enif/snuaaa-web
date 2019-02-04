@@ -1,0 +1,47 @@
+/***** aside *****/
+
+aside {
+    width: 200px;
+    height: auto;
+    /* font-family: 'Jeju Gothic'; */
+    display: inline-block;
+    vertical-align: top;
+}
+
+.aside-left {
+    float: left;
+}
+
+.aside-right {
+    float: right;
+}
+    
+#lunar-info {
+    margin: 20px;
+    h5 {
+        text-align: center;
+        font-size: 1.1em;
+        font-weight: bold;
+        margin: 1em;
+    }
+}
+
+#lunar-info-tb {
+    margin: 0 auto;
+    border-spacing: 2px;
+}
+
+#lunar-info-tb td {
+    padding: 3px;
+    font-size: 0.8em;
+}
+
+#lunar-info-img {
+    margin: 0 auto;
+    width: 150px;
+    height: 150px;
+    background-color: #05070e;
+    background-image: url("./assets/img/moon1.png");
+    background-size: cover;
+    background-position: center;
+}

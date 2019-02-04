@@ -1,0 +1,23 @@
+.userinfo-wrapper {
+    margin: 0 auto;
+    width: 300px;
+    img {
+        display: inline-block;
+        height: 80px;
+        width: 80px;
+        border-radius: 50%;
+    }
+    h3 {
+        display: inline-block;
+        font-size: 1.75rem;
+        text-align: right;
+    }
+    table {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+    }
+    td {
+        padding: 5px;
+    }
+}

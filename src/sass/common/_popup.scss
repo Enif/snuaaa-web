@@ -1,0 +1,48 @@
+/******* POPUP ******/
+
+.popup-wrapper {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff22;
+    z-index: 99;
+
+    .popup-box {
+        position: relative;
+        top: 30%;
+        width: 400px;
+        background-color: #fff;
+        margin: 0 auto;
+        text-align: center;
+
+        .popup-star {
+            font-size: 2rem;
+            padding: 10px;
+            text-align: center;
+            color: gold;
+        }
+        h5 {
+            font-size: 1rem;
+            font-weight: bold;
+        }
+        .popup-contents {
+            font-size: 0.9rem;
+            padding: 10px;
+            text-align: center;
+            line-height: 1.5;
+        }
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .popup-wrapper {
+
+        .popup-box {
+            width: 80%;
+        }
+    }
+}
+
+/******* POPUP ******/

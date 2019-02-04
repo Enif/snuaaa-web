@@ -1,0 +1,90 @@
+
+// 각 sass 파일로 분리 예정
+/****** for mobile ~ 800px ******/
+@media screen and (max-width: 800px) {
+
+    aside {
+        display: none;
+    }
+    section {
+        width: 100%;
+        min-height: 95%;
+        display: block;
+    }
+
+    .enif-section-wrapper {
+        padding: 10px;
+    }
+
+    .enif-input-field {
+        width: 100%;
+    }
+
+    #contents-wrapper {
+        width: 100%;
+    }
+
+    #calendar-wrapper {
+        width: 100%;
+    }
+    
+    #calendar-wrapper h5 {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+        color: #808080;
+    }
+    
+    #calendar-wrapper .title-left, #calendar-wrapper .title-right {
+        display: inline-block;
+        width: 50%;
+    }
+    
+    #calendar-tb {
+        width: 100%;
+        border-collapse: collapse;
+        color: #909090;
+        margin: auto;
+    }
+    
+    #calendar-tb, #calendar-tb th, #calendar-tb td {
+        border: 1px solid #909090;
+        vertical-align: middle;
+    }
+    /* 
+    #calender-tb tbody {
+        
+    } */
+    
+    #calendar-tb th {
+        font-size: 0.6em;
+        width: 14%;
+        padding: 3px;
+        background-color: #f3eade;
+        font-weight: normal;
+    }
+    
+    #calendar-tb td {
+        font-size: 0.6em;
+        text-align: center;
+        width: 14%;
+        height: 50px;
+    }
+
+    #soundbox-wrapper {
+        width: 100%;
+    }
+
+    #soundbox-contents-wrapper {
+        width: 100%;
+    }
+
+    #soundbox-img {
+        width: 100%;
+        background-position: center;
+    }
+
+    .intro-div-wrapper {
+        overflow-x: auto;
+    }
+
+}
