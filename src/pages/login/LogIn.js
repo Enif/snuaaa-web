@@ -76,19 +76,25 @@ class LogIn extends React.Component {
         })
         let logInInfo = {
             id: this.state.id,
-            password: this.state.password
+            password: this.state.password,
+            autoLogin: this.state.autoLogin
         }
         
         await service.postLogIn(logInInfo)
         .then((res) => {
             console.log('[%s] Log In Success', TAG)
-            console.log(res);
             this.setState({
                 isLoading: false
             })
             const { token } = res.data;
-            localStorage.setItem('token', token);
-            axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
+            if(this.state.autoLogin) {
+                localStorage.setItem('token', token);
+                axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
+            }
+            else {
+                sessionStorage.setItem('token', token);
+                axios.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token');
+            }
             this.props.onAuthLogin();
         })
         .catch((res) => {

@@ -17,6 +17,7 @@ function authentication(state = initialState, action) {
             };
         case types.AUTH_LOGOUT:
             localStorage.removeItem('token')
+            sessionStorage.removeItem('token')
             return {
                 ...state,
                 isLoggedIn: false
