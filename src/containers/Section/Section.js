@@ -10,7 +10,8 @@ class Section extends React.Component {
         return (
             <section className="enif-section-wrapper">
                 <Route exact path="/" component={Home}/>
-                <Route path="/about" component={About}/>
+                <Route exact path="/about" component={About}/>
+                <Route path="/about/:aaa" component={About}/>
                 <Route path="/board/:bNo" component={Board}/>
                 <Route path="/post/:pNo" component={Post}/>
                 <Route path="/photoboard/:pbNo" component={PhotoBoard}/>

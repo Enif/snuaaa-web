@@ -9,6 +9,44 @@
 .intro-div-wrapper {
     padding: 10px;
     line-height: 1.3em;
+    h3 {
+        color: #75a3e6;
+        font-size: 22px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        font-weight: bold;
+    }
+    h4 {
+        padding: 10px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    .intro-content {
+        font-size: 16px;
+        line-height: 1.5;
+        display: block;
+        .img-left {
+            margin: 10px;
+            float: left;
+            width: 200px;
+            display: block;
+        }
+        .img-right {
+            margin: 10px;
+            float: right;
+            width: 200px;
+            display: block;
+        }
+        .img-sanghui {
+            width: 150px;
+        }
+        .img-sanghui {
+            width: 150px;
+        }
+        .img-gwak {
+            width: 140px;
+        }
+    }
     ul {
         list-style: inside;
         color: rgb(85, 150, 255);   

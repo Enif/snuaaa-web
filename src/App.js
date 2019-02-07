@@ -63,7 +63,7 @@ class App extends Component {
                 <UserContext.Provider>
                     <Header /> 
                     <div id="contents-wrapper">
-                        <Aside class="aside-left" />
+                        {/* <Aside class="aside-left" /> */}
                         <Section/>
                         {/* <Aside class="aside-right" /> */}
                     </div>

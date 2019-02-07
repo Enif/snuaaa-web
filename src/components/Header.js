@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 import { loginCheck, authLogout } from '../actions';
+import logo from '../assets/img/logo_white.png'
 import UserContext from '../UserContext';
 
 const TAG = 'HEADER';
@@ -12,6 +13,7 @@ class Header extends React.Component {
         console.log(`[%s] constructor`, TAG)
         super(props);
         this.state = {
+            isShowAbout: false,
             isShowBoard: false,
             isShowPhotoBoard: false
         }
@@ -21,41 +23,61 @@ class Header extends React.Component {
         console.log(`[%s] componentDidMount`, TAG)
     }
 
-    showBoardList = () => {
+    setShowAbout = (isShow) => {
         this.setState({
-            isShowBoard: true
+            isShowAbout: isShow
         })
     }
 
-    showPhotoBoardList = () => {
+    toggleShowAbout = () => {
         this.setState({
-            isShowPhotoBoard: true
+            isShowAbout: !this.state.isShowAbout
         })
     }
 
-    hideBoardList = () => {
+    setShowBoard = (isShow) => {
         this.setState({
-            isShowBoard: false
+            isShowBoard: isShow
         })
     }
 
-    hidePhotoBoardList = () => {
+    toggleShowBoard = () => {
         this.setState({
-            isShowPhotoBoard: false
+            isShowBoard: !this.state.isShowBoard
         })
     }
+
+    setShowPhotoBoard = (isShow) => {
+        this.setState({
+            isShowPhotoBoard: isShow
+        })
+    }
+
+    toggleShowPhotoBoard = () => {
+        this.setState({
+            isShowPhotoBoard: !this.state.isShowPhotoBoard
+        })
+    }
+
 
     render() {
         const activeStyle = {
             fontWeight: 'bold',
-            color: '#e2ad5f'
+            color: '#fad55f'
         };
 
         const { loginState } = this.props
+        let subAboutClass = 'menu-nav-sub' + (this.state.isShowAbout ? '' : ' menu-nav-hidden')
+        let subBoardClass = 'menu-nav-sub' + (this.state.isShowBoard ? '' : ' menu-nav-hidden')
+        let subPhotoBoardClass = 'menu-nav-sub' + (this.state.isShowPhotoBoard ? '' : ' menu-nav-hidden')
+
 
         return (
             <div className="main-header-wrapper">
                 <div className="main-header">
+                    <div className="header-logo">
+                        <Link to="/"><img src={logo} /></Link>
+                    </div>
                     <div className="header-sign">
                         {
                             !loginState ?
@@ -67,7 +89,6 @@ class Header extends React.Component {
                             :
                             (<p>
                                 <Link to="/userinfo"> INFO </Link>
-                                /
                                 <a onClick={this.props.onLogout}> LOG OUT </a>
                             </p>)
                         }
@@ -80,29 +101,41 @@ class Header extends React.Component {
                             
                         <ul className="nav-items">
                             <li className="menu-nav"><NavLink to="/" activeStyle={activeStyle}>★</NavLink></li>
-                            <li className="menu-nav"><NavLink to="/about" activeStyle={activeStyle}>동아리 소개</NavLink></li>
-                            <li className="menu-nav" onMouseEnter={() => this.showBoardList()} onMouseLeave={() => this.hideBoardList()}>
-                                <NavLink to="/board/b01" activeStyle={activeStyle}>별들의 이야기</NavLink>
+                            <li className="menu-nav" onClick={() => this.toggleShowAbout()} onMouseEnter={() => this.setShowAbout(true)} onMouseLeave={() => this.setShowAbout(false)}>
+                                <a href="#" >동아리 소개</a>
                                 {
-                                    this.state.isShowBoard &&
-                                    <div className="menu-nav-sub">
+                                    <div className={subAboutClass}>
                                         <ul>
-                                            <li><NavLink to='/board/b01' proptest="ttt1">천기누설</NavLink></li>
-                                            <li><NavLink to='/board/b02' proptest="ttt2">낡은읽기장</NavLink></li>
-                                            <li><NavLink to='/board/b03' proptest="ttt3">관측게시판</NavLink></li>
-                                            <li><NavLink to='/board/b04' proptest="ttt4">아고라</NavLink></li>
+                                            <Link to='/about/aboutAAA'><li>AAA는 ?</li></Link>
+                                            <Link to='/about/contact'><li>찾아오는길 &amp; 연락처</li></Link>
+                                            <Link to='/about/equipment'><li>장비소개</li></Link>
+                                            <Link to='/about/observation'><li>김태영 기념 관측소 소개</li></Link>
+                                            <Link to='/about/history'><li>동아리 발자취</li></Link>
+                                            <Link to='/about/officers'><li>역대 회장단 / 임원진</li></Link>
                                         </ul>
                                     </div>
                                 }
                             </li>
-                            <li className="menu-nav" onMouseEnter={() => this.showPhotoBoardList()} onMouseLeave={() => this.hidePhotoBoardList()}>
-                                <NavLink to="/photoboard/pb01" activeStyle={activeStyle}>별들의 순간</NavLink>
+                            <li className="menu-nav" onClick={() => this.toggleShowBoard()} onMouseEnter={() => this.setShowBoard(true)} onMouseLeave={() => this.setShowBoard(false)}>
+                                <a href="#">별들의 이야기</a>
                                 {
-                                    this.state.isShowPhotoBoard &&
-                                    <div className="menu-nav-sub">
+                                    <div className={subBoardClass}>
                                         <ul>
-                                            <li><NavLink to='/photoboard/pb01' proptest="ttt1">추억만들기</NavLink></li>
-                                            <li><NavLink to='/photoboard/pb02' proptest="ttt2">별사진</NavLink></li>
+                                            <Link to='/board/b01'><li>천기누설</li></Link>
+                                            <Link to='/board/b02'><li>낡은읽기장</li></Link>
+                                            <Link to='/board/b03'><li>관측게시판</li></Link>
+                                            <Link to='/board/b04'><li>아고라</li></Link>
+                                        </ul>
+                                    </div>
+                                }
+                            </li>
+                            <li className="menu-nav" onClick={() => this.toggleShowPhotoBoard()} onMouseEnter={() => this.setShowPhotoBoard(true)} onMouseLeave={() => this.setShowPhotoBoard(false)}>
+                                <a href="#">별들의 순간</a>
+                                {
+                                    <div className={subPhotoBoardClass}>
+                                        <ul>
+                                            <Link to='/photoboard/pb01'><li>추억만들기</li></Link>
+                                            <Link to='/photoboard/pb02'><li>별사진</li></Link>
                                         </ul>
                                     </div>
                                 }
