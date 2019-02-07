@@ -1,35 +1,34 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+
 import './App.scss';
 import Header from './components/Header'
 import Aside from './components/Aside';
 import Section from './containers/Section/Section';
 import Footer from './components/Footer';
 import { updateToken } from './services';
-import { withRouter } from 'react-router';
 import { authLogin, authLogout } from './actions';
-import { connect } from 'react-redux';
-import UserContext from './UserContext';
+// import UserContext from './UserContext';
 
 const TAG = 'App'
 
 
 class App extends Component {
 
-    //[TODO] constructor에서 token vaild 확인하여 login state 유지 시켜줘야함.(새로고침시 로그아웃 방지)
     constructor(props) {
         console.log(`[%s] constructor`, TAG)
         super(props);
         this.checkToken();
     }
 
-    
     componentDidMount() {
         console.log(`[%s] componentDidMount`, TAG)
     }
 
     checkToken = async () => {
         console.log(`[%s] checkToken`, TAG)
-        const token = localStorage.getItem('token')
+        const token = (sessionStorage.getItem('token') || localStorage.getItem('token'))
         if(!token){
             //토큰이 없으면 logout
             this.props.onLogout();
@@ -46,21 +45,13 @@ class App extends Component {
                 alert("토큰이 만료되어 로그아웃 됩니다.")
                 this.props.onLogout();
             })
-            
         }
     }
-
-    // componentWillUnmount() {
-    //     console.log(`[${TAG}] componentWillUnmount`) 
-    //     this.props.onLogout();
-    // }
-
-
 
     render() {
         return (
             <div>
-                <UserContext.Provider>
+                {/* <UserContext.Provider> */}
                     <Header /> 
                     <div id="contents-wrapper">
                         {/* <Aside class="aside-left" /> */}
@@ -68,7 +59,7 @@ class App extends Component {
                         {/* <Aside class="aside-right" /> */}
                     </div>
                     <Footer />
-                </UserContext.Provider>
+                {/* </UserContext.Provider> */}
             </div>
         );
     }

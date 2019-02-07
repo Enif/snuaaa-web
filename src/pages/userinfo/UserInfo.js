@@ -31,7 +31,7 @@ class UserInfo extends React.Component {
 
     getUserInfo = async () => {
         console.log('[%s] getUserInfo', TAG);
-        await service.retrieveUserInfo(localStorage.getItem("token"))
+        await service.retrieveUserInfo()
         .then((response) => {
             console.log('[%s] getUserInfo succeess', TAG);
             let userInfo = response.data.userInfo
