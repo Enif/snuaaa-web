@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 import './App.scss';
-import Header from './components/Header'
+// import Header from './components/Header'
+import Header from './containers/Header'
 import Aside from './components/Aside';
 import Section from './containers/Section/Section';
 import Footer from './components/Footer';
