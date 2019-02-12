@@ -6,7 +6,7 @@ class Ovservation extends React.Component {
     render() {
         return (
             <div className="intro-div-wrapper" id="observation">
-                <h3>장비 소개</h3>
+                <h3>김태영 기념 관측소 소개</h3>
                 <div className="intro-content">
                     <img className='img-right' src={domImg} />
                     <p>
