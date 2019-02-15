@@ -6,7 +6,7 @@ import './App.scss';
 // import Header from './components/Header'
 import Header from './containers/Header'
 import Aside from './components/Aside';
-import Section from './containers/Section/Section';
+import Section from './containers/Section';
 import Footer from './components/Footer';
 import { updateToken } from './services';
 import { authLogin, authLogout } from './actions';
