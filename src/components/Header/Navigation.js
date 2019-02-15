@@ -10,8 +10,10 @@ class Navigation extends React.Component {
         super(props);
         this.state = {
             isShowAbout: false,
+            isShowNotice: false,
             isShowBoard: false,
-            isShowPhotoBoard: false
+            isShowPhotoBoard: false,
+            isShowOfficial: false
         }
     }
 
@@ -21,9 +23,9 @@ class Navigation extends React.Component {
         })
     }
 
-    toggleShowAbout = () => {
+    setShowNotice = (isShow) => {
         this.setState({
-            isShowAbout: !this.state.isShowAbout
+            isShowNotice: isShow
         })
     }
 
@@ -33,29 +35,26 @@ class Navigation extends React.Component {
         })
     }
 
-    toggleShowBoard = () => {
-        this.setState({
-            isShowBoard: !this.state.isShowBoard
-        })
-    }
-
     setShowPhotoBoard = (isShow) => {
         this.setState({
             isShowPhotoBoard: isShow
         })
     }
 
-    toggleShowPhotoBoard = () => {
+    setShowOfficial = (isShow) => {
         this.setState({
-            isShowPhotoBoard: !this.state.isShowPhotoBoard
+            isShowOfficial: isShow
         })
     }
+
 
     render() {
 
         let subAboutClass = 'menu-nav-sub' + (this.state.isShowAbout ? '' : ' menu-nav-hidden')
+        let subNoticeClass = 'menu-nav-sub' + (this.state.isShowNotice ? '' : ' menu-nav-hidden')
         let subBoardClass = 'menu-nav-sub' + (this.state.isShowBoard ? '' : ' menu-nav-hidden')
         let subPhotoBoardClass = 'menu-nav-sub' + (this.state.isShowPhotoBoard ? '' : ' menu-nav-hidden')
+        let subOfficialClass = 'menu-nav-sub' + (this.state.isShowOfficial ? '' : ' menu-nav-hidden')
 
         const activeStyle = {
             fontWeight: 'bold',
@@ -70,7 +69,7 @@ class Navigation extends React.Component {
                         
                     <ul className="nav-items">
                         <li className="menu-nav"><NavLink to="/" activeStyle={activeStyle}>★</NavLink></li>
-                        <li className="menu-nav" onClick={() => this.toggleShowAbout()} onMouseEnter={() => this.setShowAbout(true)} onMouseLeave={() => this.setShowAbout(false)}>
+                        <li className="menu-nav" onMouseEnter={() => this.setShowAbout(true)} onMouseLeave={() => this.setShowAbout(false)}>
                             <a href="#" ><span>동아리</span> 소개</a>
                             {
                                 <div className={subAboutClass}>
@@ -85,26 +84,39 @@ class Navigation extends React.Component {
                                 </div>
                             }
                         </li>
-                        <li className="menu-nav" >
+                        <li className="menu-nav" onMouseEnter={() => this.setShowNotice(true)} onMouseLeave={() => this.setShowNotice(false)}>
                             <a href="#"><span>별들의</span> 알림</a>
+                            {
+                                <div className={subNoticeClass}>
+                                    <ul>
+                                        <Link to='/board/b00'><li>소리통</li></Link>
+                                        <Link to='/board/b01'><li>천기누설</li></Link>
+                                    </ul>
+                                </div>
+                            }
                         </li>
-                        <li className="menu-nav" onClick={() => this.toggleShowBoard()} onMouseEnter={() => this.setShowBoard(true)} onMouseLeave={() => this.setShowBoard(false)}>
+                        <li className="menu-nav" onMouseEnter={() => this.setShowBoard(true)} onMouseLeave={() => this.setShowBoard(false)}>
                             <a href="#"><span>별들의</span> 이야기</a>
                             {
                                 <div className={subBoardClass}>
                                     <ul>
-                                        <Link to='/board/b01'><li>천기누설</li></Link>
                                         <Link to='/board/b02'><li>낡은읽기장</li></Link>
                                         <Link to='/board/b03'><li>관측게시판</li></Link>
+                                    </ul>
+                                </div>
+                            }
+                        </li>
+                        <li className="menu-nav" onMouseEnter={() => this.setShowOfficial(true)} onMouseLeave={() => this.setShowOfficial(false)}>
+                            <a href="#"><span>별들의</span> 회담</a>
+                            {
+                                <div className={subOfficialClass}>
+                                    <ul>
                                         <Link to='/board/b04'><li>아고라</li></Link>
                                     </ul>
                                 </div>
                             }
                         </li>
-                        <li className="menu-nav" >
-                            <a href="#"><span>별들의</span> 회담</a>
-                        </li>
-                        <li className="menu-nav" onClick={() => this.toggleShowPhotoBoard()} onMouseEnter={() => this.setShowPhotoBoard(true)} onMouseLeave={() => this.setShowPhotoBoard(false)}>
+                        <li className="menu-nav" onMouseEnter={() => this.setShowPhotoBoard(true)} onMouseLeave={() => this.setShowPhotoBoard(false)}>
                             <a href="#"><span>별들의</span> 순간</a>
                             {
                                 <div className={subPhotoBoardClass}>
