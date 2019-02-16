@@ -41,6 +41,7 @@
     margin-top: 200px;
     padding: 2rem;
     background-color: #ffffff;
+    z-index: 99;
     h3 {
         font-size: 1.3rem;
         font-weight: bold;
@@ -59,19 +60,21 @@
 
 
 .enif-popup .enif-btn-cancel {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 40px;
-    height: 40px;
-    background-color: #ffffff;
-    color: #a0a0a0;
-    font-size: 1.5rem;
-    border: none;
+    // position: absolute;
+    // top: 0;
+    // right: 0;
+    // width: 40px;
+    // height: 40px;
+    // background-color: #ffffff;
+    // color: #a0a0a0;
+    // font-size: 1.5rem;
+    // border: none;
 }
 
 .enif-popup .enif-btn-common {
-    position: absolute;
+    // position: relative;
+    // position: absolute;
+    float: right;
     bottom: 20px;
     right: 20px;
 }
@@ -99,7 +102,16 @@
     font-size: 1rem;
     font-weight: bold;
     border: none;
-    background: #b3cae5;
+    background: none;
+    // background: #b3cae5;
+}
+
+.enif-btn-cancel {
+    color: #36434d;
+}
+
+.enif-btn-ok {
+    color: #57adb6;
 }
 
 .enif-btn-common-rec {
@@ -159,6 +171,11 @@
 //     border: 1px solid #ff7e7e;
 // }
 
+@media screen and (max-width: 800px) {
+    .enif-popup-content {
+        width: 90%;
+    }
 
+}
 
 /**********  ENIF  **********/

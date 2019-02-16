@@ -123,23 +123,3 @@
 }
 
 
-/****** ALBUM *******/
-.album-list-wrapper {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-
-.album-wrapper {
-    width: 23%;
-    margin: 5px;
-    box-shadow: 3px 3px 7px 2px rgba(95, 95, 95, 0.2);
-}
-
-.album-wrapper:hover {
-    background-color: rgba(100, 100, 100, 0.8);
-    // background: -webkit-gradient(linear, left top, right bottom, color-stop(12%, #b3cae5), color-stop(46%, #dbdde4), color-stop(70%, #e4e3e4), color-stop(94%, #f7ddbb), color-stop(100%, #efcab2));
-}
-
-/****** ALBUM *******/

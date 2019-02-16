@@ -28,22 +28,29 @@ class CreatePhoto extends React.Component {
 
     createPhotos = async () => {
         console.log('[%s] createPhotos', TAG);
-
-        const photoInfo = new FormData();
-        photoInfo.append('title', this.state.title);
-        photoInfo.append('albumNo', this.props.albumNo);
-        photoInfo.append('timestamp', (new Date).valueOf())
-        photoInfo.append('uploadPhoto', this.state.uploadPhoto);
-        
-        await service.createPhotos(this.props.albumNo, photoInfo)
-        .then(() => {
-            console.log('[%s] Create Photos Success', TAG);
-            this.props.togglePopUp();
-        })
-        .catch(() => {
-            console.log('[%s] Create Photos Success', TAG);
-            this.props.togglePopUp();
-        })
+        if(!this.state.title) {
+            alert("제목을 입력해주세요")
+        }
+        else if (!this.state.uploadPhoto) {
+            alert("사진을 첨부해주세요")
+        }
+        else {
+            const photoInfo = new FormData();
+            photoInfo.append('title', this.state.title);
+            photoInfo.append('albumNo', this.props.albumNo);
+            photoInfo.append('timestamp', (new Date).valueOf())
+            photoInfo.append('uploadPhoto', this.state.uploadPhoto);
+            
+            await service.createPhotos(this.props.albumNo, photoInfo)
+            .then(() => {
+                console.log('[%s] Create Photos Success', TAG);
+                this.props.togglePopUp();
+            })
+            .catch(() => {
+                console.log('[%s] Create Photos Success', TAG);
+                this.props.togglePopUp();
+            })    
+        }
     }
 
     render() {
@@ -53,10 +60,10 @@ class CreatePhoto extends React.Component {
             <div className="enif-popup">
                 <div className="enif-popup-content">
                     <h3>사진 업로드</h3>
-                    <button className="enif-btn-cancel" onClick={()=>this.props.togglePopUp()}> x </button>
-                    <input type="text" name="title" placeholder="앨범 제목" onChange={(e) => this.handleChange(e)}/>
+                    <input type="text" name="title" placeholder="사진 제목" onChange={(e) => this.handleChange(e)}/>
                     <input type="file" accept="image/*" onChange={(e) => this.uploadFile(e)} /* value={this.state.uploadPhoto} *//>
-                    <button onClick={() => this.createPhotos()}>확인</button>
+                    <button className="enif-btn-common enif-btn-ok" onClick={() => this.createPhotos()}>OK</button>
+                    <button className="enif-btn-common enif-btn-cancel" onClick={()=>this.props.togglePopUp()}>CANCEL</button>                    
                 </div>
             </div>            
         ) 

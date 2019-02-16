@@ -47,8 +47,16 @@ export function createPhotos(albumNo, data) {
     return axios.post(SERVER_URL + `api/album/${albumNo}/photo`, data)
 }
 
-export function retrievePhotosInAlbum(albumNo) {
+export function retrieveAlbum(albumNo) {
     return axios.get(SERVER_URL + `api/album/${albumNo}`)
+}
+
+export function retrievePhotosInAlbum(albumNo) {
+    return axios.get(SERVER_URL + `api/album/${albumNo}/photos`)
+}
+
+export function retrievePhoto(photoNo) {
+    return axios.get(SERVER_URL + `api/photo/${photoNo}`)
 }
 
 export function retrieveSoundBox() {

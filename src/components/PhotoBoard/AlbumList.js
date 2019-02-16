@@ -3,6 +3,7 @@ import * as service from '../../services';
 import Loading from '../Common/Loading';
 import defaultAlbumCover from '../../assets/img/default_photo_img.png'
 import defaultStarAlbumCover from '../../assets/img/default_photo_img_star.png'
+import Image from '../Common/Image'
 
 const TAG = 'ALBUMLIST'
 
@@ -56,9 +57,14 @@ class AlbumList extends React.Component {
             const albumData = res.data;
             let albums = albumData.map(album => {
                 return (
-                    <div className="album-wrapper" onClick={(e) => this.clickAlbum(album.object_id, e)}>
-                        <img src={this.state.boardNo === 'pb01' ? defaultAlbumCover : defaultStarAlbumCover} />
-                        {album.title}
+                    <div className="album-list" onClick={(e) => this.clickAlbum(album.object_id, e)}>
+                        {/* <img src={this.state.boardNo === 'pb01' ? defaultAlbumCover : defaultStarAlbumCover} /> */}
+                        <Image imgSrc={album.file_path} defaultImgSrc={defaultAlbumCover} />
+                        <div className="album-cover">
+                            <h5>
+                                {album.title}
+                            </h5>
+                        </div>
                     </div>
                 )
             })
@@ -80,11 +86,9 @@ class AlbumList extends React.Component {
             {
                 isShow ?
                 (
-                    <div>
-                        <div className="album-list-wrapper">
-                            {this.albums}
-                        </div>
-                    </div>    
+                    <div className="album-list-wrapper">
+                        {this.albums}
+                    </div>
                 )
                 :
                 (

@@ -4,31 +4,73 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    .photo-wrapper {
+        width: 150px;
+        height: 150px;
+        margin: 4px;
+        position: relative;
+        box-shadow: 3px 3px 7px 2px rgba(95, 95, 95, 0.5);
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .photo-title {
+            position: absolute;
+            bottom: 0;
+            z-index: 1;
+            width: 100%;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+    }
+    
+    .photo-wrapper:hover {
+        background-color: rgba(100, 100, 100, 0.8);
+        // background: -webkit-gradient(linear, left top, right bottom, color-stop(12%, #b3cae5), color-stop(46%, #dbdde4), color-stop(70%, #e4e3e4), color-stop(94%, #f7ddbb), color-stop(100%, #efcab2));
+    }
 }
 
-.photo-wrapper {
-    width: 23%;
-    height: 200px;
-    margin: 5px;
-    position: relative;
-    box-shadow: 3px 3px 7px 2px rgba(95, 95, 95, 0.5);
-    img {
-        width: 100%;
-        height: 100%;
+
+.photo-section-wrapper {
+    .photo-wrapper {
+        display: flex;
+        justify-content: center;
+        background-color: #1d1d1d;
+        max-height: 500px;
+        img {
+            object-fit: contain;
+        }
     }
-    .photo-title {
-        position: absolute;
-        bottom: 0;
-        z-index: 1;
-        width: 100%;
+
+    .photo-contents-wrapper {
         padding: 10px;
-        background-color: rgba(255, 255, 255, 0.5);
+        h4 {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            font-size: 25px;
+            font-weight: bold;
+        }
+        p {
+            font-size: 15px;
+        }
     }
 }
 
-.photo-wrapper:hover {
-    background-color: rgba(100, 100, 100, 0.8);
-    // background: -webkit-gradient(linear, left top, right bottom, color-stop(12%, #b3cae5), color-stop(46%, #dbdde4), color-stop(70%, #e4e3e4), color-stop(94%, #f7ddbb), color-stop(100%, #efcab2));
+@media screen and (max-width: 800px) {
+    .photo-list-wrapper {
+        .photo-wrapper {
+            width: 140px;
+            height: 140px;
+        }
+    }
+
+    .photo-section-wrapper {
+        .photo-wrapper {
+            max-height: 300px;
+        }
+    }
 }
 
-/****** ALBUM *******/
+
+/****** PHOTO *******/
