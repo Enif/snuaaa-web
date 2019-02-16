@@ -59,20 +59,18 @@ class PhotoBoard extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <div id="contents-center">
-                    <div className="board-wrapper">
-                        <h2>{this.getBoardName(this.state.boardNo)}</h2>
-                        {
-                            (() => {
-                                console.log(`[PhotoBoard] ${this.state.boardState}`);
-                                if (this.state.boardState === 0) return (<AlbumList boardNo={this.state.boardNo} setBoardState={this.setBoardState} setAlbumId={this.setAlbumId} togglePopUp={this.togglePopUp}/>);
-                                // else if (this.state.boardState === 1) return (<WritePost boardNo={this.state.boardNo} setBoardState={this.setBoardState}/>);
-                                // // else if (this.state.boardState === 2) return (<Post boardNo={this.state.boardNo} setBoardState={this.setBoardState} postId={this.state.postId} />);
-                                else if (this.state.boardState === 2) return (<Redirect to={`/album/${this.state.albumId}`}/>)
-                                else return (<div>error page</div>);
-                            })()
-                        }
-                    </div>
+                <div className="board-wrapper">
+                    <h2>{this.getBoardName(this.state.boardNo)}</h2>
+                    {
+                        (() => {
+                            console.log(`[PhotoBoard] ${this.state.boardState}`);
+                            if (this.state.boardState === 0) return (<AlbumList boardNo={this.state.boardNo} setBoardState={this.setBoardState} setAlbumId={this.setAlbumId} togglePopUp={this.togglePopUp}/>);
+                            // else if (this.state.boardState === 1) return (<WritePost boardNo={this.state.boardNo} setBoardState={this.setBoardState}/>);
+                            // // else if (this.state.boardState === 2) return (<Post boardNo={this.state.boardNo} setBoardState={this.setBoardState} postId={this.state.postId} />);
+                            else if (this.state.boardState === 2) return (<Redirect to={`/album/${this.state.albumId}`}/>)
+                            else return (<div>error page</div>);
+                        })()
+                    }
                 </div>
                 {
                     this.state.popUpState && <CreateAlbum boardNo={this.state.boardNo} togglePopUp={this.togglePopUp} />

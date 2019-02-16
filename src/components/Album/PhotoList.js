@@ -1,82 +1,41 @@
 import React from 'react';
-import * as service from '../../services';
-import Loading from '../Common/Loading';
-import Photo from './Photo';
 import Image from '../Common/Image'
-import defaultAlbumCover from '../../assets/img/default_photo_img.png'
-
 
 const TAG = 'PHOTOLIST'
 
 class PhotoList extends React.Component {
 
     constructor(props) {
-        console.log('[%s] constructor', TAG)
         super(props);
-        this.photos = [];
-        this.state = {
-            albumNo: this.props.albumNo,
-            isShow: false,
-            popUpState: false,
-        }
-        this.retrievePhotos(this.state.albumNo);
     }
 
-
-    retrievePhotos = async(albumNo) => {
+    retrievePhotos = () => {
         console.log('[%s] Retrieve Photos', TAG);
 
-        await service.retrievePhotosInAlbum(albumNo)
-        .then((res) => {
-            console.log('[%s] Retrieve Photos Success', TAG);
-            const photoData = res.data;
-            let photos = photoData.map(photo => {
-                return (
-                    <div className="photo-wrapper" onClick={(e) => this.clickPhoto(photo._id, e)}>
-                        <Image imgSrc={photo.file_path}/>
-                        <div className="photo-title">
-                            {photo.title}
-                        </div>
+        let photos = this.props.photos
+        let photoList = photos.map(photo => {
+            return (
+                <div className="photo-wrapper" onClick={() => this.props.redirectPhoto(photo.object_id)}>
+                    <Image imgSrc={photo.file_path}/>
+                    <div className="photo-title">
+                        {photo.title}
                     </div>
-                )
-            })
-            this.photos = photos;
-            this.setState({
-                isShow: true
-            })
+                </div>
+            )
         })
-        .catch((res) => {
-            console.log('[%s] Retrieve Photos Fail', TAG);
-        })
+        return photoList
     }
 
     render() {
         console.log('[%s] render', TAG)
-        let { isShow } = this.state;
         return (
-            <React.Fragment>
-            {
-                isShow ?
-                (
-                    <div>
-                        <div className="photo-list-wrapper">
-                            {this.photos}
-                        </div>
-                    </div>    
-                )
-                :
-                (
-                    <Loading/>
-                )
-            }
+            <div className="board-wrapper">
+                <div className="photo-list-wrapper">
+                    {this.retrievePhotos()}
+                </div>
                 <button className="enif-btn-circle" onClick={() => this.props.togglePopUp()}>+</button>
-             
-            </React.Fragment>
+            </div>
         ) 
-    }
-
-    componentDidMount() {
-        console.log('[%s] componentDidMount', TAG)
     }
 }
 
