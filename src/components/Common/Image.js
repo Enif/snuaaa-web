@@ -8,7 +8,7 @@ class Image extends React.Component {
         super(props);
         
         this.state = {
-            imgSrc: SERVER_URL + 'api' + this.props.imgSrc
+            imgSrc: SERVER_URL + 'static' + this.props.imgSrc
         }
     }
 
