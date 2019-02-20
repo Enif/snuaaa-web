@@ -39,6 +39,7 @@ class CreateAlbum extends React.Component {
             .then(() => {
                 console.log('[%s] Create Album Success', TAG);
                 this.props.togglePopUp();
+                this.props.retrieveAlbums(this.props.boardNo)
             })
             .catch(() => {
                 console.log('[%s] Create Album Success', TAG);
@@ -49,7 +50,7 @@ class CreateAlbum extends React.Component {
 
     render() {
         console.log('[%s] render', TAG)
-        
+     
         return (
             <div className="enif-popup">
                 <div className="enif-popup-content">
@@ -64,7 +65,7 @@ class CreateAlbum extends React.Component {
                     <button className="enif-btn-common enif-btn-ok" onClick={() => this.createAlbum()}>OK</button>
                     <button className="enif-btn-common enif-btn-cancel" onClick={()=>this.props.togglePopUp()} >CANCEL</button>
                 </div>
-            </div>            
+            </div>
         ) 
     }
 
