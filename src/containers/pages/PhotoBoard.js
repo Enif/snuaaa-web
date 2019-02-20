@@ -1,8 +1,10 @@
 import React from 'react';
+import * as service from '../../services';
 import { PhotoBoardEnum } from '../../components/Board/BoardEnum';
 import { Redirect } from 'react-router';
 import AlbumList from '../../components/PhotoBoard/AlbumList';
 import CreateAlbum from '../../components/PhotoBoard/CreateAlbum';
+import Loading from '../../components/Common/Loading';
 
 const TAG = 'PHOTOBOARD'
 
@@ -10,13 +12,16 @@ class PhotoBoard extends React.Component {
 
     constructor(props) {
         super(props);
-        
+        this.albums = [];
+        this.albumId = undefined;
         this.state = {
-            boardState: 0,
             boardNo: this.props.match.params.pbNo,
             popUpState: false,
-            albumId: ''
+            isAlbumListReady: false,
+            popUpState: false,
+            toAlbum: false,
         }
+        this.retrieveAlbums(this.props.match.params.pbNo)
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -24,6 +29,21 @@ class PhotoBoard extends React.Component {
         return {
             boardNo: props.match.params.pbNo
         }
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log('[%s] shouldComponentUpdate', TAG)
+        if(this.state.boardNo !== nextState.boardNo){
+            nextState.isShow = false;
+            this.retrieveAlbums(nextState.boardNo)
+            nextState.isAlbumListReady = false;
+            return true;
+        }
+
+        if(nextState.isAlbumListReady === true) {
+            return true;
+        }
+        return false;
     }
     
     getBoardName = (bNo) => {
@@ -38,9 +58,32 @@ class PhotoBoard extends React.Component {
         return bName;
     }
 
-    setBoardState = (index) => {
+    setIsAlbumListReady = (isReady) => {
         this.setState({
-            boardState: index
+            isAlbumListReady: isReady
+        })
+    }
+
+    retrieveAlbums = async(boardNo) => {
+        console.log('[%s] Retrieve Albums', TAG);
+
+        await service.retrieveAlbumsInPhotoBoard(boardNo)
+        .then((res) => {
+            console.log('[%s] Retrieve Albums Success', TAG);
+            this.albums = res.data;
+            this.setState({
+                isAlbumListReady: true
+            })
+        })
+        .catch((err) => {
+            console.error(`[${TAG}] Retrieve Photos Fail >> ${err}`)
+        })
+    }
+
+    redirectAlbum = (albumId) => {
+        this.albumId = albumId;
+        this.setState({
+            toAlbum: true
         })
     }
 
@@ -57,25 +100,32 @@ class PhotoBoard extends React.Component {
     }
 
     render() {
+
+        let {toAlbum, isAlbumListReady} = this.state;
+
         return (
-            <React.Fragment>
-                <div className="board-wrapper">
-                    <h2>{this.getBoardName(this.state.boardNo)}</h2>
-                    {
-                        (() => {
-                            console.log(`[PhotoBoard] ${this.state.boardState}`);
-                            if (this.state.boardState === 0) return (<AlbumList boardNo={this.state.boardNo} setBoardState={this.setBoardState} setAlbumId={this.setAlbumId} togglePopUp={this.togglePopUp}/>);
-                            // else if (this.state.boardState === 1) return (<WritePost boardNo={this.state.boardNo} setBoardState={this.setBoardState}/>);
-                            // // else if (this.state.boardState === 2) return (<Post boardNo={this.state.boardNo} setBoardState={this.setBoardState} postId={this.state.postId} />);
-                            else if (this.state.boardState === 2) return (<Redirect to={`/album/${this.state.albumId}`}/>)
-                            else return (<div>error page</div>);
-                        })()
+            <>
+                {(() => {
+                    if(toAlbum) {
+                        return <Redirect to={`/album/${this.albumId}`}/>
                     }
-                </div>
-                {
-                    this.state.popUpState && <CreateAlbum boardNo={this.state.boardNo} togglePopUp={this.togglePopUp} />
-                }
-            </React.Fragment>
+                    else if(isAlbumListReady) {
+                        return (
+                            <div className="board-wrapper">
+                                <h2>{this.getBoardName(this.state.boardNo)}</h2>
+                                <AlbumList boardNo={this.state.boardNo} albums={this.albums} redirectAlbum={this.redirectAlbum} togglePopUp={this.togglePopUp}/>
+                                {
+                                    this.state.popUpState && <CreateAlbum boardNo={this.state.boardNo} retrieveAlbums={this.retrieveAlbums} togglePopUp={this.togglePopUp} />
+                                }
+                            </div>
+
+                        )
+                    }
+                    else {
+                        return <Loading />
+                    }
+                })()}
+            </>
         );
     }
 }

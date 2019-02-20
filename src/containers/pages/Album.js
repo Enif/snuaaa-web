@@ -97,9 +97,9 @@ class Album extends React.Component {
                             <div className="album-wrapper">
                                 <AlbumInfo albumInfo={this.albumInfo}/>
                                 <PhotoList photos={this.photos} redirectPhoto={this.redirectPhoto} togglePopUp={this.togglePopUp}/>  
-                            {
-                                this.state.popUpState && <CreatePhoto albumNo={this.state.albumNo} togglePopUp={this.togglePopUp} />
-                            }
+                                {
+                                    this.state.popUpState && <CreatePhoto albumNo={this.state.albumNo} retrievePhotos={this.retrievePhotos} togglePopUp={this.togglePopUp} />
+                                }
                             </div>
                         )
                     }

@@ -45,6 +45,7 @@ class CreatePhoto extends React.Component {
             .then(() => {
                 console.log('[%s] Create Photos Success', TAG);
                 this.props.togglePopUp();
+                this.props.retrievePhotos(this.props.albumNo)
             })
             .catch(() => {
                 console.log('[%s] Create Photos Success', TAG);
