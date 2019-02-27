@@ -1,24 +1,13 @@
 import React from 'react';
 import { SERVER_URL } from '../../common/environment'
 
-const TAG = 'IMAGE';
+const Image = ({imgSrc, defaultImgSrc}) => {
 
-class Image extends React.Component {
-    constructor(props) {
-        super(props);
-        
-        this.state = {
-            imgSrc: SERVER_URL + 'static' + this.props.imgSrc
-        }
-    }
+    let imgUrl = SERVER_URL + 'static' + imgSrc;
 
-    render() {
-        let { imgSrc } = this.state;
-
-        return (
-            <img src={this.props.imgSrc ? imgSrc : this.props.defaultImgSrc} alt="profileImg" />
-        )
-    }
+    return (
+        <img src={imgSrc ? imgUrl : defaultImgSrc} alt="profileImg" />
+    )
 }
 
 export default Image;

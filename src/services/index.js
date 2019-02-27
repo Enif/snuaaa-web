@@ -59,6 +59,22 @@ export function retrievePhoto(photoNo) {
     return axios.get(SERVER_URL + `api/photo/${photoNo}`)
 }
 
+export function retrieveDocuments() {
+    return axios.get(SERVER_URL + `api/document`)
+}
+
+export function retrieveDocumentsByGeneration(generation) {
+    return axios.get(SERVER_URL + `api/document/generation/${generation}`)
+}
+
+export function createDocument(data) {
+    return axios.post(SERVER_URL + `api/document`, data)
+}
+
+export function downloadDocument(docuId, index) {
+    return axios.get(SERVER_URL + `api/document/${docuId}/download/${index}`)
+}
+
 export function retrieveSoundBox() {
     return axios.get(SERVER_URL + `api/soundbox`);
 }
