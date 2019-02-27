@@ -5,5 +5,6 @@ export { default as Board } from './Board';
 export { default as PhotoBoard } from './PhotoBoard';
 export { default as Album } from './Album';
 export { default as Photo } from './Photo';
+export { default as Document } from './Document';
 export { default as LogIn } from './LogIn';
 export { default as UserInfo } from './UserInfo';

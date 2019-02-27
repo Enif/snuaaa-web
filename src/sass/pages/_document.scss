@@ -1,0 +1,73 @@
+
+.documenu-wrapper {
+    display: flex;
+
+    .doc-gen-list-handler {
+        padding: 10px;
+        cursor: pointer;
+    }
+    .doc-gen-list-wrapper {
+        width: 100%;
+        overflow: hidden;
+        .doc-gen-list {
+            display: flex;
+            transition: all 1s;
+            li {
+                padding: 10px;
+                cursor: pointer;
+                transition: all 1s;
+                border: 1px dashed white;
+                border-radius: 40%;
+    
+                &:hover {
+                    border: 1px dashed rgb(55, 69, 194);
+                }
+            }
+        }
+    
+    }
+}
+
+
+.doculist-wrapper {
+    .doculist-head {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: nowrap;
+        color: #ffffff;
+        background-color: #bcbdbc;
+        padding: 15px;
+    }
+    .doculist-body {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: nowrap;
+        padding: 10px;
+        border-bottom: 2px solid #ececec
+    }
+    .docu-generation {
+        flex-basis: 40px;
+    }
+    .docu-category {
+        flex-basis: 70px;
+    }
+    .docu-memo {
+        flex-grow: 1;
+    }
+    .docu-download {
+        flex-basis: 80px;
+    }
+    .docu-comments {
+        flex-basis: 40px;
+    }
+    table {
+        width: 100%;
+    }
+    thead {
+        color: #ffffff;
+        background-color: #bcbdbc;
+    }
+    th {
+        padding: 15px;
+    }
+}

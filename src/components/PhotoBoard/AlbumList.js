@@ -17,7 +17,7 @@ class AlbumList extends React.Component {
         let albums = this.props.albums;
         let albumList = albums.map(album => {
             return (
-                <div className="album-list" onClick={(e) => this.props.redirectAlbum(album.object_id)}>
+                <div className="album-list" key={album.object_id} onClick={(e) => this.props.redirectAlbum(album.object_id)}>
                     <Image imgSrc={album.file_path} defaultImgSrc={albumCover} />
                     <div className="album-cover">
                         <h5>

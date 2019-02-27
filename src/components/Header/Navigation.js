@@ -112,6 +112,7 @@ class Navigation extends React.Component {
                                 <div className={subOfficialClass}>
                                     <ul>
                                         <Link to='/board/b04'><li>아고라</li></Link>
+                                        <Link to='/document'><li>문서보관소</li></Link>
                                     </ul>
                                 </div>
                             }
