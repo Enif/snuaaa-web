@@ -12,16 +12,6 @@
     text-align: right;
 }
 
-.enif-section-wrapper { 
-    font-size: 13px; 
-    // padding: 30px;
-    min-height: 400px;
-    h2 {
-        font-size: 2rem;
-        font-family: 'Jua', sans-serif;
-        margin-bottom: 1rem;
-    }
-}
 
 .enif-popup {
     position: fixed;
@@ -132,10 +122,7 @@
 }
 
 .enif-input-invalid {
-    height: 20px;
-    width: 100%;
-    display: block;
-    background-color: #ffe8e8;
+    border: 2px solid #cd5c5c;
 }
 
 .enif-input-field {
