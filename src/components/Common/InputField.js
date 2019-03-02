@@ -14,8 +14,6 @@ class InputField extends React.Component {
 
     validate = (e) => {
         //check valid
-        console.log(e.target.value);
-        console.log(this.re.test(e.target.value))
         if(!this.re.test(e.target.value)) {
             this.setState({
                 valid: false
@@ -30,8 +28,10 @@ class InputField extends React.Component {
     }
 
     render() {
+
+        let fieldClass = this.state.valid ? "enif-input-field" : "enif-input-field enif-input-invalid"
         return(
-            <div className="enif-input-field">
+            <div className={fieldClass}>
                 <label htmlFor={this.props.name}>{this.props.label}</label>
                 <input
                     ref={this.inputRef}

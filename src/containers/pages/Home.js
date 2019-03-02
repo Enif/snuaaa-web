@@ -12,10 +12,7 @@ class Home extends React.Component {
 
     render() {
 
-        const { loginState } = this.props
         return (
-            loginState ?
-            (
                 <div id="contents-center">
                     <div id="calendar-wrapper" className="content">
                         <div className="title-left">
@@ -50,19 +47,9 @@ class Home extends React.Component {
                     </div>
                     <SoundBox />
                 </div>
-            )
-            :
-            (
-                <Redirect to='/login' />
-            )
         );
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        loginState: state.authentication.isLoggedIn
-    }
-}
 
-export default connect(mapStateToProps, undefined)(Home);
+export default Home;

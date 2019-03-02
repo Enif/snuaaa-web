@@ -86,7 +86,6 @@ class SignUp extends React.Component {
             data.append('email', this.state.email);
             data.append('mobile', this.state.mobile);
             data.append('introduction', this.state.introduction);
-            data.append('timestamp', (new Date).valueOf());
             if (this.state.profile) {
                 data.append('profile', this.state.profile);
             }

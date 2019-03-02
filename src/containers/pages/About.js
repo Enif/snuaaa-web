@@ -34,7 +34,6 @@ class About extends React.Component {
     }
     
     render() {
-        console.dir(window.location)
         return (                               
             this.renderComponent()
         );

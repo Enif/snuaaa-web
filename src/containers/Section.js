@@ -8,7 +8,7 @@ class Section extends React.Component {
 
     render() {
         return (
-            <section className="enif-section-wrapper">
+            <section>
                 <Route exact path="/" component={Home}/>
                 <Route exact path="/about" component={About}/>
                 <Route path="/about/:aaa" component={About}/>

@@ -1,13 +1,43 @@
 import React from 'react';
+import { fstat } from 'fs';
+import officers from './officers_tmp.json'
 
 class Officers extends React.Component {
 
     //TODO : User who is admin can be edit data.
-    //TODO : convert json data
+    //TODO : convert to database from json
+
+    generateOfficerList = () => {
+        console.log(officers)
+        let officerList = officers.map((gen) => {
+            return (
+                <div className="gen-wrapper">
+                    <div className="generation">
+                        {gen.generation}대
+                    </div>
+                    <div className="member">
+                        <div className="president">
+                            {gen.president}
+                        </div>
+                        <div className="officers">
+                            {gen.officers}
+                        </div>
+                    </div>
+                </div>
+            )
+        })
+        return officerList;
+    }
 
     render() {
         return(
+
             <div className="intro-div-wrapper" id="officers">
+                <h3>역대 회장단 / 임원진</h3>
+                <div className="intro-content officers-wrapper">
+                    {this.generateOfficerList()}
+                </div>
+
                 <table border="0" cellPadding="5" cellSpacing="2" width="758">
                     <colgroup>
                         <col width="50" />
@@ -20,71 +50,7 @@ class Officers extends React.Component {
                             <td>회장</td>
                             <td>회장단 / 임원진</td>
                         </tr>
-                        <tr>
-                            <td>75 대</td>
-                            <td>윤지용</td>
-                            <td>부회장:김우태, 총무:안도혁, 회계:황준, 디딤돌짱:김민수<br /><br />관측부장:김수현, 이융희</td>
-                        </tr>
-                        <tr>
-                            <td>74 대</td>
-                            <td>김민재</td>
-                            <td>부회장:강수상, 총무:윤지용, 회계:조수빈, 디딤돌짱:정만근<br /><br />관측부장:김우태, 오종주</td>
-                        </tr>
-                        <tr>
-                            <td>73 대</td>
-                            <td>정만근</td>
-                            <td>부회장:김민재, 총무:김민수, 회계:김태혁, 디딤돌짱:서유경<br /><br />관측부장:강수상, 송승욱</td>
-                        </tr>
-                        <tr>
-                            <td>72 대</td>
-                            <td>강민하</td>
-                            <td>총무:김민재, 회계:장효준, 디딤돌짱:진선호<br /><br />관측부장:정만근, 김민수</td>
-                        </tr>
-                        <tr>
-                            <td>71 대</td>
-                            <td>진선호</td>
-                            <td>부회장:이재하, 총무:조항빈, 회계:강민하, 디딤돌짱:김윤식<br /><br />관측부장:임재모</td>
-                        </tr>
-                        <tr>
-                            <td>70 대</td>
-                            <td>장효인</td>
-                            <td>부회장:김종민, 총무:전준범, 회계:이조행, 디딤돌짱:우정웅<br /><br />관측부장:이재하,진선호</td>
-                        </tr>
-                        <tr>
-                            <td>69 대</td>
-                            <td>김윤식</td>
-                            <td>부회장:이승철, 총무:김기현, 회계:오은실, 디딤돌짱:강다은</td>
-                        </tr>
-                        <tr>
-                            <td>68 대</td>
-                            <td>강다은</td>
-                            <td>부회장:권효상, 총무:이승철, 회계:이은비, 디딤돌짱:장효인<br /><br />관측부장:김윤식,신나은,이양준</td>
-                        </tr>
-                        <tr>
-                            <td>67 대</td>
-                            <td>김동겸</td>
-                            <td>부회장:김홍열, 총무:박현상, 회계:권효상, 디딤돌짱:우정웅<br /><br />관측부장:고성현,박경훈,윤영훈</td>
-                        </tr>
-                        <tr>
-                            <td>66 대</td>
-                            <td>장효인</td>
-                            <td>총무:김동겸, 회계:권효상, 디딤돌짱:우정웅<br /><br />관측부장:강다은,김홍열</td>
-                        </tr>
-                        <tr>
-                            <td>65 대</td>
-                            <td>서은주</td>
-                            <td >부회장:이겨레, 총무:최규민, 회계:양호등, 디딤돌짱:사세영<br /><br />안시부장:김종민, 사진부장:윤미정</td>
-                        </tr>
-                        <tr>
-                            <td>64 대</td>
-                            <td>사세영</td>
-                            <td >부회장:이윤석, 총무:장효인, 회계:김서연, 디딤돌짱:김영재<br /><br />안시부장:서은주, 우정웅, 사진부장:윤서연, 이겨레, 문화부장:유병현, 이재륜</td>
-                        </tr>
-                        <tr>
-                            <td>63 대</td>
-                            <td>김영재</td>
-                            <td >부회장:황혜진, 총무:이종구, 회계:김영근, 디딤돌짱:김태석<br /><br />관측부장:사세영, 이동하, 이윤석, 한다빈</td>
-                        </tr>
+                        
                         <tr>
                             <td>62 대</td>
                             <td>곽세종</td>

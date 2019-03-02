@@ -8,15 +8,14 @@
 @import './pages/photo';
 
 
-#contents-wrapper {
-    // width: 1200px;
-    height: auto;
-    margin: 0 auto;
+.section-wrapper {
+    flex-grow: 1;
     background-color: #f0f0f0;
 }
   
 section {
     width: 1000px;
+    height: 100%;
     padding-top: 20px;
     padding-left: 150px;
     padding-right: 150px;
@@ -24,6 +23,15 @@ section {
     margin: 0 auto;
     // display: inline-block;
     background-color: #ffffff;
+    font-size: 13px; 
+    // padding: 30px;
+    min-height: 400px;
+    h2 {
+        font-size: 2rem;
+        // font-family: 'Jua', sans-serif;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
 }
  
  
@@ -133,3 +141,15 @@ section {
      background-image: url('./assets/img/soundbox.png');
      background-size: cover;
  }
+
+
+ @media screen and (max-width: 800px) {
+
+    section {
+        width: 100%;
+        // min-height: 95%;
+        display: block;
+        padding: 1px;
+
+    }
+}

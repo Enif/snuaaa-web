@@ -61,7 +61,7 @@
         background-color: #05070e;
         > a {
             display: block;
-            height: inherit;    
+            height: 25px;    
             padding-left: 20px;
             padding-right: 20px;
             color: aliceblue;
@@ -73,7 +73,7 @@
         .menu-nav-sub {
             position: absolute;
             top: 100%;
-            background-color: #08253ee0;
+            background-color: #fad55f;
             z-index: 10;
             color: aliceblue;
             a {
@@ -89,7 +89,8 @@
                     text-align: left;
                     z-index: 10;
                     &:hover {
-                        background-color: #004b8d;
+                        color: #363941;
+                        background-color: #fce8a7;
                     }
                 }
             }
