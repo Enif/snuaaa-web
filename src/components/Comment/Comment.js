@@ -18,7 +18,7 @@ class Comment extends React.Component {
         console.log('[%s] Create Comment', TAG);
 
         let commentInfo = {
-            content: this.state.contents
+            contents: this.state.contents
         }
 
         await createComment(this.props.postNo, commentInfo)
