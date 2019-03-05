@@ -31,8 +31,12 @@ export function createPost(data) {
     return axios.post(SERVER_URL + 'api/post/', data);
 }
 
-export function createComment(postNo, data) {
-    return axios.post(SERVER_URL + `api/post/${postNo}/comment`, data);
+export function retrieveComments(parent_id) {
+    return axios.get(SERVER_URL + `api/object/${parent_id}/comment`);
+}
+
+export function createComment(parent_id, data) {
+    return axios.post(SERVER_URL + `api/object/${parent_id}/comment`, data);
 }
 
 export function retrieveAlbumsInPhotoBoard(boardNo) {

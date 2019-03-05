@@ -1,7 +1,8 @@
 import React from 'react';
 import * as service from '../../services'
 import Loading from '../../components/Common/Loading';
-import Image from '../../components/Common/Image';
+import PhotoInfo from '../../components/Photo/PhotoInfo';
+import Comment from '../Comment';
 
 const TAG = 'PHOTO'
 
@@ -38,14 +39,8 @@ class Photo extends React.Component {
                     if(!isReady) return <Loading />
                     else return (
                         <div className="photo-section-wrapper">
-                            <div className="photo-wrapper">
-                                <Image imgSrc={photoInfo.file_path} />
-                            </div>
-                            <div className="photo-contents-wrapper">
-                                <h4>{photoInfo.title}</h4>
-                                <p>photo by <strong>{photoInfo.nickname}</strong></p>
-                                <p>created {photoInfo.created_at}</p>
-                            </div>
+                            <PhotoInfo photoInfo={photoInfo} />
+                            <Comment parent_id={this.state.photoNo}/>
                         </div>
                     )
                 })()

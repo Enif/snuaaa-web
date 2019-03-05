@@ -1,7 +1,7 @@
 import React from 'react';
 import * as service from '../../services';
 import Loading from '../Common/Loading';
-import Comment from '../Comment/Comment';
+import Comment from '../../containers/Comment';
 
 const TAG = 'POST'
 
@@ -113,7 +113,7 @@ class Post extends React.Component {
                             })
                         }
                         </div>
-                        <Comment postNo={this.state.postNo}/>
+                        <Comment parent_id={this.state.postNo}/>
                     </div>
                 )
                 :
