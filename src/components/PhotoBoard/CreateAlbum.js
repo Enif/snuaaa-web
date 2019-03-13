@@ -41,8 +41,9 @@ class CreateAlbum extends React.Component {
                 this.props.togglePopUp();
                 this.props.retrieveAlbums(this.props.boardNo)
             })
-            .catch(() => {
-                console.log('[%s] Create Album Success', TAG);
+            .catch((err) => {
+                console.log('[%s] Create Album Fail', TAG);
+                console.error(err)
                 this.props.togglePopUp();
             })
         }

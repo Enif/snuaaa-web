@@ -40,27 +40,35 @@ export function createComment(parent_id, data) {
 }
 
 export function retrieveAlbumsInPhotoBoard(boardNo) {
-    return axios.get(SERVER_URL + `api/photoboard/${boardNo}`)
+    return axios.get(SERVER_URL + `api/photoboard/${boardNo}/albums`)
 }
 
 export function createAlbum(boardNo, data) {
     return axios.post(SERVER_URL + `api/photoboard/${boardNo}/album`, data)
 }
 
-export function createPhotos(albumNo, data) {
-    return axios.post(SERVER_URL + `api/album/${albumNo}/photo`, data)
+export function retrievePhotosInPhotoBoard(boardNo) {
+    return axios.get(SERVER_URL + `api/photoboard/${boardNo}/photos`)
 }
 
-export function retrieveAlbum(albumNo) {
-    return axios.get(SERVER_URL + `api/album/${albumNo}`)
+export function createPhotosInPhotoBoard(boardNo, data) {
+    return axios.post(SERVER_URL + `api/photoboard/${boardNo}/photo`, data)
 }
 
-export function retrievePhotosInAlbum(albumNo) {
-    return axios.get(SERVER_URL + `api/album/${albumNo}/photos`)
+export function createPhotosInAlbum(albumId, data) {
+    return axios.post(SERVER_URL + `api/album/${albumId}/photo`, data)
 }
 
-export function retrievePhoto(photoNo) {
-    return axios.get(SERVER_URL + `api/photo/${photoNo}`)
+export function retrieveAlbum(albumId) {
+    return axios.get(SERVER_URL + `api/album/${albumId}`)
+}
+
+export function retrievePhotosInAlbum(albumId) {
+    return axios.get(SERVER_URL + `api/album/${albumId}/photos`)
+}
+
+export function retrievePhoto(photoId) {
+    return axios.get(SERVER_URL + `api/photo/${photoId}`)
 }
 
 export function retrieveDocuments() {
@@ -81,8 +89,4 @@ export function downloadDocument(docuId, index) {
 
 export function retrieveSoundBox() {
     return axios.get(SERVER_URL + `api/soundbox`);
-}
-
-export function retrieveProfile(path) {
-    return axios.get(SERVER_URL + `api/profile/${path}`)
 }

@@ -1,0 +1,26 @@
+.photoboard-wrapper {
+
+    .view-type-selector-wrapper {
+        display: flex;
+        width: 100%;
+        font-size: 20px;
+        .view-type-selector {
+            width: 50%;
+            text-align: center;
+            padding: 10px 0px 10px 0px;
+            border: 2px solid #686868;
+            cursor: pointer;
+            transition: all 0.5s;
+            &:hover {
+                background-color: #cfcfcf;
+            }
+        }
+        .selected {
+            background-color: #686868;
+            color: #ffffff;
+            &:hover {
+                background-color: #686868;
+            }
+        }
+    }
+}

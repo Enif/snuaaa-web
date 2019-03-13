@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Image from '../Common/Image'
 
 const TAG = 'PHOTOLIST'
@@ -15,11 +16,13 @@ class PhotoList extends React.Component {
         let photos = this.props.photos
         let photoList = photos.map(photo => {
             return (
-                <div className="photo-wrapper" onClick={() => this.props.redirectPhoto(photo.object_id)}>
-                    <Image imgSrc={photo.file_path}/>
-                    <div className="photo-title">
-                        {photo.title}
-                    </div>
+                <div className="photo-wrapper" >
+                    <Link to={`/photo/${photo.object_id}`}>
+                        <Image imgSrc={photo.file_path} />
+                        <div className="photo-title">
+                            {photo.title}
+                        </div>
+                    </Link>
                 </div>
             )
         })
@@ -35,7 +38,7 @@ class PhotoList extends React.Component {
                 </div>
                 <button className="enif-btn-circle" onClick={() => this.props.togglePopUp()}>+</button>
             </div>
-        ) 
+        )
     }
 }
 
