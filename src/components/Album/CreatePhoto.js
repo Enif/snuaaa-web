@@ -26,8 +26,8 @@ class CreatePhoto extends React.Component {
         this.state.uploadPhoto = e.target.files[0];
     }
 
-    createPhotos = async () => {
-        console.log('[%s] createPhotos', TAG);
+    checkForm = () => {
+        console.log('[%s] checkForm', TAG);
         if(!this.state.title) {
             alert("제목을 입력해주세요")
         }
@@ -35,21 +35,47 @@ class CreatePhoto extends React.Component {
             alert("사진을 첨부해주세요")
         }
         else {
-            const photoInfo = new FormData();
-            photoInfo.append('title', this.state.title);
+            this.createPhotos();
+        }
+    }
+
+    createPhotos = async () => {
+
+        const photoInfo = new FormData();
+        photoInfo.append('title', this.state.title);
+        photoInfo.append('uploadPhoto', this.state.uploadPhoto);
+        
+        if(this.props.albumNo) {
             photoInfo.append('albumNo', this.props.albumNo);
-            photoInfo.append('uploadPhoto', this.state.uploadPhoto);
-            
-            await service.createPhotos(this.props.albumNo, photoInfo)
+    
+            await service.createPhotosInAlbum(this.props.albumNo, photoInfo)
             .then(() => {
                 console.log('[%s] Create Photos Success', TAG);
                 this.props.togglePopUp();
                 this.props.retrievePhotos(this.props.albumNo)
             })
             .catch(() => {
+                console.error(`[${TAG}] Create Photos Fail`);
+                this.props.togglePopUp();
+            })
+        }
+        else if(this.props.boardNo) {
+            photoInfo.append('boardNo', this.props.boardNo);
+
+            await service.createPhotosInPhotoBoard(this.props.boardNo, photoInfo)
+            .then(() => {
                 console.log('[%s] Create Photos Success', TAG);
                 this.props.togglePopUp();
-            })    
+                this.props.retrievePhotos(this.props.boardNo);
+            })
+            .catch(() => {
+                console.error(`[${TAG}] Create Photos Fail`);
+                this.props.togglePopUp();
+            })
+        }
+        else {
+            console.error(`[${TAG}] Unhandled Exception`);
+            this.props.togglePopUp();
         }
     }
 
@@ -62,7 +88,7 @@ class CreatePhoto extends React.Component {
                     <h3>사진 업로드</h3>
                     <input type="text" name="title" placeholder="사진 제목" onChange={(e) => this.handleChange(e)}/>
                     <input type="file" accept="image/*" onChange={(e) => this.uploadFile(e)} /* value={this.state.uploadPhoto} *//>
-                    <button className="enif-btn-common enif-btn-ok" onClick={() => this.createPhotos()}>OK</button>
+                    <button className="enif-btn-common enif-btn-ok" onClick={() => this.checkForm()}>OK</button>
                     <button className="enif-btn-common enif-btn-cancel" onClick={()=>this.props.togglePopUp()}>CANCEL</button>                    
                 </div>
             </div>            

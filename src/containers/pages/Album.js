@@ -1,5 +1,4 @@
 import React from 'react';
-import { Redirect } from 'react-router';
 import * as service from '../../services'
 import Loading from '../../components/Common/Loading';
 import PhotoList from '../../components/Album/PhotoList';
@@ -14,14 +13,11 @@ class Album extends React.Component {
         super(props);
         this.photos = [];
         this.albumInfo = undefined;
-        this.photoId = undefined;
         this.state = {
             albumNo: this.props.match.params.aNo,
-            albumState: 0,
             isAlbumReady: false,
             isPhotoListReady: false,
             popUpState: false,
-            toPhoto: false,
         }
         this.retrieveAlbum(this.props.match.params.aNo);
         this.retrievePhotos(this.props.match.params.aNo);
@@ -70,13 +66,6 @@ class Album extends React.Component {
         })
     }
 
-    redirectPhoto = (photoId) => {
-        this.photoId = photoId;
-        this.setState({
-            toPhoto: true
-        })
-    }
-
     togglePopUp = () => {
         this.setState({
             popUpState: !this.state.popUpState
@@ -84,15 +73,12 @@ class Album extends React.Component {
     }
 
     render() {
-        let {toPhoto, isAlbumReady, isPhotoListReady} = this.state
+        let {isAlbumReady, isPhotoListReady} = this.state
         console.log(this.albumInfo)
         return (
             <>
                 {(() => {
-                    if(toPhoto) {
-                        return <Redirect to={`/photo/${this.photoId}`}/>
-                    }
-                    else if(isAlbumReady && isPhotoListReady) {
+                    if(isAlbumReady && isPhotoListReady) {
                         return (
                             <div className="album-wrapper">
                                 <AlbumInfo albumInfo={this.albumInfo}/>

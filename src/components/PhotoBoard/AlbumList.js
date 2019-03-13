@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import defaultAlbumCover from '../../assets/img/default_photo_img.png'
 import defaultStarAlbumCover from '../../assets/img/default_photo_img_star.png'
 import Image from '../Common/Image'
@@ -17,17 +18,28 @@ class AlbumList extends React.Component {
         let albums = this.props.albums;
         let albumList = albums.map(album => {
             return (
-                <div className="album-list" key={album.object_id} onClick={(e) => this.props.redirectAlbum(album.object_id)}>
-                    <Image imgSrc={album.file_path} defaultImgSrc={albumCover} />
-                    <div className="album-cover">
-                        <h5>
-                            {album.title}
-                        </h5>
-                    </div>
+                <div className="album-list" key={album.object_id} >
+                    <Link to={`/album/${album.object_id}`}>
+
+                        <Image imgSrc={album.file_path} defaultImgSrc={albumCover} />
+                        <div className="album-cover">
+                            <h5>
+                                {album.title}
+                            </h5>
+                        </div>
+                    </Link>
                 </div>
             )
         })
         return albumList;
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log('[%s] shouldComponentUpdate', TAG)
+        if (this.props.albums.length === nextProps.albums.length) {
+            return false;
+        }
+        return true;
     }
 
     render() {
@@ -39,7 +51,7 @@ class AlbumList extends React.Component {
                 </div>
                 <button className="enif-btn-circle" onClick={() => this.props.togglePopUp()}>+</button>
             </React.Fragment>
-        ) 
+        )
     }
 }
 
