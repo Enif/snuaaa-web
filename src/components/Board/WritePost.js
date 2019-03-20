@@ -24,14 +24,13 @@ class WritePost extends React.Component {
         console.log('[%s] postLogIn', TAG);
 
         let postInfo = {
-            boardNo: this.props.boardNo,
             title: this.state.title,
             contents: this.state.contents
         }
 
         console.log(JSON.stringify(postInfo));
 
-        await service.createPost(postInfo)
+        await service.createPost(this.props.boardNo, postInfo)
         .then((res) => {
             console.log('[%s] Save Post Success', TAG)
             this.props.setBoardState(0);
