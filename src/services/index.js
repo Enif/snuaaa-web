@@ -27,8 +27,8 @@ export function retrievePost(postNo) {
     return axios.get(SERVER_URL + `api/post/${postNo}`);
 }
 
-export function createPost(data) {
-    return axios.post(SERVER_URL + 'api/post/', data);
+export function createPost(board_id, data) {
+    return axios.post(SERVER_URL + `api/board/${board_id}/post`, data);
 }
 
 export function retrieveComments(parent_id) {
