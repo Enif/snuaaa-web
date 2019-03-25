@@ -39,8 +39,12 @@ export function createComment(parent_id, data) {
     return axios.post(SERVER_URL + `api/object/${parent_id}/comment`, data);
 }
 
-export function retrieveAlbumsInPhotoBoard(boardNo) {
-    return axios.get(SERVER_URL + `api/photoboard/${boardNo}/albums`)
+export function retrieveAlbumsInPhotoBoard(board_id) {
+    return axios.get(SERVER_URL + `api/photoboard/${board_id}/albums`)
+}
+
+export function retrieveAlbumsInPhotoBoardByCategory(board_id, ctg_id) {
+    return axios.get(SERVER_URL + `api/photoboard/${board_id}/albums?category=${ctg_id}`)
 }
 
 export function createAlbum(boardNo, data) {

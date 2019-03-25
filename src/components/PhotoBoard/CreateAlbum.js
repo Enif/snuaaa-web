@@ -12,6 +12,7 @@ class CreateAlbum extends React.Component {
         this.state = {
             title: '',
             contents: '',
+            checkedCategory: ''
         }
     }
 
@@ -30,6 +31,7 @@ class CreateAlbum extends React.Component {
         }
         else {
             let albumInfo = {
+                category_id: this.state.checkedCategory,
                 title: this.state.title,
                 contents: this.state.contents
             }
@@ -49,6 +51,12 @@ class CreateAlbum extends React.Component {
         }
     }
 
+    handleCategoryChange = (e) => {
+        this.setState({
+            checkedCategory: e.target.value
+        })
+    }
+
     render() {
         console.log('[%s] render', TAG)
      
@@ -58,6 +66,19 @@ class CreateAlbum extends React.Component {
                     <h3>앨범 생성</h3>
                     {/* <button className="enif-btn-cancel" onClick={()=>this.props.togglePopUp()}> x </button> */}
                     <div>
+                        <input type="radio" id="ctg-event" name="category" value="ctg001"
+                        checked={this.state.checkedCategory === 'ctg001'} onChange={this.handleCategoryChange}/>
+                        <label htmlFor="ctg-event">행사</label>
+
+                        <input type="radio" id="ctg-observe" name="category" value="ctg002"
+                        checked={this.state.checkedCategory === 'ctg002'} onChange={this.handleCategoryChange}/>
+                        <label htmlFor="ctg-observe">관측</label>
+
+                        <input type="radio" id="ctg-friendship" name="category" value="ctg003"
+                        checked={this.state.checkedCategory === 'ctg003'} onChange={this.handleCategoryChange}/>
+                        <label htmlFor="ctg-friendship">친목</label>
+                    </div>
+                    <div className="input-text">
                         <input type="text" name="title" placeholder="앨범 제목" onChange={(e) => this.handleChange(e)}/>
                     </div>
                     <div>

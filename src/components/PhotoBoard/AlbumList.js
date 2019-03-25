@@ -16,13 +16,24 @@ class AlbumList extends React.Component {
 
         let albumCover = this.props.boardNo === 'pb02' ? defaultStarAlbumCover : defaultAlbumCover;
         let albums = this.props.albums;
+        let color;
+
         let albumList = albums.map(album => {
+            if(album.category_color) {
+                color = {
+                    "border-top-color": album.category_color
+                }
+            }
+            
             return (
                 <div className="album-list" key={album.object_id} >
                     <Link to={`/album/${album.object_id}`}>
 
                         <Image imgSrc={album.file_path} defaultImgSrc={albumCover} />
                         <div className="album-cover">
+                            <div className="album-category-marker" style={color}>
+
+                            </div>
                             <h5>
                                 {album.title}
                             </h5>

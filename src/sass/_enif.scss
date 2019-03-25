@@ -37,9 +37,11 @@
         font-weight: bold;
         margin-bottom: 1rem;
     }
-    input {
-        height: 2rem;
-        width: 100%;
+    .input-text {
+        input {
+            height: 2rem;
+            width: 100%;
+        }    
     }
     textarea {
         height: 8rem;
