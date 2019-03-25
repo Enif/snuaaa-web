@@ -34,6 +34,13 @@
             background-color: rgba(104, 104, 104, 0.5);
             transition: all 1s;
         }
+        .album-category-marker {
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-top: 50px solid transparent;
+            border-right: 50px solid transparent;
+        }
         h5 {
             text-align: center;
             font-size: 15px;

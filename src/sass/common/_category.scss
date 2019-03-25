@@ -1,0 +1,22 @@
+.category-wrapper {
+    display: flex;
+    .category-all {
+        margin: 10px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .category-obj {
+        display: flex;
+        .category-box {
+            width: 10px;
+            height: 100%;
+            // height: 10px;
+            // background-color: #c45454;
+            margin-right: 5px;
+        }
+        margin: 10px;
+        font-size: 18px;
+        cursor: pointer;
+    }
+}
