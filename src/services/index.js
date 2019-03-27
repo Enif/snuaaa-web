@@ -19,12 +19,16 @@ export function retrieveUserInfo() {
     return axios.get(SERVER_URL + 'api/userinfo/');
 }
 
-export function retrievePostsInBoard(boardNo) {
-    return axios.get(SERVER_URL + `api/board/${boardNo}`);
+export function retrieveBoardInfo(board_id) {
+    return axios.get(SERVER_URL + `api/board/${board_id}`);
 }
 
-export function retrievePost(postNo) {
-    return axios.get(SERVER_URL + `api/post/${postNo}`);
+export function retrievePostsInBoard(board_id) {
+    return axios.get(SERVER_URL + `api/board/${board_id}/posts`);
+}
+
+export function retrievePost(post_id) {
+    return axios.get(SERVER_URL + `api/post/${post_id}`);
 }
 
 export function createPost(board_id, data) {

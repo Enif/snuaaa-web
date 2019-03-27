@@ -1,19 +1,19 @@
 export const BoardEnum = [
     {
-        boardNo : 'b00',
+        boardNo : 'brd01',
         boardName : "소리통"
     },
     {
-        boardNo : 'b01',
+        boardNo : 'brd02',
         boardName : "천기누설"
     },
     {
-        boardNo : 'b02',
+        boardNo : 'brd03',
         boardName : "낡은일기장",
         
     },
     {
-        boardNo : 'b03',
+        boardNo : 'brd04',
         boardName : "관측게시판",
         category : [{
             categoryNo : "c01",
@@ -29,7 +29,7 @@ export const BoardEnum = [
         }]
     },
     {
-        boardNo : 'b04',
+        boardNo : 'brd05',
         boardName : "아고라",
         category : [{
             categoryNo : "c01",
@@ -41,7 +41,7 @@ export const BoardEnum = [
         }]
     },
     {
-        boardNo : 'b05',
+        boardNo : 'brd06',
         boardName : "시그너스"
     },
 ]

@@ -1,41 +1,75 @@
 import React from 'react';
-import { Redirect } from 'react-router';
 import { BoardEnum } from '../../components/Board/BoardEnum';
-//import Post from '../../components/Board/Post';
-import PostList from '../../components/Board/PostList';
-import WritePost from '../../components/Board/WritePost';
+import * as service from '../../services';
+import PostBoard from '../postboard/PostBoard';
+import Loading from '../../components/Common/Loading';
 
 const TAG = 'BOARD'
 
 class Board extends React.Component {
 
     constructor(props) {
+        console.log(`[${TAG}] Constructor`)
+
         super(props);
         
+        this.boardInfo = undefined;
+        this.categories = undefined;
         this.state = {
-            boardState: 0,
-            boardNo: this.props.match.params.bNo,
-            postId: ''
+            isReady: false,
+            board_id: this.props.match.params.bNo,
         }
+    }
+
+    componentDidMount() {
+        console.log(`[${TAG}] ComponentDidMount`)
+        this.retrieveBoardInfo(this.state.board_id);
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log(`[${TAG}] shouldComponentUpdate`)
+        console.log(`[${TAG}] this.state.isReady : ${this.state.isReady}`)
+        console.log(`[${TAG}] nextState.isReady : ${nextState.isReady}`)
+        if(this.state.isReady && nextState.isReady) {
+            this.retrieveBoardInfo(nextState.board_id)
+            return false;
+        }
+        else {
+            return true;
+            // return false;
+        }
+        // this.retrieveBoardInfo(this.state.boardNo);
+        // return true;
+    }
+
+    componentWillUnmount() {
+        console.log(`[${TAG}] ComponentWillUnmount`)
     }
 
     static getDerivedStateFromProps(props, state) {
         console.log('[%s] getDerivedStateFromProps', TAG);
         return {
-            boardNo: props.match.params.bNo
+            board_id: props.match.params.bNo
         }
     }
-    
-    getBoardName = (bNo) => {
-        let bName = '';
-        BoardEnum.forEach((board) => {
-            if(board.boardNo === bNo) {
-                bName = board.boardName
-            }
-        })
-        return bName;
-    }
 
+    retrieveBoardInfo = async (board_id) => {
+        this.setState({
+            isReady: false
+        })
+        await service.retrieveBoardInfo(board_id)
+        .then((res) => {
+            this.boardInfo = res.data.resBoardInfo;
+            this.categories = res.data.resCategoryInfo;
+            this.setState({
+                isReady: true
+            })
+        })
+        .catch((err) => {
+            console.error(err);
+        })
+    }
+    
     getCategory = (bNo) => {
         let categorys = [];
         BoardEnum.forEach((board) => {
@@ -57,34 +91,30 @@ class Board extends React.Component {
         }
     }
 
-    setBoardState = (index) => {
-        this.setState({
-            boardState: index
-        })
-    }
-
-    setPostId = (id) => {
-        this.setState({
-            postId: id
-        })
-    }
 
     render() {
+        console.log(`[${TAG}] render.. `)
         return (
             <div id="contents-center">
-                <div className="board-wrapper">
-                    <h2>{this.getBoardName(this.state.boardNo)}</h2>
-                    {this.getCategory(this.state.boardNo)}
-                    {
-                        (() => {
-                            if (this.state.boardState === 0) return (<PostList boardNo={this.state.boardNo} setBoardState={this.setBoardState} setPostId={this.setPostId} />);
-                            else if (this.state.boardState === 1) return (<WritePost boardNo={this.state.boardNo} setBoardState={this.setBoardState}/>);
-                            // else if (this.state.boardState === 2) return (<Post boardNo={this.state.boardNo} setBoardState={this.setBoardState} postId={this.state.postId} />);
-                            else if (this.state.boardState === 2) return (<Redirect to={`/post/${this.state.postId}`}/>)
-                            else return (<div>error page</div>);
-                        })()
+                {(() => {
+                    if(this.state.isReady) {
+                        if(this.boardInfo.board_type === 'N') {
+                            return (
+                                <PostBoard boardInfo={this.boardInfo} board_id={this.state.board_id} categories={this.categories}/>
+                            )
+                        }
+                        else if(this.boardInfo.board_type === 'P') {
+                            return (
+                                <div>PhotoBoard</div>
+                            )
+                        }
                     }
-                </div>
+                    else {
+                        return (
+                            <Loading />
+                        )
+                    }
+                })()}
             </div>
         );
     }

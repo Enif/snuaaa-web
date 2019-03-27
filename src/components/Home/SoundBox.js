@@ -35,7 +35,7 @@ class SoundBox extends React.Component {
     render() {
         return(
             <div id="soundbox-wrapper" className="content">
-                <Link to ='/board/b00'><div id="soundbox-title">NOTICE</div></Link>
+                <Link to ='/board/brd01'><div id="soundbox-title">NOTICE</div></Link>
                 <div id="soundbox-contents-wrapper">
                     <div id="soundbox-content" className="content">    
                         <h5>{this.state.title}</h5>
