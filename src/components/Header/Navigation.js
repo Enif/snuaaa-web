@@ -89,8 +89,8 @@ class Navigation extends React.Component {
                             {
                                 <div className={subNoticeClass}>
                                     <ul>
-                                        <Link to='/board/b00'><li>소리통</li></Link>
-                                        <Link to='/board/b01'><li>천기누설</li></Link>
+                                        <Link to='/board/brd01'><li>소리통</li></Link>
+                                        <Link to='/board/brd02'><li>천기누설</li></Link>
                                     </ul>
                                 </div>
                             }
@@ -100,8 +100,8 @@ class Navigation extends React.Component {
                             {
                                 <div className={subBoardClass}>
                                     <ul>
-                                        <Link to='/board/b02'><li>낡은읽기장</li></Link>
-                                        <Link to='/board/b03'><li>관측게시판</li></Link>
+                                        <Link to='/board/brd03'><li>낡은읽기장</li></Link>
+                                        <Link to='/board/brd04'><li>관측게시판</li></Link>
                                     </ul>
                                 </div>
                             }
@@ -111,7 +111,7 @@ class Navigation extends React.Component {
                             {
                                 <div className={subOfficialClass}>
                                     <ul>
-                                        <Link to='/board/b04'><li>아고라</li></Link>
+                                        <Link to='/board/brd05'><li>아고라</li></Link>
                                         <Link to='/document'><li>문서보관소</li></Link>
                                     </ul>
                                 </div>
@@ -122,8 +122,8 @@ class Navigation extends React.Component {
                             {
                                 <div className={subPhotoBoardClass}>
                                     <ul>
-                                        <Link to='/photoboard/pb01'><li>추억만들기</li></Link>
-                                        <Link to='/photoboard/pb02'><li>별사진</li></Link>
+                                        <Link to='/board/brd07'><li>추억만들기</li></Link>
+                                        <Link to='/board/brd08'><li>별사진</li></Link>
                                     </ul>
                                 </div>
                             }

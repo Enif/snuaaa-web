@@ -26,7 +26,7 @@ class Album extends React.Component {
     // static getDerivedStateFromProps(props, state) {
     //     console.log('[%s] getDerivedStateFromProps', TAG);
     //     return {
-    //         boardNo: props.match.params.pbNo
+    //         board_id: props.match.params.pbNo
     //     }
     // }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 //import { withRouter } from 'react-router';
 import { Route } from 'react-router-dom';
-import { Home, About, Board, PhotoBoard, Album, Photo, Document, SignUp, LogIn, UserInfo } from './pages';
+import { Home, About, Board, Album, Photo, Document, SignUp, LogIn, UserInfo } from './pages';
 import Post from '../components/Board/Post';
 
 class Section extends React.Component {
@@ -14,7 +14,7 @@ class Section extends React.Component {
                 <Route path="/about/:aaa" component={About}/>
                 <Route path="/board/:bNo" component={Board}/>
                 <Route path="/post/:pNo" component={Post}/>
-                <Route path="/photoboard/:pbNo" component={PhotoBoard}/>
+                {/* <Route path="/photoboard/:pbNo" component={PhotoBoard}/> */}
                 <Route path="/album/:aNo" component={Album}/>
                 <Route path="/photo/:pNo" component={Photo}/>
                 <Route path="/document" component={Document}/>

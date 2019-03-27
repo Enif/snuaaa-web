@@ -1,19 +1,19 @@
 export const BoardEnum = [
     {
-        boardNo : 'b00',
+        board_id : 'brd01',
         boardName : "소리통"
     },
     {
-        boardNo : 'b01',
+        board_id : 'brd02',
         boardName : "천기누설"
     },
     {
-        boardNo : 'b02',
+        board_id : 'brd03',
         boardName : "낡은일기장",
         
     },
     {
-        boardNo : 'b03',
+        board_id : 'brd04',
         boardName : "관측게시판",
         category : [{
             categoryNo : "c01",
@@ -29,7 +29,7 @@ export const BoardEnum = [
         }]
     },
     {
-        boardNo : 'b04',
+        board_id : 'brd05',
         boardName : "아고라",
         category : [{
             categoryNo : "c01",
@@ -41,18 +41,18 @@ export const BoardEnum = [
         }]
     },
     {
-        boardNo : 'b05',
+        board_id : 'brd06',
         boardName : "시그너스"
     },
 ]
 
 export const PhotoBoardEnum = [
     {
-        boardNo : 'pb01',
+        board_id : 'pb01',
         boardName : '추억만들기'
     },
     {
-        boardNo : 'pb02',
+        board_id : 'pb02',
         boardName : '별사진'
     }
 ]

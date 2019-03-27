@@ -1,9 +1,9 @@
 import React from 'react';
 import * as service from '../../services';
 
-const TAG = 'WRITEPOST'
+const TAG = 'CREATEPOST'
 
-class WritePost extends React.Component {
+class CreatePost extends React.Component {
 
     constructor(props) {
         super(props);
@@ -30,10 +30,11 @@ class WritePost extends React.Component {
 
         console.log(JSON.stringify(postInfo));
 
-        await service.createPost(this.props.boardNo, postInfo)
+        await service.createPost(this.props.board_id, postInfo)
         .then((res) => {
             console.log('[%s] Save Post Success', TAG)
-            this.props.setBoardState(0);
+            this.props.retrievePosts();
+            this.props.togglePopUp();
         })
         .catch((res) => {
             console.log('[%s] Save Post Fail', TAG)
@@ -51,7 +52,7 @@ class WritePost extends React.Component {
                     <textarea name="contents" value={this.state.contents} onChange={this.handleChange} />
                 </div>
                 <div>
-                    <button> 취소 </button>
+                    <button onClick={() => this.props.togglePopUp()}> 취소 </button>
                     <button onClick={this.createPost}> 확인 </button>
                 </div>
             </div>
@@ -59,4 +60,4 @@ class WritePost extends React.Component {
     }
 }
 
-export default WritePost;
+export default CreatePost;

@@ -1,8 +1,8 @@
 import React from 'react';
 import * as service from '../../services';
 import { PhotoBoardEnum } from '../../components/Board/BoardEnum';
-import Memory from '../photoboard/Memory';
-import AstroPhoto from '../photoboard/AstroPhoto';
+import Memory from './Memory';
+import AstroPhoto from './AstroPhoto';
 import AlbumList from '../../components/PhotoBoard/AlbumList';
 import CreateAlbum from '../../components/PhotoBoard/CreateAlbum';
 import Loading from '../../components/Common/Loading';
@@ -15,7 +15,7 @@ class PhotoBoard extends React.Component {
         super(props);
         this.albums = [];
         this.state = {
-            boardNo: this.props.match.params.pbNo,
+            // board_id: this.props.match.params.pbNo,
             // popUpState: false,
             isReady: false,
             // popUpState: false,
@@ -23,18 +23,18 @@ class PhotoBoard extends React.Component {
         // this.retrieveAlbums(this.props.match.params.pbNo)
     }
 
-    static getDerivedStateFromProps(props, state) {
-        console.log('[%s] getDerivedStateFromProps', TAG);
-        return {
-            boardNo: props.match.params.pbNo
-        }
-    }
+    // static getDerivedStateFromProps(props, state) {
+    //     console.log('[%s] getDerivedStateFromProps', TAG);
+    //     return {
+    //         board_id: props.match.params.pbNo
+    //     }
+    // }
 
     // shouldComponentUpdate(nextProps, nextState) {
     //     console.log('[%s] shouldComponentUpdate', TAG)
-    //     if(this.state.boardNo !== nextState.boardNo){
+    //     if(this.state.board_id !== nextState.board_id){
     //         nextState.isShow = false;
-    //         this.retrieveAlbums(nextState.boardNo)
+    //         this.retrieveAlbums(nextState.board_id)
     //         nextState.isAlbumListReady = false;
     //         return true;
     //     }
@@ -45,15 +45,15 @@ class PhotoBoard extends React.Component {
     //     return false;
     // }
     
-    getBoardName = (bNo) => {
-        let bName = '';
-        PhotoBoardEnum.forEach((board) => {
-            if(board.boardNo === bNo) {
-                bName = board.boardName
-            }
-        })
-        return bName;
-    }
+    // getBoardName = (bNo) => {
+    //     let bName = '';
+    //     PhotoBoardEnum.forEach((board) => {
+    //         if(board.board_id === bNo) {
+    //             bName = board.boardName
+    //         }
+    //     })
+    //     return bName;
+    // }
 
     setIsReady = (isReady) => {
         this.setState({
@@ -61,10 +61,10 @@ class PhotoBoard extends React.Component {
         })
     }
 
-    // retrieveAlbums = async(boardNo) => {
+    // retrieveAlbums = async(board_id) => {
     //     console.log('[%s] Retrieve Albums', TAG);
 
-    //     await service.retrieveAlbumsInPhotoBoard(boardNo)
+    //     await service.retrieveAlbumsInPhotoBoard(board_id)
     //     .then((res) => {
     //         console.log('[%s] Retrieve Albums Success', TAG);
     //         this.albums = res.data;
@@ -79,23 +79,24 @@ class PhotoBoard extends React.Component {
 
     render() {
 
-        let {isAlbumListReady, boardNo} = this.state;
+        let { board_id, boardInfo, categories } = this.props;
+        // let {isAlbumListReady, board_id} = this.state;
 
         return (
             <>
                 {(() => {
                     // if(! isAlbumListReady) {
-                        if(boardNo === 'pb01') {
+                        if(board_id === 'brd07') {
                             return (
-                                <Memory boardName={this.getBoardName(this.state.boardNo)} boardNo={this.state.boardNo} setIsReady={this.setIsReady} />
+                                <Memory board_id={board_id} boardInfo={boardInfo} categories={categories} />
                             )
                         }
-                        else if(boardNo === 'pb02'){
+                        else if(board_id === 'brd08'){
                             return (
-                                <AstroPhoto boardName={this.getBoardName(this.state.boardNo)} boardNo={this.state.boardNo}/>
+                                <AstroPhoto board_id={board_id} boardInfo={boardInfo} categories={categories} />
                             )
                         }
-                        else if(boardNo === 'pb03'){
+                        else if(board_id === 'brd09'){
                             return (
                                 <div>사진전..</div>
                             )

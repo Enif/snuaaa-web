@@ -14,7 +14,7 @@ class AlbumList extends React.Component {
 
     retrieveAlbums = () => {
 
-        let albumCover = this.props.boardNo === 'pb02' ? defaultStarAlbumCover : defaultAlbumCover;
+        let albumCover = this.props.board_id === 'brd08' ? defaultStarAlbumCover : defaultAlbumCover;
         let albums = this.props.albums;
         let color;
 
