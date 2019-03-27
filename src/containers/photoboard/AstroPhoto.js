@@ -19,9 +19,11 @@ class AstroPhoto extends React.Component {
             isReady: false,
             isViewPhotos: false
         }
-        this.retrieveAlbums(this.props.boardNo)
     }
 
+    componentDidMount() {
+        this.retrieveAlbums(this.props.board_id);
+    }
 
     setIsReady = (isReady) => {
         this.setState({
@@ -34,20 +36,20 @@ class AstroPhoto extends React.Component {
             isViewPhotos: isViewPhotos
         })
         if (!isViewPhotos) {
-            this.retrieveAlbums(this.props.boardNo);
+            this.retrieveAlbums(this.props.board_id);
         }
         else {
-            this.retrievePhotos(this.props.boardNo);
+            this.retrievePhotos(this.props.board_id);
         }
     }
 
-    retrieveAlbums = async (boardNo) => {
+    retrieveAlbums = async (board_id) => {
         console.log('[%s] Retrieve Albums', TAG);
         this.setState({
             isReady: false
         })
 
-        await service.retrieveAlbumsInPhotoBoard(boardNo)
+        await service.retrieveAlbumsInPhotoBoard(board_id)
             .then((res) => {
                 console.log('[%s] Retrieve Albums Success', TAG);
                 this.albums = res.data;
@@ -60,13 +62,13 @@ class AstroPhoto extends React.Component {
             })
     }
 
-    retrievePhotos = async (boardNo) => {
+    retrievePhotos = async (board_id) => {
         console.log('[%s] Retrieve Albums', TAG);
         this.setState({
             isReady: false
         })
 
-        await service.retrievePhotosInPhotoBoard(boardNo)
+        await service.retrievePhotosInPhotoBoard(board_id)
             .then((res) => {
                 console.log('[%s] Retrieve Albums Success', TAG);
                 this.photos = res.data;
@@ -88,6 +90,7 @@ class AstroPhoto extends React.Component {
     render() {
 
         let { isReady } = this.state;
+        let { board_id, boardInfo } = this.props;
         let albumSelectorClassName = "view-type-selector" + (this.state.isViewPhotos ? "" : " selected")
         let photoSelectorClassName = "view-type-selector" + (this.state.isViewPhotos ? " selected" : "")
 
@@ -97,7 +100,7 @@ class AstroPhoto extends React.Component {
                     if (isReady) {
                         return (
                             <div className="photoboard-wrapper">
-                                <h2>{this.props.boardName}</h2>
+                                <h2>{boardInfo.board_name}</h2>
                                 <div className="view-type-selector-wrapper">
                                     <div className={albumSelectorClassName} onClick={() => this.setIsViewPhotos(false)}>앨범</div>
                                     <div className={photoSelectorClassName} onClick={() => this.setIsViewPhotos(true)}>사진</div>
@@ -106,14 +109,14 @@ class AstroPhoto extends React.Component {
                                     (
                                         <>
                                             <PhotoList photos={this.photos} togglePopUp={this.togglePopUp} />
-                                            {this.state.popUpState && <CreatePhoto boardNo={this.props.boardNo} retrievePhotos={this.retrievePhotos} togglePopUp={this.togglePopUp} />}
+                                            {this.state.popUpState && <CreatePhoto board_id={board_id} retrievePhotos={this.retrievePhotos} togglePopUp={this.togglePopUp} />}
                                         </>
                                     )
                                     :
                                     (
                                         <>
-                                            <AlbumList boardNo={this.state.boardNo} albums={this.albums} togglePopUp={this.togglePopUp} />
-                                            {this.state.popUpState && <CreateAlbum boardNo={this.props.boardNo} retrieveAlbums={this.retrieveAlbums} togglePopUp={this.togglePopUp} />}
+                                            <AlbumList board_id={board_id} albums={this.albums} togglePopUp={this.togglePopUp} />
+                                            {this.state.popUpState && <CreateAlbum board_id={board_id} retrieveAlbums={this.retrieveAlbums} togglePopUp={this.togglePopUp} />}
                                         </>
                                     )
                                 }

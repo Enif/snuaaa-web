@@ -49,7 +49,6 @@ class PostBoard extends React.Component {
         await service.retrievePostsInBoard(this.props.board_id)
         .then((res) => {
             console.log('[%s] Retrieve Posts Success', TAG);
-            console.log(res.data)
             this.posts = res.data;
             this.setIsReady(true);
         })
@@ -72,7 +71,7 @@ class PostBoard extends React.Component {
 
     render() {
         let boardName = this.props.boardInfo.board_name;
-        console.log(`[${TAG}] render.. }`)
+        console.log(`[${TAG}] render.. `)
         console.log(`[${TAG}] board_name : ${boardName}`)
         return (
             <div id="contents-center">
@@ -86,14 +85,14 @@ class PostBoard extends React.Component {
                         return (
                             <div className="board-wrapper">
                                 <h2>{boardName}</h2>
-                                {/* {this.getCategory(this.state.boardNo)} */}
+                                {/* {this.getCategory(this.state.board_id)} */}
                                 {this.retrieveCategories()}
                                 <PostList posts={this.posts} togglePopUp={this.togglePopUp} />
                                 {/* {
                                     (() => {
                                         if (this.state.boardState === 0) return ();
-                                        else if (this.state.boardState === 1) return (<WritePost boardNo={this.state.boardNo} setBoardState={this.setBoardState}/>);
-                                        // else if (this.state.boardState === 2) return (<Post boardNo={this.state.boardNo} setBoardState={this.setBoardState} postId={this.state.postId} />);
+                                        else if (this.state.boardState === 1) return (<WritePost board_id={this.state.board_id} setBoardState={this.setBoardState}/>);
+                                        // else if (this.state.boardState === 2) return (<Post board_id={this.state.board_id} setBoardState={this.setBoardState} postId={this.state.postId} />);
                                         else if (this.state.boardState === 2) return (<Redirect to={`/post/${this.state.postId}`}/>)
                                         else return (<div>error page</div>);
                                     })()

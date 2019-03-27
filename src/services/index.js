@@ -51,16 +51,16 @@ export function retrieveAlbumsInPhotoBoardByCategory(board_id, ctg_id) {
     return axios.get(SERVER_URL + `api/photoboard/${board_id}/albums?category=${ctg_id}`)
 }
 
-export function createAlbum(boardNo, data) {
-    return axios.post(SERVER_URL + `api/photoboard/${boardNo}/album`, data)
+export function createAlbum(board_id, data) {
+    return axios.post(SERVER_URL + `api/photoboard/${board_id}/album`, data)
 }
 
-export function retrievePhotosInPhotoBoard(boardNo) {
-    return axios.get(SERVER_URL + `api/photoboard/${boardNo}/photos`)
+export function retrievePhotosInPhotoBoard(board_id) {
+    return axios.get(SERVER_URL + `api/photoboard/${board_id}/photos`)
 }
 
-export function createPhotosInPhotoBoard(boardNo, data) {
-    return axios.post(SERVER_URL + `api/photoboard/${boardNo}/photo`, data)
+export function createPhotosInPhotoBoard(board_id, data) {
+    return axios.post(SERVER_URL + `api/photoboard/${board_id}/photo`, data)
 }
 
 export function createPhotosInAlbum(albumId, data) {

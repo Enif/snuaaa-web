@@ -59,14 +59,14 @@ class CreatePhoto extends React.Component {
                 this.props.togglePopUp();
             })
         }
-        else if(this.props.boardNo) {
-            photoInfo.append('boardNo', this.props.boardNo);
+        else if(this.props.board_id) {
+            photoInfo.append('board_id', this.props.board_id);
 
-            await service.createPhotosInPhotoBoard(this.props.boardNo, photoInfo)
+            await service.createPhotosInPhotoBoard(this.props.board_id, photoInfo)
             .then(() => {
                 console.log('[%s] Create Photos Success', TAG);
                 this.props.togglePopUp();
-                this.props.retrievePhotos(this.props.boardNo);
+                this.props.retrievePhotos(this.props.board_id);
             })
             .catch(() => {
                 console.error(`[${TAG}] Create Photos Fail`);

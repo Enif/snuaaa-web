@@ -122,8 +122,8 @@ class Navigation extends React.Component {
                             {
                                 <div className={subPhotoBoardClass}>
                                     <ul>
-                                        <Link to='/photoboard/pb01'><li>추억만들기</li></Link>
-                                        <Link to='/photoboard/pb02'><li>별사진</li></Link>
+                                        <Link to='/board/brd07'><li>추억만들기</li></Link>
+                                        <Link to='/board/brd08'><li>별사진</li></Link>
                                     </ul>
                                 </div>
                             }

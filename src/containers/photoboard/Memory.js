@@ -7,24 +7,6 @@ import Loading from '../../components/Common/Loading';
 
 const TAG = 'MEMORY'
 
-const category = [
-    {
-        "category_id": "ctg001",
-        "category_name": "행사",
-        "category_color": "#ff7b00"
-    },
-    {
-        "category_id": "ctg002",
-        "category_name": "관측",
-        "category_color": "#0080ff"
-    },
-    {
-        "category_id": "ctg003",
-        "category_name": "친목",
-        "category_color": "#c45454"
-    }
-]
-
 class Memory extends React.Component {
 
     constructor(props) {
@@ -35,7 +17,10 @@ class Memory extends React.Component {
             popUpState: false,
             isReady: false,
         }
-        this.retrieveAlbums(this.props.boardNo)
+    }
+
+    componentDidMount() {
+        this.retrieveAlbums(this.props.board_id)
     }
 
     setIsReady = (isReady) => {
@@ -84,18 +69,19 @@ class Memory extends React.Component {
 
     render() {
         let { isReady } = this.state;
-        console.log(this.state)
+        let { board_id, boardInfo, categories } = this.props;
+
         return (
             <>
                 {(() => {
                     if (isReady) {
                         return(
                             <div className="board-wrapper">
-                                <h2>{this.props.boardName}</h2>
-                                <Category categories={category} board_id={this.props.boardNo} clickAll={this.retrieveAlbums} clickCategory={this.retrieveAlbumsByCategory} />
-                                <AlbumList boardNo={this.props.boardNo} albums={this.albums} togglePopUp={this.togglePopUp}/>
+                                <h2>{boardInfo.board_name}</h2>
+                                <Category categories={categories} board_id={board_id} clickAll={this.retrieveAlbums} clickCategory={this.retrieveAlbumsByCategory} />
+                                <AlbumList board_id={board_id} albums={this.albums} togglePopUp={this.togglePopUp}/>
                                 {
-                                    this.state.popUpState && <CreateAlbum boardNo={this.props.boardNo} retrieveAlbums={this.retrieveAlbums} togglePopUp={this.togglePopUp} />
+                                    this.state.popUpState && <CreateAlbum board_id={board_id} categories={categories} retrieveAlbums={this.retrieveAlbums} togglePopUp={this.togglePopUp} />
                                 }
                             </div>
                         )

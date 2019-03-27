@@ -23,11 +23,27 @@ class CreateAlbum extends React.Component {
         console.log(this.state.title);
     }
 
+    makeCategoryList = () => {
+        let CategoryList = this.props.categories.map((category) => {
+            return (
+                <>
+                    <input type="radio" id={category.category_id} name="category" value={category.category_id}
+                    checked={this.state.checkedCategory === category.category_id} onChange={this.handleCategoryChange}/>
+                    <label htmlFor={category.category_id}>{category.category_name}</label>
+                </>
+            )
+        })
+        return CategoryList;
+    }
+
     createAlbum = async () => {
         console.log('[%s] createAlbum', TAG);
 
         if(!this.state.title) {
             alert("제목을 입력해 주세요")
+        }
+        else if(this.props.categories && !this.state.checkedCategory) {
+            alert("카테고리를 선택해 주세요")
         }
         else {
             let albumInfo = {
@@ -35,13 +51,12 @@ class CreateAlbum extends React.Component {
                 title: this.state.title,
                 contents: this.state.contents
             }
-            console.log(albumInfo);
             
-            await service.createAlbum(this.props.boardNo, albumInfo)
+            await service.createAlbum(this.props.board_id, albumInfo)
             .then(() => {
                 console.log('[%s] Create Album Success', TAG);
                 this.props.togglePopUp();
-                this.props.retrieveAlbums(this.props.boardNo)
+                this.props.retrieveAlbums(this.props.board_id)
             })
             .catch((err) => {
                 console.log('[%s] Create Album Fail', TAG);
@@ -64,19 +79,8 @@ class CreateAlbum extends React.Component {
             <div className="enif-popup">
                 <div className="enif-popup-content">
                     <h3>앨범 생성</h3>
-                    {/* <button className="enif-btn-cancel" onClick={()=>this.props.togglePopUp()}> x </button> */}
-                    <div>
-                        <input type="radio" id="ctg-event" name="category" value="ctg001"
-                        checked={this.state.checkedCategory === 'ctg001'} onChange={this.handleCategoryChange}/>
-                        <label htmlFor="ctg-event">행사</label>
-
-                        <input type="radio" id="ctg-observe" name="category" value="ctg002"
-                        checked={this.state.checkedCategory === 'ctg002'} onChange={this.handleCategoryChange}/>
-                        <label htmlFor="ctg-observe">관측</label>
-
-                        <input type="radio" id="ctg-friendship" name="category" value="ctg003"
-                        checked={this.state.checkedCategory === 'ctg003'} onChange={this.handleCategoryChange}/>
-                        <label htmlFor="ctg-friendship">친목</label>
+                    <div className="categories-wrapper">
+                        {this.props.categories && this.makeCategoryList()}
                     </div>
                     <div className="input-text">
                         <input type="text" name="title" placeholder="앨범 제목" onChange={(e) => this.handleChange(e)}/>
