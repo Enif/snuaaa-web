@@ -1,14 +1,23 @@
 {
-  "name": "snuaa-react",
-  "version": "0.1.0",
+  "name": "snuaaa-react",
+  "version": "0.6.3",
   "private": true,
-  "homepage": "http://52.78.161.191:8080/",
+  "homepage": "https://snuaaa.gitlab.io/snuaaa-react/",
+  "license": "UNLICENSED",
+  "author": {
+    "name": "Youngjae Kim",
+    "email": "yjkim1803@gmail.com"
+  },
+  "contributors": [
+    "Sooyeon Ahn"
+  ],
   "dependencies": {
     "axios": "^0.18.0",
-    "node-sass": "^4.10.0",
-    "react": "^16.6.0",
-    "react-dom": "^16.6.0",
-    "react-redux": "^5.1.0",
+    "node-sass": "^4.11.0",
+    "react": "^16.8.6",
+    "react-app-polyfill": "^0.2.2",
+    "react-dom": "^16.8.6",
+    "react-redux": "^5.1.1",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.1",
