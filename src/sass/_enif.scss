@@ -15,7 +15,7 @@
 
 .enif-popup {
     position: fixed;
-    z-index: 1;
+    z-index: 30;
     top: 0;
     left: 0;
     width: 100%;
@@ -26,16 +26,17 @@
 .enif-popup-content {
     position: relative;
     width: 500px;
-    height: 300px;
+    // height: 300px;
     margin: 0 auto;
     margin-top: 200px;
-    padding: 2rem;
+    padding: 2rem 2rem 3rem 2rem;
     background-color: #ffffff;
     z-index: 99;
     h3 {
+        text-align: center;
         font-size: 1.3rem;
         font-weight: bold;
-        margin-bottom: 1rem;
+        margin-bottom: 15px;
     }
     .input-text {
         input {
@@ -48,20 +49,29 @@
         width: 100%;
         resize: none;
     }
+
+    .enif-table {
+        width: 100%;
+        caption {
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        tr {
+            margin: 10px 0px 10px 0px;
+        }
+        th {
+            vertical-align: middle;
+            font-size: 15px;
+            font-weight: bold;
+        }
+        td {
+            padding: 5px;
+        }
+    }
 }
 
-
-.enif-popup .enif-btn-cancel {
-    // position: absolute;
-    // top: 0;
-    // right: 0;
-    // width: 40px;
-    // height: 40px;
-    // background-color: #ffffff;
-    // color: #a0a0a0;
-    // font-size: 1.5rem;
-    // border: none;
-}
 
 .enif-popup .enif-btn-common {
     // position: relative;
@@ -71,9 +81,31 @@
     right: 20px;
 }
 
-.enif-btn-cancel:hover {
-    font-weight: bold;
-    color: rgb(88, 88, 88);
+
+.enif-btn-common {
+    width: 130px;
+    height: 40px;
+    border-radius: 5px;
+    font-size: 1rem;
+    // font-weight: bold;
+    border: none;
+    background: none;
+    cursor: pointer;
+    // background: #b3cae5;
+}
+
+.enif-btn-cancel {
+    color: #b4b4b4;
+    font-size: 20px;
+    &:hover {
+        // font-weight: bold;
+        color: rgb(105, 105, 105);    
+    }
+}
+
+.enif-btn-ok {
+    color: #57adb6;
+    font-size: 20px;
 }
 
 .enif-btn-circle {
@@ -87,24 +119,6 @@
     color: #fff;
 }
 
-.enif-btn-common {
-    width: 130px;
-    height: 40px;
-    border-radius: 5px;
-    font-size: 1rem;
-    font-weight: bold;
-    border: none;
-    background: none;
-    // background: #b3cae5;
-}
-
-.enif-btn-cancel {
-    color: #36434d;
-}
-
-.enif-btn-ok {
-    color: #57adb6;
-}
 
 .enif-btn-common-rec {
     height: 3em;
@@ -155,6 +169,19 @@
     }
 }
 
+.enif-divider {
+    margin: 20px 0px 20px 0px;
+    height: 2px;
+    background-color: #C9C9C9;
+}
+
+
+.enif-fixed-top {
+    position: fixed;
+    top: 0;
+}
+
+
 // .enif-input-field input:invalid {
 //     // background-color: #fff4f4;
 //     border: 1px solid #ff7e7e;
@@ -165,6 +192,18 @@
         width: 90%;
     }
 
+    .enif-btn-circle {
+        position: fixed;
+        right: 3rem;
+        bottom: 3rem;
+        z-index: 5;
+    }
+
+    .enif-fixed-btm {
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+    }
 }
 
 /**********  ENIF  **********/

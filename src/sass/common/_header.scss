@@ -1,4 +1,6 @@
 /***** header *****/
+
+
 .main-header-wrapper {
     width: 100%;
     text-align: center;
@@ -40,10 +42,17 @@
 }
 
 
+
+.pos-relative {
+    position: relative;
+}
+
 .main-menu-nav-wrapper {
     height: 30px;
-    position: relative;
+    // position: relative;
     background-color: #05070e;
+    width: 100%;
+    z-index: 10;
 
     nav {
         color: aliceblue;
@@ -59,12 +68,13 @@
         display: inline-block;        
         color: aliceblue;
         background-color: #05070e;
-        > a {
+        .menu-item-1 {
             display: block;
             height: 25px;    
             padding-left: 20px;
             padding-right: 20px;
             color: aliceblue;
+            cursor: pointer;
             &:hover {
                 // text-decoration: none;
                 border-bottom: 3px solid #fad55f;
@@ -230,9 +240,11 @@
             span {
                 display: none;
             }
-            > a {
+            .menu-item-1 {
                 padding-left: 0.5rem;
                 padding-right: 0.5rem;
+                line-height: 2rem;
+
                 &:hover {
                     text-decoration: none;
                     color: #fad55f;
@@ -288,7 +300,6 @@
     // }
     .nav-items > li > a {
         // vertical-align: middle;
-        line-height: 2rem;
     }
     
     .popup-user-wrapper {

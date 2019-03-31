@@ -74,7 +74,7 @@ class PostBoard extends React.Component {
         console.log(`[${TAG}] render.. `)
         console.log(`[${TAG}] board_name : ${boardName}`)
         return (
-            <div id="contents-center">
+            <div className="section-contents">
                 {(() => {
                     if(this.state.popUpState) {
                         return (

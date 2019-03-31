@@ -16,9 +16,9 @@ class AlbumList extends React.Component {
 
         let albumCover = this.props.board_id === 'brd08' ? defaultStarAlbumCover : defaultAlbumCover;
         let albums = this.props.albums;
-        let color;
 
         let albumList = albums.map(album => {
+            let color;
             if(album.category_color) {
                 color = {
                     "border-top-color": album.category_color
@@ -60,7 +60,6 @@ class AlbumList extends React.Component {
                 <div className="album-list-wrapper">
                     {this.retrieveAlbums()}
                 </div>
-                <button className="enif-btn-circle" onClick={() => this.props.togglePopUp()}>+</button>
             </React.Fragment>
         )
     }

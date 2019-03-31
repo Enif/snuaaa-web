@@ -68,7 +68,7 @@ class Board extends React.Component {
     render() {
         console.log(`[${TAG}] render.. `)
         return (
-            <div id="contents-center">
+            <div className="section-contents">
                 {(() => {
                     if(this.state.isReady) {
                         if(this.boardInfo.board_type === 'N') {

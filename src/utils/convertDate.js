@@ -14,3 +14,19 @@ exports.convertDate = function(date) {
 
     return (year + "-" + month + "-" + da);
 }
+
+exports.convertFullDate = function(date) {
+    let convertedDate = new Date(date);
+    
+    let year = convertedDate.getFullYear();
+    let month = convertedDate.getMonth() < 9
+        ? '0' + (convertedDate.getMonth() + 1).toString()
+        : (convertedDate.getMonth() + 1).toString();
+    let day = convertedDate.getDate();
+    let hour = convertedDate.getHours() < 9
+        ? '0' + convertedDate.getHours()
+        : convertedDate.getHours();
+    let min = convertedDate.getMinutes();
+
+    return (`${year}.${month}.${day} ${hour}:${min}`);
+}

@@ -73,23 +73,28 @@ class Memory extends React.Component {
 
         return (
             <>
-                {(() => {
-                    if (isReady) {
-                        return(
-                            <div className="board-wrapper">
-                                <h2>{boardInfo.board_name}</h2>
-                                <Category categories={categories} board_id={board_id} clickAll={this.retrieveAlbums} clickCategory={this.retrieveAlbumsByCategory} />
-                                <AlbumList board_id={board_id} albums={this.albums} togglePopUp={this.togglePopUp}/>
-                                {
-                                    this.state.popUpState && <CreateAlbum board_id={board_id} categories={categories} retrieveAlbums={this.retrieveAlbums} togglePopUp={this.togglePopUp} />
-                                }
-                            </div>
-                        )
-                    }
-                    else {
-                        return <Loading />
-                    }
-                })()}
+                <div className="board-wrapper">
+                    <h2>{boardInfo.board_name}</h2>
+                        <Category categories={categories} board_id={board_id} clickAll={this.retrieveAlbums} clickCategory={this.retrieveAlbumsByCategory} />
+                        <div className="enif-divider"></div>
+                        {(() => {
+                            if (isReady) {
+                                return(
+                                    <>
+                                        <AlbumList board_id={board_id} albums={this.albums} togglePopUp={this.togglePopUp}/>
+                                        {
+                                            this.state.popUpState && <CreateAlbum board_id={board_id} categories={categories} retrieveAlbums={this.retrieveAlbums} togglePopUp={this.togglePopUp} />
+                                        }
+                                    </>)
+                            }
+                            else {
+                                return <Loading />
+                            }
+                        })()}
+                    <div className="enif-fixed-btm">
+                        <button className="enif-btn-circle btn-crt-album" onClick={() => this.togglePopUp()}>+</button>
+                    </div>
+                </div>
 
             </>
         );

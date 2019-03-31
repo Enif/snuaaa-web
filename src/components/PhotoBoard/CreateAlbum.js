@@ -25,11 +25,20 @@ class CreateAlbum extends React.Component {
 
     makeCategoryList = () => {
         let CategoryList = this.props.categories.map((category) => {
+            let style = {
+                "border": `1px solid ${category.category_color}`,
+            }            
+            let style_selected = {
+                "border": `1px solid ${category.category_color}`,
+                "background-color": category.category_color,
+                "color": "#eeeeee"
+            }
             return (
                 <>
                     <input type="radio" id={category.category_id} name="category" value={category.category_id}
                     checked={this.state.checkedCategory === category.category_id} onChange={this.handleCategoryChange}/>
-                    <label htmlFor={category.category_id}>{category.category_name}</label>
+                    <label htmlFor={category.category_id}
+                        style={this.state.checkedCategory === category.category_id ? style_selected : style}>{category.category_name}</label>
                 </>
             )
         })
@@ -77,20 +86,28 @@ class CreateAlbum extends React.Component {
      
         return (
             <div className="enif-popup">
-                <div className="enif-popup-content">
-                    <h3>앨범 생성</h3>
-                    <div className="categories-wrapper">
-                        {this.props.categories && this.makeCategoryList()}
-                    </div>
-                    <div className="input-text">
-                        <input type="text" name="title" placeholder="앨범 제목" onChange={(e) => this.handleChange(e)}/>
-                    </div>
-                    <div>
-                        <textarea name="contents" placeholder="앨범 설명" onChange={(e) => this.handleChange(e)}/>
-                    </div>
+                <div className="enif-popup-content crt-alb-wrapper">
+                    <table className="enif-table">
+                        <caption>앨범 생성</caption>
+                        <tbody>
+                            <tr>
+                                <th>카테고리</th>
+                                <td className="categories-wrapper">{this.props.categories && this.makeCategoryList()}</td>
+                            </tr>
+                            <tr>
+                                <th>제목</th>
+                                <td className="input-text crt-alb-title"><input type="text" name="title" placeholder="앨범 제목" onChange={(e) => this.handleChange(e)}/></td>
+                            </tr>
+                            <tr>
+                                <th>설명</th>
+                                <td className="crt-alb-contents"><textarea name="contents" placeholder="앨범 설명" onChange={(e) => this.handleChange(e)}/></td>
+                            </tr>
+                        </tbody>
+                    </table>
                     <button className="enif-btn-common enif-btn-ok" onClick={() => this.createAlbum()}>OK</button>
                     <button className="enif-btn-common enif-btn-cancel" onClick={()=>this.props.togglePopUp()} >CANCEL</button>
                 </div>
+
             </div>
         ) 
     }

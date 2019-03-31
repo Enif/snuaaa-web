@@ -7,6 +7,7 @@
     flex-wrap: wrap;
 }
 
+
 .album-list {
     width: 232px;
     height: 232px;
@@ -50,9 +51,56 @@
 }
 
 .album-info {
-    h5 {
-        font-size: 20px;
-        font-weight: bold;
+    
+    p {
+        font-size: 15px;
+        margin: 10px 10px 10px 0px;
+    }
+    .alb-title-wrapper {
+        height: 40px;
+        .alb-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 10px 10px 10px 0px;
+            float: left;
+        }
+        .alb-author {
+            // text-align: right;
+            font-size: 20px;
+            font-weight: bold;
+            float: right;
+            color: #49A0AE;
+        }
+    
+    }
+    .contents {
+
+    }
+}
+
+
+.crt-alb-wrapper {
+    .categories-wrapper {
+        height: 30px;
+        margin-top: 20px;
+        input {
+            display: none;
+        }
+        input:checked + label {
+            color: #eeeeee;
+            background-color: #005783;
+        }
+        label {
+            margin: 5px;
+            padding: 6px;
+            // border: 1px solid #005783;
+            border-radius: 7px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    }
+    .crt-alb-title {
+        margin-bottom: 10px;
     }
 }
 
