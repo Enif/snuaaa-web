@@ -82,6 +82,7 @@ class Album extends React.Component {
                         return (
                             <div className="album-wrapper">
                                 <AlbumInfo albumInfo={this.albumInfo}/>
+                                <div className="enif-divider"></div>
                                 <PhotoList photos={this.photos} redirectPhoto={this.redirectPhoto} togglePopUp={this.togglePopUp}/>  
                                 {
                                     this.state.popUpState && <CreatePhoto albumNo={this.state.albumNo} retrievePhotos={this.retrievePhotos} togglePopUp={this.togglePopUp} />

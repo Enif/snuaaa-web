@@ -24,3 +24,20 @@
         }
     }
 }
+
+.btn-crt-album {
+    position: absolute;
+    right: -70px;
+    top: 100px;
+}
+
+@media screen and (max-width: 800px) {
+    .btn-crt-album {
+        top: -5rem;
+        right: 2rem;
+        // position: fixed;
+        // top: initial;
+        // right: 70px;
+        // bottom: 2rem;
+    }
+}

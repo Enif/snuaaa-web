@@ -13,7 +13,7 @@ class Home extends React.Component {
     render() {
 
         return (
-                <div id="contents-center">
+                <div className="section-contents">
                     <div id="calendar-wrapper" className="content">
                         <div className="title-left">
                             <h5>천문현상 &amp; 일정</h5>

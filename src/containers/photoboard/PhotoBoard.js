@@ -1,6 +1,5 @@
 import React from 'react';
 import * as service from '../../services';
-import { PhotoBoardEnum } from '../../components/Board/BoardEnum';
 import Memory from './Memory';
 import AstroPhoto from './AstroPhoto';
 import AlbumList from '../../components/PhotoBoard/AlbumList';

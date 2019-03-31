@@ -13,8 +13,24 @@ class Navigation extends React.Component {
             isShowNotice: false,
             isShowBoard: false,
             isShowPhotoBoard: false,
-            isShowOfficial: false
+            isShowOfficial: false,
+            isFixed: false
         }
+    }
+
+    componentDidMount() {
+        document.addEventListener("scroll", (e) => {
+            if(e.target.scrollingElement.scrollTop > 300) {
+                this.setState({
+                    isFixed: true
+                })
+            }
+            else {
+                this.setState({
+                    isFixed: false
+                })
+            } 
+        })
     }
 
     setShowAbout = (isShow) => {
@@ -55,6 +71,7 @@ class Navigation extends React.Component {
         let subBoardClass = 'menu-nav-sub' + (this.state.isShowBoard ? '' : ' menu-nav-hidden')
         let subPhotoBoardClass = 'menu-nav-sub' + (this.state.isShowPhotoBoard ? '' : ' menu-nav-hidden')
         let subOfficialClass = 'menu-nav-sub' + (this.state.isShowOfficial ? '' : ' menu-nav-hidden')
+        let wrapperClass = 'main-menu-nav-wrapper' + (this.state.isFixed ? ' enif-fixed-top' : ' pos-relative'); 
 
         const activeStyle = {
             fontWeight: 'bold',
@@ -62,15 +79,19 @@ class Navigation extends React.Component {
         };
 
         return (
-            <div className="main-menu-nav-wrapper">
+            <div className={wrapperClass}>
                 <nav>
                     {/* <input className="nav-toggle" id="nav-toggle" type="checkbox"/> 
                     <label className="navicon" htmlFor="nav-toggle"><span className="navicon-bar"></span></label> */}
                         
                     <ul className="nav-items">
-                        <li className="menu-nav"><NavLink to="/" activeStyle={activeStyle}>★</NavLink></li>
+                        <li className="menu-nav">                            
+                            <NavLink to="/" activeStyle={activeStyle}>
+                                <div className="menu-item-1">★</div>
+                            </NavLink>
+                        </li>
                         <li className="menu-nav" onClick={() => this.setShowAbout(true)} onMouseEnter={() => this.setShowAbout(true)} onMouseLeave={() => this.setShowAbout(false)}>
-                            <a href="#" ><span>동아리</span> 소개</a>
+                            <div className="menu-item-1"><span>동아리</span> 소개</div>
                             {
                                 <div className={subAboutClass}>
                                     <ul>
@@ -85,7 +106,7 @@ class Navigation extends React.Component {
                             }
                         </li>
                         <li className="menu-nav" onClick={() => this.setShowNotice(true)} onMouseEnter={() => this.setShowNotice(true)} onMouseLeave={() => this.setShowNotice(false)}>
-                            <a href="#"><span>별들의</span> 알림</a>
+                            <div className="menu-item-1"><span>별들의</span> 알림</div>
                             {
                                 <div className={subNoticeClass}>
                                     <ul>
@@ -96,7 +117,7 @@ class Navigation extends React.Component {
                             }
                         </li>
                         <li className="menu-nav" onClick={() => this.setShowBoard(true)} onMouseEnter={() => this.setShowBoard(true)} onMouseLeave={() => this.setShowBoard(false)}>
-                            <a href="#"><span>별들의</span> 이야기</a>
+                            <div className="menu-item-1"><span>별들의</span> 이야기</div>
                             {
                                 <div className={subBoardClass}>
                                     <ul>
@@ -107,7 +128,7 @@ class Navigation extends React.Component {
                             }
                         </li>
                         <li className="menu-nav" onClick={() => this.setShowOfficial(true)} onMouseEnter={() => this.setShowOfficial(true)} onMouseLeave={() => this.setShowOfficial(false)}>
-                            <a href="#"><span>별들의</span> 회담</a>
+                            <div className="menu-item-1"><span>별들의</span> 회담</div>
                             {
                                 <div className={subOfficialClass}>
                                     <ul>
@@ -118,7 +139,7 @@ class Navigation extends React.Component {
                             }
                         </li>
                         <li className="menu-nav" onClick={() => this.setShowPhotoBoard(true)} onMouseEnter={() => this.setShowPhotoBoard(true)} onMouseLeave={() => this.setShowPhotoBoard(false)}>
-                            <a href="#"><span>별들의</span> 순간</a>
+                            <div className="menu-item-1"><span>별들의</span> 순간</div>
                             {
                                 <div className={subPhotoBoardClass}>
                                     <ul>
