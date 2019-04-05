@@ -63,7 +63,7 @@ class Category extends React.Component {
             "border": `1px solid #aaaaaa`
         }
         let style_selected = {
-            "background-color": "#aaaaaa",
+            "backgroundColor": "#aaaaaa",
             "color": "#eeeeee"
         }
         return (

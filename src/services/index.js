@@ -60,11 +60,11 @@ export function retrievePhotosInPhotoBoard(board_id) {
 }
 
 export function createPhotosInPhotoBoard(board_id, data) {
-    return axios.post(SERVER_URL + `api/photoboard/${board_id}/photo`, data)
+    return axios.post(SERVER_URL + `api/photoboard/${board_id}/photos`, data)
 }
 
 export function createPhotosInAlbum(albumId, data) {
-    return axios.post(SERVER_URL + `api/album/${albumId}/photo`, data)
+    return axios.post(SERVER_URL + `api/album/${albumId}/photos`, data)
 }
 
 export function retrieveAlbum(albumId) {

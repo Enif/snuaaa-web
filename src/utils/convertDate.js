@@ -17,16 +17,18 @@ exports.convertDate = function(date) {
 
 exports.convertFullDate = function(date) {
     let convertedDate = new Date(date);
+
     
     let year = convertedDate.getFullYear();
-    let month = convertedDate.getMonth() < 9
-        ? '0' + (convertedDate.getMonth() + 1).toString()
-        : (convertedDate.getMonth() + 1).toString();
+    let month = convertedDate.getMonth() + 1;
     let day = convertedDate.getDate();
-    let hour = convertedDate.getHours() < 9
-        ? '0' + convertedDate.getHours()
-        : convertedDate.getHours();
+    let hour = convertedDate.getHours();
     let min = convertedDate.getMinutes();
+
+    month = month < 10 ? '0' + month : month;
+    day = day < 10 ? '0' + day : day;
+    hour = hour < 10 ? '0' + hour : hour;
+    min = min < 10 ? '0' + min : min;
 
     return (`${year}.${month}.${day} ${hour}:${min}`);
 }
