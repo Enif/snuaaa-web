@@ -35,22 +35,6 @@ class CreatePhoto extends React.Component {
         this.setState({
             [e.target.name]: e.target.value
         });
-        
-        const { imgIdx, title, desc, date, location, camera, lens, focal_length, f_stop, exposure_time, iso } = this.state;
-        if(imgIdx >= 0) {
-            this.photoInfos[imgIdx] = {
-                title: title,
-                desc: desc,
-                date: date,
-                location: location,
-                camera: camera,
-                lens: lens,
-                focal_length: focal_length,
-                f_stop: f_stop,
-                exposure_time: exposure_time,
-                iso: iso,
-            }
-        }
     }
 
     uploadFile = (e) => {
@@ -78,6 +62,22 @@ class CreatePhoto extends React.Component {
 
     setImgIdx = (index) => {
 
+        const { imgIdx, title, desc, date, location, camera, lens, focal_length, f_stop, exposure_time, iso } = this.state;
+        if(imgIdx >= 0) {
+            this.photoInfos[imgIdx] = {
+                title: title,
+                desc: desc,
+                date: date,
+                location: location,
+                camera: camera,
+                lens: lens,
+                focal_length: focal_length,
+                f_stop: f_stop,
+                exposure_time: exposure_time,
+                iso: iso,
+            }
+        }
+
         this.setState({
             imgIdx: index,
             title: this.photoInfos[index].title,
@@ -103,6 +103,22 @@ class CreatePhoto extends React.Component {
     }
 
     createPhotos = async () => {
+
+        const { imgIdx, title, desc, date, location, camera, lens, focal_length, f_stop, exposure_time, iso } = this.state;
+        if(imgIdx >= 0) {
+            this.photoInfos[imgIdx] = {
+                title: title,
+                desc: desc,
+                date: date,
+                location: location,
+                camera: camera,
+                lens: lens,
+                focal_length: focal_length,
+                f_stop: f_stop,
+                exposure_time: exposure_time,
+                iso: iso,
+            }
+        }
 
         const photosForm = new FormData();
 

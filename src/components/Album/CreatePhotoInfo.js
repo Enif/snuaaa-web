@@ -35,7 +35,7 @@ const CreatePhotoInfo = (props) => {
                         </div>
                         <div>
                             <input className="enif-wid-quater" type="text" name="exposure_time" onChange={(e) => props.handleChange(e)} value={props.exposure_time}></input>
-                            <label>s</label>
+                            <label></label>
                         </div>
                         <div>
                             <label>ISO</label>
