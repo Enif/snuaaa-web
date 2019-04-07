@@ -43,6 +43,10 @@ export function createComment(parent_id, data) {
     return axios.post(SERVER_URL + `api/object/${parent_id}/comment`, data);
 }
 
+export function likeObject(object_id) {
+    return axios.post(SERVER_URL + `api/object/${object_id}/like`);
+}
+
 export function retrieveAlbumsInPhotoBoard(board_id) {
     return axios.get(SERVER_URL + `api/photoboard/${board_id}/albums`)
 }
@@ -98,3 +102,4 @@ export function downloadDocument(docuId, index) {
 export function retrieveSoundBox() {
     return axios.get(SERVER_URL + `api/soundbox`);
 }
+

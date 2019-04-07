@@ -15,14 +15,19 @@
             height: 100%;
             object-fit: cover;
         }
-        .photo-title {
+        .photo-cover {
             position: absolute;
-            visibility: hidden;
+            // visibility: hidden;
+            color: #C9C9C9;
             bottom: 0;
             z-index: 1;
             width: 100%;
-            padding: 10px;
-            background-color: rgba(255, 255, 255, 0.5);
+            padding: 5px;
+            font-size: 16px;
+            background-color: rgba(22, 22, 22, 0.5);
+            .material-icons {
+                font-size: 16px;
+            }
             &:hover {
                 visibility: visible;
             }
@@ -52,6 +57,23 @@
         display: flex;
         .info-wrapper {
             flex-basis: 50%;
+            .like-comment-num-wrapper {
+                font-size: 24px;
+                padding-top: 10px;
+                // padding-bottom: 10px;
+                .like-num-wrapper {
+                    display: inline-block;
+                    margin-right: 12px;
+                    color: #f0645e;
+                }
+                .comment-num-wrapper {
+                    display: inline-block;
+                    color: #a3a3a3;
+                }
+                .material-icons {
+                    font-size: 24px;
+                }
+            }
             h4 {
                 margin-top: 20px;
                 margin-bottom: 20px;

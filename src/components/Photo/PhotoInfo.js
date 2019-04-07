@@ -14,9 +14,23 @@ const PhotoInfo = (props) => {
 
                 <div className="info-wrapper">
                     <h4>{props.photoInfo.title}</h4>
-                    <p>{props.photoInfo.contents}</p>
-                    <p>created {convertFullDate(props.photoInfo.created_at)}</p>
+                    <p>{convertFullDate(props.photoInfo.created_at)}</p>
 
+                    <div className="like-comment-num-wrapper">
+                        <div className="like-num-wrapper">
+                            <i class="material-icons pointer" onClick={() => props.likePhoto()}>
+                                {props.likeInfo ? 'favorite' : 'favorite_border'}
+                            </i>
+                            {props.photoInfo.like_num}
+                        </div>
+                        <div className="comment-num-wrapper">
+                            <i class="material-icons">comment</i>
+                            {props.photoInfo.comment_num}
+                        </div>
+                    </div>
+
+                    <div className="enif-divider"></div>
+                    <p>{props.photoInfo.contents}</p>
                     <div className="enif-divider"></div>
 
                     <table>

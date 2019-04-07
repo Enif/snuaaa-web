@@ -18,10 +18,11 @@ class PhotoList extends React.Component {
             return (
                 <div className="photo-wrapper" >
                     <Link to={`/photo/${photo.object_id}`}>
-                        <Image imgSrc={photo.file_path} />
-                        <div className="photo-title">
-                            {photo.title}
+                        <div className="photo-cover">
+                            <i class="material-icons">favorite</i> {photo.like_num}&nbsp;
+                            <i class="material-icons">comment</i> {photo.comment_num}
                         </div>
+                        <Image imgSrc={photo.file_path} />
                     </Link>
                 </div>
             )
