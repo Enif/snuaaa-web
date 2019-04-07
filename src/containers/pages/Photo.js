@@ -12,26 +12,45 @@ class Photo extends React.Component {
         super(props);
         this.photoInfo = undefined;
         this.state = {
-            photoNo: this.props.match.params.pNo,
+            photo_id: this.props.match.params.pNo,
+            likeInfo: false,
             isReady: false,
         }
         this.retrievePhoto(this.props.match.params.pNo);
     }
 
-    retrievePhoto = async(photoNo) => {
-        await service.retrievePhoto(photoNo)
+    retrievePhoto = async(photo_id) => {
+        await service.retrievePhoto(photo_id)
         .then((res) => {
-            this.photoInfo = res.data;
+            this.photoInfo = res.data.photoInfo;
             this.setState({
+                likeInfo: res.data.likeInfo,
                 isReady: true
             })
         })
     }
 
+    likePhoto = async() => {
+        await service.likeObject(this.state.photo_id)
+        .then(() => {
+            if(this.state.likeInfo) {
+                this.photoInfo.like_num--;
+            }
+            else {
+                this.photoInfo.like_num++;
+            }
+            this.setState({
+                likeInfo: !this.state.likeInfo
+            })
+        })
+        .catch((err) => {
+            console.error(err)
+        })
+    }
+
 
     render() {
-        let photoInfo = this.photoInfo;
-        let { isReady } = this.state;
+        let { isReady, likeInfo } = this.state;
         return(
             <>
             {
@@ -39,8 +58,8 @@ class Photo extends React.Component {
                     if(!isReady) return <Loading />
                     else return (
                         <div className="photo-section-wrapper">
-                            <PhotoInfo photoInfo={photoInfo} />
-                            <Comment parent_id={this.state.photoNo}/>
+                            <PhotoInfo photoInfo={this.photoInfo} likeInfo={likeInfo} likePhoto={this.likePhoto}/>
+                            <Comment parent_id={this.state.photo_id}/>
                         </div>
                     )
                 })()
