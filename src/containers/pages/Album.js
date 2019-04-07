@@ -14,7 +14,7 @@ class Album extends React.Component {
         this.photos = [];
         this.albumInfo = undefined;
         this.state = {
-            albumNo: this.props.match.params.aNo,
+            album_id: this.props.match.params.aNo,
             isAlbumReady: false,
             isPhotoListReady: false,
             popUpState: false,
@@ -42,8 +42,8 @@ class Album extends React.Component {
         })
     }
 
-    retrieveAlbum = async(albumNo) => {
-        await service.retrieveAlbum(albumNo)
+    retrieveAlbum = async(album_id) => {
+        await service.retrieveAlbum(album_id)
         .then((res) => {
             this.albumInfo = res.data;
             this.setState({
@@ -52,8 +52,8 @@ class Album extends React.Component {
         })
     }
 
-    retrievePhotos = async(albumNo) => {
-        await service.retrievePhotosInAlbum(albumNo)
+    retrievePhotos = async(album_id) => {
+        await service.retrievePhotosInAlbum(album_id)
         .then((res) => {
             this.photos = res.data;
             this.setState({
@@ -83,9 +83,9 @@ class Album extends React.Component {
                             <div className="album-wrapper">
                                 <AlbumInfo albumInfo={this.albumInfo}/>
                                 <div className="enif-divider"></div>
-                                <PhotoList photos={this.photos} redirectPhoto={this.redirectPhoto} togglePopUp={this.togglePopUp}/>  
+                                <PhotoList photos={this.photos} redirectPhoto={this.redirectPhoto} togglePopUp={this.togglePopUp}/>
                                 {
-                                    this.state.popUpState && <CreatePhoto albumNo={this.state.albumNo} retrievePhotos={this.retrievePhotos} togglePopUp={this.togglePopUp} />
+                                    this.state.popUpState && <CreatePhoto album_id={this.state.album_id} retrievePhotos={this.retrievePhotos} togglePopUp={this.togglePopUp} />
                                 }
                             </div>
                         )

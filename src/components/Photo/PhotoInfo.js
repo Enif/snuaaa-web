@@ -9,15 +9,63 @@ const PhotoInfo = (props) => {
             <div className="photo-wrapper">
                 <Image imgSrc={props.photoInfo.file_path} />
             </div>
+
             <div className="photo-contents-wrapper">
+
                 <div className="info-wrapper">
                     <h4>{props.photoInfo.title}</h4>
-                    {/* <p>photo by <strong>{props.photoInfo.nickname}</strong></p> */}
-                    <p>created {convertFullDate(props.photoInfo.created_at)}</p>                
+                    <p>{props.photoInfo.contents}</p>
+                    <p>created {convertFullDate(props.photoInfo.created_at)}</p>
+
+                    <div className="enif-divider"></div>
+
+                    <table>
+                        { props.photoInfo.date && (
+                        <tr>
+                            <td>Date</td>
+                            <td>{props.photoInfo.date}</td>
+                        </tr>)}
+
+                        { props.photoInfo.location && (
+                        <tr>
+                            <td>Location</td>
+                            <td>{props.photoInfo.location}</td>
+                        </tr>)}
+
+                        { props.photoInfo.camera && (
+                        <tr>
+                            <td>Camera</td>
+                            <td>{props.photoInfo.camera}</td>
+                        </tr>)}
+
+                        { props.photoInfo.lens && (
+                        <tr>
+                            <td>Lens</td>
+                            <td>{props.photoInfo.lens}</td>
+                        </tr>)}
+
+                        { props.photoInfo.focal_length && (
+                        <tr>
+                            <td>@</td>
+                            <td>{props.photoInfo.focal_length}</td>
+                        </tr>)}
+
+                        { (props.photoInfo.f_stop || props.photoInfo.exposure_time || props.photoInfo.iso) && (
+                        <tr>
+                            <td>Setting</td>
+                            <td>
+                                {props.photoInfo.f_stop && <>F/{props.photoInfo.f_stop}</>}
+                                {props.photoInfo.exposure_time && <> {props.photoInfo.exposure_time}</>}
+                                {props.photoInfo.iso && <> ISO{props.photoInfo.iso}</>}
+                            </td>
+                        </tr>)}
+                    </table>
                 </div>
                 <div className="user-wrapper">
                     <Image imgSrc={props.photoInfo.profile_path}/>
-                    <p className="username">{props.photoInfo.nickname}</p>
+                    <div className="username">
+                        {props.photoInfo.nickname}
+                    </div>
                 </div>
             </div>
         </>

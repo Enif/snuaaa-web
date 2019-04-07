@@ -21,7 +21,7 @@ class AlbumList extends React.Component {
             let color;
             if(album.category_color) {
                 color = {
-                    "border-top-color": album.category_color
+                    "borderTopColor": album.category_color
                 }
             }
             
