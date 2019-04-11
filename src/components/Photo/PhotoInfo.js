@@ -18,13 +18,13 @@ const PhotoInfo = (props) => {
 
                     <div className="like-comment-num-wrapper">
                         <div className="like-num-wrapper">
-                            <i class="material-icons pointer" onClick={() => props.likePhoto()}>
+                            <i className="material-icons pointer" onClick={() => props.likePhoto()}>
                                 {props.likeInfo ? 'favorite' : 'favorite_border'}
                             </i>
                             {props.photoInfo.like_num}
                         </div>
                         <div className="comment-num-wrapper">
-                            <i class="material-icons">comment</i>
+                            <i className="material-icons">comment</i>
                             {props.photoInfo.comment_num}
                         </div>
                     </div>

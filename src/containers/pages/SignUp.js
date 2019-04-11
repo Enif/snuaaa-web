@@ -48,10 +48,9 @@ class SignUp extends React.Component {
     }
 
     handleChange = (e) => {
-        let nextState = {};
-        nextState[e.target.name] = e.target.value;
-        this.setState(nextState);
-        console.log(this.state)
+        this.setState({
+            [e.target.name]: e.target.value
+        });
     }
 
     postSignUp = async () => {

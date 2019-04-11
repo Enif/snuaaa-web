@@ -7,4 +7,4 @@ export { default as Album } from './Album';
 export { default as Photo } from './Photo';
 export { default as Document } from './Document';
 export { default as LogIn } from './LogIn';
-export { default as UserInfo } from './UserInfo';
+export { default as MyPage } from './MyPage';

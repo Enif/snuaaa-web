@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const TAG = 'PopupUser';
 
@@ -15,9 +16,8 @@ class PopupUser extends React.Component {
         return (
             <div className="popup-user-wrapper">
                 <div className="btn-toggle" onClick={this.props.togglePopup}>x</div>
-                <p>My page</p>
-                <p>Posts</p>
-                <p>Comments</p>
+                <Link to="/mypage/profile"><p>My Page</p></Link>
+                <Link to="/mypage/post"><p>Post &amp; Comments</p></Link>
                 <p onClick={this.props.logout}>Log out</p>
             </div>
         )

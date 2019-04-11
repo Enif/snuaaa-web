@@ -60,7 +60,7 @@ class Document extends React.Component {
     render() {
         let { isDocuListReady } = this.state
         return(
-            <>
+            <div className="board-wrapper">
                 <h2>문서게시판</h2>
                 <DocuMenu retrieveDocumentsByGeneration={this.retrieveDocumentsByGeneration} />
                 {(() => {
@@ -81,7 +81,7 @@ class Document extends React.Component {
                         )
                     }
                 })()}
-            </>
+            </div>
         )
     }
 }
