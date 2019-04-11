@@ -7,7 +7,7 @@ const LogInComponent = ({ handleChange, postLogIn, redirectToSignUp, checkAuto }
     return (
         <div className="login-wrapper">
             <div className="logo-wrapper">
-                <img src={logo} />
+                <img src={logo} alt="logo" />
             </div>
             <div className="inputs-wrapper">
                 <div className="auto-checker">
@@ -20,12 +20,12 @@ const LogInComponent = ({ handleChange, postLogIn, redirectToSignUp, checkAuto }
                             name="id"
                             handleChange={handleChange}
                             placeholder=" ID"
-                            isRequired="true"
+                            isRequired={true}
                         />
                         <input type="password" className="login-input" placeholder=" PASSWORD"
                             name="password"
                             onChange={handleChange}
-                            onKeyDown={(e) => {if(e.keyCode == 13) postLogIn()}}
+                            onKeyDown={(e) => {if(e.keyCode === 13) postLogIn()}}
                             required />
                     </div>
                     <button className="login-btn" onClick={postLogIn}>로그인</button>

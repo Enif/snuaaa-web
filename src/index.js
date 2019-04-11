@@ -16,7 +16,7 @@ const store = createStore(reducers);
 ReactDOM.render(
     // <CookiesProvider>
         <Provider store={store}>
-            <BrowserRouter>
+            <BrowserRouter basename="/page">
                 <App/>
             </BrowserRouter>
         </Provider>
