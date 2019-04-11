@@ -82,7 +82,7 @@ class PhotoBoard extends React.Component {
         // let {isAlbumListReady, board_id} = this.state;
 
         return (
-            <>
+            <div className="board-wrapper">
                 {(() => {
                     // if(! isAlbumListReady) {
                         if(board_id === 'brd07') {
@@ -108,7 +108,7 @@ class PhotoBoard extends React.Component {
                     //     return <Loading />
                     // }
                 })()}
-            </>
+            </div>
         );
     }
 }

@@ -12,7 +12,7 @@ exports.convertDate = function(date) {
     }
     let da = convertedDate.getDate().toString();
 
-    return (year + "-" + month + "-" + da);
+    return (year + "." + month + "." + da);
 }
 
 exports.convertFullDate = function(date) {

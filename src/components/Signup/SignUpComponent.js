@@ -86,7 +86,7 @@ const SignUpComponent = ({ handleChange, postSignUp, profile, uploadFile, formRe
                     <InputField label="이름*" name="username" handleChange={handleChange} required={true} pattern="^[A-Za-z가-힣]{2,5}$" 
                         invalidMessage="2-10자의 한글 혹은 영문"/>
                     <InputField label="E-mail*" type="email" name="email" handleChange={handleChange} required={true} pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" 
-                        invalidMessage="이메일 형식에 맞게 입력해주세요"/>
+                        maxLength="30" invalidMessage="이메일 형식에 맞게 입력해주세요"/>
                     <InputField label="Mobile*" name="mobile" handleChange={handleChange} required={true} pattern="^[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}$" 
                         invalidMessage="전화번호 형식에 맞게 입력해주세요(xxx-xxxx-xxxx)"/>
                     <InputField label="동아리 가입번호" name="aaaNum" handleChange={handleChange} pattern="^[0-9]{2}[Aa]{3}-[0-9]{1,3}$" 

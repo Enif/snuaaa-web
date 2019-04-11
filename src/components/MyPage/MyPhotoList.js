@@ -2,18 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Image from '../Common/Image'
 
-const TAG = 'PHOTOLIST'
+const MyPhotoList = ({photos}) => {
 
-class PhotoList extends React.Component {
+    const retrievePhotos = () => {
 
-    constructor(props) {
-        super(props);
-    }
-
-    retrievePhotos = () => {
-        console.log('[%s] Retrieve Photos', TAG);
-
-        let photos = this.props.photos
         let photoList = photos.map(photo => {
             return (
                 <div className="photo-wrapper" key={photo.object_id}>
@@ -30,17 +22,14 @@ class PhotoList extends React.Component {
         return photoList
     }
 
-    render() {
-        console.log('[%s] render', TAG)
-        return (
-            <div className="board-wrapper">
-                <div className="photo-list-wrapper">
-                    {this.retrievePhotos()}
-                </div>
-                <button className="enif-btn-circle" onClick={() => this.props.togglePopUp()}>+</button>
+    return (
+        <div className="my-list-wrapper">
+            <h4>등록한 사진</h4>
+            <div className="photo-list-wrapper">
+                {retrievePhotos()}
             </div>
-        )
-    }
+        </div>
+    )
 }
 
-export default PhotoList;
+export default MyPhotoList;

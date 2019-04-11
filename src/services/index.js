@@ -16,7 +16,19 @@ export function postLogIn(data) {
 }
 
 export function retrieveUserInfo() {
-    return axios.get(SERVER_URL + 'api/userinfo/');
+    return axios.get(SERVER_URL + 'api/userinfo');
+}
+
+export function updateUserInfo(data) {
+    return axios.patch(SERVER_URL + 'api/userinfo', data);
+}
+
+export function deleteUserInfo() {
+    return axios.delete(SERVER_URL + 'api/userinfo');
+}
+
+export function retrieveUserPosts() {
+    return axios.get(SERVER_URL + 'api/userinfo/posts');
 }
 
 export function retrieveBoardInfo(board_id) {

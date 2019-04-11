@@ -1,7 +1,7 @@
 import React from 'react';
 //import { withRouter } from 'react-router';
 import { Route } from 'react-router-dom';
-import { Home, About, Board, Album, Photo, Document, SignUp, LogIn, UserInfo } from './pages';
+import { Home, About, Board, Album, Photo, Document, SignUp, LogIn, MyPage } from './pages';
 import Post from '../components/Board/Post';
 
 class Section extends React.Component {
@@ -20,7 +20,7 @@ class Section extends React.Component {
                 <Route path="/document" component={Document}/>
                 <Route path="/signup" component={SignUp}/>
                 <Route path="/login" component={LogIn}/>
-                <Route path="/userinfo" component={UserInfo}/>
+                <Route path="/mypage/:index" component={MyPage}/>
             </section>
         );
     }

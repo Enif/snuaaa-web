@@ -73,7 +73,7 @@ class Memory extends React.Component {
 
         return (
             <>
-                <div className="board-wrapper">
+                <div className="photoboard-wrapper">
                     <h2>{boardInfo.board_name}</h2>
                         <Category categories={categories} board_id={board_id} clickAll={this.retrieveAlbums} clickCategory={this.retrieveAlbumsByCategory} />
                         <div className="enif-divider"></div>
