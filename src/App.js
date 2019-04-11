@@ -79,7 +79,7 @@ class App extends Component {
                     if(!isReady) {
                         return <Loading />
                     }
-                    else if (!loginState && !( window.location.pathname === '/login' || window.location.pathname === '/signup')) {
+                    else if (!loginState && !( window.location.pathname === '/page/login' || window.location.pathname === '/page/signup')) {
                         return <Redirect to='/login' />
                     }
                     else {
