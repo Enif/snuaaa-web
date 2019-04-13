@@ -1,0 +1,58 @@
+.profile-mini-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 80%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    .profile-img {
+        width: 20%;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        img {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+        }
+    }
+    .nickname {
+        width: 25%;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+        font-weight: bold;
+    }
+    .userdesc {
+        // width: 50%;
+        // flex-grow: 1;
+        height: 75px;
+        line-height: 16px;
+        overflow: hidden;
+    }
+    .expanded {
+        height: auto;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .profile-mini-wrapper {
+        width: 100%;
+        .profile-img {
+            width: 3rem;
+            flex-shrink: 0;
+            img {
+                height: 3rem;
+                width: 3rem;
+            }
+        }
+        .nickname {
+            font-size: 1.2rem;
+            width: 6rem;
+            flex-shrink: 0;
+        }
+        .userdesc {
+            flex-grow: 1;
+        }
+    }
+}

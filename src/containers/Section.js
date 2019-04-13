@@ -1,8 +1,7 @@
 import React from 'react';
 //import { withRouter } from 'react-router';
 import { Route } from 'react-router-dom';
-import { Home, About, Board, Album, Photo, Document, SignUp, LogIn, MyPage } from './pages';
-import Post from '../components/Board/Post';
+import { Home, About, Board, Post, Album, Photo, Document, SignUp, LogIn, MyPage } from './pages';
 
 class Section extends React.Component {
 

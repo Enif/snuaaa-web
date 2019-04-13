@@ -1,4 +1,4 @@
-exports.convertDate = function(date) {
+export function convertDate(date) {
     let convertedDate = new Date(date);
     
     let year = convertedDate.getFullYear().toString().substring(2)
@@ -15,7 +15,7 @@ exports.convertDate = function(date) {
     return (year + "." + month + "." + da);
 }
 
-exports.convertFullDate = function(date) {
+export function convertFullDate(date) {
     let convertedDate = new Date(date);
 
     
