@@ -1,0 +1,49 @@
+.profile-mini-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 80%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    .profile-img {
+        width: 20%;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        img {
+            height: 50px;
+            width: 50px;
+        }
+    }
+    .nickname {
+        width: 30%;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+        font-weight: bold;
+    }
+    .userdesc {
+        width: 50%;
+
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .profile-mini-wrapper {
+        width: 100%;
+        .profile-img {
+            flex-basis: 3rem;
+            img {
+                height: 3rem;
+                width: 3rem;
+            }
+        }
+        .nickname {
+            font-size: 1.2rem;
+            width: 6rem;
+        }
+        .userdesc {
+            flex-grow: 1;
+        }
+    }
+}

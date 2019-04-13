@@ -9,12 +9,22 @@
 
 
 .album-list {
-    width: 232px;
-    height: 232px;
+    width: 33%;
+    // height: 232px;
     margin: 0.5px;
     position: relative;
     box-shadow: 3px 3px 7px 2px rgba(95, 95, 95, 0.2);
     cursor: pointer;
+    &::before {
+        content: '';
+        padding-top: 100%;
+        float: left;
+    }
+    &::after {
+        content: '';
+        display: block;
+        clear: both;
+    }
     img {
         position: absolute;
         width: 100%;
@@ -106,8 +116,8 @@
 
 @media screen and (max-width: 800px) {
     .album-list {
-        width: calc(50vw - 2px);
-        height: calc(50vw - 2px);
+        width: calc(50% - 3px);
+        // height: calc(50vw - 2px);
     }
 }
 

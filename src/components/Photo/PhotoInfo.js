@@ -16,16 +16,26 @@ const PhotoInfo = (props) => {
                     <h4>{props.photoInfo.title}</h4>
                     <p>{convertFullDate(props.photoInfo.created_at)}</p>
 
-                    <div className="like-comment-num-wrapper">
-                        <div className="like-num-wrapper">
-                            <i className="material-icons pointer" onClick={() => props.likePhoto()}>
-                                {props.likeInfo ? 'favorite' : 'favorite_border'}
-                            </i>
-                            {props.photoInfo.like_num}
+                    <div className="actions-wrapper">
+                        <div className="edit-delete-wrapper">
+                            <div className="edit-wrapper">
+                                <i className="material-icons pointer">edit</i>
+                            </div>
+                            <div className="delete-wrapper">
+                                <i className="material-icons pointer">delete</i>
+                            </div>
                         </div>
-                        <div className="comment-num-wrapper">
-                            <i className="material-icons">comment</i>
-                            {props.photoInfo.comment_num}
+                        <div className="like-comment-num-wrapper">
+                            <div className="like-num-wrapper">
+                                <i className="material-icons pointer" onClick={() => props.likePhoto()}>
+                                    {props.likeInfo ? 'favorite' : 'favorite_border'}
+                                </i>
+                                {props.photoInfo.like_num}
+                            </div>
+                            <div className="comment-num-wrapper">
+                                <i className="material-icons">comment</i>
+                                {props.photoInfo.comment_num}
+                            </div>
                         </div>
                     </div>
 

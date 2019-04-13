@@ -2,43 +2,55 @@
     padding-top: 20px;
 }
 
-.post-list {
+.post-list-wrapper {
     margin-top: 2rem;
-    background: #f5f5f5;
-    border-top: 1px solid #9e9e9e;
-    border-collapse: collapse;
 }
 
-.post-wrapper {
-    /* margin: 1px; */
-    padding: 1rem;
-    border: 1px solid #9e9e9e;
-    border-collapse: collapse;
-    /* border: #6e74a4; */
-    border-top: none;
+.post-list-unit {
+    padding: 10px;
+    border-top: 1px solid #C9C9C9;
+    &:last-child {
+        border-bottom: 1px solid #C9C9C9;
+    }
     &:hover {
         background: #e7f2ff;
     }
+    a {
+        color: #000000;
+    }
+    .post-list-unit-left {
+        display: inline-block;
+        width: 80%;
+        padding-left: 10px;
+    }
+    .post-list-unit-right {
+        display: inline-block;
+        width: 20%;
+    }
+
+    .post-title {
+        margin-bottom: 10px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    
+    .post-author {
+        display: inline-block;
+        cursor: pointer;
+        color: #A3A3A3;
+    }
+    
+    .post-created {
+        display: inline-block;
+        margin-left: 10px;
+    }
+    
+    .post-comment-num {
+        font-size: 18px;
+    }
 }
 
-.post-wrapper > div {
-    display: inline-block;
-}
 
-.post-number {
-    width: 10%;
-    vertical-align: middle;
-    text-align: center;
-}
-
-.post-title {
-    width: 70%;
-    cursor: pointer;
-}
-
-.post-author {
-    width: 20%;
-}
 
 .writepost-wrapper {
     margin: 20px;
@@ -52,36 +64,4 @@
     width: 100%;
     height: 500px;
     resize: none;
-}
-
-.enif-post-wrapper {
-    width: 90%;
-    margin: 0 auto;
-    border-top: 1px solid #c9c9c9;
-}
-
-.enif-post-title {
-    font-size: 1rem;
-    padding: 1rem;
-    border: 1px solid #c9c9c9;
-    border-top: none;
-    background-color: #fff6f6;
-    h5 {
-        display: inline;
-        font-weight: bold;
-    }
-    .post-title-info {
-        // display: inline;
-        float: right;
-    }
-}
-
-.enif-post-content {
-    padding-top: 1rem;
-    padding: 1rem;
-    border: 1px solid #c9c9c9;
-    min-height: 300px;
-    line-height: 200%;
-    border-top: none;
-
 }

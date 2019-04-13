@@ -1,0 +1,36 @@
+
+
+
+.actions-wrapper {
+    display: flex;
+    justify-content: space-between;
+    // padding-top: 5px;
+
+    .edit-delete-wrapper {
+        .edit-wrapper {
+            display: inline-block;
+            margin-right: 12px;
+        }
+        .delete-wrapper {
+            display: inline-block;
+        }
+
+    }
+
+    .like-comment-num-wrapper {
+        font-size: 20px;
+        // padding-bottom: 10px;
+        .like-num-wrapper {
+            display: inline-block;
+            margin-right: 12px;
+            color: #f0645e;
+        }
+        .comment-num-wrapper {
+            display: inline-block;
+            color: #a3a3a3;
+        }
+        .material-icons {
+            font-size: 24px;
+        }
+    }
+}

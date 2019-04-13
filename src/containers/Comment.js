@@ -14,11 +14,10 @@ class Comment extends React.Component {
             contents: '',
             isReady: false
         }
-        this.retrieveComments(this.props.parent_id)
-
     }
 
     componentDidMount() {
+        this.retrieveComments(this.props.parent_id)
     }
 
     retrieveComments = async () => {
