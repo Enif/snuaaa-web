@@ -1,10 +1,6 @@
 import React from 'react';
 import * as service from '../../services';
 import Loading from '../../components/Common/Loading';
-import ProfileMini from '../../components/Common/ProfileMini';
-import Comment from '../Comment';
-import { convertFullDate } from '../../utils/convertDate';
-import { breakLine } from '../../utils/breakLine';
 import PostComponent from '../../components/Post/PostComponent';
 
 const TAG = 'POST'
@@ -19,6 +15,7 @@ class Post extends React.Component {
 
         this.state = {
             post_id: this.props.match.params.pNo,
+            likeInfo: false,
             isShow: false
         }
     }
@@ -40,8 +37,9 @@ class Post extends React.Component {
         await service.retrievePost(this.state.post_id)
         .then((res) => {
             console.log('[%s] Retrieve Post Success', TAG);
-            this.postData = res.data;
+            this.postData = res.data.postInfo;
             this.setState({
+                likeInfo: res.data.likeInfo,
                 isShow: true
             })
         })
@@ -50,16 +48,34 @@ class Post extends React.Component {
         })
     }
 
+    likePost = async() => {
+        await service.likeObject(this.state.post_id)
+        .then(() => {
+            if(this.state.likeInfo) {
+                this.postData.like_num--;
+            }
+            else {
+                this.postData.like_num++;
+            }
+            this.setState({
+                likeInfo: !this.state.likeInfo
+            })
+        })
+        .catch((err) => {
+            console.error(err)
+        })
+    }
+
     render() {
         console.log('[%s] render', TAG)
-        let { isShow } = this.state;
+        let { isShow, post_id, likeInfo} = this.state;
 
         return (
             <>
             {
                 isShow ?
                 (
-                    <PostComponent postData={this.postData} post_id={this.state.post_id} />
+                    <PostComponent postData={this.postData} post_id={post_id} likeInfo={likeInfo} likePost={this.likePost}/>
                 )
                 :
                 (

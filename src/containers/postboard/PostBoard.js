@@ -70,9 +70,10 @@ class PostBoard extends React.Component {
   
 
     render() {
-        let boardName = this.props.boardInfo.board_name;
         console.log(`[${TAG}] render.. `)
-        console.log(`[${TAG}] board_name : ${boardName}`)
+
+        let { board_id, boardInfo, categories } = this.props;
+
         return (
             <div className="section-contents">
                 {(() => {
@@ -84,19 +85,10 @@ class PostBoard extends React.Component {
                     else if(this.state.isReady) {
                         return (
                             <div className="board-wrapper">
-                                <h2>{boardName}</h2>
+                                <h2>{boardInfo.board_name}</h2>
                                 {/* {this.getCategory(this.state.board_id)} */}
                                 {this.retrieveCategories()}
                                 <PostList posts={this.posts} togglePopUp={this.togglePopUp} />
-                                {/* {
-                                    (() => {
-                                        if (this.state.boardState === 0) return ();
-                                        else if (this.state.boardState === 1) return (<WritePost board_id={this.state.board_id} setBoardState={this.setBoardState}/>);
-                                        // else if (this.state.boardState === 2) return (<Post board_id={this.state.board_id} setBoardState={this.setBoardState} postId={this.state.postId} />);
-                                        else if (this.state.boardState === 2) return (<Redirect to={`/post/${this.state.postId}`}/>)
-                                        else return (<div>error page</div>);
-                                    })()
-                                } */}
                             </div>
                         )
                     }

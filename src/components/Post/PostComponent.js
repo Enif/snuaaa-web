@@ -4,7 +4,7 @@ import ProfileMini from '../Common/ProfileMini';
 import { convertFullDate } from '../../utils/convertDate';
 import { breakLine } from '../../utils/breakLine';
 
-const PostComponent = ({postData, post_id}) => {
+const PostComponent = ({postData, post_id, likeInfo, likePost}) => {
 
     return (
 
@@ -36,8 +36,10 @@ const PostComponent = ({postData, post_id}) => {
                 </div>
                 <div className="like-comment-num-wrapper">
                     <div className="like-num-wrapper">
-                        <i className="material-icons pointer">favorite</i>
-                        {postData.like_num}
+                        <i className="material-icons pointer" onClick={() => likePost()}>
+                            { likeInfo ? 'favorite' : 'favorite_border'}
+                        </i>
+                        {postData.like_num}                  
                     </div>
                     <div className="comment-num-wrapper">
                         <i className="material-icons">comment</i>

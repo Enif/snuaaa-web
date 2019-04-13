@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from '../Common/Image';
+import ProfileMini from '../Common/ProfileMini';
 import { convertFullDate } from '../../utils/convertDate'
 
 const PhotoInfo = (props) => {
@@ -85,12 +86,7 @@ const PhotoInfo = (props) => {
                         </tr>)}
                     </table>
                 </div>
-                <div className="user-wrapper">
-                    <Image imgSrc={props.photoInfo.profile_path}/>
-                    <div className="username">
-                        {props.photoInfo.nickname}
-                    </div>
-                </div>
+                <ProfileMini profileImg={props.photoInfo.profile_path} nickname={props.photoInfo.nickname} userDesc={props.photoInfo.introduction}/>
             </div>
         </>
     )

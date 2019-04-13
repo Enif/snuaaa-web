@@ -34,8 +34,14 @@ class PostList extends React.Component {
                     </div>
                     <div className="post-list-unit-right">
                         <div className="post-comment-num">
-                            <i className="material-icons md-18 md-dark">comment</i>
-                            {post.comment_num}
+                            <span className="color-pink">
+                                <i className="material-icons md-18">favorite</i>
+                                {post.like_num}
+                            </span>
+                            <span className="color-gray1">
+                                <i className="material-icons md-18 md-dark">comment</i>
+                                {post.comment_num}
+                            </span>                        
                         </div>
                     </div>
                 </div>

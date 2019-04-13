@@ -12,10 +12,11 @@
         img {
             height: 50px;
             width: 50px;
+            border-radius: 50%;
         }
     }
     .nickname {
-        width: 30%;
+        width: 25%;
         display: grid;
         justify-content: center;
         align-items: center;
@@ -23,8 +24,14 @@
         font-weight: bold;
     }
     .userdesc {
-        width: 50%;
-
+        // width: 50%;
+        // flex-grow: 1;
+        height: 75px;
+        line-height: 16px;
+        overflow: hidden;
+    }
+    .expanded {
+        height: auto;
     }
 }
 
@@ -32,7 +39,8 @@
     .profile-mini-wrapper {
         width: 100%;
         .profile-img {
-            flex-basis: 3rem;
+            width: 3rem;
+            flex-shrink: 0;
             img {
                 height: 3rem;
                 width: 3rem;
@@ -41,6 +49,7 @@
         .nickname {
             font-size: 1.2rem;
             width: 6rem;
+            flex-shrink: 0;
         }
         .userdesc {
             flex-grow: 1;
