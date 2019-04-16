@@ -5,6 +5,15 @@ import { convertFullDate } from '../../utils/convertDate'
 
 const PhotoInfo = (props) => {
 
+    const makeTagList = () => {
+        let tagList = props.tagInfo.map((tag) => {
+            return (
+                <div className="tag-unit">{tag.tag_name}</div>
+            )
+        })
+        return tagList;
+    }
+
     return (
         <>
             <div className="photo-wrapper">
@@ -16,6 +25,7 @@ const PhotoInfo = (props) => {
                 <div className="info-wrapper">
                     <h4>{props.photoInfo.title}</h4>
                     <p>{convertFullDate(props.photoInfo.created_at)}</p>
+                    <div className="info-tags">{makeTagList()}</div>
 
                     <div className="actions-wrapper">
                         <div className="edit-delete-wrapper">

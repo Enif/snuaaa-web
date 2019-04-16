@@ -4,6 +4,7 @@ import AlbumList from '../../components/PhotoBoard/AlbumList';
 import CreateAlbum from '../../components/PhotoBoard/CreateAlbum';
 import PhotoList from '../../components/Album/PhotoList';
 import CreatePhoto from '../../components/Album/CreatePhoto';
+import Tag from '../../components/Common/Tag';
 import Loading from '../../components/Common/Loading';
 
 const TAG = 'ASTROPHOTO'
@@ -14,15 +15,49 @@ class AstroPhoto extends React.Component {
         super(props);
         this.albums = [];
         this.photos = [];
+        this.tags = [];
+
         this.state = {
             popUpState: false,
             isReady: false,
-            isViewPhotos: false
+            isViewPhotos: false,
+            selectedTags: []
         }
     }
 
     componentDidMount() {
-        this.retrieveAlbums(this.props.board_id);
+        this.fetch(this.state.isViewPhotos);
+        // this.retrieveAlbums(this.props.board_id);
+    }
+
+    fetch = (isViewPhotos) => {
+        const board_id = this.props.board_id;
+
+        this.setIsReady(false);
+        if(!isViewPhotos) {
+            service.retrieveAlbumsInPhotoBoard(board_id)
+            .then((res) => {
+                this.albums = res.data;
+                this.setIsReady(true);
+            })
+            .catch((err) => {
+                console.error(err);
+            })
+        }
+        else {
+            Promise.all([
+                service.retrieveTagsInBoard(board_id),
+                service.retrievePhotosInPhotoBoard(board_id)
+            ])
+            .then((res) => {
+                this.tags = res[0].data;
+                this.photos = res[1].data;
+                this.setIsReady(true);
+            })
+            .catch((err) => {
+                console.error(err);
+            })
+        }
     }
 
     setIsReady = (isReady) => {
@@ -35,50 +70,43 @@ class AstroPhoto extends React.Component {
         this.setState({
             isViewPhotos: isViewPhotos
         })
-        if (!isViewPhotos) {
-            this.retrieveAlbums(this.props.board_id);
+        this.fetch(isViewPhotos);
+    }
+
+    clickTag = (e) => {
+        if(this.state.selectedTags.includes(e.target.id)) {
+            let idx = this.state.selectedTags.indexOf(e.target.id);
+            this.state.selectedTags.splice(idx, 1);
         }
         else {
-            this.retrievePhotos(this.props.board_id);
+            this.state.selectedTags.push(e.target.id)
+        }
+        // console.log(e.target.id);
+        // console.log(this.selectedTags);
+        this.setIsReady(false);
+        if(this.state.selectedTags.length > 0) {
+
+            console.log(this.state.selectedTags)
+            service.retrievePhotosInPhotoBoardByTag(this.props.board_id ,this.state.selectedTags)
+            .then((res) => {
+                console.log(res)
+                this.photos = res.data;
+                this.setIsReady(true);
+            })
+            .catch((err) => {
+                console.error(err);
+            })
+        }
+        else {
+            this.fetch(this.state.isViewPhotos);
         }
     }
 
-    retrieveAlbums = async (board_id) => {
-        console.log('[%s] Retrieve Albums', TAG);
+    clickAll = () => {
         this.setState({
-            isReady: false
+            selectedTags: []
         })
-
-        await service.retrieveAlbumsInPhotoBoard(board_id)
-            .then((res) => {
-                console.log('[%s] Retrieve Albums Success', TAG);
-                this.albums = res.data;
-                this.setState({
-                    isReady: true
-                })
-            })
-            .catch((err) => {
-                console.error(`[${TAG}] Retrieve Photos Fail >> ${err}`)
-            })
-    }
-
-    retrievePhotos = async (board_id) => {
-        console.log('[%s] Retrieve Albums', TAG);
-        this.setState({
-            isReady: false
-        })
-
-        await service.retrievePhotosInPhotoBoard(board_id)
-            .then((res) => {
-                console.log('[%s] Retrieve Albums Success', TAG);
-                this.photos = res.data;
-                this.setState({
-                    isReady: true
-                })
-            })
-            .catch((err) => {
-                console.error(`[${TAG}] Retrieve Photos Fail >> ${err}`)
-            })
+        this.fetch(this.state.isViewPhotos);
     }
 
     togglePopUp = () => {
@@ -108,15 +136,16 @@ class AstroPhoto extends React.Component {
                                 {this.state.isViewPhotos ?
                                     (
                                         <>
+                                            <Tag tags={this.tags} clickAll={this.clickAll} selectedTags={this.state.selectedTags} clickTag={this.clickTag} />
                                             <PhotoList photos={this.photos} togglePopUp={this.togglePopUp} />
-                                            {this.state.popUpState && <CreatePhoto board_id={board_id} retrievePhotos={this.retrievePhotos} togglePopUp={this.togglePopUp} />}
+                                            {this.state.popUpState && <CreatePhoto board_id={board_id} tags={this.tags} retrievePhotos={this.fetch} togglePopUp={this.togglePopUp} />}
                                         </>
                                     )
                                     :
                                     (
                                         <>
                                             <AlbumList board_id={board_id} albums={this.albums} togglePopUp={this.togglePopUp} />
-                                            {this.state.popUpState && <CreateAlbum board_id={board_id} retrieveAlbums={this.retrieveAlbums} togglePopUp={this.togglePopUp} />}
+                                            {this.state.popUpState && <CreateAlbum board_id={board_id} retrieveAlbums={this.fetch} togglePopUp={this.togglePopUp} />}
                                             <button className="enif-btn-circle" onClick={() => this.togglePopUp()}>+</button>
                                         </>
                                     )

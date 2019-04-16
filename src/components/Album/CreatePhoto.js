@@ -25,6 +25,7 @@ class CreatePhoto extends React.Component {
             f_stop: '',
             exposure_time: '',
             iso: '',
+            selectedTags: [],
             uploadPhotos: [],
             imgDatas: [],
             imgIdx: -1
@@ -45,7 +46,7 @@ class CreatePhoto extends React.Component {
             })
         }
         for(let i = 0; i < e.target.files.length; i++) {
-            this.photoInfos = this.photoInfos.concat([{
+            this.photoInfos.push({
                 title: '',
                 desc: '',
                 date: '',
@@ -55,14 +56,17 @@ class CreatePhoto extends React.Component {
                 focal_length: '',
                 f_stop: '',
                 exposure_time: '',
-                iso: ''
-            }])
+                iso: '',
+                selectedTags: []
+            })
         }
     }
 
     setImgIdx = (index) => {
 
-        const { imgIdx, title, desc, date, location, camera, lens, focal_length, f_stop, exposure_time, iso } = this.state;
+        const { imgIdx, title, desc, date, location, camera, lens, 
+            focal_length, f_stop, exposure_time, iso, selectedTags } = this.state;
+
         if(imgIdx >= 0) {
             this.photoInfos[imgIdx] = {
                 title: title,
@@ -75,6 +79,7 @@ class CreatePhoto extends React.Component {
                 f_stop: f_stop,
                 exposure_time: exposure_time,
                 iso: iso,
+                selectedTags: selectedTags
             }
         }
 
@@ -89,8 +94,38 @@ class CreatePhoto extends React.Component {
             focal_length: this.photoInfos[index].focal_length,
             f_stop: this.photoInfos[index].f_stop,
             exposure_time: this.photoInfos[index].exposure_time,
-            iso: this.photoInfos[index].iso
+            iso: this.photoInfos[index].iso,
+            selectedTags: this.photoInfos[index].selectedTags
         })
+    }
+
+    makeTagList = () => {
+        const tagList = this.props.tags.map((tag) => {
+            return (
+                <div className="tag-unit" key={tag.tag_id} >
+                    <input type="checkbox" id={"crt_" + tag.tag_id} checked={this.state.selectedTags.includes(tag.tag_id)}
+                    onChange={(e) => this.clickTag(e)} />
+                    <label htmlFor={"crt_" + tag.tag_id}># {tag.tag_name}</label>
+                </div>
+            )
+        })
+        return tagList;
+    }
+
+    clickTag = (e) => {
+        let tagId = e.target.id.replace('crt_', '');
+
+        if(this.state.selectedTags.includes(tagId)) {
+            this.setState({
+                selectedTags: this.state.selectedTags.filter(tag => tagId !== tag)
+            })
+        }
+        else {
+            this.setState({
+                selectedTags: this.state.selectedTags.concat(tagId)
+            })
+            
+        }
     }
 
     checkForm = () => {
@@ -104,7 +139,8 @@ class CreatePhoto extends React.Component {
 
     createPhotos = async () => {
 
-        const { imgIdx, title, desc, date, location, camera, lens, focal_length, f_stop, exposure_time, iso } = this.state;
+        const { imgIdx, title, desc, date, location, camera, lens,
+            focal_length, f_stop, exposure_time, iso, selectedTags } = this.state;
         if(imgIdx >= 0) {
             this.photoInfos[imgIdx] = {
                 title: title,
@@ -117,6 +153,7 @@ class CreatePhoto extends React.Component {
                 f_stop: f_stop,
                 exposure_time: exposure_time,
                 iso: iso,
+                selectedTags: selectedTags
             }
         }
 
@@ -134,6 +171,7 @@ class CreatePhoto extends React.Component {
             photosForm.append('f_stop', this.photoInfos[i].f_stop);
             photosForm.append('exposure_time', this.photoInfos[i].exposure_time);
             photosForm.append('iso', this.photoInfos[i].iso);
+            photosForm.append('tags', this.photoInfos[i].selectedTags);
             photosForm.append('uploadPhotos', this.state.uploadPhotos[i]);
         }
 
@@ -189,16 +227,26 @@ class CreatePhoto extends React.Component {
                             <input type="file" id="photos" multiple accept="image/*" onChange={(e) => this.uploadFile(e)}/>
                             <ThumbnailList uploadPhotos={uploadPhotos} imgIdx={imgIdx} setImgIdx={this.setImgIdx}/>
                         </div>
+
                         <div className="crt-photo-center">
                             <PreviewImage uploadPhotos={uploadPhotos} imgIdx={imgIdx} />
                         </div>
+
                         <div className="crt-photo-right">
+
                         {(() => {
                             if(this.state.imgIdx >= 0) {
                                 return(
+                                    <>
+                                        {this.props.tags && 
+                                        <div className="tag-wrapper">
+                                            {this.makeTagList()}
+                                        </div>}
+                                    
                                     <CreatePhotoInfo title={title} desc={desc} date={date} location={location}
                                     camera={camera} lens={lens} focal_length={focal_length} f_stop={f_stop}
                                     exposure_time={exposure_time} iso={iso} handleChange={this.handleChange}/>
+                                    </>
                                 )
                             }
                             else {

@@ -58,6 +58,20 @@
         .info-wrapper {
             flex-basis: 50%;
 
+            .info-tags {
+                display: flex;
+                .tag-unit {
+                    border: 1px solid #e25d7f;
+                    color: #eeeeee;
+                    background-color: #e25d7f;
+                    margin: 5px;
+                    padding: 8px;
+                    border-radius: 7px;
+                    font-size: 14px;
+                    user-select: none;
+                }
+            }
+
             h4 {
                 margin-top: 20px;
                 margin-bottom: 20px;
@@ -311,6 +325,7 @@
                         width: 5rem;
                         height: 6rem;
                         flex: none;
+                        user-select: none;
                         .add-photo {
                             width: 3.5rem;
                             height: 3.5rem;
