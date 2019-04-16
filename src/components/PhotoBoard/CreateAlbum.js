@@ -90,10 +90,13 @@ class CreateAlbum extends React.Component {
                     <table className="enif-table">
                         <caption>앨범 생성</caption>
                         <tbody>
-                            <tr>
-                                <th>카테고리</th>
-                                <td className="categories-wrapper">{this.props.categories && this.makeCategoryList()}</td>
-                            </tr>
+                            {
+                                this.props.categories &&
+                                <tr>
+                                    <th>카테고리</th>
+                                    <td className="categories-wrapper">{this.makeCategoryList()}</td>
+                                </tr>
+                            }
                             <tr>
                                 <th>제목</th>
                                 <td className="input-text crt-alb-title"><input type="text" name="title" placeholder="앨범 제목" onChange={(e) => this.handleChange(e)}/></td>

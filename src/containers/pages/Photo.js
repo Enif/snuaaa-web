@@ -11,6 +11,7 @@ class Photo extends React.Component {
     constructor(props) {
         super(props);
         this.photoInfo = undefined;
+        this.tagInfo = undefined;
         this.state = {
             photo_id: this.props.match.params.pNo,
             likeInfo: false,
@@ -23,6 +24,7 @@ class Photo extends React.Component {
         await service.retrievePhoto(photo_id)
         .then((res) => {
             this.photoInfo = res.data.photoInfo;
+            this.tagInfo = res.data.tagInfo;
             this.setState({
                 likeInfo: res.data.likeInfo,
                 isReady: true
@@ -58,7 +60,7 @@ class Photo extends React.Component {
                     if(!isReady) return <Loading />
                     else return (
                         <div className="photo-section-wrapper">
-                            <PhotoInfo photoInfo={this.photoInfo} likeInfo={likeInfo} likePhoto={this.likePhoto}/>
+                            <PhotoInfo photoInfo={this.photoInfo} likeInfo={likeInfo} tagInfo={this.tagInfo} likePhoto={this.likePhoto}/>
                             <Comment parent_id={this.state.photo_id}/>
                         </div>
                     )

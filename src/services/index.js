@@ -39,6 +39,10 @@ export function retrievePostsInBoard(board_id) {
     return axios.get(SERVER_URL + `api/board/${board_id}/posts`);
 }
 
+export function retrieveTagsInBoard(board_id) {
+    return axios.get(SERVER_URL + `api/board/${board_id}/tags`);
+}
+
 export function retrievePost(post_id) {
     return axios.get(SERVER_URL + `api/post/${post_id}`);
 }
@@ -77,6 +81,19 @@ export function retrievePhotosInPhotoBoard(board_id) {
 
 export function createPhotosInPhotoBoard(board_id, data) {
     return axios.post(SERVER_URL + `api/photoboard/${board_id}/photos`, data)
+}
+
+export function retrievePhotosInPhotoBoardByTag(board_id, tags) {
+    let tagUrl = '';
+    tags.forEach((tag) => {
+        if(!tagUrl) {
+            tagUrl += `tag=${tag}`
+        }
+        else {
+            tagUrl += `&tag=${tag}`
+        }
+    })
+    return axios.get(SERVER_URL + `api/photoboard/${board_id}/photos?${tagUrl}`)
 }
 
 export function createPhotosInAlbum(albumId, data) {

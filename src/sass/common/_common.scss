@@ -41,3 +41,38 @@
         }
     }
 }
+
+.tag-wrapper {
+    margin-top: 25px;
+    margin-bottom: 15px;
+    .tag-unit {
+        display: inline-block;
+        // width: 100px;
+        label {
+            width: 100%;
+            border: 1px solid #e25d7f;
+            margin: 5px;
+            padding: 8px;
+            border-radius: 7px;
+            font-size: 14px;
+            user-select: none;
+            cursor: pointer;
+        }
+        input {
+            display: none;
+        }
+        input:checked + label {
+            color: #eeeeee;
+            background-color: #e25d7f;
+        }
+    }
+    .tag-all {
+        label {
+            border: 1px solid #686868;
+        }
+        input:checked + label {
+            color: #eeeeee;
+            background-color: #686868;
+        }
+    }
+}
