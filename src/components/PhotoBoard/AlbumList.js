@@ -1,103 +1,67 @@
 import React from 'react';
-import * as service from '../../services';
-import Loading from '../Common/Loading';
+import { Link } from 'react-router-dom';
 import defaultAlbumCover from '../../assets/img/default_photo_img.png'
 import defaultStarAlbumCover from '../../assets/img/default_photo_img_star.png'
+import Image from '../Common/Image'
 
 const TAG = 'ALBUMLIST'
 
 class AlbumList extends React.Component {
 
     constructor(props) {
-        console.log('[%s] constructor', TAG)
         super(props);
-        this.albums = [];
-        this.state = {
-            boardNo: this.props.boardNo,
-            isShow: false
-        }
-        this.retrieveAlbums(this.state.boardNo);
     }
 
-    static getDerivedStateFromProps(props, state) {
-        console.log('[%s] getDerivedStateFromProps', TAG);
-        return {
-            boardNo: props.boardNo,
-        }
+    retrieveAlbums = () => {
+
+        let albumCover = this.props.board_id === 'brd08' ? defaultStarAlbumCover : defaultAlbumCover;
+        let albums = this.props.albums;
+
+        let albumList = albums.map(album => {
+            let color;
+            if(album.category_color) {
+                color = {
+                    "borderTopColor": album.category_color
+                }
+            }
+            
+            return (
+                <div className="album-list" key={album.object_id} >
+                    <Link to={`/album/${album.object_id}`}>
+
+                        <Image imgSrc={album.file_path} defaultImgSrc={albumCover} />
+                        <div className="album-cover">
+                            <div className="album-category-marker" style={color}>
+
+                            </div>
+                            <h5>
+                                {album.title}
+                            </h5>
+                        </div>
+                    </Link>
+                </div>
+            )
+        })
+        return albumList;
     }
 
     shouldComponentUpdate(nextProps, nextState) {
         console.log('[%s] shouldComponentUpdate', TAG)
-        if(this.state.boardNo !== nextState.boardNo){
-            nextState.isShow = false;
-            this.retrieveAlbums(nextState.boardNo)
-            return true;
+        if (this.props.albums.length === nextProps.albums.length) {
+            return false;
         }
-
-        if(nextState.isShow === true) {
-            return true;
-        }
-    }
-
-    clickAlbum = (albumId, e) => {
-        e.preventDefault();
-        this.props.setAlbumId(albumId);
-        this.props.setBoardState(2);
-    }
-
-    retrieveAlbums = async(boardNo) => {
-        console.log('[%s] Retrieve Albums', TAG);
-
-        await service.retrieveAlbumsInPhotoBoard(boardNo)
-        .then((res) => {
-            console.log('[%s] Retrieve Albums Success', TAG);
-            console.log(res.data)
-            const albumData = res.data;
-            let albums = albumData.map(album => {
-                return (
-                    <div className="album-wrapper" onClick={(e) => this.clickAlbum(album._id, e)}>
-                        <img src={this.state.boardNo === 'pb01' ? defaultAlbumCover : defaultStarAlbumCover} />
-                        {album.title}
-                    </div>
-                )
-            })
-            this.albums = albums;
-            this.setState({
-                isShow: true
-            })
-        })
-        .catch((res) => {
-            console.log('[%s] Retrieve Albums Fail', TAG);
-        })
+        return true;
     }
 
     render() {
         console.log('[%s] render', TAG)
-        let { isShow } = this.state;
         return (
             <React.Fragment>
-            {
-                isShow ?
-                (
-                    <div>
-                        <div className="album-list-wrapper">
-                            {this.albums}
-                        </div>
-                    </div>    
-                )
-                :
-                (
-                    <Loading/>
-                )
-            }
-                <button className="enif-btn-circle" onClick={() => this.props.togglePopUp()}>+</button>
-             
+                <div className="album-list-wrapper">
+                    {this.retrieveAlbums()}
+                </div>
             </React.Fragment>
-        ) 
-    }
-
-    componentDidMount() {
-        console.log('[%s] componentDidMount', TAG)
+        )
     }
 }
 

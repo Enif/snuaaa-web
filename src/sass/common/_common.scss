@@ -1,0 +1,81 @@
+
+.color-pink {
+    color: #f0645e;
+}
+
+.color-gray1 {
+    color: #a3a3a3;
+}
+
+
+.actions-wrapper {
+    display: flex;
+    justify-content: space-between;
+    // padding-top: 5px;
+
+    .edit-delete-wrapper {
+        .edit-wrapper {
+            display: inline-block;
+            margin-right: 12px;
+        }
+        .delete-wrapper {
+            display: inline-block;
+        }
+
+    }
+
+    .like-comment-num-wrapper {
+        font-size: 20px;
+        // padding-bottom: 10px;
+        .like-num-wrapper {
+            display: inline-block;
+            margin-right: 12px;
+            color: #f0645e;
+        }
+        .comment-num-wrapper {
+            display: inline-block;
+            color: #a3a3a3;
+        }
+        .material-icons {
+            font-size: 24px;
+        }
+    }
+}
+
+.tag-wrapper {
+    margin-top: 10px;
+    margin-bottom: 0px;
+    display: flex;
+    flex-wrap: wrap;
+    .tag-unit {
+        // display: inline-block;
+        // width: 100px;
+        margin: 15px 5px 10px 5px;
+
+        label {
+            width: 100%;
+            border: 1px solid #e25d7f;
+            padding: 8px;
+            border-radius: 7px;
+            font-size: 14px;
+            user-select: none;
+            cursor: pointer;
+        }
+        input {
+            display: none;
+        }
+        input:checked + label {
+            color: #eeeeee;
+            background-color: #e25d7f;
+        }
+    }
+    .tag-all {
+        label {
+            border: 1px solid #686868;
+        }
+        input:checked + label {
+            color: #eeeeee;
+            background-color: #686868;
+        }
+    }
+}

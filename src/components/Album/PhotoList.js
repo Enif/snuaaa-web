@@ -1,81 +1,45 @@
 import React from 'react';
-import * as service from '../../services';
-import Loading from '../Common/Loading';
-import Photo from './Photo';
-import defaultAlbumCover from '../../assets/img/default_photo_img.png'
-
+import { Link } from 'react-router-dom';
+import Image from '../Common/Image'
 
 const TAG = 'PHOTOLIST'
 
 class PhotoList extends React.Component {
 
     constructor(props) {
-        console.log('[%s] constructor', TAG)
         super(props);
-        this.photos = [];
-        this.state = {
-            albumNo: this.props.albumNo,
-            isShow: false,
-            popUpState: false,
-        }
-        this.retrievePhotos(this.state.albumNo);
     }
 
-
-    retrievePhotos = async(albumNo) => {
+    retrievePhotos = () => {
         console.log('[%s] Retrieve Photos', TAG);
-        console.log(this.props.albumNo);
 
-        await service.retrievePhotosInAlbum(albumNo)
-        .then((res) => {
-            console.log('[%s] Retrieve Albums Success', TAG);
-            console.log(res.data)
-            const photoData = res.data;
-            let photos = photoData.map(photo => {
-                return (
-                    <div className="album-wrapper" onClick={(e) => this.clickPhoto(photo._id, e)}>
-                        <img src={defaultAlbumCover} />
-                        {photo.title}
-                    </div>
-                )
-            })
-            this.photos = photos;
-            this.setState({
-                isShow: true
-            })
+        let photos = this.props.photos
+        let photoList = photos.map(photo => {
+            return (
+                <div className="photo-wrapper" key={photo.object_id}>
+                    <Link to={`/photo/${photo.object_id}`}>
+                        <div className="photo-cover">
+                            <i className="material-icons">favorite</i> {photo.like_num}&nbsp;
+                            <i className="material-icons">comment</i> {photo.comment_num}
+                        </div>
+                        <Image imgSrc={photo.file_path} />
+                    </Link>
+                </div>
+            )
         })
-        .catch((res) => {
-            console.log('[%s] Retrieve Albums Fail', TAG);
-        })
+        return photoList
     }
 
     render() {
         console.log('[%s] render', TAG)
-        let { isShow } = this.state;
         return (
-            <React.Fragment>
-            {
-                isShow ?
-                (
-                    <div>
-                        <div className="album-list-wrapper">
-                            {this.photos}
-                        </div>
-                    </div>    
-                )
-                :
-                (
-                    <Loading/>
-                )
-            }
+            <div className="board-wrapper">
+                <div className="photo-list-wrapper">
+                    {this.retrievePhotos()}
+                </div>
                 <button className="enif-btn-circle" onClick={() => this.props.togglePopUp()}>+</button>
-             
-            </React.Fragment>
-        ) 
-    }
-
-    componentDidMount() {
-        console.log('[%s] componentDidMount', TAG)
+            </div>
+        )
     }
 }
 

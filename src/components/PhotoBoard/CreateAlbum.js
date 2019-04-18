@@ -11,6 +11,8 @@ class CreateAlbum extends React.Component {
 
         this.state = {
             title: '',
+            contents: '',
+            checkedCategory: ''
         }
     }
 
@@ -21,41 +23,95 @@ class CreateAlbum extends React.Component {
         console.log(this.state.title);
     }
 
+    makeCategoryList = () => {
+        let CategoryList = this.props.categories.map((category) => {
+            let style = {
+                "border": `1px solid ${category.category_color}`,
+            }            
+            let style_selected = {
+                "border": `1px solid ${category.category_color}`,
+                "background-color": category.category_color,
+                "color": "#eeeeee"
+            }
+            return (
+                <>
+                    <input type="radio" id={category.category_id} name="category" value={category.category_id}
+                    checked={this.state.checkedCategory === category.category_id} onChange={this.handleCategoryChange}/>
+                    <label htmlFor={category.category_id}
+                        style={this.state.checkedCategory === category.category_id ? style_selected : style}>{category.category_name}</label>
+                </>
+            )
+        })
+        return CategoryList;
+    }
+
     createAlbum = async () => {
         console.log('[%s] createAlbum', TAG);
-        let albumInfo = {
-            title: this.state.title
+
+        if(!this.state.title) {
+            alert("제목을 입력해 주세요")
         }
-        console.log(albumInfo);
-        
-        await service.createAlbum(this.props.boardNo, albumInfo)
-        .then(() => {
-            console.log('[%s] Create Album Success', TAG);
-            this.props.togglePopUp();
-        })
-        .catch(() => {
-            console.log('[%s] Create Album Success', TAG);
-            this.props.togglePopUp();
+        else if(this.props.categories && !this.state.checkedCategory) {
+            alert("카테고리를 선택해 주세요")
+        }
+        else {
+            let albumInfo = {
+                category_id: this.state.checkedCategory,
+                title: this.state.title,
+                contents: this.state.contents
+            }
+            
+            await service.createAlbum(this.props.board_id, albumInfo)
+            .then(() => {
+                console.log('[%s] Create Album Success', TAG);
+                this.props.togglePopUp();
+                this.props.retrieveAlbums(this.props.board_id)
+            })
+            .catch((err) => {
+                console.log('[%s] Create Album Fail', TAG);
+                console.error(err)
+                this.props.togglePopUp();
+            })
+        }
+    }
+
+    handleCategoryChange = (e) => {
+        this.setState({
+            checkedCategory: e.target.value
         })
     }
 
     render() {
         console.log('[%s] render', TAG)
-        
+     
         return (
             <div className="enif-popup">
-                <div className="enif-popup-content">
-                    <h3>앨범 생성</h3>
-                    <button className="enif-btn-cancel" onClick={()=>this.props.togglePopUp()}> x </button>
-                    <div>
-                        <input type="text" name="title" placeholder="앨범 제목" onChange={(e) => this.handleChange(e)}/>
-                    </div>
-                    <div>
-                        <textarea name="desc" placeholder="앨범 설명"/>
-                    </div>
-                    <button className="enif-btn-common" onClick={() => this.createAlbum()}>확인</button>
+                <div className="enif-popup-content crt-alb-wrapper">
+                    <table className="enif-table">
+                        <caption>앨범 생성</caption>
+                        <tbody>
+                            {
+                                this.props.categories &&
+                                <tr>
+                                    <th>카테고리</th>
+                                    <td className="categories-wrapper">{this.makeCategoryList()}</td>
+                                </tr>
+                            }
+                            <tr>
+                                <th>제목</th>
+                                <td className="input-text crt-alb-title"><input type="text" name="title" placeholder="앨범 제목" onChange={(e) => this.handleChange(e)}/></td>
+                            </tr>
+                            <tr>
+                                <th>설명</th>
+                                <td className="crt-alb-contents"><textarea name="contents" placeholder="앨범 설명" onChange={(e) => this.handleChange(e)}/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button className="enif-btn-common enif-btn-ok" onClick={() => this.createAlbum()}>OK</button>
+                    <button className="enif-btn-common enif-btn-cancel" onClick={()=>this.props.togglePopUp()} >CANCEL</button>
                 </div>
-            </div>            
+
+            </div>
         ) 
     }
 

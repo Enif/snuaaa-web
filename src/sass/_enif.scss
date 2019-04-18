@@ -1,0 +1,220 @@
+/**********  ENIF  **********/
+
+.enif-text-left {
+    text-align: left;
+}
+
+.enif-text-center {
+    text-align: center;
+}
+
+.enif-text-right {
+    text-align: right;
+}
+
+.enif-wid-full {
+    width: 100%;
+}
+
+.enif-wid-half {
+    width: 50%;
+}
+
+.enif-wid-quater {
+    width: 25%;
+}
+
+.enif-popup {
+    position: fixed;
+    z-index: 30;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.enif-popup-content {
+    position: relative;
+    width: 500px;
+    // height: 300px;
+    margin: 0 auto;
+    margin-top: 200px;
+    padding: 2rem 2rem 3rem 2rem;
+    background-color: #ffffff;
+    z-index: 99;
+    h3 {
+        text-align: center;
+        font-size: 1.3rem;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+    .input-text {
+        input {
+            height: 2rem;
+            width: 100%;
+        }    
+    }
+    textarea {
+        height: 8rem;
+        width: 100%;
+        resize: none;
+    }
+
+    .enif-table {
+        width: 100%;
+        caption {
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        tr {
+            margin: 10px 0px 10px 0px;
+        }
+        th {
+            vertical-align: middle;
+            font-size: 15px;
+            font-weight: bold;
+        }
+        td {
+            padding: 5px;
+        }
+    }
+}
+
+
+.enif-popup .enif-btn-common {
+    // position: relative;
+    // position: absolute;
+    float: right;
+    bottom: 20px;
+    right: 20px;
+}
+
+
+.enif-btn-common {
+    width: 130px;
+    height: 40px;
+    border-radius: 5px;
+    font-size: 1rem;
+    // font-weight: bold;
+    border: none;
+    background: none;
+    cursor: pointer;
+    // background: #b3cae5;
+}
+
+.enif-btn-cancel {
+    color: #b4b4b4;
+    font-size: 20px;
+    &:hover {
+        // font-weight: bold;
+        color: rgb(105, 105, 105);    
+    }
+}
+
+.enif-btn-ok {
+    color: #57adb6;
+    font-size: 20px;
+}
+
+.enif-btn-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 2rem;
+    /* font-weight: bold; */
+    border: none;
+    background: #00115e;
+    color: #fff;
+}
+
+
+.enif-btn-common-rec {
+    height: 3em;
+    width: 20em;
+    margin: 1em auto;
+    letter-spacing: 0.2rem;
+    color: white;
+    background-color: #447294;
+    border: none;
+    // font-weight: bold;
+}
+
+.enif-input {
+    height: 20px;
+    width: 100%;
+    display: block;
+}
+
+.enif-input-invalid {
+    border: 2px solid #cd5c5c;
+}
+
+.enif-input-field {
+    margin: 0 auto;
+    margin-top: 15px;
+    width: 300px;
+    label {
+        font-size: 0.9rem;
+        font-weight: bold;
+        margin: 3px;
+    }
+    input {
+        // margin-top: 5px;
+        height: 35px;
+        width: 100%;
+        display: block;
+    }
+    p {
+        color: red;
+    }
+    textarea {
+        margin-top: 5px;
+        display: block;
+        width: 100%;
+        height: 100px;
+        resize: none;
+        overflow: auto;
+    }
+}
+
+.enif-divider {
+    margin: 20px 0px 20px 0px;
+    height: 2px;
+    background-color: #C9C9C9;
+}
+
+
+.enif-fixed-top {
+    position: fixed;
+    top: 0;
+}
+
+
+// .enif-input-field input:invalid {
+//     // background-color: #fff4f4;
+//     border: 1px solid #ff7e7e;
+// }
+
+@media screen and (max-width: 800px) {
+    .enif-popup-content {
+        width: 90%;
+    }
+
+    .enif-btn-circle {
+        position: fixed;
+        right: 3rem;
+        bottom: 3rem;
+        z-index: 5;
+    }
+
+    .enif-fixed-btm {
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+    }
+}
+
+/**********  ENIF  **********/

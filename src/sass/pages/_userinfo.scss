@@ -1,0 +1,194 @@
+.userinfo-header {
+    display: flex;
+    background-color: #FDEED5;
+    padding: 10px;
+    .header-item {
+        font-size: 15px;
+        margin-right: 20px;
+    }
+}
+
+.profile-wrapper {
+    margin: 0 auto;
+    width: 500px;
+
+    .profile-img-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding-top: 20px;
+        img {
+            height: 150px;
+            width: 150px;
+            border-radius: 50%;
+            border: 2px solid #C9C9C9;
+        }
+        h5 {
+            margin-top: 15px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    }
+    .enif-input-field {
+        margin: 0 auto;
+        margin-top: 15px;
+        width: 400px;
+        background-color: #FFF;
+        border: 2px solid #C9C9C9;
+        border-radius: 20px;
+        padding: 10px;
+        label {
+            display: inline-block;
+            width: 40%;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin: 3px;
+            color: #666666;
+        }
+        input {
+            display: inline-block;
+            height: 35px;
+            width: 55%;
+            border: none;
+            font-family: 'NIXGONM-Vb';
+            &:disabled {
+                background-color: #FFF;
+                color: #666666;
+            }
+        }
+        textarea {
+            border: none;
+            resize: none;
+            overflow: auto;
+        }
+    }
+
+    .enif-input-invalid {
+        border: 2px solid #cd5c5c;
+    }
+
+    .btn-wrapper {
+        margin-top: 20px;
+        button {
+            font-family: 'NIXGONM-Vb';
+            border: none;
+            border-radius: 5px;
+        }
+        .btn-withdraw {
+            float: left;
+            background-color: #FFFFFF;
+            width: 100px;
+            height: 40px;
+            color: #666666;
+            border: 1px solid #FFFFFF;
+            transition: all 1s;
+            &:hover {
+                border: 1px solid #666666;
+            }
+        }
+        .btn-save {
+            float: right;
+            background-color: #49A0AE;
+            width: 100px;
+            height: 40px;
+            color: #FFFFFF;
+            font-size: 16px;
+        }
+
+    }
+}
+
+.my-wrapper {
+    display: flex;
+    .my-left {
+        width: 50%;
+    }
+    .my-right {
+        width: 50%;
+    }
+}
+
+.my-list-wrapper {
+    h4 {
+        font-size: 20px;
+        font-weight: bold;
+        color: #7193C4;
+        padding: 10px 0 10px 0;
+    }
+    .my-post-wrapper {
+        padding: 1rem;
+        border-top: 1px solid #C9C9C9;
+        &:last-child {
+            border-bottom: 1px solid #C9C9C9;
+        }
+        a {
+            color: #000000;
+        }
+        .my-post-boardname {
+            display: inline-block;
+            width: 25%;
+            color: #A3A3A3;
+        }
+        .my-post-title {
+            display: inline-block;
+            width: 55%;
+        }
+        .my-post-date {
+            display: inline-block;
+            width: 20%;
+        }
+    }
+    .my-cmt-wrapper {
+        padding: 1rem;
+        border-top: 1px solid #C9C9C9;
+        &:last-child {
+            border-bottom: 1px solid #C9C9C9;
+        }
+        .my-cmt-boardname {
+            display: inline-block;
+            width: 25%;
+            color: #A3A3A3;
+        }
+        .my-cmt-contents {
+            display: inline-block;
+            width: 55%;
+            .my-cmt-cmt {
+                margin-top: 5px;
+                color: #C9C9C9;
+            }
+        }
+        .my-cmt-date {
+            display: inline-block;
+            width: 20%;
+        }
+    }
+}
+
+
+
+
+@media screen and (max-width: 800px) {
+    .userinfo-header {
+        .header-item {
+            font-size: 0.8rem;
+        }
+    }
+
+    .profile-wrapper {
+    width: 100%;
+        .enif-input-field {
+            width: 90%;
+        }
+    }
+
+    .my-post-list-wrapper {
+        width: 10 0%;
+    }
+
+    .my-photo-list-wrapper {
+        width: 100%;
+    }
+
+}
+

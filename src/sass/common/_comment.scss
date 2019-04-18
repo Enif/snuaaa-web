@@ -1,0 +1,62 @@
+/****** COMMENT *******/
+
+.comment-area-wrapper {
+    margin: 10px 0px 10px 0px;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: #f4f4f4;
+    
+
+    .comment-list-wrapper {
+        .comment-wrapper {
+            display: flex;
+            height: 50px;
+            margin-top: 10px;
+            .profile {
+                img {
+                    border-radius: 50%;
+                    height: 40px;
+                    width: 40px;
+                }    
+            }
+            .com-cont-wrp {
+                h5 {
+                    font-size: 15px;
+                    font-weight: bold;
+                    padding: 5px;
+                }
+                p {
+                    font-size: 14px;
+                    padding: 5px;
+                }    
+            }
+        }
+    }
+
+    .comment-write {
+        height: 40px;
+        position: relative;
+        // display: flex;
+        textarea {
+            height: 100%;
+            width: 85%;
+            resize: none;
+            border: #b4b4b4;
+            padding-right: 30px;
+        }
+        button {
+            position: absolute;
+            right: 0;
+            height: 100%;
+            width: 20%;
+            font-size: 1rem;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            background: #fad55f;
+            &:active {
+                background: #6d869c;
+            }
+        }
+    }
+}

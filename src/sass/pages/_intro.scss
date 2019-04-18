@@ -1,0 +1,147 @@
+.intro-wrapper {
+    font-size: 13px; 
+    margin: 0 auto;
+    padding-left: 10%;
+    padding-right: 10%;
+    /* font-family: 'Jeju Gothic', serif; */
+    }
+    
+.intro-div-wrapper {
+    padding: 10px;
+    line-height: 1.3em;
+    h3 {
+        color: #75a3e6;
+        font-size: 22px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        font-weight: bold;
+    }
+    h4 {
+        padding: 10px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    .intro-content {
+        font-size: 16px;
+        line-height: 1.5;
+        display: block;
+        .img-left {
+            margin: 10px;
+            float: left;
+            width: 200px;
+            display: block;
+        }
+        .img-right {
+            margin: 10px;
+            float: right;
+            width: 200px;
+            display: block;
+        }
+        .img-sanghui {
+            width: 150px;
+        }
+        .img-sanghui {
+            width: 150px;
+        }
+        .img-gwak {
+            width: 140px;
+        }
+    }
+    ul {
+        list-style: inside;
+        color: rgb(85, 150, 255);   
+        li {
+            a {
+                font-size: 0.9rem;
+                line-height: 1.3em;
+                cursor: pointer;
+                &:hover {
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+    h5 {
+        line-height: 2em;
+        font-weight: bold;
+    }
+}
+
+
+.intro-div-wrapper table,
+.intro-div-wrapper th,
+.intro-div-wrapper td{
+    font-size: 0.9em;
+    border: 1px solid black;
+    padding: 0.5em;
+}
+
+.officers-wrapper {
+    .gen-wrapper {
+        display: flex;
+        height: 70px;
+        margin-top: 10px;
+        .generation {
+            flex-basis: 12%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #fad55f;
+            text-align: center;
+            color: #64635f;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        .member {
+            display: flex;
+            margin-left: 10px;
+            flex-basis: 88%;
+            background: #f2f2f2;
+            border-radius: 20px;
+            .president {
+                flex-basis: 20%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-right: 3px solid #ffffff;
+            }
+            .officers {
+                flex-basis: 80%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 10px;
+                font-size: 13px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .officers-wrapper {
+
+        .gen-wrapper {
+            height: 4rem;
+            .generation {
+                border-radius: 1rem;
+                flex-basis: 20%;
+            }
+            .member {
+                display: flex;
+                margin-left: 0.5rem;
+                flex-basis: 80%;
+                background: #f2f2f2;
+                border-radius: 1rem;
+                .president {
+                    flex-basis: 25%;
+                    font-size: 0.9rem;
+                }
+                .officers {
+                    flex-basis: 75%;
+                    padding-right: 0.5rem;
+                    font-size: 0.7rem;
+                }
+            }
+        }
+    }
+}

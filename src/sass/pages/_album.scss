@@ -1,0 +1,125 @@
+/****** ALBUM *******/
+.album-list-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-content: flex-start;
+    flex-wrap: wrap;
+}
+
+
+.album-list {
+    width: 33%;
+    // height: 232px;
+    margin: 0.5px;
+    position: relative;
+    box-shadow: 3px 3px 7px 2px rgba(95, 95, 95, 0.2);
+    cursor: pointer;
+    &::before {
+        content: '';
+        padding-top: 100%;
+        float: left;
+    }
+    &::after {
+        content: '';
+        display: block;
+        clear: both;
+    }
+    img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .album-cover {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        background-color: rgba(255, 255, 255, 0);
+        &:hover {
+            visibility: visible;
+            background-color: rgba(104, 104, 104, 0.5);
+            transition: all 1s;
+        }
+        .album-category-marker {
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-top: 50px solid transparent;
+            border-right: 50px solid transparent;
+        }
+        h5 {
+            text-align: center;
+            font-size: 15px;
+            color: white;
+        }
+    }
+}
+
+.album-info {
+    
+    p {
+        font-size: 15px;
+        margin: 10px 10px 10px 0px;
+    }
+    .alb-title-wrapper {
+        height: 40px;
+        .alb-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 10px 10px 10px 0px;
+            float: left;
+        }
+        .alb-author {
+            // text-align: right;
+            font-size: 20px;
+            font-weight: bold;
+            float: right;
+            color: #49A0AE;
+        }
+    
+    }
+    .contents {
+
+    }
+}
+
+
+.crt-alb-wrapper {
+    .categories-wrapper {
+        height: 30px;
+        margin-top: 20px;
+        input {
+            display: none;
+        }
+        input:checked + label {
+            color: #eeeeee;
+            background-color: #005783;
+        }
+        label {
+            margin: 5px;
+            padding: 6px;
+            // border: 1px solid #005783;
+            border-radius: 7px;
+            font-size: 14px;
+            cursor: pointer;
+            user-select: none;
+        }
+    }
+    .crt-alb-title {
+        margin-bottom: 10px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .album-list {
+        width: calc(50% - 3px);
+        // height: calc(50vw - 2px);
+    }
+}
+
+/****** ALBUM *******/

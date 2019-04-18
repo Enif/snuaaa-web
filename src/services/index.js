@@ -1,7 +1,11 @@
 import axios from 'axios';
 import { SERVER_URL } from '../common/environment'
 
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + (sessionStorage.getItem('token') || localStorage.getItem('token') );
+
+export function updateToken() {
+    return axios.get(SERVER_URL + 'api/check')
+}
 
 export function postSignUp(data) {
     return axios.post(SERVER_URL + 'api/signup/', data);
@@ -11,42 +15,120 @@ export function postLogIn(data) {
     return axios.post(SERVER_URL + 'api/login/', data);
 }
 
-export function getUserInfo(data) {
-    return axios.get(SERVER_URL + 'api/userinfo/', data);
+export function retrieveUserInfo() {
+    return axios.get(SERVER_URL + 'api/userinfo');
 }
 
-export function getUserProfile(data) {
-    return axios.get(SERVER_URL + 'api/userinfo/profile', data)
+export function updateUserInfo(data) {
+    return axios.patch(SERVER_URL + 'api/userinfo', data);
 }
 
-export function retrievePost(postNo) {
-     return axios.get(SERVER_URL + `api/post/${postNo}`);
+export function deleteUserInfo() {
+    return axios.delete(SERVER_URL + 'api/userinfo');
 }
 
-export function retrievePosts(data) {
-    return axios.get(SERVER_URL + 'api/post/', data);
+export function retrieveUserPosts() {
+    return axios.get(SERVER_URL + 'api/userinfo/posts');
 }
 
-export function retrievePostsInBoard(boardNo) {
-    return axios.get(SERVER_URL + `api/board/${boardNo}`);
+export function retrieveBoardInfo(board_id) {
+    return axios.get(SERVER_URL + `api/board/${board_id}`);
 }
 
-export function createPost(data) {
-    return axios.post(SERVER_URL + 'api/post/', data);
+export function retrievePostsInBoard(board_id) {
+    return axios.get(SERVER_URL + `api/board/${board_id}/posts`);
 }
 
-export function retrieveAlbumsInPhotoBoard(boardNo) {
-    return axios.get(SERVER_URL + `api/photoboard/${boardNo}`)
+export function retrieveTagsInBoard(board_id) {
+    return axios.get(SERVER_URL + `api/board/${board_id}/tags`);
 }
 
-export function createAlbum(boardNo, data) {
-    return axios.post(SERVER_URL + `api/photoboard/${boardNo}`, data)
+export function retrievePost(post_id) {
+    return axios.get(SERVER_URL + `api/post/${post_id}`);
 }
 
-export function createPhotos(albumNo, data) {
-    return axios.post(SERVER_URL + `api/album/${albumNo}`, data)
+export function createPost(board_id, data) {
+    return axios.post(SERVER_URL + `api/board/${board_id}/post`, data);
 }
 
-export function retrievePhotosInAlbum(albumNo) {
-    return axios.get(SERVER_URL + `api/album/${albumNo}`)
+export function retrieveComments(parent_id) {
+    return axios.get(SERVER_URL + `api/object/${parent_id}/comment`);
 }
+
+export function createComment(parent_id, data) {
+    return axios.post(SERVER_URL + `api/object/${parent_id}/comment`, data);
+}
+
+export function likeObject(object_id) {
+    return axios.post(SERVER_URL + `api/object/${object_id}/like`);
+}
+
+export function retrieveAlbumsInPhotoBoard(board_id) {
+    return axios.get(SERVER_URL + `api/photoboard/${board_id}/albums`)
+}
+
+export function retrieveAlbumsInPhotoBoardByCategory(board_id, ctg_id) {
+    return axios.get(SERVER_URL + `api/photoboard/${board_id}/albums?category=${ctg_id}`)
+}
+
+export function createAlbum(board_id, data) {
+    return axios.post(SERVER_URL + `api/photoboard/${board_id}/album`, data)
+}
+
+export function retrievePhotosInPhotoBoard(board_id) {
+    return axios.get(SERVER_URL + `api/photoboard/${board_id}/photos`)
+}
+
+export function createPhotosInPhotoBoard(board_id, data) {
+    return axios.post(SERVER_URL + `api/photoboard/${board_id}/photos`, data)
+}
+
+export function retrievePhotosInPhotoBoardByTag(board_id, tags) {
+    let tagUrl = '';
+    tags.forEach((tag) => {
+        if(!tagUrl) {
+            tagUrl += `tag=${tag}`
+        }
+        else {
+            tagUrl += `&tag=${tag}`
+        }
+    })
+    return axios.get(SERVER_URL + `api/photoboard/${board_id}/photos?${tagUrl}`)
+}
+
+export function createPhotosInAlbum(albumId, data) {
+    return axios.post(SERVER_URL + `api/album/${albumId}/photos`, data)
+}
+
+export function retrieveAlbum(albumId) {
+    return axios.get(SERVER_URL + `api/album/${albumId}`)
+}
+
+export function retrievePhotosInAlbum(albumId) {
+    return axios.get(SERVER_URL + `api/album/${albumId}/photos`)
+}
+
+export function retrievePhoto(photoId) {
+    return axios.get(SERVER_URL + `api/photo/${photoId}`)
+}
+
+export function retrieveDocuments() {
+    return axios.get(SERVER_URL + `api/document`)
+}
+
+export function retrieveDocumentsByGeneration(generation) {
+    return axios.get(SERVER_URL + `api/document/generation/${generation}`)
+}
+
+export function createDocument(data) {
+    return axios.post(SERVER_URL + `api/document`, data)
+}
+
+export function downloadDocument(docuId, index) {
+    return axios.get(SERVER_URL + `api/document/${docuId}/download/${index}`)
+}
+
+export function retrieveSoundBox() {
+    return axios.get(SERVER_URL + `api/soundbox`);
+}
+

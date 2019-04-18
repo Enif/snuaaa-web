@@ -1,0 +1,58 @@
+/******* Loading ******/
+
+.loading {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #999;
+    z-index: 99;
+    padding-top: 100px;
+    animation: loading-background 3s ease-in-out infinite;
+}
+
+@keyframes loading-background{
+    0% { background-color: rgba(255, 255, 255, 0.8); }
+    50% { background-color: rgba(100, 100, 100, 0.8); }
+    100%{ background-color: rgba(255, 255, 255, 0.8); }
+}
+
+.loading-sun {
+    position: relative;
+    top: 30%;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: gold;
+    margin: 0 auto;
+    box-shadow: 0 0 50px 10px rgb(255, 255, 255);
+    z-index: 0;
+}
+.loading-sun:before {
+    content: "";
+    position: absolute;
+    right: 0;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: black;
+    z-index: 1;
+    -webkit-animation: loadermy 3s ease-in-out infinite;
+    animation: loadermy 3s ease-in-out infinite;
+}
+
+@-webkit-keyframes loadermy{
+    0%{ left: -25px; background-color: rgba(255, 87, 87, 0.8); }
+    50%{ left: 0px; background-color: rgba(255, 87, 87, .1);}
+    100%{ left: 25px; background-color: rgba(255, 87, 87, .8); }
+}
+
+@keyframes loadermy{
+    0%{ left: -200px; background-color: rgba(255, 255, 255, 0.1); }
+    50%{ left: 0px; background-color: rgba(30, 30, 30, 0.8);}
+    100%{ left: 200px; background-color: rgba(255, 255, 255, 0.1); }
+}
+
+
+/******* Loading ******/

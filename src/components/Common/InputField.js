@@ -14,8 +14,6 @@ class InputField extends React.Component {
 
     validate = (e) => {
         //check valid
-        console.log(e.target.value);
-        console.log(this.re.test(e.target.value))
         if(!this.re.test(e.target.value)) {
             this.setState({
                 valid: false
@@ -30,22 +28,29 @@ class InputField extends React.Component {
     }
 
     render() {
+
+        let fieldClass = this.state.valid ? "enif-input-field" : "enif-input-field enif-input-invalid"
         return(
-            <div className="enif-input-field">
-                <label>{this.props.label}</label>
+            <div className={fieldClass}>
+                <label htmlFor={this.props.name}>{this.props.label}</label>
                 <input
                     ref={this.inputRef}
                     type={this.props.type || "text"}
                     // className={this.state.valid ? null : "enif-input-invalid"}
+                    id={this.props.name}
                     name={this.props.name}
                     onChange={(e) => {
-                        this.validate(e)
-                        this.props.handleChange(e) }}
+                        this.validate(e);
+                        if(this.props.handleChange) {
+                            this.props.handleChange(e);
+                        }
+                    }}
                     // onBlur={(e) => this.validate(e)}
-                    // value={this.props.value}
+                    value={this.props.value}
                     placeholder={this.props.placeholder}
                     pattern={this.props.pattern}
-                    // pattern={this.props.pattern}
+                    disabled={this.props.disabled}
+                    maxLength={this.props.maxLength ? this.props.maxLength : 20}
                     required={this.props.required}
                 />
                 { !this.state.valid && <p>{this.props.invalidMessage}</p> }
