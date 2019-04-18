@@ -161,6 +161,7 @@ class CreatePhoto extends React.Component {
 
         for(let i = 0, max = this.state.uploadPhotos.length; i < max; i++) {
             console.log(this.photoInfos[i])
+            photosForm.append('board_id', this.props.board_id);
             photosForm.append('title', this.photoInfos[i].title);
             photosForm.append('desc', this.photoInfos[i].desc);
             photosForm.append('date', this.photoInfos[i].date);

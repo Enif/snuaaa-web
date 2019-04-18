@@ -8,7 +8,7 @@ const PhotoInfo = (props) => {
     const makeTagList = () => {
         let tagList = props.tagInfo.map((tag) => {
             return (
-                <div className="tag-unit">{tag.tag_name}</div>
+                <div className="tag-unit"># {tag.tag_name}</div>
             )
         })
         return tagList;

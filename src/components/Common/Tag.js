@@ -14,7 +14,6 @@ function Tag({clickAll, clickTag, tags, selectedTags}) {
     })
 
     const makeTagList = (tags) => {
-        // console.log(tags)
         const tagList = tags.map((tag) => {
             return (
                 <div className="tag-unit">
