@@ -13,12 +13,16 @@ class Album extends React.Component {
         super(props);
         this.photos = [];
         this.albumInfo = undefined;
+        this.tagInfo = undefined;
         this.state = {
             album_id: this.props.match.params.aNo,
             isAlbumReady: false,
             isPhotoListReady: false,
             popUpState: false,
         }
+    }
+
+    componentDidMount() {
         this.retrieveAlbum(this.props.match.params.aNo);
         this.retrievePhotos(this.props.match.params.aNo);
     }
@@ -45,7 +49,8 @@ class Album extends React.Component {
     retrieveAlbum = async(album_id) => {
         await service.retrieveAlbum(album_id)
         .then((res) => {
-            this.albumInfo = res.data;
+            this.albumInfo = res.data.albumInfo;
+            this.tagInfo = res.data.tagInfo;
             this.setState({
                 isAlbumReady: true
             })
@@ -85,7 +90,7 @@ class Album extends React.Component {
                                 <div className="enif-divider"></div>
                                 <PhotoList photos={this.photos} redirectPhoto={this.redirectPhoto} togglePopUp={this.togglePopUp}/>
                                 {
-                                    this.state.popUpState && <CreatePhoto album_id={this.state.album_id} retrievePhotos={this.retrievePhotos} togglePopUp={this.togglePopUp} />
+                                    this.state.popUpState && <CreatePhoto album_id={this.state.album_id} board_id={this.albumInfo.board_id} tags={this.tagInfo} retrievePhotos={this.retrievePhotos} togglePopUp={this.togglePopUp} />
                                 }
                             </div>
                         )

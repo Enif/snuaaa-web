@@ -23,11 +23,11 @@ class AstroPhoto extends React.Component {
             isViewPhotos: false,
             selectedTags: []
         }
+        console.log(`[${TAG}] constructor`);
     }
 
     componentDidMount() {
         this.fetch(this.state.isViewPhotos);
-        // this.retrieveAlbums(this.props.board_id);
     }
 
     fetch = (isViewPhotos) => {
@@ -81,15 +81,11 @@ class AstroPhoto extends React.Component {
         else {
             this.state.selectedTags.push(e.target.id)
         }
-        // console.log(e.target.id);
-        // console.log(this.selectedTags);
         this.setIsReady(false);
-        if(this.state.selectedTags.length > 0) {
 
-            console.log(this.state.selectedTags)
+        if(this.state.selectedTags.length > 0) {
             service.retrievePhotosInPhotoBoardByTag(this.props.board_id ,this.state.selectedTags)
             .then((res) => {
-                console.log(res)
                 this.photos = res.data;
                 this.setIsReady(true);
             })
