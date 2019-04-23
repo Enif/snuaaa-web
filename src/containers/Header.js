@@ -7,6 +7,7 @@ import imgProfile from '../assets/img/profile.png';
 import UserContext from '../UserContext';
 import Navigation from '../components/Header/Navigation'
 import PopupUser from '../components/Header/PopupUser'
+import Image from '../components/Common/Image';
 
 
 
@@ -30,13 +31,15 @@ class Header extends React.Component {
 
     componentDidMount() {
         console.log(`[%s] componentDidMount`, TAG)
-        console.log(window.location.pathname)
     }
 
     render() {
 
-        const { loginState } = this.props;
+        console.log(window.location.pathname)
+
+        const { loginState, profile_path } = this.props;
         let { isShowPopupUser } = this.state;
+        console.log(this.props)
         return (
             <div className="main-header-wrapper">
                 <div className="main-header">
@@ -54,7 +57,8 @@ class Header extends React.Component {
                         </p>)
                         :
                         (<div className="profile-img-wrapper">
-                            <img onClick={this.togglePopup} src={imgProfile}/>
+                            <Image onClick={this.togglePopup} imgSrc={profile_path} defaultImgSrc={imgProfile} />
+                            {/* <img onClick={this.togglePopup} src={imgProfile}/> */}
                             {
                                 isShowPopupUser && <PopupUser togglePopup={this.togglePopup} logout={this.props.onLogout}/>
                             }
@@ -69,7 +73,10 @@ class Header extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        loginState: state.authentication.isLoggedIn
+        loginState: state.authentication.isLoggedIn,
+        nickname: state.authentication.nickname,
+        level: state.authentication.level,
+        profile_path: state.authentication.profile_path
     }
 }
 
