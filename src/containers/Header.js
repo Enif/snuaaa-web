@@ -1,10 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link, NavLink } from 'react-router-dom';
-import { loginCheck, authLogout } from '../actions';
+import { Link } from 'react-router-dom';
+import { authLogout } from '../actions';
 import logo from '../assets/img/logo_white.png'
 import imgProfile from '../assets/img/profile.png';
-import UserContext from '../UserContext';
 import Navigation from '../components/Header/Navigation'
 import PopupUser from '../components/Header/PopupUser'
 import Image from '../components/Common/Image';
@@ -82,7 +81,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onLoginCheck: () => dispatch(loginCheck()),
         onLogout: () => dispatch(authLogout())
     }
 }
