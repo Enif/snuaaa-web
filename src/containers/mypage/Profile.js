@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { authLogout } from '../../actions';
 import * as service from '../../services';
 import Loading from '../../components/Common/Loading';
 import ProfileComponent from '../../components/MyPage/ProfileComponent';
@@ -92,8 +94,19 @@ class Profile extends React.Component {
         })
     }
 
-    deleteUser = () => {
-        alert("정말로 탈퇴하시겠습니까?")
+    deleteUser = async () => {
+        let goDrop = window.confirm("정말로 탈퇴하시겠습니까?");
+        if(goDrop) {
+            await service.deleteUserInfo()
+            .then(() => {
+                alert("탈퇴 요청이 정상적으로 처리되었습니다.");
+                this.props.onLogout();
+            })
+            .catch((err) => {
+                console.error(err);
+                alert("탈퇴 실패");
+            })
+        }
     }
 
     render() {
@@ -109,4 +122,10 @@ class Profile extends React.Component {
     }
 }
 
-export default Profile;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onLogout: () => dispatch(authLogout())
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Profile);
