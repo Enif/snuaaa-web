@@ -4,7 +4,9 @@ import * as types from '../actions/ActionTypes';
 
 const initialState = {
     isLoggedIn: false,
-    currentUser: '',
+    nickname: '',
+    level: '',
+    profile_path: '',
 };
 
 function authentication(state = initialState, action) {
@@ -13,14 +15,20 @@ function authentication(state = initialState, action) {
         case types.AUTH_LOGIN:
             return {
                 ...state,
-                isLoggedIn: true
+                isLoggedIn: true,
+                nickname: action.nickname,
+                level: action.level,
+                profile_path: action.profile_path
             };
         case types.AUTH_LOGOUT:
             localStorage.removeItem('token')
             sessionStorage.removeItem('token')
             return {
                 ...state,
-                isLoggedIn: false
+                isLoggedIn: false,
+                nickname: '',
+                level: 0,
+                profile_path: ''
             }
         case types.AUTH_GET_STATUS:
             return {
@@ -28,11 +36,6 @@ function authentication(state = initialState, action) {
                 isLoggedIn: true
             };
             
-        // case types.AUTH_LOGIN_SUCCESS:
-        // return {
-        //     ...state,
-        //     isLoggedIn: true
-        // };
         default:
             return state;
     }

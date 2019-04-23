@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router';
 
@@ -51,7 +52,17 @@ class App extends Component {
             await updateToken()
             .then((res) => {
                 console.log(`[${TAG}] Token is valid`)
-                this.props.onLogin();
+                const { token, nickname, level, profile_path } = res.data;
+                if(this.state.autoLogin) {
+                    localStorage.setItem('token', token);
+                    axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
+                }
+                else {
+                    sessionStorage.setItem('token', token);
+                    axios.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token');
+                }
+                this.props.onAuthLogin(nickname, level, profile_path);
+                // this.props.onLogin();
                 this.setState({
                     isReady: true
                 })
@@ -109,7 +120,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onLogin: () => dispatch(authLogin()),
+        onAuthLogin: (nickname, level, profile_path) => dispatch(authLogin(nickname, level, profile_path)),
         onLogout: () => dispatch(authLogout())
     }
 }
