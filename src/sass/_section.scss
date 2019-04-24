@@ -16,6 +16,7 @@
 }
   
 section {
+    position: relative;
     width: 1000px;
     height: 100%;
     padding-left: 150px;
@@ -155,7 +156,7 @@ section {
         width: 100%;
         // min-height: 95%;
         display: block;
-        padding: 1px;
+        padding: 0.1rem 0rem 5rem 0rem;
 
     }
 }
