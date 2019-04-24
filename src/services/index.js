@@ -58,6 +58,13 @@ export function retrieveComments(parent_id) {
 export function createComment(parent_id, data) {
     return axios.post(SERVER_URL + `api/object/${parent_id}/comment`, data);
 }
+//GM modified 
+export function updateComment(comment_id, data) {
+    return axios.patch(SERVER_URL + `api/comment/${comment_id}`, data);
+}
+export function deleteComment(comment_id) {
+    return axios.delete(SERVER_URL + `api/comment/${comment_id}`);
+}
 
 export function likeObject(object_id) {
     return axios.post(SERVER_URL + `api/object/${object_id}/like`);
