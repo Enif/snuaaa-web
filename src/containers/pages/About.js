@@ -1,5 +1,4 @@
 import React from 'react';
-import { Redirect } from 'react-router'
 import AboutAAA from '../../components/About/aboutAAA';
 import Contact from '../../components/About/contact';
 import Equipment from '../../components/About/equipment';

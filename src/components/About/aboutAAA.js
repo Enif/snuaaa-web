@@ -8,7 +8,7 @@ class AboutAAA extends React.Component {
             <div className="intro-div-wrapper" id="about">
                 <h3>아마추어 천문 동아리 AAA</h3>
                 <p className="intro-content">
-                    <img className='img-right' src={logoImg} />
+                    <img className='img-right' src={logoImg} alt="logo" />
                     &nbsp; AAA(Amateur Astronomy Association)는 아마추어 천문활동을 사랑하는 
                     회원들이 모여 구성한 서울대학교의 중앙 동아리입니다. 1980년 자연대 동아리로 
                     시작하여 39년이 지난 현재까지 계속되어 온만큼 유구한 역사를 자랑합니다.
@@ -25,7 +25,6 @@ class AboutAAA extends React.Component {
                     오늘 밤 저희와 함께 또 다른 추억을 남겨 보는 것은 어떠신가요?
                     기나긴 역사와 빛나는 현재를 가진 AAA는 밤하늘을 사랑하는 모든 이들을 환영합니다.
                 </p>
-                {/* <a href="#intro-top"><p>top</p></a> */}
             </div>
         )
     }

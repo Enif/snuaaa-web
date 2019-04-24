@@ -14,7 +14,7 @@ class Equipment extends React.Component {
                 <div className="intro-content">
                     <h5>&nbsp;1) 김태영 망원경 (MT-200)</h5>
                     <p>
-                        <img className="img-left" src={mt200} />
+                        <img className="img-left" src={mt200} alt="MT-200" />
                         &nbsp;김태영 망원경은 관측소 2층에 고정된 동아리의 대표 망원경입니다. 이 망원경의 이름은 
                         1999년 9월 원자핵 공학과 실험실 사고로 돌아가신 89학번 김태영 선배님의 이름을 따서 붙여졌습니다.
                         평소 동아리에 아낌없는 사랑을 보여주신 김태영 선배님이었기에 김태영 선배님의 아버님은 AAA에 
@@ -26,7 +26,7 @@ class Equipment extends React.Component {
                     <br/>
                     <h5>&nbsp;2) 상희</h5>
                     <p>
-                        <img className="img-right img-sanghui" src={sanghui} />
+                        <img className="img-right img-sanghui" src={sanghui} alt="SangHui" />
                         &nbsp;상희는 94학번 곽상혁 선배님께서 1996년도에 제작하신 동아리의 안시용 망원경입니다. 
                         10인치급 수제작 망원경 중에서는 동아리 최초의 작품이며 오랜 시간 동안 동아리의 관측을 함께
                         하였습니다. 현재는 많이 노화되어 관측에는 잘 사용되지 않지만 '상희'라는 이름에서는 여전히
@@ -37,7 +37,7 @@ class Equipment extends React.Component {
                     <br/><br/><br/>
                     <h5>&nbsp;3) 14.5inch</h5>
                     <p>
-                        <img className="img-left img-sanghui" src={fourteenpointfiveinch} />
+                        <img className="img-left img-sanghui" src={fourteenpointfiveinch} alt="14.5inch" />
                         &nbsp;14.5inch는 2005년에 결성된 망원경 제작 모임(99김재호, 99전태영, 00배동환, 01김현수, 03김중규,
                         03임수현, 04김형철, 04오세창, 05정찬영)의 결실입니다. 차세대 대구경 망원경을 만들고자 하는 선배들의 뜻에
                         걸맞게 현재까지도 동아리 최대 구경 망원경으로 관측에 활발히 이용되고 있습니다.<br/><br/>
@@ -47,7 +47,7 @@ class Equipment extends React.Component {
                     <br/><br/><br/>
                     <h5>&nbsp;4) 곽</h5>
                     <p>
-                        <img className="img-right img-gwak" src={gwak} />
+                        <img className="img-right img-gwak" src={gwak} alt="Gwak" />
                         &nbsp;곽은 09학번 곽세종 선배님의 주도하에 동아리원들이 2014년에 제작한 망원경입니다. 곽은 기존 망원경들보다
                         무게가 가볍고 휴대성이 좋아 평상시는 물론, 원정 관측시에도 자주 이용됩니다. 또한 편리한 설치법과 세련된 디자인
                         또한 곽이 지니는 장접으로 꼽힙니다.<br/><br/>
@@ -57,7 +57,7 @@ class Equipment extends React.Component {
                     <br /><br />
                     <h5>&nbsp;5) FS-102</h5>
                     <p>
-                        <img className="img-left" src={fs102} />
+                        <img className="img-left" src={fs102} alt="FS-102" />
                         &nbsp; FS-102는 일본 다카하시(Takahashi)사의 제품입니다. FS-102의 렌즈는 특수한 재질로 제작되어
                         관측 시의 색수차를 줄여주고, 굴절 망원경 특유의 안정적인 상을 보여주어 천체사진 촬영에 자주 이용되었습니다.<br/>
                         &nbsp; FS-102는 구경 4인치, F수 8(초점거리 820mm)의 케플러식 굴절 망원경입니다. x0.75 리듀서를 이용하면 

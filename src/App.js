@@ -52,6 +52,7 @@ class App extends Component {
             await updateToken()
             .then((res) => {
                 console.log(`[${TAG}] Token is valid`)
+                // [TODO] token에 autoLogin 정보 저장하여 사용해야 함. (현재 자동 로그인 유지 되지 않음)
                 const { token, nickname, level, profile_path } = res.data;
                 if(this.state.autoLogin) {
                     localStorage.setItem('token', token);
@@ -82,8 +83,6 @@ class App extends Component {
         console.log(`[${TAG}] render...`);
         let { isReady } = this.state;
         let { loginState } = this.props;
-        console.log(isReady)
-        console.log(loginState)
         return (
             <div className="snuaaa-wrapper">
                 {(() => {
