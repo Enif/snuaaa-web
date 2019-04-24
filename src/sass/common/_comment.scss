@@ -30,6 +30,20 @@
                     padding: 5px;
                 }    
             }
+            .actions-wrapper {
+                display: flex;
+                justify-content: space-between;
+                // padding-top: 5px;
+        
+                .edit-wrapper {
+                    display: inline-block;
+                }
+                .delete-wrapper {
+                    display: inline-block;
+                }
+        
+                
+            }
         }
     }
 
