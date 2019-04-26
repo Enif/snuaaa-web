@@ -1,4 +1,5 @@
 import React from 'react';
+import * as service from '../../services';
 
 class InputField extends React.Component {
     constructor(props) {
@@ -8,7 +9,8 @@ class InputField extends React.Component {
         this.re = new RegExp(this.props.pattern);
 
         this.state = {
-            valid: true
+            valid: true,
+            idChecker: true
         }
     }
 
@@ -28,7 +30,8 @@ class InputField extends React.Component {
     }
 
     render() {
-
+        let pwFlag = false
+        let idFlag = true
         let fieldClass = this.state.valid ? "enif-input-field" : "enif-input-field enif-input-invalid"
         return(
             <div className={fieldClass}>
@@ -42,10 +45,32 @@ class InputField extends React.Component {
                     onChange={(e) => {
                         this.validate(e);
                         if(this.props.handleChange) {
-                            this.props.handleChange(e);
+                            pwFlag = this.props.handleChange(e);
+                        }
+                        if(pwFlag) {
+                            this.setState({
+                                valid: true
+                            })
                         }
                     }}
-                    // onBlur={(e) => this.validate(e)}
+                    onBlur={(e) => {
+                        if(e.target.name === "id") {
+                            service.duplicateCheck(e.target.value)
+                            .then((res) => {
+                                console.log("Available ID")
+                                this.setState({
+                                    idChecker: true
+                                })
+                            })
+                            .catch((res) => {
+                                console.log('Existing ID');
+                                this.setState({
+                                    idChecker: false
+                                })
+                            })
+                        }
+                        
+                    }}
                     value={this.props.value}
                     placeholder={this.props.placeholder}
                     pattern={this.props.pattern}
@@ -54,6 +79,7 @@ class InputField extends React.Component {
                     required={this.props.required}
                 />
                 { !this.state.valid && <p>{this.props.invalidMessage}</p> }
+                { !this.state.idChecker && <p>{"사용할 수 없는 ID입니다"}</p> }
             </div>
         )
     }

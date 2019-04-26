@@ -52,6 +52,33 @@ class SignUp extends React.Component {
             [e.target.name]: e.target.value
         });
     }
+    
+    handleMobile = (e) => {
+        let showString = e.target.value.replace(/-/gi, "");
+        if (e.target.value.slice(-1) === "-") {
+            e.target.value = e.target.value.slice(0, -1);
+        }
+        if (showString.length == 4) {
+            e.target.value = e.target.value.slice(0,3) + "-" + e.target.value.slice(-1);
+        } else if (showString.length === 8) {
+            e.target.value = e.target.value.slice(0,8) + "-" + e.target.value.slice(-1);
+        }
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+    
+    pwChecker = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+        if(this.state.password === e.target.value) {
+            return true
+        } else {
+            return false
+        }
+    }
+
 
     postSignUp = async () => {
         console.log('[%s] postSignUp', TAG);
@@ -112,6 +139,8 @@ class SignUp extends React.Component {
                             <FullScreenPortal>
                                 <SignUpComponent
                                     handleChange={this.handleChange}
+                                    handleMobile={this.handleMobile}
+                                    pwChecker={this.pwChecker}
                                     postSignUp={this.postSignUp}
                                     uploadFile={this.uploadFile}
                                     profile={this.state.profile}
