@@ -30,7 +30,6 @@ class InputField extends React.Component {
 
     render() {
         let pwFlag = false
-        let idFlag = true
         let fieldClass = this.state.valid ? "enif-input-field" : "enif-input-field enif-input-invalid"
         return(
             <div className={fieldClass}>
@@ -54,7 +53,7 @@ class InputField extends React.Component {
                     }}
                     onBlur={(e) => {
                         if(this.props.handleBlur) {
-                            idFlag = this.props.handleBlur(e);
+                            this.props.handleBlur(e);
                         }
                     }}
                     value={this.props.value}
