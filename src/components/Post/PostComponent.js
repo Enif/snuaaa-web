@@ -1,10 +1,18 @@
 import React from 'react';
+// import { EditorState, ContentState } from 'draft-js';
+// import htmlToDraft from 'html-to-draftjs';
+import { Editor } from 'react-draft-wysiwyg';
 import Comment from '../../containers/Comment';
 import ProfileMini from '../Common/ProfileMini';
 import { convertFullDate } from '../../utils/convertDate';
-import { breakLine } from '../../utils/breakLine';
+// import { breakLine } from '../../utils/breakLine';
 
-const PostComponent = ({postData, post_id, likeInfo, likePost}) => {
+const PostComponent = ({postData, editorState , post_id, likeInfo, likePost, setisEditting}) => {
+
+    // const blocksFromHtml = htmlToDraft(postData.contents);
+    // const { contentBlocks, entityMap } = blocksFromHtml;
+    // const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
+    // const editorState = EditorState.createWithContent(contentState);
 
     return (
 
@@ -21,14 +29,14 @@ const PostComponent = ({postData, post_id, likeInfo, likePost}) => {
                 </div>
             </div>
             <div className="post-content">
-                {breakLine(postData.contents)}
+                <Editor toolbarHidden editorState={editorState} />
             </div>
             <ProfileMini profileImg={postData.profile_path} nickname={postData.nickname} userDesc={postData.introduction}/>
             <div className="enif-divider"></div>
             <div className="actions-wrapper">
                 <div className="edit-delete-wrapper">
                     <div className="edit-wrapper">
-                        <i className="material-icons pointer">edit</i>
+                        <i className="material-icons pointer" onClick={() => setisEditting(true)}>edit</i>
                     </div>
                     <div className="delete-wrapper">
                         <i className="material-icons pointer">delete</i>

@@ -31,6 +31,7 @@ class PostBoard extends React.Component {
     }
 
     togglePopUp = () => {
+        window.history.pushState(null, null, window.location.pathname)
         this.setState({
             popUpState: !this.state.popUpState
         })
@@ -73,31 +74,33 @@ class PostBoard extends React.Component {
         console.log(`[${TAG}] render.. `)
 
         let { board_id, boardInfo, categories } = this.props;
+        let { isReady, popUpState } = this.state;
 
         return (
             <div className="section-contents">
-                {(() => {
-                    if(this.state.popUpState) {
-                        return (
+                {
+                    isReady ?
+                    (
+                        <div className="board-wrapper">
+                        <h2>{boardInfo.board_name}</h2>
+                        {
+                            popUpState ?                        
                             <CreatePost board_id={this.props.board_id} togglePopUp={this.togglePopUp} retrievePosts={this.retrievePosts}/>
-                        )
-                    }
-                    else if(this.state.isReady) {
-                        return (
-                            <div className="board-wrapper">
-                                <h2>{boardInfo.board_name}</h2>
-                                {/* {this.getCategory(this.state.board_id)} */}
-                                {this.retrieveCategories()}
-                                <PostList posts={this.posts} togglePopUp={this.togglePopUp} />
-                            </div>
-                        )
-                    }
-                    else {
-                        return (
-                            <Loading />
-                        )
-                    }
-                })()}
+                            :
+                            (
+                                <>
+                                    {this.retrieveCategories()}
+                                    <PostList posts={this.posts} togglePopUp={this.togglePopUp} />
+                                </>
+                            )
+                        }
+                        </div>
+                    )
+                    :
+                    (
+                        <Loading />
+                    )
+                }
             </div>
         );
     }

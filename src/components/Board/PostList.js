@@ -55,14 +55,14 @@ class PostList extends React.Component {
         console.log('[%s] render', TAG)
         
         return (
-            <React.Fragment>
-                <div>
+                <>
                     <div className="post-list-wrapper">
                         {this.makePostList()}
                     </div>
-                    <button className="enif-btn-circle" onClick={() => this.props.togglePopUp()}>+</button>
-                </div>       
-            </React.Fragment>
+                    <button className="enif-btn-circle enif-pos-sticky" onClick={() => this.props.togglePopUp()}>
+                        <i className="material-icons">create</i>
+                    </button>
+                </>
         ) 
     }
 

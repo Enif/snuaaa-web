@@ -85,13 +85,15 @@ class Album extends React.Component {
                 {(() => {
                     if(isAlbumReady && isPhotoListReady) {
                         return (
-                            <div className="album-wrapper">
-                                <AlbumInfo albumInfo={this.albumInfo}/>
-                                <div className="enif-divider"></div>
-                                <PhotoList photos={this.photos} redirectPhoto={this.redirectPhoto} togglePopUp={this.togglePopUp}/>
-                                {
-                                    this.state.popUpState && <CreatePhoto album_id={this.state.album_id} board_id={this.albumInfo.board_id} tags={this.tagInfo} retrievePhotos={this.retrievePhotos} togglePopUp={this.togglePopUp} />
-                                }
+                            <div className="section-contents">
+                                <div className="album-wrapper">
+                                    <AlbumInfo albumInfo={this.albumInfo}/>
+                                    <div className="enif-divider"></div>
+                                    <PhotoList photos={this.photos} redirectPhoto={this.redirectPhoto} togglePopUp={this.togglePopUp}/>
+                                    {
+                                        this.state.popUpState && <CreatePhoto album_id={this.state.album_id} board_id={this.albumInfo.board_id} tags={this.tagInfo} retrievePhotos={this.retrievePhotos} togglePopUp={this.togglePopUp} />
+                                    }
+                                </div>
                             </div>
                         )
                     }

@@ -1,7 +1,11 @@
 import React from 'react';
+import { EditorState, ContentState } from 'draft-js';
+import htmlToDraft from 'html-to-draftjs';
 import * as service from '../../services';
 import Loading from '../../components/Common/Loading';
 import PostComponent from '../../components/Post/PostComponent';
+import EditPost from '../../components/Post/EditPost';
+
 
 const TAG = 'POST'
 
@@ -16,7 +20,9 @@ class Post extends React.Component {
         this.state = {
             post_id: this.props.match.params.pNo,
             likeInfo: false,
-            isShow: false
+            isShow: false,
+            isEditting: false,
+            editorState: null
         }
     }
 
@@ -31,6 +37,18 @@ class Post extends React.Component {
         }
     }
 
+    setisEditting = (isEditting) => {
+        this.setState({
+            isEditting: isEditting
+        })
+    }
+
+    onEditorStateChange = (editorState) => {
+        this.setState({
+            editorState
+        })
+    }
+
     retrievePost = async () => {
         console.log('[%s] Retrieve Post', TAG);
 
@@ -38,9 +56,16 @@ class Post extends React.Component {
         .then((res) => {
             console.log('[%s] Retrieve Post Success', TAG);
             this.postData = res.data.postInfo;
+
+            const blocksFromHtml = htmlToDraft(this.postData.contents);
+            const { contentBlocks, entityMap } = blocksFromHtml;
+            const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
+            const editorState = EditorState.createWithContent(contentState);
+
             this.setState({
                 likeInfo: res.data.likeInfo,
-                isShow: true
+                isShow: true,
+                editorState: editorState
             })
         })
         .catch((res) => {
@@ -68,14 +93,21 @@ class Post extends React.Component {
 
     render() {
         console.log('[%s] render', TAG)
-        let { isShow, post_id, likeInfo} = this.state;
+        let { isShow, post_id, likeInfo, isEditting, editorState} = this.state;
 
         return (
             <>
             {
                 isShow ?
                 (
-                    <PostComponent postData={this.postData} post_id={post_id} likeInfo={likeInfo} likePost={this.likePost}/>
+                    isEditting ?
+                    (
+                        <EditPost postData={this.postData} editorState={editorState} onEditorStateChange={this.onEditorStateChange}/>
+                    )
+                    :
+                    (
+                        <PostComponent postData={this.postData} editorState={editorState} post_id={post_id} likeInfo={likeInfo} likePost={this.likePost} setisEditting={this.setisEditting}/>
+                    )
                 )
                 :
                 (

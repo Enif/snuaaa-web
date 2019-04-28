@@ -37,7 +37,9 @@ class PhotoList extends React.Component {
                 <div className="photo-list-wrapper">
                     {this.retrievePhotos()}
                 </div>
-                <button className="enif-btn-circle" onClick={() => this.props.togglePopUp()}>+</button>
+                <button className="enif-btn-circle enif-pos-sticky" onClick={() => this.props.togglePopUp()}>
+                    <i className="material-icons">add_photo_alternate</i>
+                </button>
             </div>
         )
     }
