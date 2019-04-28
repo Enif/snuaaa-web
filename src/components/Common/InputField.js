@@ -9,8 +9,7 @@ class InputField extends React.Component {
         this.re = new RegExp(this.props.pattern);
 
         this.state = {
-            valid: true,
-            idChecker: true
+            valid: true
         }
     }
 
@@ -54,22 +53,9 @@ class InputField extends React.Component {
                         }
                     }}
                     onBlur={(e) => {
-                        if(e.target.name === "id") {
-                            service.duplicateCheck(e.target.value)
-                            .then((res) => {
-                                console.log("Available ID")
-                                this.setState({
-                                    idChecker: true
-                                })
-                            })
-                            .catch((res) => {
-                                console.log('Existing ID');
-                                this.setState({
-                                    idChecker: false
-                                })
-                            })
+                        if(this.props.handleBlur) {
+                            idFlag = this.props.handleBlur(e);
                         }
-                        
                     }}
                     value={this.props.value}
                     placeholder={this.props.placeholder}
@@ -79,7 +65,6 @@ class InputField extends React.Component {
                     required={this.props.required}
                 />
                 { !this.state.valid && <p>{this.props.invalidMessage}</p> }
-                { !this.state.idChecker && <p>{"사용할 수 없는 ID입니다"}</p> }
             </div>
         )
     }

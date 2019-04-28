@@ -16,7 +16,10 @@ const printProfile = function(profile) {
 }
 
 // [TODO] Make defalt state & Make Oject contain UserInfo
-const SignUpComponent = ({ pwChecker, handleMobile, handleChange, postSignUp, profile, uploadFile, formRef }) => {
+const SignUpComponent = ({ validAll, dupId, pwChecker, handleId, handlePw,
+                            handleUsername, handleEmail, blurId,
+                            handleMobile, handleCheckBox, handleChange, 
+                            postSignUp, profile, uploadFile, formRef }) => {
     
     return (
         <div className="sign-up-wrapper">
@@ -74,48 +77,49 @@ const SignUpComponent = ({ pwChecker, handleMobile, handleChange, postSignUp, pr
             </div>
 
             <div className="signup-input-wrapper">
-                <form ref={formRef} onSubmit={(e) => {e.preventDefault(); postSignUp()}}>
-                    <p className="enif-text-right">위의 가입안내문에 동의합니다.<input className="checkbox-signup" type="checkBox" /></p>
+                <p className="enif-text-right">위의 가입안내문에 동의합니다.
+                <input className="checkbox-signup" name="isAgree" onChange={handleCheckBox} type="checkBox" /></p>
 
-                    <InputField label="아이디*" name="id" handleChange={handleChange} required={true} pattern="^[A-Za-z0-9]{4,12}$" 
-                        invalidMessage="4-12자리의 영문 혹은 숫자"/>
-                    <InputField label="비밀번호*" type="password" name="password" handleChange={handleChange} required={true} pattern="^[A-Za-z0-9]{4,12}$" 
-                        invalidMessage="4-12자리의 영문 혹은 숫자"/>
-                    <InputField label="비밀번호확인*" type="password" name="passwordCf" handleChange={pwChecker} required={true} pattern="^$"
-                        invalidMessage="비밀번호가 일치하지 않습니다."/>
-                    <InputField label="이름*" name="username" handleChange={handleChange} required={true} pattern="^[A-Za-z가-힣]{2,10}$"
-                        invalidMessage="2-10자의 한글 혹은 영문"/>
-                    <InputField label="E-mail*" type="email" name="email" handleChange={handleChange} required={true} pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" 
-                        maxLength="30" invalidMessage="이메일 형식에 맞게 입력해주세요"/>
-                    <InputField label="Mobile*" name="mobile" handleChange={handleMobile} required={true} pattern="^[0-9]{3}-[0-9]{4}-[0-9]{4}$" 
-                        invalidMessage="전화번호 형식에 맞게 입력해주세요(xxx-xxxx-xxxx)"/>
-                    <InputField label="동아리 가입번호" name="aaaNum" handleChange={handleChange} pattern="^[0-9]{2}[Aa]{3}-[0-9]{1,3}|[Aa]{3}[0-9]{2}-[0-9]{1,3}$" 
-                        invalidMessage="가입번호 형식에 맞게 입력해주세요. 동아리 회원이 아닌 경우, 입력하지 않으셔도 됩니다."/>
-                    <InputField label="학번" name="schoolNum" handleChange={handleChange} pattern="^[0-9]{2}$"
-                        invalidMessage="두자리 숫자로 입력해주세요 ex) 10 "/>
-                    <InputField label="학과" name="major" handleChange={handleChange} />
+                <InputField label="아이디*" name="id" handleChange={handleId} handleBlur={blurId} required={true} pattern="^[A-Za-z0-9]{4,12}$" 
+                    invalidMessage="4-12자리의 영문 혹은 숫자"/> 
+                    { !dupId && <p>{"사용할 수 없는 ID입니다"}</p> }
+                <InputField label="비밀번호*" type="password" name="password" handleChange={handlePw} required={true} pattern="^[A-Za-z0-9]{4,12}$" 
+                    invalidMessage="4-12자리의 영문 혹은 숫자"/>
+                <InputField label="비밀번호확인*" type="password" name="passwordCf" handleChange={pwChecker} required={true} pattern="^$"
+                    invalidMessage="비밀번호가 일치하지 않습니다."/>
+                <InputField label="이름*" name="username" handleChange={handleUsername} required={true} pattern="^[A-Za-z가-힣]{2,10}$"
+                    invalidMessage="2-10자의 한글 혹은 영문"/>
+                <InputField label="E-mail*" type="email" name="email" handleChange={handleEmail} required={true} pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" 
+                    maxLength="30" invalidMessage="이메일 형식에 맞게 입력해주세요"/>
+                <InputField label="Mobile*" name="mobile" handleChange={handleMobile} required={true} pattern="^[0-9]{3}-[0-9]{4}-[0-9]{4}$" 
+                    invalidMessage="전화번호 형식에 맞게 입력해주세요(xxx-xxxx-xxxx)"/>
+                <InputField label="동아리 가입번호" name="aaaNum" handleChange={handleChange} pattern="^[0-9]{2}[Aa]{3}-[0-9]{1,3}|[Aa]{3}[0-9]{2}-[0-9]{1,3}$" 
+                    invalidMessage="가입번호 형식에 맞게 입력해주세요. 동아리 회원이 아닌 경우, 입력하지 않으셔도 됩니다."/>
+                <InputField label="학번" name="schoolNum" handleChange={handleChange} pattern="^[0-9]{2}$"
+                    invalidMessage="두자리 숫자로 입력해주세요 ex) 10 "/>
+                <InputField label="학과" name="major" handleChange={handleChange} />
 
-                    <div className="enif-input-field profile-signup">
-                        <label htmlFor="profile">
-                            <span>Profile</span>
-                            <span>{printProfile(profile)}</span>
-                            <div className="btn-profile">파일선택</div>
-                        </label>
-                        <input
-                            type="file"
-                            id="profile"
-                            name="profile"
-                            accept="image/*"
-                            onChange={(e) => uploadFile(e)}
-                        />
-                    </div>
-                    <div className="enif-input-field">
-                        <label>자기소개</label>
-                        <textarea />
-                    </div>
-                        {/* <button className="enif-btn-common-rec signup-btn" onClick={postSignUp}>회원가입</button> */}
-                        <input type="submit" value="회원가입 "className="enif-btn-common-rec signup-btn" ></input>
-                </form>
+                <div className="enif-input-field profile-signup">
+                    <label htmlFor="profile">
+                        <span>Profile</span>
+                        <span>{printProfile(profile)}</span>
+                        <div className="btn-profile">파일선택</div>
+                    </label>
+                    <input
+                        type="file"
+                        id="profile"
+                        name="profile"
+                        accept="image/*"
+                        onChange={(e) => uploadFile(e)}
+                    />
+                </div>
+                <div className="enif-input-field">
+                    <label>자기소개</label>
+                    <textarea />
+                </div>
+            { validAll && <button className="enif-btn-common-rec signup-btn" onClick={postSignUp}>회원가입</button> }
+            { !validAll && <button className="enif-btn-common-rec signup-btn" >미입력된 항목이 있습니다</button> }
+        
             </div>
         </div>
     )

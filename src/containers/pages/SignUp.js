@@ -27,6 +27,18 @@ class SignUp extends React.Component {
             introduction: '',
             profile: null,
             signUpState: 'READY',
+            validAll: false,
+            validAgree: false,
+            validId: false,
+            dupId: true,
+            validPw: false,
+            validPwCf: false,
+            validUsername: false,
+            validAaaNum: false,
+            validSchoolNum: false,
+            validMajor: false,
+            validEmail: false,
+            validMobile: false,
         }
         this.formRef = React.createRef();
     }
@@ -47,13 +59,83 @@ class SignUp extends React.Component {
         }
     }
 
+    handleCheckBox = (e) => {
+        this.setState({
+            [e.target.name]: e.target.checked,
+            validAgree: e.target.checked
+        });
+    }
+
     handleChange = (e) => {
+        let re = new RegExp(e.target.pattern);
+
         this.setState({
             [e.target.name]: e.target.value
         });
     }
+
+    handleId = (e) => {
+        let re = new RegExp(e.target.pattern);
+        
+        this.setState({
+            [e.target.name]: e.target.value,
+            validId: re.test(e.target.value)
+        });
+    }
+
+    blurId = (e) => {
+        service.duplicateCheck(e.target.value)
+        .then((res) => {
+            console.log("Available ID");
+            this.setState({
+                dupId: true
+            });
+        })
+        .catch((res) => {
+            console.log('Existing ID');
+            this.setState({
+                dupId: false
+            });
+        });
+    }
+
+    handlePw = (e) => {
+        let re = new RegExp(e.target.pattern);
+        
+        this.setState({
+            [e.target.name]: e.target.value,
+            validPw: re.test(e.target.value)
+        });
+    }
+    
+    pwChecker = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value,
+            validPwCf: this.state.password === e.target.value
+        });
+        return this.state.password === e.target.value
+    }
+
+    handleUsername = (e) => {
+        let re = new RegExp(e.target.pattern);
+        
+        this.setState({
+            [e.target.name]: e.target.value,
+            validUsername: re.test(e.target.value)
+        });
+    }
+
+    handleEmail = (e) => {
+        let re = new RegExp(e.target.pattern);
+        
+        this.setState({
+            [e.target.name]: e.target.value,
+            validEmail: re.test(e.target.value)
+        });
+    }
     
     handleMobile = (e) => {
+        let re = new RegExp(e.target.pattern);
         let showString = e.target.value.replace(/-/gi, "");
         if (e.target.value.slice(-1) === "-") {
             e.target.value = e.target.value.slice(0, -1);
@@ -64,70 +146,44 @@ class SignUp extends React.Component {
             e.target.value = e.target.value.slice(0,8) + "-" + e.target.value.slice(-1);
         }
         this.setState({
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.value,
+            validMobile: re.test(e.target.value)
         })
     }
     
-    pwChecker = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
-        if(this.state.password === e.target.value) {
-            return true
-        } else {
-            return false
-        }
-    }
 
 
     postSignUp = async () => {
         console.log('[%s] postSignUp', TAG);
 
-        let validation = true;
-
-        for (let i = 0, max = this.formRef.current.childElementCount; i < max; i++) {
-            if (!this.formRef.current[i].validity.valid) {
-                this.formRef.current[i].focus();
-                validation = false;
-                // alert("형식이 맞지 않습니다.")
-                break;
-            }
+        this.setState({ signUpState: 'LOADING' })
+        const data = new FormData();
+        data.append('id', this.state.id);
+        data.append('password', this.state.password);
+        data.append('passwordCf', this.state.passwordCf);
+        data.append('username', this.state.username);
+        data.append('aaaNum', this.state.aaaNum);
+        data.append('schoolNum', this.state.schoolNum);
+        data.append('major', this.state.major);
+        data.append('email', this.state.email);
+        data.append('mobile', this.state.mobile);
+        data.append('introduction', this.state.introduction);
+        if (this.state.profile) {
+            data.append('profile', this.state.profile);
         }
 
-        if (this.state.password !== this.state.passwordCf) {
-            this.formRef.current[2].focus();
-            validation = false;
-        }
-
-        if (validation) {
-            this.setState({ signUpState: 'LOADING' })
-            const data = new FormData();
-            data.append('id', this.state.id);
-            data.append('password', this.state.password);
-            data.append('passwordCf', this.state.passwordCf);
-            data.append('username', this.state.username);
-            data.append('aaaNum', this.state.aaaNum);
-            data.append('schoolNum', this.state.schoolNum);
-            data.append('major', this.state.major);
-            data.append('email', this.state.email);
-            data.append('mobile', this.state.mobile);
-            data.append('introduction', this.state.introduction);
-            if (this.state.profile) {
-                data.append('profile', this.state.profile);
-            }
-
-            await service.postSignUp(data)
-                .then((response) => {
-                    console.log('Sign up Success!!');
-                    console.log(response);
-                    this.setState({ signUpState: 'SUCCESS' })
-                })
-                .catch((response) => {
-                    console.log('Sign up Fail T-T')
-                    console.log(response);
-                    this.setState({ signUpState: 'FAILURE' })
-                })
-        }
+        await service.postSignUp(data)
+            .then((response) => {
+                console.log('Sign up Success!!');
+                console.log(response);
+                this.setState({ signUpState: 'SUCCESS' })
+            })
+            .catch((response) => {
+                console.log('Sign up Fail T-T')
+                console.log(response);
+                this.setState({ signUpState: 'FAILURE' })
+            })
+    
     }
 
     render() {
@@ -138,9 +194,20 @@ class SignUp extends React.Component {
                         if (this.state.signUpState === 'READY') return (
                             <FullScreenPortal>
                                 <SignUpComponent
+                                    validAll = {this.state.validUsername && this.state.validAgree &&
+                                                this.state.validEmail && this.state.validId &&
+                                                this.state.validPwCf && this.state.validMobile &&
+                                                this.state.validPw}
+                                    dupId = {this.state.dupId}
                                     handleChange={this.handleChange}
-                                    handleMobile={this.handleMobile}
+                                    handleCheckBox={this.handleCheckBox}
+                                    handleId={this.handleId}
+                                    blurId={this.blurId}
+                                    handlePw={this.handlePw}
                                     pwChecker={this.pwChecker}
+                                    handleUsername={this.handleUsername}
+                                    handleEmail={this.handleEmail}
+                                    handleMobile={this.handleMobile}
                                     postSignUp={this.postSignUp}
                                     uploadFile={this.uploadFile}
                                     profile={this.state.profile}
