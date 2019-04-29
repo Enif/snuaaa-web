@@ -16,10 +16,49 @@ const printProfile = function(profile) {
 }
 
 // [TODO] Make defalt state & Make Oject contain UserInfo
-const SignUpComponent = ({ validAll, dupId, pwChecker, handleId, handlePw,
-                            handleUsername, handleEmail, blurId,
-                            handleMobile, handleCheckBox, handleChange, 
-                            postSignUp, profile, uploadFile, formRef }) => {
+const SignUpComponent = ({ userInfo, validAll, dupId, checkDubId,  
+                            handleCheckBox, handleChange,
+                            postSignUp, profile, uploadFile }) => {
+
+    let idInfo, pwInfo, pwCfInfo, usernameInfo,
+    emailInfo, mobileInfo, aaaNumInfo, schoolNumInfo,
+    majorInfo, introInfo = null;
+
+    userInfo.forEach(info => {
+        if(info.label === 'id') {
+            idInfo = info;
+        }
+        else if(info.label === 'password') {
+            pwInfo = info;
+        }
+        else if(info.label === 'passwordCf') {
+            pwCfInfo = info;
+        }
+        else if(info.label === 'username') {
+            usernameInfo = info;
+        }
+        else if(info.label === 'email') {
+            emailInfo = info;
+        }
+        else if(info.label === 'mobile') {
+            mobileInfo = info;
+        }
+        else if(info.label === 'aaaNum') {
+            aaaNumInfo = info;
+        }
+        else if(info.label === 'schoolNum') {
+            schoolNumInfo = info;
+        }
+        else if(info.label === 'major') {
+            majorInfo = info;
+        }
+        else if(info.label === 'introduction') {
+            introInfo = info;
+        }
+        else {
+            return new Error('userInfo Error..')
+        }
+    });
     
     return (
         <div className="sign-up-wrapper">
@@ -80,22 +119,21 @@ const SignUpComponent = ({ validAll, dupId, pwChecker, handleId, handlePw,
                 <p className="enif-text-right">위의 가입안내문에 동의합니다.
                 <input className="checkbox-signup" name="isAgree" onChange={handleCheckBox} type="checkBox" /></p>
 
-                <InputField label="아이디*" name="id" handleChange={handleId} handleBlur={blurId} required={true} pattern="^[A-Za-z0-9]{4,12}$" 
-                    invalidMessage="4-12자리의 영문 혹은 숫자"/> 
-                    { !dupId && <p>{"사용할 수 없는 ID입니다"}</p> }
-                <InputField label="비밀번호*" type="password" name="password" handleChange={handlePw} required={true} pattern="^[A-Za-z0-9]{4,12}$" 
+                <InputField label="아이디*" name="id" handleChange={handleChange} handleBlur={checkDubId} required={true} valid={idInfo.valid}
+                    invalidMessage={dupId ? "사용할 수 없는 ID입니다" : "4-12자리의 영문 혹은 숫자"}/> 
+                <InputField label="비밀번호*" type="password" name="password" handleChange={handleChange} required={true} valid={pwInfo.valid} 
                     invalidMessage="4-12자리의 영문 혹은 숫자"/>
-                <InputField label="비밀번호확인*" type="password" name="passwordCf" handleChange={pwChecker} required={true} pattern="^$"
+                <InputField label="비밀번호확인*" type="password" name="passwordCf" handleChange={handleChange} required={true} valid={pwCfInfo.valid}
                     invalidMessage="비밀번호가 일치하지 않습니다."/>
-                <InputField label="이름*" name="username" handleChange={handleUsername} required={true} pattern="^[A-Za-z가-힣]{2,10}$"
-                    invalidMessage="2-10자의 한글 혹은 영문"/>
-                <InputField label="E-mail*" type="email" name="email" handleChange={handleEmail} required={true} pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" 
+                <InputField label="이름*" name="username" handleChange={handleChange} required={true} valid={usernameInfo.valid}
+                    invalidMessage="2-6자의 한글 / 2-20 Alphabets"/>
+                <InputField label="E-mail*" type="email" name="email" handleChange={handleChange} valid={emailInfo.valid} required={true}
                     maxLength="30" invalidMessage="이메일 형식에 맞게 입력해주세요"/>
-                <InputField label="Mobile*" name="mobile" handleChange={handleMobile} required={true} pattern="^[0-9]{3}-[0-9]{4}-[0-9]{4}$" 
-                    invalidMessage="전화번호 형식에 맞게 입력해주세요(xxx-xxxx-xxxx)"/>
-                <InputField label="동아리 가입번호" name="aaaNum" handleChange={handleChange} pattern="^[0-9]{2}[Aa]{3}-[0-9]{1,3}|[Aa]{3}[0-9]{2}-[0-9]{1,3}$" 
+                <InputField label="Mobile*" name="mobile" handleChange={handleChange} required={true} valid={mobileInfo.valid}
+                    invalidMessage="전화번호 형식에 맞게 입력해주세요(000-0000-0000)"/>
+                <InputField label="동아리 가입번호" name="aaaNum" handleChange={handleChange} valid={aaaNumInfo.valid}
                     invalidMessage="가입번호 형식에 맞게 입력해주세요. 동아리 회원이 아닌 경우, 입력하지 않으셔도 됩니다."/>
-                <InputField label="학번" name="schoolNum" handleChange={handleChange} pattern="^[0-9]{2}$"
+                <InputField label="학번" name="schoolNum" handleChange={handleChange} valid={schoolNumInfo.valid}
                     invalidMessage="두자리 숫자로 입력해주세요 ex) 10 "/>
                 <InputField label="학과" name="major" handleChange={handleChange} />
 
@@ -115,11 +153,9 @@ const SignUpComponent = ({ validAll, dupId, pwChecker, handleId, handlePw,
                 </div>
                 <div className="enif-input-field">
                     <label>자기소개</label>
-                    <textarea />
+                    <textarea name="introduction" onChange={handleChange}/>
                 </div>
-            { validAll && <button className="enif-btn-common-rec signup-btn" onClick={postSignUp}>회원가입</button> }
-            { !validAll && <button className="enif-btn-common-rec signup-btn" >미입력된 항목이 있습니다</button> }
-        
+            <button disabled={!validAll} className="enif-btn-common-rec signup-btn" onClick={postSignUp}>회원가입</button>
             </div>
         </div>
     )

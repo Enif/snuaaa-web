@@ -11,8 +11,8 @@ export function postSignUp(data) {
     return axios.post(SERVER_URL + 'api/signup/', data);
 }
 //GM modified
-export function duplicateCheck(user_id) {
-    return axios.get(SERVER_URL + `api/user/${user_id}`)
+export function duplicateCheck(data) {
+    return axios.post(SERVER_URL + `api/signup/dupcheck`, data);
 }
 
 export function postLogIn(data) {
@@ -66,6 +66,7 @@ export function createComment(parent_id, data) {
 export function updateComment(comment_id, data) {
     return axios.patch(SERVER_URL + `api/comment/${comment_id}`, data);
 }
+
 export function deleteComment(comment_id) {
     return axios.delete(SERVER_URL + `api/comment/${comment_id}`);
 }
