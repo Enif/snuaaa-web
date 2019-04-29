@@ -124,7 +124,11 @@
         height: 4rem;
         font-size: 1.5rem;
         font-family: 'NIXGONM-Vb';
-        // margin: 0 auto;
+        cursor: pointer;
+        &:disabled {
+            background-color: #666666;
+            cursor: not-allowed;
+        }
     }
 }
 
