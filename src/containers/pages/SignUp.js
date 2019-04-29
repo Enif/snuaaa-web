@@ -6,7 +6,6 @@ import SignUpFailure from '../../components/Signup/SignUpFailure';
 import Loading from '../../components/Common/Loading';
 import FullScreenPortal from '../../containers/FullScreenPortal';
 
-
 const TAG = 'SINGUP'
 
 class SignUp extends React.Component {
@@ -15,20 +14,83 @@ class SignUp extends React.Component {
         super(props);
 
         this.state = {
-            id: '',
-            password: '',
-            passwordCf: '',
-            username: '',
-            aaaNum: '',
-            schoolNum: '',
-            major: '',
-            email: '',
-            mobile: '',
-            introduction: '',
-            profile: null,
+
+            userInfo: [
+                {
+                    label: 'id',
+                    value: '',
+                    valid: null,
+                    isRequired: true,
+                    regExp: '^[A-Za-z0-9]{4,12}$'
+                },
+                {
+                    label: 'password',
+                    value: '',
+                    valid: null,
+                    isRequired: true,
+                    regExp: '^[A-Za-z0-9]{4,12}$'
+                },
+                {
+                    label: 'passwordCf',
+                    value: '',
+                    valid: null,
+                    isRequired: true,
+                    regExp: '^[A-Za-z0-9]{4,12}$'
+                },    
+                {
+                    label: 'username',
+                    value: '',
+                    valid: null,
+                    isRequired: true,
+                    regExp: '^[가-힣]{2,6}$|^[A-Za-z ]{2,20}$'
+                },
+                {
+                    label: 'email',
+                    value: '',
+                    valid: null,
+                    isRequired: true,
+                    regExp: '^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$'
+                },
+                {
+                    label: 'mobile',
+                    value: '',
+                    valid: null,
+                    isRequired: true,
+                    regExp: '^[0-9]{3}-[0-9]{4}-[0-9]{4}$'
+                },
+                {
+                    label: 'aaaNum',
+                    value: '',
+                    valid: null,
+                    isRequired: false,
+                    regExp: '^[0-9]{2}[Aa]{3}-[0-9]{1,3}|[Aa]{3}[0-9]{2}-[0-9]{1,3}$'
+                },
+                {
+                    label: 'schoolNum',
+                    value: '',
+                    valid: null,
+                    isRequired: false,
+                    regExp: '^[0-9]{2}$'
+                },
+                {
+                    label: 'major',
+                    value: '',
+                    valid: null,
+                    isRequired: false
+                },
+                {
+                    label: 'introduction',
+                    value: '',
+                    valid: false,
+                    isRequired: false
+                }
+            ],
+
             signUpState: 'READY',
+            profile: null,
+            dupId: false,
+            isTermAgree: false
         }
-        this.formRef = React.createRef();
     }
 
     componentDidMount() {
@@ -47,63 +109,136 @@ class SignUp extends React.Component {
         }
     }
 
-    handleChange = (e) => {
+    handleCheckBox = (e) => {
         this.setState({
-            [e.target.name]: e.target.value
+            isTermAgree: e.target.checked
         });
     }
 
+    findInfo = (label) => {
+        const { userInfo } = this.state;
+        let info = userInfo.find(info => info.label === label)
+        return info
+    }
+
+    handleChange = (e) => {
+        const { userInfo } = this.state
+        this.setState({
+            userInfo: userInfo.map((info) => {
+                if(info.label === e.target.name) {
+                    if(info.label === 'passwordCf') {
+                        if(this.findInfo('password').value === e.target.value) {
+                            return {...info, value: e.target.value, valid: true}
+                        }
+                        else {
+                            return {...info, value: e.target.value, valid: false}
+                        }
+                    }
+                    else if(info.label === 'mobile') {
+                        // auto generate '-'
+                        let showString = e.target.value.replace(/-/gi, "");
+                        if (e.target.value.slice(-1) === "-") {
+                            e.target.value = e.target.value.slice(0, -1);
+                        }
+                        if (showString.length == 4) {
+                            e.target.value = e.target.value.slice(0,3) + "-" + e.target.value.slice(-1);
+                        } else if (showString.length === 8) {
+                            e.target.value = e.target.value.slice(0,8) + "-" + e.target.value.slice(-1);
+                        }
+                        let re = new RegExp(info.regExp);
+                        let valid = re.test(e.target.value)
+                        return {...info, value: e.target.value, valid: valid}
+                    }
+                    if(info.regExp) {
+                        let re = new RegExp(info.regExp);
+                        let valid = re.test(e.target.value)
+                        return {...info, value: e.target.value, valid: valid}
+                    }
+                    else {
+                        return {...info, value: e.target.value}
+                    }
+                }
+                else {
+                    return info;
+                }
+            })
+        })
+    }
+
+    checkDubId = () => {
+
+        const { userInfo } = this.state
+        service.duplicateCheck({check_id: this.findInfo('id').value})
+        .then((res) => {
+            // Available ID
+            this.setState({
+                userInfo: userInfo.map((info) => {
+                    if(info.label === 'id' && info.valid) {
+                        return {...info, valid: true}
+                    }
+                    else {
+                        return info;
+                    }
+                }),
+                dupId: false
+            })
+        })
+        .catch((res) => {
+            // Existing ID
+            this.setState({
+                userInfo: userInfo.map((info) => {
+                    if(info.label === 'id' && info.valid) {
+                        return {...info, valid: false}
+                    }
+                    else {
+                        return info;
+                    }
+                }),
+                dupId: true
+            })
+        });
+    }
+
+
     postSignUp = async () => {
-        console.log('[%s] postSignUp', TAG);
+        
+        this.setState({ signUpState: 'LOADING' })
+        const { userInfo } = this.state;
 
-        let validation = true;
+        const data = new FormData();
+        userInfo.forEach((info) => {
+            data.append(info.label, info.value)
+        })
 
-        for (let i = 0, max = this.formRef.current.childElementCount; i < max; i++) {
-            if (!this.formRef.current[i].validity.valid) {
-                this.formRef.current[i].focus();
-                validation = false;
-                // alert("형식이 맞지 않습니다.")
-                break;
+        if (this.state.profile) {
+            data.append('profile', this.state.profile);
+        }
+
+        await service.postSignUp(data)
+            .then(() => {
+                this.setState({ signUpState: 'SUCCESS' })
+            })
+            .catch((err) => {
+                console.error(err);
+                this.setState({ signUpState: 'FAILURE' })
+            })
+    }
+
+    checkValid = () => {
+        let valid = true;
+        const { userInfo, isTermAgree } = this.state;
+        userInfo.forEach((info) => {
+            if(info.isRequired) {
+                valid = valid && info.valid;
             }
-        }
-
-        if (this.state.password !== this.state.passwordCf) {
-            this.formRef.current[2].focus();
-            validation = false;
-        }
-
-        if (validation) {
-            this.setState({ signUpState: 'LOADING' })
-            const data = new FormData();
-            data.append('id', this.state.id);
-            data.append('password', this.state.password);
-            data.append('passwordCf', this.state.passwordCf);
-            data.append('username', this.state.username);
-            data.append('aaaNum', this.state.aaaNum);
-            data.append('schoolNum', this.state.schoolNum);
-            data.append('major', this.state.major);
-            data.append('email', this.state.email);
-            data.append('mobile', this.state.mobile);
-            data.append('introduction', this.state.introduction);
-            if (this.state.profile) {
-                data.append('profile', this.state.profile);
-            }
-
-            await service.postSignUp(data)
-                .then((response) => {
-                    console.log('Sign up Success!!');
-                    console.log(response);
-                    this.setState({ signUpState: 'SUCCESS' })
-                })
-                .catch((response) => {
-                    console.log('Sign up Fail T-T')
-                    console.log(response);
-                    this.setState({ signUpState: 'FAILURE' })
-                })
-        }
+        })
+        valid = valid && isTermAgree;
+        return valid;
     }
 
     render() {
+        const valid = this.checkValid();
+
         return (
             <div>
                 {
@@ -111,11 +246,15 @@ class SignUp extends React.Component {
                         if (this.state.signUpState === 'READY') return (
                             <FullScreenPortal>
                                 <SignUpComponent
+                                    userInfo={this.state.userInfo}
+                                    validAll = {valid}
+                                    dupId = {this.state.dupId}
                                     handleChange={this.handleChange}
+                                    handleCheckBox={this.handleCheckBox}
+                                    checkDubId={this.checkDubId}
                                     postSignUp={this.postSignUp}
                                     uploadFile={this.uploadFile}
                                     profile={this.state.profile}
-                                    formRef={this.formRef}
                                 />
                             </FullScreenPortal>
                             );
