@@ -1,62 +1,48 @@
 import React from 'react';
 
-class InputField extends React.Component {
-    constructor(props) {
-        super(props);
+const InputField = ({label, name, type, value, valid, 
+    placeholder, pattern, disabled, maxLength, required, 
+    invalidMessage, handleChange, handleBlur}) => {
 
-        this.inputRef = React.createRef();
-        this.re = new RegExp(this.props.pattern);
-
-        this.state = {
-            valid: true
-        }
+    // this.inputRef = React.createRef();
+    let fieldClass;
+    if(valid === true) {
+        fieldClass = "enif-input-field enif-input-valid";
+    }
+    else if (valid === false) {
+        fieldClass = "enif-input-field enif-input-invalid";
+    }
+    else {
+        fieldClass = "enif-input-field";
     }
 
-    validate = (e) => {
-        //check valid
-        if(!this.re.test(e.target.value)) {
-            this.setState({
-                valid: false
-            })
-            // e.target.validity.valid = false
-        }
-        else {
-            this.setState({
-                valid: true
-            })
-        }
-    }
-
-    render() {
-
-        let fieldClass = this.state.valid ? "enif-input-field" : "enif-input-field enif-input-invalid"
-        return(
-            <div className={fieldClass}>
-                <label htmlFor={this.props.name}>{this.props.label}</label>
-                <input
-                    ref={this.inputRef}
-                    type={this.props.type || "text"}
-                    // className={this.state.valid ? null : "enif-input-invalid"}
-                    id={this.props.name}
-                    name={this.props.name}
-                    onChange={(e) => {
-                        this.validate(e);
-                        if(this.props.handleChange) {
-                            this.props.handleChange(e);
-                        }
-                    }}
-                    // onBlur={(e) => this.validate(e)}
-                    value={this.props.value}
-                    placeholder={this.props.placeholder}
-                    pattern={this.props.pattern}
-                    disabled={this.props.disabled}
-                    maxLength={this.props.maxLength ? this.props.maxLength : 20}
-                    required={this.props.required}
-                />
-                { !this.state.valid && <p>{this.props.invalidMessage}</p> }
-            </div>
-        )
-    }
+    return(
+        <div className={fieldClass}>
+            <label htmlFor={name}>{label}</label>
+            <input
+                // ref={this.inputRef}
+                type={type || "text"}
+                id={name}
+                name={name}
+                onChange={(e) => {
+                    handleChange(e)
+                }}
+                onBlur={(e) => {
+                    if(handleBlur) {
+                        handleBlur(e);
+                    }
+                }}
+                value={value}
+                placeholder={placeholder}
+                pattern={pattern}
+                disabled={disabled}
+                maxLength={maxLength ? maxLength : 20}
+                required={required}
+            />
+            { valid === false && <p>{invalidMessage}</p> }
+        </div>
+    )
+    
 }
 
 export default InputField;
