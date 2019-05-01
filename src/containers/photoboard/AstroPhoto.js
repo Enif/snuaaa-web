@@ -142,7 +142,9 @@ class AstroPhoto extends React.Component {
                                         <>
                                             <AlbumList board_id={board_id} albums={this.albums} togglePopUp={this.togglePopUp} />
                                             {this.state.popUpState && <CreateAlbum board_id={board_id} retrieveAlbums={this.fetch} togglePopUp={this.togglePopUp} />}
-                                            <button className="enif-btn-circle" onClick={() => this.togglePopUp()}>+</button>
+                                            <button className="enif-btn-circle enif-pos-sticky" onClick={() => this.togglePopUp()}>
+                                                <i className="material-icons">library_add</i>
+                                            </button>
                                         </>
                                     )
                                 }

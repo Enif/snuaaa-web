@@ -91,9 +91,11 @@ class Memory extends React.Component {
                                 return <Loading />
                             }
                         })()}
-                    <div className="enif-fixed-btm">
-                        <button className="enif-btn-circle btn-crt-album" onClick={() => this.togglePopUp()}>+</button>
-                    </div>
+                    {/* <div className="enif-fixed-btm"> */}
+                        <button className="enif-btn-circle enif-pos-sticky" onClick={() => this.togglePopUp()}>
+                            <i className="material-icons">library_add</i>
+                        </button>
+                    {/* </div> */}
                 </div>
 
             </>

@@ -3,7 +3,7 @@
 }
 
 .post-list-wrapper {
-    margin-top: 2rem;
+    margin: 20px 0px;
 }
 
 .post-list-unit {
@@ -53,15 +53,68 @@
 
 
 .writepost-wrapper {
-    margin: 20px;
+    // margin: 0px;
+
+    input {
+        height: 40px;
+        width: 100%;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        border-bottom: 1px solid #C9C9C9;
+        font-size: 20px;
+    }
+
+    .writepost-content {
+        display: block;
+        textarea {
+            width: 100%;
+            height: 400px;
+            resize: none;
+        }
+    }
+    .editor-wrapper {
+        margin-top: 10px;
+        display: block;
+    }
+    .editor-toolbar {
+        padding: 6px 5px 0;
+        border-radius: 2px;
+        border: 1px solid #F1F1F1;
+        display: flex;
+        justify-content: flex-start;
+        background: white;
+        flex-wrap: wrap;
+        font-size: 15px;
+        margin-bottom: 5px;
+        user-select: none;
+    }
+    .editor-textarea {
+        border: 1px solid #F1F1F1;
+        padding: 5px;
+        border-radius: 2px;
+        height: 400px;
+        // cursor: text;
+    }
+    .btn-wrapper {
+        .enif-btn-cancel {
+            float: left;
+        }
+        .enif-btn-ok {
+            float: right;
+        }
+    }
 }
 
-.writepost-title input {
-    width: 100%;
-}
+@media screen and (max-width: 800px) {
+    .writepost-wrapper {
 
-.writepost-content textarea {
-    width: 100%;
-    height: 500px;
-    resize: none;
+
+        .editor-toolbar {
+            display: none;
+        }
+        .editor-textarea {
+            display: none;
+        }
+    }
 }

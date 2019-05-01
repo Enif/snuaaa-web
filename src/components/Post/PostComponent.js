@@ -1,15 +1,20 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import PostStateEnum from '../../common/PostStateEnum';
 import Comment from '../../containers/Comment';
 import ProfileMini from '../Common/ProfileMini';
 import { convertFullDate } from '../../utils/convertDate';
 import { breakLine } from '../../utils/breakLine';
 
-const PostComponent = ({postData, post_id, likeInfo, likePost}) => {
+const PostComponent = ({postData, post_id, likeInfo, likePost, setPostState, deletePost}) => {
 
     return (
 
         <div className="post-wrapper">
             <div className="post-title">
+                <Link to={`/board/${postData.board_id}`}>
+                    <i className="material-icons">keyboard_backspace</i>
+                </Link>
                 <h5>{postData.title}</h5>
             </div>
             <div className="post-info-other">
@@ -28,10 +33,10 @@ const PostComponent = ({postData, post_id, likeInfo, likePost}) => {
             <div className="actions-wrapper">
                 <div className="edit-delete-wrapper">
                     <div className="edit-wrapper">
-                        <i className="material-icons pointer">edit</i>
+                        <i className="material-icons pointer" onClick={() => setPostState(PostStateEnum.EDITTING)}>edit</i>
                     </div>
                     <div className="delete-wrapper">
-                        <i className="material-icons pointer">delete</i>
+                        <i className="material-icons pointer" onClick={() => deletePost()}>delete</i>
                     </div>
                 </div>
                 <div className="like-comment-num-wrapper">

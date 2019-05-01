@@ -33,8 +33,10 @@
 
 @media screen and (max-width: 800px) {
     .btn-crt-album {
-        top: -5rem;
-        right: 2rem;
+        position: sticky;
+        margin-left: 75%;
+        // top: -5rem;
+        // right: 2rem;
         // position: fixed;
         // top: initial;
         // right: 70px;
