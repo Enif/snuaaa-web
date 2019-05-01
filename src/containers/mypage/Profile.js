@@ -13,14 +13,70 @@ class Profile extends React.Component {
         super(props);
 
         this.state = {
-            id: '',
-            username: '',
-            aaa_no: '',
-            col_no: '',
-            major: '',
-            email: '',
-            mobile: '',
-            introduction: '',
+            userInfo: [
+                {
+                    label: 'id',
+                    value: '',
+                    valid: null,
+                    isRequired: true,
+                    regExp: '^[A-Za-z0-9]{4,12}$'
+                },
+                {
+                    label: 'nickname',
+                    value: '',
+                    valid: null,
+                    isRequired: true,
+                    regExp: '^[A-Za-z0-9]{4,12}$'
+                },
+                {
+                    label: 'name',
+                    value: '',
+                    valid: null,
+                    isRequired: true,
+                    regExp: '^[가-힣]{2,6}$|^[A-Za-z ]{2,20}$'
+                },
+                {
+                    label: 'email',
+                    value: '',
+                    valid: null,
+                    isRequired: true,
+                    regExp: '^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$'
+                },
+                {
+                    label: 'mobile',
+                    value: '',
+                    valid: null,
+                    isRequired: true,
+                    regExp: '^[0-9]{3}-[0-9]{4}-[0-9]{4}$'
+                },
+                {
+                    label: 'aaa_no',
+                    value: '',
+                    valid: null,
+                    isRequired: false,
+                    regExp: '^[0-9]{2}[Aa]{3}-[0-9]{1,3}|[Aa]{3}[0-9]{2}-[0-9]{1,3}$'
+                },
+                {
+                    label: 'col_no',
+                    value: '',
+                    valid: null,
+                    isRequired: false,
+                    regExp: '^[0-9]{2}$'
+                },
+                {
+                    label: 'major',
+                    value: '',
+                    valid: null,
+                    isRequired: false
+                },
+                {
+                    label: 'introduction',
+                    value: '',
+                    valid: false,
+                    isRequired: false
+                }
+            ],
+            
             profileImg: null,
             profilePath: '',
             isShow: false
@@ -31,10 +87,47 @@ class Profile extends React.Component {
         this.getUserInfo();
     }
 
+    findInfo = (label) => {
+        const { userInfo } = this.state;
+        console.log(userInfo);
+        let info = userInfo.find(info => info.label === label)
+        return info
+    }
+
     handleChange = (e) => {
+        const { userInfo } = this.state
         this.setState({
-            [e.target.name]: e.target.value
-        });
+            userInfo: userInfo.map((info) => {
+                if(info.label === e.target.name) {
+                    if(info.label === 'mobile') {
+                        // auto generate '-'
+                        let showString = e.target.value.replace(/-/gi, "");
+                        if (e.target.value.slice(-1) === "-") {
+                            e.target.value = e.target.value.slice(0, -1);
+                        }
+                        if (showString.length == 4) {
+                            e.target.value = e.target.value.slice(0,3) + "-" + e.target.value.slice(-1);
+                        } else if (showString.length === 8) {
+                            e.target.value = e.target.value.slice(0,8) + "-" + e.target.value.slice(-1);
+                        }
+                        let re = new RegExp(info.regExp);
+                        let valid = re.test(e.target.value)
+                        return {...info, value: e.target.value, valid: valid}
+                    }
+                    if(info.regExp) {
+                        let re = new RegExp(info.regExp);
+                        let valid = re.test(e.target.value)
+                        return {...info, value: e.target.value, valid: valid}
+                    }
+                    else {
+                        return {...info, value: e.target.value}
+                    }
+                }
+                else {
+                    return info;
+                }
+            })
+        })
     }
 
     getUserInfo = async () => {
@@ -45,18 +138,41 @@ class Profile extends React.Component {
         await service.retrieveUserInfo()
         .then((response) => {
             console.log('[%s] getUserInfo succeess', TAG);
-            let userInfo = response.data.userInfo
+            let resInfo = response.data.userInfo
+            const { userInfo } = this.state
             this.setState({
-                id: userInfo.id,
-                username: userInfo.name,
-                nickname: userInfo.nickname,
-                aaa_no: userInfo.aaa_no,
-                col_no: userInfo.col_no,
-                major: userInfo.major,
-                email: userInfo.email,
-                mobile: userInfo.mobile,
-                introduction: userInfo.introduction,
-                profilePath: userInfo.profile_path,
+                userInfo: userInfo.map((info) => {
+                    if(info.label === 'id') {
+                        info.value = resInfo.id
+                    }
+                    if(info.label === 'nickname') {
+                        info.value = resInfo.nickname
+                    }
+                    if(info.label === 'name') {
+                        info.value = resInfo.name 
+                    }
+                    if(info.label === 'aaa_no') {
+                        info.value = resInfo.aaa_no
+                    }
+                    if(info.label === 'col_no') {
+                        info.value = resInfo.col_no
+                    }
+                    if(info.label === 'major') {
+                        info.value = resInfo.major 
+                    }
+                    if(info.label === 'email') {
+                        info.value = resInfo.email
+                    }
+                    if(info.label === 'mobile') {
+                        info.value = resInfo.mobile
+                    }
+                    if(info.label === 'introduction') {
+                        info.value = resInfo.introduction
+                    }
+                    return {...info, valid:true}
+                }),
+                profileImg: resInfo.profileImg,
+                profilePath: resInfo.profile_path,
                 isShow: true
             });
         })
@@ -71,16 +187,14 @@ class Profile extends React.Component {
         this.setState({
             isShow: false
         });
-        const userData = {
-            name: this.state.username,
-            aaa_no: this.state.aaa_no,
-            col_no: this.state.col_no,
-            major: this.state.major,
-            email: this.state.email,
-            mobile: this.state.mobile,
-            introduction: this.state.introduction,
-        }
-        await service.updateUserInfo(userData)
+        const { userInfo } = this.state;
+
+        const data = {};
+        userInfo.forEach((info) => {
+            data[info.label] = info.value;
+        });
+
+        await service.updateUserInfo(data)
         .then(() => {
             alert("업데이트 성공");
             this.setState({
@@ -110,12 +224,11 @@ class Profile extends React.Component {
     }
 
     render() {
-        let {isShow, profilePath, id, username, nickname, aaa_no, col_no, major, email, mobile, introduction} = this.state
+        const { userInfo, isShow }= this.state
         return (
             isShow ?
-            <ProfileComponent profilePath={profilePath} id={id} username={username} nickname={nickname} aaa_no={aaa_no}
-            col_no={col_no} major={major} email={email} mobile={mobile} introduction={introduction} handleChange={this.handleChange}
-            updateInfo={this.updateInfo} deleteUser={this.deleteUser} />
+            <ProfileComponent profilePath={userInfo.profilePath} userInfo={userInfo} handleChange={this.handleChange}
+                            updateInfo={this.updateInfo} deleteUser={this.deleteUser} />
             :
             <Loading />
         )
