@@ -3,7 +3,7 @@ import Image from '../Common/Image';
 import InputField from '../Common/InputField';
 import imgDefaultProfile from '../../assets/img/profile.png';
 
-const ProfileComponent = ({profilePath, userInfo, handleChange, updateInfo, deleteUser}) => {
+const ProfileComponent = ({profilePath, userInfo, handleChange, updateInfo, deleteUser, valid}) => {
 
     let idInfo, nameInfo,
     emailInfo, mobileInfo, aaaNumInfo, colNumInfo,
@@ -68,7 +68,7 @@ const ProfileComponent = ({profilePath, userInfo, handleChange, updateInfo, dele
                 </div>
                 <div className="btn-wrapper">
                     <button className="btn-withdraw" onClick={() => deleteUser()}>탈퇴하기</button>
-                    <button className="btn-save" onClick={() => updateInfo()}>저장</button>
+                    <button className="btn-save" disabled={!valid} onClick={() => updateInfo()}>저장</button>
                 </div>
 
 

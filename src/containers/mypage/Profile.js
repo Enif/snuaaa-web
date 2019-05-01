@@ -72,7 +72,7 @@ class Profile extends React.Component {
                 {
                     label: 'introduction',
                     value: '',
-                    valid: false,
+                    valid: null,
                     isRequired: false
                 }
             ],
@@ -116,7 +116,7 @@ class Profile extends React.Component {
                     }
                     if(info.regExp) {
                         let re = new RegExp(info.regExp);
-                        let valid = re.test(e.target.value)
+                        let valid = e.target.value ? re.test(e.target.value) : null
                         return {...info, value: e.target.value, valid: valid}
                     }
                     else {
@@ -137,7 +137,6 @@ class Profile extends React.Component {
         });
         await service.retrieveUserInfo()
         .then((response) => {
-            console.log('[%s] getUserInfo succeess', TAG);
             let resInfo = response.data.userInfo
             const { userInfo } = this.state
             this.setState({
@@ -171,13 +170,11 @@ class Profile extends React.Component {
                     }
                     return {...info, valid:true}
                 }),
-                profileImg: resInfo.profileImg,
                 profilePath: resInfo.profile_path,
                 isShow: true
             });
         })
         .catch((err) => {
-            console.log('[%s] getUserInfo fail', TAG);
             console.error(err)
         })
     }
@@ -223,12 +220,26 @@ class Profile extends React.Component {
         }
     }
 
+    checkValid = () => {
+        let valid = true;
+        const { userInfo } = this.state;
+        userInfo.forEach((info) => {
+            if(info.isRequired || (info.valid !== null)) {
+                valid = valid && info.valid;
+            }
+        })
+        return valid;
+    }
+
     render() {
-        const { userInfo, isShow }= this.state
+        console.log(`[${TAG}] render..`)
+        const { userInfo, profilePath, isShow }= this.state
+        const valid = this.checkValid();
+
         return (
             isShow ?
-            <ProfileComponent profilePath={userInfo.profilePath} userInfo={userInfo} handleChange={this.handleChange}
-                            updateInfo={this.updateInfo} deleteUser={this.deleteUser} />
+            <ProfileComponent profilePath={profilePath} userInfo={userInfo} handleChange={this.handleChange}
+                            updateInfo={this.updateInfo} deleteUser={this.deleteUser} valid={valid}/>
             :
             <Loading />
         )

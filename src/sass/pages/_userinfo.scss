@@ -84,7 +84,8 @@
             height: 40px;
             color: #666666;
             border: 1px solid #FFFFFF;
-            transition: all 1s;
+            transition: all 0.3s;
+            cursor: pointer;
             &:hover {
                 border: 1px solid #666666;
             }
@@ -96,6 +97,11 @@
             height: 40px;
             color: #FFFFFF;
             font-size: 16px;
+            cursor: pointer;
+            &:disabled {
+                background-color: #666666;
+                cursor: not-allowed;
+            }
         }
 
     }
