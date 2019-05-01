@@ -81,7 +81,7 @@ class SignUp extends React.Component {
                 {
                     label: 'introduction',
                     value: '',
-                    valid: false,
+                    valid: null,
                     isRequired: false
                 }
             ],
@@ -151,7 +151,7 @@ class SignUp extends React.Component {
                     }
                     if(info.regExp) {
                         let re = new RegExp(info.regExp);
-                        let valid = re.test(e.target.value)
+                        let valid = e.target.value ? re.test(e.target.value) : null
                         return {...info, value: e.target.value, valid: valid}
                     }
                     else {
@@ -228,7 +228,7 @@ class SignUp extends React.Component {
         let valid = true;
         const { userInfo, isTermAgree } = this.state;
         userInfo.forEach((info) => {
-            if(info.isRequired) {
+            if(info.isRequired || (info.valid !== null)) {
                 valid = valid && info.valid;
             }
         })

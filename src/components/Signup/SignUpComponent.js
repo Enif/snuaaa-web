@@ -120,7 +120,7 @@ const SignUpComponent = ({ userInfo, validAll, dupId, checkDubId,
                 <input className="checkbox-signup" name="isAgree" onChange={handleCheckBox} type="checkBox" /></p>
 
                 <InputField label="아이디*" name="id" handleChange={handleChange} handleBlur={checkDubId} required={true} valid={idInfo.valid}
-                    invalidMessage={dupId ? "사용할 수 없는 ID입니다" : "4-12자리의 영문 혹은 숫자"}/> 
+                    invalidMessage={dupId ? "이미 사용중인 ID입니다" : "4-12자리의 영문 혹은 숫자"}/> 
                 <InputField label="비밀번호*" type="password" name="password" handleChange={handleChange} required={true} valid={pwInfo.valid} 
                     invalidMessage="4-12자리의 영문 혹은 숫자"/>
                 <InputField label="비밀번호확인*" type="password" name="passwordCf" handleChange={handleChange} required={true} valid={pwCfInfo.valid}
