@@ -13,6 +13,7 @@ class SignUp extends React.Component {
     constructor(props) {
         super(props);
 
+        console.log(`[${TAG}] constructor`)
         this.state = {
 
             userInfo: [
@@ -49,7 +50,7 @@ class SignUp extends React.Component {
                     value: '',
                     valid: null,
                     isRequired: true,
-                    regExp: '^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$'
+                    regExp: '^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$'
                 },
                 {
                     label: 'mobile',
@@ -140,7 +141,7 @@ class SignUp extends React.Component {
                         if (e.target.value.slice(-1) === "-") {
                             e.target.value = e.target.value.slice(0, -1);
                         }
-                        if (showString.length == 4) {
+                        if (showString.length === 4) {
                             e.target.value = e.target.value.slice(0,3) + "-" + e.target.value.slice(-1);
                         } else if (showString.length === 8) {
                             e.target.value = e.target.value.slice(0,8) + "-" + e.target.value.slice(-1);

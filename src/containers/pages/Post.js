@@ -19,8 +19,6 @@ class Post extends React.Component {
         this.state = {
             post_id: this.props.match.params.pNo,
             likeInfo: false,
-            // isShow: false,
-            // isEditting: false,
             postState: PostStateEnum.LOADING,
             editingPostData: {
                 title: '',
@@ -83,8 +81,7 @@ class Post extends React.Component {
 
         await service.updatePost(this.state.post_id, this.state.editingPostData)
         .then((res) => {
-            this.setisEditting(false);
-            this.retrievePost();  
+            this.retrievePost();
         })
         .catch((err) => {
             console.error(err);
