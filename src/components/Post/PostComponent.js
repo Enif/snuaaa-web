@@ -1,23 +1,20 @@
 import React from 'react';
-// import { EditorState, ContentState } from 'draft-js';
-// import htmlToDraft from 'html-to-draftjs';
-import { Editor } from 'react-draft-wysiwyg';
+import { Link } from 'react-router-dom';
+import PostStateEnum from '../../common/PostStateEnum';
 import Comment from '../../containers/Comment';
 import ProfileMini from '../Common/ProfileMini';
 import { convertFullDate } from '../../utils/convertDate';
-// import { breakLine } from '../../utils/breakLine';
+import { breakLine } from '../../utils/breakLine';
 
-const PostComponent = ({postData, editorState , post_id, likeInfo, likePost, setisEditting}) => {
-
-    // const blocksFromHtml = htmlToDraft(postData.contents);
-    // const { contentBlocks, entityMap } = blocksFromHtml;
-    // const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
-    // const editorState = EditorState.createWithContent(contentState);
+const PostComponent = ({postData, post_id, likeInfo, likePost, setPostState, deletePost}) => {
 
     return (
 
         <div className="post-wrapper">
             <div className="post-title">
+                <Link to={`/board/${postData.board_id}`}>
+                    <i className="material-icons">keyboard_backspace</i>
+                </Link>
                 <h5>{postData.title}</h5>
             </div>
             <div className="post-info-other">
@@ -29,17 +26,17 @@ const PostComponent = ({postData, editorState , post_id, likeInfo, likePost, set
                 </div>
             </div>
             <div className="post-content">
-                <Editor toolbarHidden editorState={editorState} />
+                {breakLine(postData.contents)}
             </div>
             <ProfileMini profileImg={postData.profile_path} nickname={postData.nickname} userDesc={postData.introduction}/>
             <div className="enif-divider"></div>
             <div className="actions-wrapper">
                 <div className="edit-delete-wrapper">
                     <div className="edit-wrapper">
-                        <i className="material-icons pointer" onClick={() => setisEditting(true)}>edit</i>
+                        <i className="material-icons pointer" onClick={() => setPostState(PostStateEnum.EDITTING)}>edit</i>
                     </div>
                     <div className="delete-wrapper">
-                        <i className="material-icons pointer">delete</i>
+                        <i className="material-icons pointer" onClick={() => deletePost()}>delete</i>
                     </div>
                 </div>
                 <div className="like-comment-num-wrapper">

@@ -85,7 +85,7 @@ class PostBoard extends React.Component {
                         <h2>{boardInfo.board_name}</h2>
                         {
                             popUpState ?                        
-                            <CreatePost board_id={this.props.board_id} togglePopUp={this.togglePopUp} retrievePosts={this.retrievePosts}/>
+                            <CreatePost board_id={board_id} togglePopUp={this.togglePopUp} retrievePosts={this.retrievePosts}/>
                             :
                             (
                                 <>

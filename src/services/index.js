@@ -51,6 +51,14 @@ export function retrievePost(post_id) {
     return axios.get(SERVER_URL + `api/post/${post_id}`);
 }
 
+export function updatePost(post_id, data) {
+    return axios.patch(SERVER_URL + `api/post/${post_id}`, data);
+}
+
+export function deletePost(post_id) {
+    return axios.delete(SERVER_URL + `api/post/${post_id}`);
+}
+
 export function createPost(board_id, data) {
     return axios.post(SERVER_URL + `api/board/${board_id}/post`, data);
 }
