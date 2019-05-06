@@ -8,11 +8,8 @@ const PopupUser = ({togglePopup, logout}) => {
             <div className="btn-toggle" onClick={togglePopup}>
                 <i className="material-icons">close</i>
             </div>
-            <Link to="/mypage/profile" onClick={togglePopup}>
+            <Link to="/mypage/info" onClick={togglePopup}>
                 <p>My Page</p>
-            </Link>
-            <Link to="/mypage/post" onClick={togglePopup}>
-                <p>Post &amp; Comments</p>
             </Link>
             <p onClick={() => {
                 logout();

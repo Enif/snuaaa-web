@@ -1,17 +1,19 @@
 import React from 'react';
 import * as service from '../../services';
 import Loading from '../../components/Common/Loading';
+import MyProfile from '../../components/MyPage/MyProfile';
 import MyPostList from '../../components/MyPage/MyPostList';
 import MyPhotoList from '../../components/MyPage/MyPhotoList';
 import MyCommentList from '../../components/MyPage/MyCommentList';
 
 const TAG = 'MYPOST'
 
-class MyPost extends React.Component {
+class MyInfo extends React.Component {
 
     constructor(props) {
         super(props);
 
+        this.profile = null;
         this.postList = [];
         this.photoList = [];
         this.commentList = [];
@@ -30,17 +32,20 @@ class MyPost extends React.Component {
             isShow: false
         })
 
-        await service.retrieveUserPosts()
+        await Promise.all([service.retrieveUserInfo(), service.retrieveUserPosts()]) 
         .then((response) => {
-            this.postList = response.data.postList;
-            this.photoList = response.data.photoList;
-            this.commentList = response.data.commentList;
+
+            this.profile = response[0].data.userInfo;
+            this.postList = response[1].data.postList;
+            this.photoList = response[1].data.photoList;
+            this.commentList = response[1].data.commentList;
 
             this.setState({
                 isShow: true
             })
         })
         .catch((err) => {
+            console.error(err);
         })
     }
 
@@ -50,12 +55,15 @@ class MyPost extends React.Component {
         return (
             isShow ?
             <div className="my-wrapper">
-                <div className="my-left">
-                    <MyPostList posts={this.postList} />
-                    <MyPhotoList photos={this.photoList} />
-                </div>
-                <div className="my-right">
-                    <MyCommentList comments={this.commentList} />
+                <MyProfile profileImg={this.profile.profile_path} nickname={this.profile.nickname} userDesc={this.profile.introduction} />
+                <div className="my-objects-wrapper">
+                    <div className="my-left">
+                        <MyPostList posts={this.postList} />
+                        <MyPhotoList photos={this.photoList} />
+                    </div>
+                    <div className="my-right">
+                        <MyCommentList comments={this.commentList} />
+                    </div>
                 </div>
             </div>
             :
@@ -64,4 +72,4 @@ class MyPost extends React.Component {
     }
 }
 
-export default MyPost;
+export default MyInfo;

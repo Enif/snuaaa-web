@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Profile from '../mypage/Profile';
-import MyPost from '../mypage/MyPost';
+import EditInfo from '../mypage/EditInfo';
+import MyInfo from '../mypage/MyInfo';
 
 const TAG = 'MYPAGE'
 
@@ -23,9 +23,9 @@ class MyPage extends React.Component {
     }
 
     renderComponent() {
-        if (this.state.index === 'profile') return (<Profile />);
-        else if (this.state.index === 'post') return (<MyPost/>);
-        else return <Profile />;
+        if (this.state.index === 'profile') return (<EditInfo />);
+        else if (this.state.index === 'info') return (<MyInfo/>);
+        else return <MyInfo />;
     }
 
     render() {
@@ -34,10 +34,10 @@ class MyPage extends React.Component {
 
         return (
             <>
-                <div className="userinfo-header">
-                    <div className="header-item"><Link to="profile">Profile</Link></div>
-                    <div className="header-item"><Link to="post">Post &amp; Comments</Link></div>
-                </div>
+                {/* <div className="userinfo-header"> */}
+                    {/* <div className="header-item"><Link to="profile">Profile</Link></div>
+                    <div className="header-item"><Link to="info">Post &amp; Comments</Link></div> */}
+                {/* </div> */}
                 {this.renderComponent()}
             </>
         )

@@ -3,7 +3,7 @@ import Image from '../Common/Image';
 import InputField from '../Common/InputField';
 import imgDefaultProfile from '../../assets/img/profile.png';
 
-const ProfileComponent = ({profilePath, userInfo, handleChange, updateInfo, deleteUser, valid}) => {
+const ProfileComponent = ({profilePath, userInfo, handleChange, uploadProfileImg, updateInfo, deleteUser, isProfileImgChanged, valid}) => {
 
     let idInfo, nameInfo,
     emailInfo, mobileInfo, aaaNumInfo, colNumInfo,
@@ -45,7 +45,13 @@ const ProfileComponent = ({profilePath, userInfo, handleChange, updateInfo, dele
     return (
         <div className="profile-wrapper">
             <div className="profile-img-wrapper">
-                <Image imgSrc={profilePath} defaultImgSrc={imgDefaultProfile} />
+                <Image imgSrc={profilePath} defaultImgSrc={imgDefaultProfile} local={isProfileImgChanged}/>
+                <label htmlFor="profileImg">
+                    <div className="edit-profile-img">
+                        <i className="material-icons">photo_camera</i>
+                    </div>
+                </label>
+                <input type="file" id="profileImg" accept="image/*" onChange={uploadProfileImg} />
                 <h5>{nicknameInfo.value}</h5>
             </div>
 
