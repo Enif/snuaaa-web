@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router'
+import { connect } from 'react-redux';
 import * as service from '../../services';
 import PostStateEnum from '../../common/PostStateEnum';
 import Loading from '../../components/Common/Loading';
@@ -124,8 +125,9 @@ class Post extends React.Component {
     }
 
     render() {
-        console.log('[%s] render', TAG)
-        let { post_id, likeInfo, postState, editingPostData} = this.state;
+        console.log(`[${TAG}] render..`);
+        const { post_id, likeInfo, postState, editingPostData} = this.state;
+        const { my_id } = this.props;
 
         return (
             <>
@@ -139,6 +141,7 @@ class Post extends React.Component {
                             <PostComponent
                                 postData={this.postData}
                                 post_id={post_id}
+                                my_id={my_id}
                                 likeInfo={likeInfo}
                                 likePost={this.likePost}
                                 setPostState={this.setPostState}
@@ -169,4 +172,10 @@ class Post extends React.Component {
     }
 }
 
-export default Post;
+const mapStateToProps = (state) => {
+    return {
+        my_id: state.authentication.user_id
+    }
+}
+
+export default connect(mapStateToProps, null)(Post);

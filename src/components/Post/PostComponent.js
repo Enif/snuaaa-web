@@ -6,7 +6,7 @@ import ProfileMini from '../Common/ProfileMini';
 import { convertFullDate } from '../../utils/convertDate';
 import { breakLine } from '../../utils/breakLine';
 
-const PostComponent = ({postData, post_id, likeInfo, likePost, setPostState, deletePost}) => {
+const PostComponent = ({postData, post_id, my_id, likeInfo, likePost, setPostState, deletePost}) => {
 
     return (
 
@@ -31,14 +31,17 @@ const PostComponent = ({postData, post_id, likeInfo, likePost, setPostState, del
             <ProfileMini profileImg={postData.profile_path} nickname={postData.nickname} userDesc={postData.introduction}/>
             <div className="enif-divider"></div>
             <div className="actions-wrapper">
-                <div className="edit-delete-wrapper">
-                    <div className="edit-wrapper">
-                        <i className="material-icons pointer" onClick={() => setPostState(PostStateEnum.EDITTING)}>edit</i>
+                {
+                    (my_id === postData.author_id) &&
+                    <div className="edit-delete-wrapper">
+                        <div className="edit-wrapper">
+                            <i className="material-icons pointer" onClick={() => setPostState(PostStateEnum.EDITTING)}>edit</i>
+                        </div>
+                        <div className="delete-wrapper">
+                            <i className="material-icons pointer" onClick={() => deletePost()}>delete</i>
+                        </div>
                     </div>
-                    <div className="delete-wrapper">
-                        <i className="material-icons pointer" onClick={() => deletePost()}>delete</i>
-                    </div>
-                </div>
+                }
                 <div className="like-comment-num-wrapper">
                     <div className="like-num-wrapper">
                         <i className="material-icons pointer" onClick={() => likePost()}>

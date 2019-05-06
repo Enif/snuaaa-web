@@ -4,8 +4,9 @@ import * as types from '../actions/ActionTypes';
 
 const initialState = {
     isLoggedIn: false,
+    user_id: '',
     nickname: '',
-    level: '',
+    level: 0,
     profile_path: '',
 };
 
@@ -16,6 +17,7 @@ function authentication(state = initialState, action) {
             return {
                 ...state,
                 isLoggedIn: true,
+                user_id: action.user_id,
                 nickname: action.nickname,
                 level: action.level,
                 profile_path: action.profile_path
@@ -26,6 +28,7 @@ function authentication(state = initialState, action) {
             return {
                 ...state,
                 isLoggedIn: false,
+                user_id: '',
                 nickname: '',
                 level: 0,
                 profile_path: ''
