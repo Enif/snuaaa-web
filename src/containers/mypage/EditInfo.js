@@ -7,7 +7,7 @@ import ProfileComponent from '../../components/MyPage/ProfileComponent';
 
 const TAG = 'PROFILE'
 
-class Profile extends React.Component {
+class EditInfo extends React.Component {
 
     constructor(props) {
         super(props);
@@ -79,6 +79,7 @@ class Profile extends React.Component {
             
             profileImg: null,
             profilePath: '',
+            isProfileImgChanged: false,
             isShow: false
         }
     }
@@ -130,6 +131,16 @@ class Profile extends React.Component {
         })
     }
 
+    uploadProfileImg = (e) => {
+        if(e.target.files[0]) {
+            this.setState({
+                profileImg: e.target.files[0],
+                profilePath: URL.createObjectURL(e.target.files[0]),
+                isProfileImgChanged: true
+            })
+        }
+    }
+
     getUserInfo = async () => {
         console.log('[%s] getUserInfo', TAG);
         this.setState({
@@ -171,6 +182,7 @@ class Profile extends React.Component {
                     return {...info, valid:true}
                 }),
                 profilePath: resInfo.profile_path,
+                isProfileImgChanged: false,
                 isShow: true
             });
         })
@@ -186,10 +198,19 @@ class Profile extends React.Component {
         });
         const { userInfo } = this.state;
 
-        const data = {};
+        // const data = {};
+        // userInfo.forEach((info) => {
+        //     data[info.label] = info.value;
+        // });
+
+        const data = new FormData();
         userInfo.forEach((info) => {
-            data[info.label] = info.value;
-        });
+            data.append(info.label, info.value)
+        })
+
+        if (this.state.profileImg) {
+            data.append('profileImg', this.state.profileImg)
+        }
 
         await service.updateUserInfo(data)
         .then(() => {
@@ -233,13 +254,13 @@ class Profile extends React.Component {
 
     render() {
         console.log(`[${TAG}] render..`)
-        const { userInfo, profilePath, isShow }= this.state
+        const { userInfo, profilePath, isProfileImgChanged, isShow }= this.state
         const valid = this.checkValid();
 
         return (
             isShow ?
-            <ProfileComponent profilePath={profilePath} userInfo={userInfo} handleChange={this.handleChange}
-                            updateInfo={this.updateInfo} deleteUser={this.deleteUser} valid={valid}/>
+            <ProfileComponent profilePath={profilePath} userInfo={userInfo} handleChange={this.handleChange} uploadProfileImg={this.uploadProfileImg}
+                            isProfileImgChanged={isProfileImgChanged} updateInfo={this.updateInfo} deleteUser={this.deleteUser} valid={valid}/>
             :
             <Loading />
         )
@@ -252,4 +273,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(Profile);
+export default connect(null, mapDispatchToProps)(EditInfo);
