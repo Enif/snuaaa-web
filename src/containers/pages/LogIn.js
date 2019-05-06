@@ -86,7 +86,7 @@ class LogIn extends React.Component {
             this.setState({
                 isLoading: false
             })
-            const { token, nickname, level, profile_path } = res.data;
+            const { token, user_id, nickname, level, profile_path } = res.data;
             if(this.state.autoLogin) {
                 localStorage.setItem('token', token);
                 axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
@@ -95,7 +95,7 @@ class LogIn extends React.Component {
                 sessionStorage.setItem('token', token);
                 axios.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token');
             }
-            this.props.onAuthLogin(nickname, level, profile_path);
+            this.props.onLogin(user_id, nickname, level, profile_path);
         })
         .catch((res) => {
             console.log('[%s] Log In Fail', TAG)
@@ -136,7 +136,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onAuthLogin: (nickname, level, profile_path) => dispatch(authLogin(nickname, level, profile_path))
+        onLogin: (user_id, nickname, level, profile_path) => dispatch(authLogin(user_id, nickname, level, profile_path))
     }
 }
 

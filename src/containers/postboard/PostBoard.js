@@ -73,7 +73,7 @@ class PostBoard extends React.Component {
     render() {
         console.log(`[${TAG}] render.. `)
 
-        let { board_id, boardInfo, categories } = this.props;
+        let { board_id, boardInfo } = this.props;
         let { isReady, popUpState } = this.state;
 
         return (

@@ -1,6 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import * as service from '../services';
-
 import CommentList from '../components/Comment/CommentList';
 
 const TAG = 'COMMENT'
@@ -31,13 +31,11 @@ class Comment extends React.Component {
     }
 
     retrieveComments = async () => {
-        console.log(`[${TAG}] Retrieve Comments`)
         this.setState({
             isReady: false
         })
         await service.retrieveComments(this.props.parent_id)
         .then((res) => {
-            console.log(res.data)
             this.comments = res.data;
             this.setState({
                 isReady: true
@@ -45,12 +43,10 @@ class Comment extends React.Component {
         })
         .catch((err) => {
             console.error(err)
-            console.log(`${TAG} Retrieve Comments Fail`);
         })
     }
 
     createComment = async () => {
-        console.log(`[${TAG}] Create Comment`);
 
         if(!this.state.contents) {
             alert("내용을 입력하세요.")
@@ -59,7 +55,6 @@ class Comment extends React.Component {
             let commentInfo = {
                 contents: this.state.contents
             }
-    
             await service.createComment(this.props.parent_id, commentInfo)
             .then((res) => {
                 console.log('[%s] Create Comment Success', TAG);
@@ -68,9 +63,10 @@ class Comment extends React.Component {
                 })
                 this.retrieveComments();
             })
-            .catch((res) => {
-                console.log('[%s] Create Comment Fail', TAG);
-            })    
+            .catch((err) => {
+                console.error(err);
+                alert("댓글 작성 실패");
+            })
         }
     }
 
@@ -96,9 +92,10 @@ class Comment extends React.Component {
                 })
                 this.retrieveComments();
             })
-            .catch((res) => {
-                console.log('[%s] Update Comment Fail', TAG);
-            })    
+            .catch((err) => {
+                console.error(err);
+                alert("댓글 업데이트 실패");
+            })
         }
     }
 
@@ -113,9 +110,9 @@ class Comment extends React.Component {
                 alert("삭제 성공");
                 this.retrieveComments();
             })
-            .catch((res) => {
-                console.log('[%s] Update Comment Fail', TAG);
-                alert("문제가 발생했습니다. 다시 시도해주세요.");
+            .catch((err) => {
+                console.error(err);
+                alert("댓글 삭제 실패");
             })
         }
     }
@@ -136,12 +133,15 @@ class Comment extends React.Component {
     
 
     render() {
+        console.log(`[${TAG}] render..`);
+        const { my_id } = this.props;
+
         return (
             <div className="comment-area-wrapper">
-                <CommentList comments={this.comments} deleteComment={this.deleteComment} 
-                updateComment={this.updateComment} commentInEdit={this.state.commentInEdit} 
-                setCommentInEdit={this.setCommentInEdit} editingContents={this.state.editingContents}
-                editingContentsChange={this.editingContentsChange}/>
+                <CommentList my_id={my_id} comments={this.comments} deleteComment={this.deleteComment} 
+                    updateComment={this.updateComment} commentInEdit={this.state.commentInEdit} 
+                    setCommentInEdit={this.setCommentInEdit} editingContents={this.state.editingContents}
+                    editingContentsChange={this.editingContentsChange}/>
                 <div className="comment-write">
                     <textarea placeholder="댓글을 입력하세요" name="contents" onChange={(e) => this.handleChange(e)} value={this.state.contents}></textarea>
                     <button onClick={this.createComment}>ENTER</button>
@@ -151,4 +151,10 @@ class Comment extends React.Component {
     }
 }
 
-export default Comment;
+const mapStateToProps = (state) => {
+    return {
+        my_id: state.authentication.user_id
+    }
+}
+
+export default connect(mapStateToProps, null)(Comment);
