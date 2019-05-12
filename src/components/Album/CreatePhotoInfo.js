@@ -1,50 +1,54 @@
 import React from 'react';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css"
 
-const CreatePhotoInfo = (props) => {
+const CreatePhotoInfo = ({ title, desc, date, location, camera, lens, focal_length, f_stop,
+    exposure_time, iso, handleChange, handleDate }) => {
     return (
         <div className="photo-infos-wrapper">
-            <input className="input-title" type="text" name="title" placeholder="제목" onChange={(e) => props.handleChange(e)} value={props.title} />
-            <textarea className="input-desc" placeholder="설명" name="desc" onChange={(e) => props.handleChange(e)} value={props.desc}/>
+            <input className="input-title" type="text" name="title" placeholder="제목" onChange={handleChange} value={title} />
+            <textarea className="input-desc" placeholder="설명" name="desc" onChange={handleChange} value={desc} />
             <div className="photo-infos">
                 <div className="photo-info">
                     <div className="label-wrapper"><label>Date</label></div>
-                    <input className="enif-wid-half" type="date" name="date" onChange={(e) => props.handleChange(e)} value={props.date}></input>                    
+                    <DatePicker selected={date} onChange={handleDate} dateFormat="yyyy/MM/dd"/>
+                    {/* <input className="enif-wid-half" type="date" name="date" onChange={(e) => handleChange(e)} value={date}></input> */}
                 </div>
                 <div className="photo-info">
                     <div className="label-wrapper"><label>Location</label></div>
-                    <input className="enif-wid-half" type="text" name="location" onChange={(e) => props.handleChange(e)} value={props.location}></input>
+                    <input className="enif-wid-half" type="text" name="location" onChange={(e) => handleChange(e)} value={location}></input>
                 </div>
                 <div className="photo-info">
                     <div className="label-wrapper"><label>Camera</label></div>
-                    <input className="enif-wid-half" type="text" name="camera" onChange={(e) => props.handleChange(e)} value={props.camera}></input>
+                    <input className="enif-wid-half" type="text" name="camera" onChange={(e) => handleChange(e)} value={camera}></input>
                 </div>
                 <div className="photo-info">
                     <div className="label-wrapper"><label>Lens</label></div>
-                    <input className="enif-wid-half" type="text" name="lens" onChange={(e) => props.handleChange(e)} value={props.lens}></input>
+                    <input className="enif-wid-half" type="text" name="lens" onChange={(e) => handleChange(e)} value={lens}></input>
                 </div>
                 <div className="photo-info">
                     <div className="label-wrapper"><label>@</label></div>
-                    <input className="enif-wid-half" type="number" name="focal_length" onChange={(e) => props.handleChange(e)} value={props.focal_length}></input>
+                    <input className="enif-wid-half" type="number" name="focal_length" onChange={(e) => handleChange(e)} value={focal_length}></input>
                 </div>
                 <div className="photo-info">
                     <div className="label-wrapper">Setting</div>
                     <div className="input-wrapper">
                         <div>
                             <label>F/</label>
-                            <input className="enif-wid-quater" type="number" name="f_stop" onChange={(e) => props.handleChange(e)} value={props.f_stop}></input>
+                            <input className="enif-wid-quater" type="number" name="f_stop" onChange={(e) => handleChange(e)} value={f_stop}></input>
                         </div>
                         <div>
-                            <input className="enif-wid-quater" type="text" name="exposure_time" onChange={(e) => props.handleChange(e)} value={props.exposure_time}></input>
+                            <input className="enif-wid-quater" type="text" name="exposure_time" onChange={(e) => handleChange(e)} value={exposure_time}></input>
                             <label></label>
                         </div>
                         <div>
                             <label>ISO</label>
-                            <input className="enif-wid-quater" type="number" name="iso" onChange={(e) => props.handleChange(e)} value={props.iso}></input>
+                            <input className="enif-wid-quater" type="number" name="iso" onChange={(e) => handleChange(e)} value={iso}></input>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 

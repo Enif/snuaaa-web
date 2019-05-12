@@ -1,5 +1,5 @@
 import React from 'react';
-import PostStateEnum from '../../common/PostStateEnum';
+import ContentStateEnum from '../../common/ContentStateEnum';
 
 function EditPost({editingPostData, handleEditting, setPostState, updatePost}) {
 
@@ -12,7 +12,7 @@ function EditPost({editingPostData, handleEditting, setPostState, updatePost}) {
                 <textarea name="contents" value={editingPostData.contents} onChange={(e) => handleEditting(e)} placeholder="내용을 입력하세요" />
             </div>
             <div className="btn-wrapper">
-                <button className="enif-btn-common enif-btn-cancel" onClick={() => setPostState(PostStateEnum.READY)}> 취소 </button>
+                <button className="enif-btn-common enif-btn-cancel" onClick={() => setPostState(ContentStateEnum.READY)}> 취소 </button>
                 <button className="enif-btn-common enif-btn-ok" onClick={() => updatePost()} > 확인 </button>
             </div>
         </div>

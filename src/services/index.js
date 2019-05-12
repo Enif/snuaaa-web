@@ -128,8 +128,16 @@ export function retrievePhotosInAlbum(albumId) {
     return axios.get(SERVER_URL + `api/album/${albumId}/photos`)
 }
 
-export function retrievePhoto(photoId) {
-    return axios.get(SERVER_URL + `api/photo/${photoId}`)
+export function retrievePhoto(photo_id) {
+    return axios.get(SERVER_URL + `api/photo/${photo_id}`)
+}
+
+export function updatePhoto(photo_id, data) {
+    return axios.patch(SERVER_URL + `api/photo/${photo_id}`, data)
+}
+
+export function deletePhoto(photo_id) {
+    return axios.delete(SERVER_URL + `api/photo/${photo_id}`)
 }
 
 export function retrieveDocuments() {

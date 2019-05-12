@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import PostStateEnum from '../../common/PostStateEnum';
+import ContentStateEnum from '../../common/ContentStateEnum';
 import Comment from '../../containers/Comment';
 import ProfileMini from '../Common/ProfileMini';
 import { convertFullDate } from '../../utils/convertDate';
@@ -35,7 +35,7 @@ const PostComponent = ({postData, post_id, my_id, likeInfo, likePost, setPostSta
                     (my_id === postData.author_id) &&
                     <div className="edit-delete-wrapper">
                         <div className="edit-wrapper">
-                            <i className="material-icons pointer" onClick={() => setPostState(PostStateEnum.EDITTING)}>edit</i>
+                            <i className="material-icons pointer" onClick={() => setPostState(ContentStateEnum.EDITTING)}>edit</i>
                         </div>
                         <div className="delete-wrapper">
                             <i className="material-icons pointer" onClick={() => deletePost()}>delete</i>

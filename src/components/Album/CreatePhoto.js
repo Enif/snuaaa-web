@@ -38,6 +38,12 @@ class CreatePhoto extends React.Component {
         });
     }
 
+    handleDate = (date) => {
+        this.setState({
+            date: date
+        })
+    }
+
     uploadFile = (e) => {
         const { uploadPhotos } = this.state;
         if(e.target.files) {
@@ -246,13 +252,13 @@ class CreatePhoto extends React.Component {
                                     
                                     <CreatePhotoInfo title={title} desc={desc} date={date} location={location}
                                     camera={camera} lens={lens} focal_length={focal_length} f_stop={f_stop}
-                                    exposure_time={exposure_time} iso={iso} handleChange={this.handleChange}/>
+                                    exposure_time={exposure_time} iso={iso} handleChange={this.handleChange} handleDate={this.handleDate}/>
                                     </>
                                 )
                             }
                             else {
                                 return(
-                                    <div>사진을 선택해주세요</div>
+                                    <div className="message-info">사진을 선택해주세요</div>
                                 )
                             }
                         })()}

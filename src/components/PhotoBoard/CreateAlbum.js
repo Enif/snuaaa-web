@@ -65,12 +65,11 @@ class CreateAlbum extends React.Component {
             .then(() => {
                 console.log('[%s] Create Album Success', TAG);
                 this.props.togglePopUp();
-                this.props.retrieveAlbums(this.props.board_id)
+                this.props.fetch()
             })
             .catch((err) => {
-                console.log('[%s] Create Album Fail', TAG);
                 console.error(err)
-                this.props.togglePopUp();
+                alert("앨범 생성 실패");
             })
         }
     }
