@@ -30,7 +30,7 @@ class CreateAlbum extends React.Component {
             }            
             let style_selected = {
                 "border": `1px solid ${category.category_color}`,
-                "background-color": category.category_color,
+                "backgroundColor": category.category_color,
                 "color": "#eeeeee"
             }
             return (

@@ -24,6 +24,9 @@ class Photo extends React.Component {
             likeInfo: false,
             photoState: ContentStateEnum.LOADING,
         }
+    }
+
+    componentDidMount() {
         this.fetch();
     }
 

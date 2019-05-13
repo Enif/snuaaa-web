@@ -62,28 +62,54 @@
 
 .album-info {
     
-    p {
-        font-size: 15px;
-        margin: 10px 10px 10px 0px;
-    }
-    .alb-title-wrapper {
+    .alb-header-wrapper {
+        margin-top: 20px;
         height: 40px;
+        display: flex;
+        .alb-btn-back {
+            button {
+                height: 35px;
+                width: 35px;
+                border: none;
+                border-radius: 50%;
+                background-color: $color_aqua;
+                cursor: pointer;
+                .material-icons {
+                    color: $color_white;
+                }
+            }
+        }
         .alb-title {
+            // display: inline-block;
+            // margin-left: 20px;
+            max-width: 500px;
             font-size: 20px;
             font-weight: bold;
-            margin: 10px 10px 10px 0px;
+            padding: 10px 10px;
             float: left;
+        }
+        .actions-wrapper {
+            padding: 5px 0px;
+            width: 60px;
+            flex-shrink: 0;
         }
         .alb-author {
             // text-align: right;
+            flex-grow: 1;
+            flex-shrink: 0;
+            text-align: right;
+            padding: 10px 5px;
+            margin-right: 0px;
             font-size: 20px;
             font-weight: bold;
-            float: right;
+            // float: right;
             color: #49A0AE;
         }
     
     }
     .contents {
+        font-size: 15px;
+        margin: 30px 10px 10px 10px;
 
     }
 }
@@ -120,6 +146,38 @@
         width: calc(50% - 3px);
         // height: calc(50vw - 2px);
     }
+
+    .album-info {
+        .alb-header-wrapper {
+            .alb-btn-back {
+                margin-left: 0.5rem;
+                button {
+                    height: 35px;
+                    width: 35px;
+                    border: none;
+                    border-radius: 50%;
+                    background-color: $color_aqua;
+                    cursor: pointer;
+                    .material-icons {
+                        color: $color_white;
+                    }
+                }
+            }
+            .alb-title {
+                font-size: 1.1rem;
+                padding: 10px 5px;
+            }
+            .actions-wrapper {
+                padding: 1px 1px;
+            }
+            .alb-author {
+                font-size: 1.1rem;
+                float: right;
+                color: #49A0AE;
+            }
+        }
+    }
+    
 }
 
 /****** ALBUM *******/

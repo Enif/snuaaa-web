@@ -187,12 +187,13 @@ class CreatePhoto extends React.Component {
             await service.createPhotosInAlbum(this.props.album_id, photosForm)
             .then(() => {
                 console.log('[%s] Create Photos Success', TAG);
+                console.log(this.props)
                 this.props.togglePopUp();
-                this.props.retrievePhotos(this.props.album_id)
+                this.props.fetch();
             })
             .catch(() => {
                 console.error(`[${TAG}] Create Photos Fail`);
-                this.props.togglePopUp();
+                alert('사진 생성 실패');
             })
         }
         else if(this.props.board_id) {
@@ -205,7 +206,7 @@ class CreatePhoto extends React.Component {
             })
             .catch(() => {
                 console.error(`[${TAG}] Create Photos Fail`);
-                this.props.togglePopUp();
+                alert('사진 생성 실패');
             })
         }
         else {
