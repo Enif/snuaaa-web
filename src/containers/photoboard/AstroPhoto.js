@@ -27,15 +27,16 @@ class AstroPhoto extends React.Component {
     }
 
     componentDidMount() {
-        this.fetch(this.state.isViewPhotos);
+        this.fetch();
     }
 
-    fetch = (isViewPhotos) => {
-        const board_id = this.props.board_id;
 
+    fetch = async () => {
+        const board_id = this.props.board_id;
+        const { isViewPhotos } = this.state;
         this.setIsReady(false);
         if(!isViewPhotos) {
-            service.retrieveAlbumsInPhotoBoard(board_id)
+            await service.retrieveAlbumsInPhotoBoard(board_id)
             .then((res) => {
                 this.albums = res.data;
                 this.setIsReady(true);
@@ -45,7 +46,7 @@ class AstroPhoto extends React.Component {
             })
         }
         else {
-            Promise.all([
+            await Promise.all([
                 service.retrieveTagsInBoard(board_id),
                 service.retrievePhotosInPhotoBoard(board_id)
             ])
@@ -69,8 +70,9 @@ class AstroPhoto extends React.Component {
     setIsViewPhotos = (isViewPhotos) => {
         this.setState({
             isViewPhotos: isViewPhotos
-        })
-        this.fetch(isViewPhotos);
+        },
+        this.fetch
+        )
     }
 
     clickTag = (e) => {
@@ -94,7 +96,7 @@ class AstroPhoto extends React.Component {
             })
         }
         else {
-            this.fetch(this.state.isViewPhotos);
+            this.fetch();
         }
     }
 
@@ -102,7 +104,7 @@ class AstroPhoto extends React.Component {
         this.setState({
             selectedTags: []
         })
-        this.fetch(this.state.isViewPhotos);
+        this.fetch();
     }
 
     togglePopUp = () => {
@@ -112,6 +114,8 @@ class AstroPhoto extends React.Component {
     }
 
     render() {
+
+        console.log(`[${TAG}] render..`)
 
         let { isReady } = this.state;
         let { board_id, boardInfo } = this.props;
@@ -141,14 +145,13 @@ class AstroPhoto extends React.Component {
                                     (
                                         <>
                                             <AlbumList board_id={board_id} albums={this.albums} togglePopUp={this.togglePopUp} />
-                                            {this.state.popUpState && <CreateAlbum board_id={board_id} retrieveAlbums={this.fetch} togglePopUp={this.togglePopUp} />}
-                                            <button className="enif-btn-circle enif-pos-sticky" onClick={() => this.togglePopUp()}>
+                                            {this.state.popUpState && <CreateAlbum board_id={board_id} fetch={this.fetch} togglePopUp={this.togglePopUp} />}
+                                            <button className="enif-btn-circle enif-pos-sticky" onClick={this.togglePopUp}>
                                                 <i className="material-icons">library_add</i>
                                             </button>
                                         </>
                                     )
                                 }
-
                             </div>
                         )
                     }

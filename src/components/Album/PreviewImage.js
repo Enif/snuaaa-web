@@ -26,7 +26,7 @@ class PreviewImage extends React.Component {
         const { uploadPhotos, imgIdx } = this.props;
         if(uploadPhotos.length > 0 && imgIdx >= 0) {    
             let imgSrc = window.URL.createObjectURL(uploadPhotos[imgIdx])
-            return (<img src={imgSrc} />)
+            return (<img src={imgSrc} alt="previewImg" />)
         }
     }
 

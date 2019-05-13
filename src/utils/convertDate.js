@@ -1,23 +1,18 @@
 export function convertDate(date) {
     let convertedDate = new Date(date);
     
-    let year = convertedDate.getFullYear().toString().substring(2)
-    let month;
-    let convertedMonth = convertedDate.getMonth();
-    if(convertedMonth < 9) {
-        month = '0' + (convertedMonth + 1).toString();
-    }
-    else {
-        month = (convertedMonth + 1).toString(); 
-    }
-    let da = convertedDate.getDate().toString();
+    let year = convertedDate.getFullYear().toString().substring(2);
+    let month = convertedDate.getMonth() + 1;
+    let day = convertedDate.getDate();
 
-    return (year + "." + month + "." + da);
+    month = month < 10 ? '0' + month : month;
+    day = day < 10 ? '0' + day : day;
+
+    return (year + "." + month + "." + day);
 }
 
 export function convertFullDate(date) {
     let convertedDate = new Date(date);
-
     
     let year = convertedDate.getFullYear();
     let month = convertedDate.getMonth() + 1;

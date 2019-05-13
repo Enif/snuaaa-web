@@ -116,20 +116,36 @@ export function retrievePhotosInPhotoBoardByTag(board_id, tags) {
     return axios.get(SERVER_URL + `api/photoboard/${board_id}/photos?${tagUrl}`)
 }
 
-export function createPhotosInAlbum(albumId, data) {
-    return axios.post(SERVER_URL + `api/album/${albumId}/photos`, data)
+export function createPhotosInAlbum(album_id, data) {
+    return axios.post(SERVER_URL + `api/album/${album_id}/photos`, data)
 }
 
-export function retrieveAlbum(albumId) {
-    return axios.get(SERVER_URL + `api/album/${albumId}`)
+export function retrieveAlbum(album_id) {
+    return axios.get(SERVER_URL + `api/album/${album_id}`)
 }
 
-export function retrievePhotosInAlbum(albumId) {
-    return axios.get(SERVER_URL + `api/album/${albumId}/photos`)
+export function updateAlbum(album_id, data) {
+    return axios.patch(SERVER_URL + `api/album/${album_id}`, data)
 }
 
-export function retrievePhoto(photoId) {
-    return axios.get(SERVER_URL + `api/photo/${photoId}`)
+export function deleteAlbum(album_id) {
+    return axios.delete(SERVER_URL + `api/album/${album_id}`)
+}
+
+export function retrievePhotosInAlbum(album_id) {
+    return axios.get(SERVER_URL + `api/album/${album_id}/photos`)
+}
+
+export function retrievePhoto(photo_id) {
+    return axios.get(SERVER_URL + `api/photo/${photo_id}`)
+}
+
+export function updatePhoto(photo_id, data) {
+    return axios.patch(SERVER_URL + `api/photo/${photo_id}`, data)
+}
+
+export function deletePhoto(photo_id) {
+    return axios.delete(SERVER_URL + `api/photo/${photo_id}`)
 }
 
 export function retrieveDocuments() {

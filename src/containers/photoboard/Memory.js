@@ -20,7 +20,7 @@ class Memory extends React.Component {
     }
 
     componentDidMount() {
-        this.retrieveAlbums(this.props.board_id)
+        this.retrieveAlbums()
     }
 
     setIsReady = (isReady) => {
@@ -29,11 +29,11 @@ class Memory extends React.Component {
         })
     }
 
-    retrieveAlbums = async (board_id) => {
+    retrieveAlbums = async () => {
         console.log('[%s] Retrieve Albums', TAG);
         this.setIsReady(false);
 
-        await service.retrieveAlbumsInPhotoBoard(board_id)
+        await service.retrieveAlbumsInPhotoBoard(this.props.board_id)
             .then((res) => {
                 console.log('[%s] Retrieve Albums Success', TAG);
                 this.albums = res.data;
@@ -83,7 +83,7 @@ class Memory extends React.Component {
                                     <>
                                         <AlbumList board_id={board_id} albums={this.albums} togglePopUp={this.togglePopUp}/>
                                         {
-                                            this.state.popUpState && <CreateAlbum board_id={board_id} categories={categories} retrieveAlbums={this.retrieveAlbums} togglePopUp={this.togglePopUp} />
+                                            this.state.popUpState && <CreateAlbum board_id={board_id} categories={categories} fetch={this.retrieveAlbums} togglePopUp={this.togglePopUp} />
                                         }
                                     </>)
                             }

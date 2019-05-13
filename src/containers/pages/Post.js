@@ -1,8 +1,8 @@
 import React from 'react';
-import { Redirect } from 'react-router'
+import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import * as service from '../../services';
-import PostStateEnum from '../../common/PostStateEnum';
+import ContentStateEnum from '../../common/ContentStateEnum';
 import Loading from '../../components/Common/Loading';
 import PostComponent from '../../components/Post/PostComponent';
 import EditPost from '../../components/Post/EditPost';
@@ -20,7 +20,7 @@ class Post extends React.Component {
         this.state = {
             post_id: this.props.match.params.pNo,
             likeInfo: false,
-            postState: PostStateEnum.LOADING,
+            postState: ContentStateEnum.LOADING,
             editingPostData: {
                 title: '',
                 contents: ''
@@ -65,7 +65,7 @@ class Post extends React.Component {
 
             this.setState({
                 likeInfo: res.data.likeInfo,
-                postState: PostStateEnum.READY,
+                postState: ContentStateEnum.READY,
                 editingPostData: {
                     title: res.data.postInfo.title,
                     contents: res.data.postInfo.contents
@@ -74,7 +74,7 @@ class Post extends React.Component {
         })
         .catch((err) => {
             console.error(err);
-            this.setPostState(PostStateEnum.ERROR);
+            this.setPostState(ContentStateEnum.ERROR);
         })
     }
 
@@ -97,7 +97,7 @@ class Post extends React.Component {
             await service.deletePost(this.state.post_id)
             .then(() => {
                 alert("게시글이 삭제되었습니다.");
-                this.setPostState(PostStateEnum.DELETED);
+                this.setPostState(ContentStateEnum.DELETED);
             })
             .catch((err) => {
                 console.error(err);
@@ -133,10 +133,10 @@ class Post extends React.Component {
             <>
             {
                 (() => {
-                    if(postState === PostStateEnum.LOADING) {
+                    if(postState === ContentStateEnum.LOADING) {
                         return <Loading/>;
                     }
-                    else if(postState === PostStateEnum.READY) {
+                    else if(postState === ContentStateEnum.READY) {
                         return (
                             <PostComponent
                                 postData={this.postData}
@@ -148,7 +148,7 @@ class Post extends React.Component {
                                 deletePost={this.deletePost}/>
                         )
                     }
-                    else if(postState === PostStateEnum.EDITTING)
+                    else if(postState === ContentStateEnum.EDITTING)
                         return (
                             <EditPost
                                 editingPostData={editingPostData}
@@ -156,7 +156,7 @@ class Post extends React.Component {
                                 setPostState={this.setPostState}
                                 updatePost={this.updatePost}/>
                     )
-                    else if(postState === PostStateEnum.DELETED)
+                    else if(postState === ContentStateEnum.DELETED)
                         return (
                             <Redirect to={`/board/${this.postData.board_id}`} />
                         )

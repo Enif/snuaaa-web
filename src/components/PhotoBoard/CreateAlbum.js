@@ -30,7 +30,7 @@ class CreateAlbum extends React.Component {
             }            
             let style_selected = {
                 "border": `1px solid ${category.category_color}`,
-                "background-color": category.category_color,
+                "backgroundColor": category.category_color,
                 "color": "#eeeeee"
             }
             return (
@@ -65,12 +65,11 @@ class CreateAlbum extends React.Component {
             .then(() => {
                 console.log('[%s] Create Album Success', TAG);
                 this.props.togglePopUp();
-                this.props.retrieveAlbums(this.props.board_id)
+                this.props.fetch()
             })
             .catch((err) => {
-                console.log('[%s] Create Album Fail', TAG);
                 console.error(err)
-                this.props.togglePopUp();
+                alert("앨범 생성 실패");
             })
         }
     }

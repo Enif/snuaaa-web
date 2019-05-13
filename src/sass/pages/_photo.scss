@@ -42,7 +42,26 @@
 
 
 .photo-section-wrapper {
-    .photo-wrapper {
+    .photo-alb-title-wrp {
+        // height: 50px;
+        background-color: $color_aqua;
+        color: #F1F1F1;
+        display: flex;
+        padding-top: 10px;
+        padding-bottom: 8px;
+        a {
+            float: left;
+            margin-left: 5px;
+            color: #FFFFFF;
+        }
+        h5 {
+            font-size: 20px;
+            flex-grow: 1;
+            font-weight: bold;
+            text-align: center;
+        }
+    }
+    .photo-img-wrapper {
         display: flex;
         justify-content: center;
         background-color: #1d1d1d;
@@ -118,7 +137,7 @@
         position: relative;
         width: 1400px;
         margin: 0 auto;
-        margin-top: 100px;
+        margin-top: 5%;
         background-color: #ffffff;
         z-index: 99;
         .crt-photo-header {
@@ -149,6 +168,7 @@
                     display: flex;
                     justify-content: center;
                     align-items: center;
+                    cursor: pointer;
                     .add-photo {
                         border: 1px solid #C9C9C9;
                         border-radius: 50%;
@@ -234,22 +254,37 @@
                         font-weight: bold;
                         border: none;
                         font-family: 'NIXGONM-Vb';
+                        cursor: pointer;
+                        transition: all 0.2s;
                     }
                     .btn-cancel {
                         flex-basis: 33%;
                         color: #1d1d1d;
                         background-color: #F1F1F1;
+                        &:hover {
+                            background-color: darken($color: #F1F1F1, $amount: 10%);                            
+                        }
                     }
                     .btn-ok {
                         flex-basis: 67%;
                         color: #F1F1F1;
                         background-color: #7193C4;
+                        &:hover {
+                            background-color: darken($color: #7193C4, $amount: 10%);                            
+                        }
                     }
-
+                }
+                .message-info {
+                    padding: 15px;
+                    font-size: 17px;
                 }
 
             }
         }
+    }
+
+    .edt-photo-wrp {
+        width: 950px;
     }
 }
 
@@ -265,7 +300,7 @@
     }
 
     .photo-section-wrapper {
-        .photo-wrapper {
+        .photo-img-wrapper {
             max-height: 300px;
         }
 

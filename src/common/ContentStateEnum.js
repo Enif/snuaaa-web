@@ -1,4 +1,4 @@
-const PostStateEnum = Object.freeze({
+const ContentStateEnum = Object.freeze({
     ERROR: -1,
     LOADING: 0,
     READY: 1,
@@ -6,4 +6,4 @@ const PostStateEnum = Object.freeze({
     DELETED: 3
 })
 
-export default PostStateEnum;
+export default ContentStateEnum;
