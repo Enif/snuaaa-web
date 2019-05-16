@@ -88,3 +88,21 @@
         }
     }
 }
+
+.paginator-wrapper {
+    display: flex;
+    margin: 10px;
+    ul {
+        display: flex;
+    }
+    li {
+        padding: 5px;
+        cursor: pointer;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    .current {
+        font-weight: bold;
+    }
+}
