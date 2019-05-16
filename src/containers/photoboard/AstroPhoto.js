@@ -6,8 +6,10 @@ import PhotoList from '../../components/Album/PhotoList';
 import CreatePhoto from '../../components/Album/CreatePhoto';
 import Tag from '../../components/Common/Tag';
 import Loading from '../../components/Common/Loading';
+import Paginator from '../../components/Common/Paginator';
 
-const TAG = 'ASTROPHOTO'
+const TAG = 'ASTROPHOTO';
+const ALBUMROWNUM = 12;
 
 class AstroPhoto extends React.Component {
 
@@ -16,11 +18,13 @@ class AstroPhoto extends React.Component {
         this.albums = [];
         this.photos = [];
         this.tags = [];
+        this.count = 0;
 
         this.state = {
             popUpState: false,
             isReady: false,
             isViewPhotos: false,
+            pageIdx: 1,
             selectedTags: []
         }
         console.log(`[${TAG}] constructor`);
@@ -36,9 +40,10 @@ class AstroPhoto extends React.Component {
         const { isViewPhotos } = this.state;
         this.setIsReady(false);
         if(!isViewPhotos) {
-            await service.retrieveAlbumsInPhotoBoard(board_id)
+            await service.retrieveAlbumsInPhotoBoard(board_id, this.state.pageIdx)
             .then((res) => {
-                this.albums = res.data;
+                this.albums = res.data.albumInfo;
+                this.count = res.data.albumCount.count;
                 this.setIsReady(true);
             })
             .catch((err) => {
@@ -46,18 +51,32 @@ class AstroPhoto extends React.Component {
             })
         }
         else {
-            await Promise.all([
-                service.retrieveTagsInBoard(board_id),
-                service.retrievePhotosInPhotoBoard(board_id)
-            ])
-            .then((res) => {
-                this.tags = res[0].data;
-                this.photos = res[1].data;
-                this.setIsReady(true);
-            })
-            .catch((err) => {
-                console.error(err);
-            })
+            if(this.state.selectedTags.length > 0) {
+                service.retrievePhotosInPhotoBoardByTag(this.props.board_id ,this.state.selectedTags, this.state.pageIdx)
+                .then((res) => {
+                    this.photos = res.data.photoInfo;
+                    this.count = res.data.photoCount.count;
+                    this.setIsReady(true);
+                })
+                .catch((err) => {
+                    console.error(err);
+                })
+            }
+            else {
+                await Promise.all([
+                    service.retrieveTagsInBoard(board_id),
+                    service.retrievePhotosInPhotoBoard(board_id, this.state.pageIdx)
+                ])
+                .then((res) => {
+                    this.tags = res[0].data;
+                    this.photos = res[1].data.photoInfo;
+                    this.count = res[1].data.photoCount.count;
+                    this.setIsReady(true);
+                })
+                .catch((err) => {
+                    console.error(err);
+                })
+            }
         }
     }
 
@@ -69,7 +88,8 @@ class AstroPhoto extends React.Component {
 
     setIsViewPhotos = (isViewPhotos) => {
         this.setState({
-            isViewPhotos: isViewPhotos
+            isViewPhotos: isViewPhotos,
+            pageIdx: 1
         },
         this.fetch
         )
@@ -83,28 +103,19 @@ class AstroPhoto extends React.Component {
         else {
             this.state.selectedTags.push(e.target.id)
         }
-        this.setIsReady(false);
-
-        if(this.state.selectedTags.length > 0) {
-            service.retrievePhotosInPhotoBoardByTag(this.props.board_id ,this.state.selectedTags)
-            .then((res) => {
-                this.photos = res.data;
-                this.setIsReady(true);
-            })
-            .catch((err) => {
-                console.error(err);
-            })
-        }
-        else {
-            this.fetch();
-        }
+        this.setState({
+            pageIdx: 1
+        },
+        this.fetch
+        )
     }
 
     clickAll = () => {
         this.setState({
             selectedTags: []
-        })
-        this.fetch();
+        },
+        this.fetch
+        )
     }
 
     togglePopUp = () => {
@@ -113,11 +124,19 @@ class AstroPhoto extends React.Component {
         })
     }
 
+    clickPage = (idx) => {
+        this.setState({
+            pageIdx: idx
+        },
+        this.fetch
+        )
+    }
+
     render() {
 
         console.log(`[${TAG}] render..`)
 
-        let { isReady } = this.state;
+        let { isReady, pageIdx } = this.state;
         let { board_id, boardInfo } = this.props;
         let albumSelectorClassName = "view-type-selector" + (this.state.isViewPhotos ? "" : " selected")
         let photoSelectorClassName = "view-type-selector" + (this.state.isViewPhotos ? " selected" : "")
@@ -133,6 +152,8 @@ class AstroPhoto extends React.Component {
                                     <div className={albumSelectorClassName} onClick={() => this.setIsViewPhotos(false)}>앨범</div>
                                     <div className={photoSelectorClassName} onClick={() => this.setIsViewPhotos(true)}>사진</div>
                                 </div>
+                                <Paginator pageIdx={pageIdx} pageNum={Math.ceil(this.count / ALBUMROWNUM)} clickPage={this.clickPage} />
+                                <div className="enif-divider"></div>
                                 {this.state.isViewPhotos ?
                                     (
                                         <>

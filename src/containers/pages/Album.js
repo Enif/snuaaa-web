@@ -48,14 +48,19 @@ class Album extends React.Component {
     }
 
     deleteAlbum = async() => {
-        await service.deleteAlbum(this.props.match.params.aNo)
-        .then(() => {
-            // this.
-            this.setAlbumState(ContentStateEnum.DELETED);
-        })
-        .catch((err) => {
-            console.error(err)
-        })
+
+        let goDrop = window.confirm("정말로 삭제하시겠습니까? 삭제한 게시글은 다시 복원할 수 없습니다.");
+        if(goDrop) {
+            await service.deleteAlbum(this.props.match.params.aNo)
+            .then(() => {
+                alert("게시글이 삭제되었습니다.");
+                this.setAlbumState(ContentStateEnum.DELETED);
+            })
+            .catch((err) => {
+                console.error(err);
+                alert("삭제 실패");
+            })
+        }
     }
 
     setAlbumState = (state) => {
@@ -73,7 +78,7 @@ class Album extends React.Component {
     render() {
         let { album_id, albumState, popUpState } = this.state
         const { my_id } = this.props;
-        // console.log(this.albumInfo)
+
         return (
             <>
             {

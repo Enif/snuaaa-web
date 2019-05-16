@@ -2,23 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { convertDate } from '../../utils/convertDate'
 
-const TAG = 'POSTLIST'
+const PostList = ({posts, togglePopUp}) => {
 
-class PostList extends React.Component {
+    const makePostList = () => {
 
-    constructor(props) {
-        console.log('[%s] constructor', TAG)
-        super(props);
-    }
-
-
-    makePostList = () => {
-        console.log('[%s] Retrieve Posts', TAG);
-
-        let posts = this.props.posts;
         let postList = posts.map(post => {
             return (
-                <div className="post-list-unit">
+                <div className="post-list-unit" key={post.object_id}>
                     <div className="post-list-unit-left">
                         <div className="post-title">
                             <Link to={`/post/${post.object_id}`}>
@@ -47,24 +37,19 @@ class PostList extends React.Component {
                 </div>
             )
         });
-        return postList
-    
+        return postList    
     }
-
-    render() {
-        console.log('[%s] render', TAG)
         
-        return (
-                <>
-                    <div className="post-list-wrapper">
-                        {this.makePostList()}
-                    </div>
-                    <button className="enif-btn-circle enif-pos-sticky" onClick={() => this.props.togglePopUp()}>
-                        <i className="material-icons">create</i>
-                    </button>
-                </>
-        ) 
-    }
+    return (
+            <>
+                <div className="post-list-wrapper">
+                    {makePostList()}
+                </div>
+                <button className="enif-btn-circle enif-pos-sticky" onClick={togglePopUp}>
+                    <i className="material-icons">create</i>
+                </button>
+            </>
+    ) 
 
 }
 
