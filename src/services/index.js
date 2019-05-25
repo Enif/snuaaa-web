@@ -173,5 +173,21 @@ export function deleteDocument(doc_id) {
 }
 
 export function retrieveSoundBox() {
-    return axios.get(SERVER_URL + `api/soundbox`);
+    return axios.get(SERVER_URL + `api/home/soundbox`);
+}
+
+export function retrieveRecentPosts() {
+    return axios.get(SERVER_URL + `api/home/posts`);
+}
+
+export function retrieveRecentComments() {
+    return axios.get(SERVER_URL + `api/home/comments`);
+}
+
+export function retrieveRecentMemory() {
+    return axios.get(SERVER_URL + `api/home/memory`);
+}
+
+export function retrieveRecentAstroPhoto() {
+    return axios.get(SERVER_URL + `api/home/astrophoto`);
 }

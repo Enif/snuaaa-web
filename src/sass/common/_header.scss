@@ -7,9 +7,9 @@
     background-color: #05070e;
 
     .main-header {
-        max-width: 1640px;
+        max-width: 1920px;
         width: 100%;
-        height: 300px;
+        height: 263px;
         margin: 0 auto;
         background-image: url("./assets/img/header.gif");
         background-repeat: no-repeat;
@@ -54,15 +54,18 @@
 }
 
 .main-menu-nav-wrapper {
-    height: 30px;
-    // position: relative;
+    height: 40px;
+    text-align: center;
+    // padding-top: 12px;
     background-color: #05070e;
     width: 100%;
     z-index: 10;
+    position: sticky;
+    top: 0;
 
     nav {
         color: aliceblue;
-        height: 30px;
+        height: 40px;
         background-color: #05070e;
         .nav-items {
             height: 100%;
@@ -76,9 +79,11 @@
         background-color: #05070e;
         .menu-item-1 {
             display: block;
-            height: 25px;    
+            height: 35px;
+            padding-top: 10px;
             padding-left: 20px;
             padding-right: 20px;
+            // line-height: 25px;
             color: aliceblue;
             cursor: pointer;
             &:hover {
@@ -181,8 +186,10 @@
 }
 
 .popup-user-wrapper {
+    position: absolute;
+    z-index: 11;
     display: block;
-    width: 100%;
+    width: 150px;
     height: 200px;
     margin-top: 10px;
     padding-top: 20px;
@@ -236,7 +243,7 @@
         font-size: 0.8rem;
 
         nav {
-            // height: 2rem;
+            height: 2rem;
             margin: 0;
             .nav-items {
                 display: flex;
@@ -254,6 +261,7 @@
                 display: none;
             }
             .menu-item-1 {
+                padding-top: 0;
                 padding-left: 0.5rem;
                 padding-right: 0.5rem;
                 line-height: 2rem;

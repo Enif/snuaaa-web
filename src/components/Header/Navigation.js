@@ -19,18 +19,18 @@ class Navigation extends React.Component {
     }
 
     componentDidMount() {
-        document.addEventListener("scroll", (e) => {
-            if(e.target.scrollingElement.scrollTop > 300) {
-                this.setState({
-                    isFixed: true
-                })
-            }
-            else {
-                this.setState({
-                    isFixed: false
-                })
-            } 
-        })
+        // document.addEventListener("scroll", (e) => {
+        //     if(e.target.scrollingElement.scrollTop > 263) {
+        //         this.setState({
+        //             isFixed: true
+        //         })
+        //     }
+        //     else {
+        //         this.setState({
+        //             isFixed: false
+        //         })
+        //     } 
+        // })
     }
 
     setShowAbout = (isShow) => {
