@@ -2,6 +2,7 @@ import React from 'react';
 import * as service from '../../services';
 import PostBoard from '../postboard/PostBoard';
 import PhotoBoard from '../photoboard/PhotoBoard';
+import DocuBoard from '../docuboard/DocuBoard';
 import Loading from '../../components/Common/Loading';
 
 const TAG = 'BOARD'
@@ -79,6 +80,11 @@ class Board extends React.Component {
                         else if(this.boardInfo.board_type === 'P') {
                             return (
                                 <PhotoBoard boardInfo={this.boardInfo} board_id={this.state.board_id} categories={this.categories} />
+                            )
+                        }
+                        else if(this.boardInfo.board_type === 'D') {
+                            return (
+                                <DocuBoard boardInfo={this.boardInfo} board_id={this.state.board_id} categories={this.categories} />
                             )
                         }
                     }

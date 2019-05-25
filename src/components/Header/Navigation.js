@@ -133,7 +133,7 @@ class Navigation extends React.Component {
                                 <div className={subOfficialClass}>
                                     <ul>
                                         <Link to='/board/brd05'><li>아고라</li></Link>
-                                        <Link to='/document'><li>문서보관소</li></Link>
+                                        <Link to='/board/brd09'><li>문서보관소</li></Link>
                                     </ul>
                                 </div>
                             }

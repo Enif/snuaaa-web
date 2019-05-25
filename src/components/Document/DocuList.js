@@ -1,57 +1,61 @@
 import React from 'react';
-import { downloadDocument } from '../../services';
+import { Link } from 'react-router-dom';
+// import { downloadDocument } from '../../services';
 import Download from './Download'
-import { ReactComponent as Logo} from '../../assets/img/outline-attachment-24px.svg'
 
-const TAG = 'DOCULIST'
+const DocuList = ({documents}) => {
 
-class DocuList extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
-
-
-    retrieveDocuments = () => {
-        let documents = this.props.documents;
+    const makeDocuList = () => {
         let docuList = documents.map(document => {
             return (
                 <div className="doculist-body" key={document.object_id}>
                     <div className="docu-generation">{document.generation}</div>
-                    <div className="docu-category">기타문서</div>
-                    <div className="docu-memo">{document.title}</div>
-                    <div className="docu-download">{this.retrieveFileList(document)}</div>
-                    <div className="docu-comments">2</div>
+                    <div className="docu-category">{document.category_name}</div>
+                    <div className="docu-memo">
+                        <Link to={`/document/${document.object_id}`}>{document.title}</Link>
+                    </div>
+                    <div className="docu-download">{makeFileList(document)}</div>
+                    <div className="docu-comments">
+                        <div className="post-comment-num">
+                            <span className="color-pink">
+                                <i className="material-icons md-18">favorite</i>
+                                {document.like_num}
+                            </span>
+                            <span className="color-gray1">
+                                <i className="material-icons md-18 md-dark">comment</i>
+                                {document.comment_num}
+                            </span>                        
+                        </div>
+                    </div>
                 </div>
             )
         })
         return docuList
     }
-    
-    retrieveFileList = (document) => {
+
+    const makeFileList = (document) => {
         let fileList = []
         for(let i = 0; i < document.file_path.length; i++) {
-            fileList.push(<Download object_id={document.object_id} index={i}><Logo /></Download>)
+            fileList.push(
+            <Download object_id={document.object_id} index={i} key={document.object_id + '_' + i}>
+                <i className="material-icons">insert_drive_file</i>
+            </Download>)
         }
         return fileList;
     }
 
-
-    render() {
-        console.log('[%s] render', TAG)
-        return (
-                <div className="doculist-wrapper">
-                    <div className="doculist-head">
-                        <div className="docu-generation">회기</div>
-                        <div className="docu-category">항목</div>
-                        <div className="docu-memo">메모</div>
-                        <div className="docu-download">다운로드</div>
-                        <div className="docu-comments">댓글</div>
-                    </div>
-                    {this.retrieveDocuments()}
-                </div>
-            ) 
-    }
+    return (
+        <div className="doculist-wrapper">
+            <div className="doculist-head">
+                <div className="docu-generation">회기</div>
+                <div className="docu-category">항목</div>
+                <div className="docu-memo">제목</div>
+                <div className="docu-download">다운로드</div>
+                <div className="docu-comments">댓글</div>
+            </div>
+            {makeDocuList()}
+        </div>
+    )
 }
 
 export default DocuList;

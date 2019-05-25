@@ -37,6 +37,15 @@
         line-height: 200%;
         border-top: none;
     }
+    .file-download-wrapper {
+        .file-download-list {
+            a {
+                display: inline-flex;
+                align-items: center;
+                color: $color_gray1;
+            }
+        }
+    }
 }
 
 
