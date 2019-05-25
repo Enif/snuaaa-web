@@ -87,8 +87,8 @@ class PostBoard extends React.Component {
     render() {
         console.log(`[${TAG}] render.. `)
 
-        let { board_id, boardInfo } = this.props;
-        let { isReady, popUpState, pageIdx } = this.state;
+        const { board_id, boardInfo } = this.props;
+        const { isReady, popUpState, pageIdx } = this.state;
 
         return (
             <div className="section-contents">

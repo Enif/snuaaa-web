@@ -8,9 +8,11 @@
 @import './pages/userinfo';
 @import './pages/photo';
 @import './pages/post';
+@import './pages/home';
 
 
 .section-wrapper {
+    display: flex;
     flex-grow: 1;
     background-color: #f0f0f0;
 }
@@ -18,19 +20,15 @@
 section {
     position: relative;
     width: 1000px;
-    height: 100%;
     padding-left: 150px;
     padding-right: 150px;
     padding-bottom: 50px;
     margin: 0 auto;
-    // display: inline-block;
     background-color: #ffffff;
     font-size: 13px; 
     // padding: 30px;
-    min-height: 400px;
     h2 {
         font-size: 2rem;
-        // font-family: 'Jua', sans-serif;
         margin-top: 1rem;
         margin-bottom: 1rem;
     }
@@ -102,52 +100,6 @@ section {
      line-height: 1.5;
  }
  
- #soundbox-wrapper {
-     width: 700px;
- }
- 
- #soundbox-title {
-     width: 160px;
-     position: relative;
-     z-index: 10;
-     background-color: #e5c8cc;
-     color: white;
-     font-size: 2em;
-     text-align: center;
-     margin: 0 auto;
-     padding-top: 10px;
-     padding-bottom: 10px;
- }
- 
- #soundbox-contents-wrapper {
-     width: 700px;
-     margin-top: -30px;
-     position: relative;
-     z-index: 0;
-     padding-top: 30px;
-     /* padding-left: 60px;
-     padding-right: 60px; */
-     padding-bottom: 30px;
-     color: #08253e;
-     font-weight: 60;
-     background-color: #fffced;
-     h5 {
-        font-weight: bold;
-        font-size: 20px;
-    }
-}
- 
- 
-#soundbox-content{
-    margin: 20px;
-}
- 
- #soundbox-img {
-     width: 700px;
-     height: 120px;
-     background-image: url('./assets/img/soundbox.png');
-     background-size: cover;
- }
 
 
  @media screen and (max-width: 800px) {

@@ -6,6 +6,6 @@ export { default as Post } from './Post';
 // export { default as PhotoBoard } from './PhotoBoard';
 export { default as Album } from './Album';
 export { default as Photo } from './Photo';
-export { default as Document } from './Document';
+export { default as Docu } from './Document';
 export { default as LogIn } from './LogIn';
 export { default as MyPage } from './MyPage';

@@ -19,18 +19,18 @@ class Navigation extends React.Component {
     }
 
     componentDidMount() {
-        document.addEventListener("scroll", (e) => {
-            if(e.target.scrollingElement.scrollTop > 300) {
-                this.setState({
-                    isFixed: true
-                })
-            }
-            else {
-                this.setState({
-                    isFixed: false
-                })
-            } 
-        })
+        // document.addEventListener("scroll", (e) => {
+        //     if(e.target.scrollingElement.scrollTop > 263) {
+        //         this.setState({
+        //             isFixed: true
+        //         })
+        //     }
+        //     else {
+        //         this.setState({
+        //             isFixed: false
+        //         })
+        //     } 
+        // })
     }
 
     setShowAbout = (isShow) => {
@@ -133,7 +133,7 @@ class Navigation extends React.Component {
                                 <div className={subOfficialClass}>
                                     <ul>
                                         <Link to='/board/brd05'><li>아고라</li></Link>
-                                        <Link to='/document'><li>문서보관소</li></Link>
+                                        <Link to='/board/brd09'><li>문서보관소</li></Link>
                                     </ul>
                                 </div>
                             }

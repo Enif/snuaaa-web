@@ -1,53 +1,20 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import { retrieveSoundBox } from '../../services'
+import { breakLine } from '../../utils/breakLine';
 
-const TAG = 'SOUNDBOX';
+const SoundBox = ({title, contents}) => {
 
-class SoundBox extends React.Component {
-
-    constructor(props) {
-
-        super(props);
-        this.state = {
-            title: '',
-            contents: ''
-        }
-
-        this.retrieveSoundBox();
-    }
-
-    retrieveSoundBox = async () => {
-        console.log('[%s] Retrieve Soundbox', TAG);
-        await retrieveSoundBox()
-        .then((res) => {
-            console.log(res.data)
-            this.setState({
-                title: res.data.title,
-                contents: res.data.contents
-            })
-        })
-        .catch((res) => {
-            console.log('[%s] Retrieve Soundbox Fail', TAG);
-        })
-    }
-
-    render() {
-        return(
-            <div id="soundbox-wrapper" className="content">
-                <Link to ='/board/brd01'><div id="soundbox-title">NOTICE</div></Link>
-                <div id="soundbox-contents-wrapper">
-                    <div id="soundbox-content" className="content">    
-                        <h5>{this.state.title}</h5>
-                        <p>{this.state.contents.split('\n').map(line => {
-                            return (<span>{line} <br/></span>)
-                        })}</p>
-                    </div>
+    return(
+        <div className="soundbox-wrapper">
+            <Link to ='/board/brd01'><div className="soundbox-title">NOTICE</div></Link>
+            <div className="soundbox-contents-wrapper">
+                <div className="soundbox-contents">
+                    <h5>{title}</h5>
+                    <p>{breakLine(contents)}</p>
                 </div>
-                <div id="soundbox-img"></div>
             </div>
-        )
-    }
+        </div>
+    )
 }
 
 export default SoundBox;

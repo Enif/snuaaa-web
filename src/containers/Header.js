@@ -40,32 +40,34 @@ class Header extends React.Component {
         let { isShowPopupUser } = this.state;
         console.log(this.props)
         return (
-            <div className="main-header-wrapper">
-                <div className="main-header">
-                    <Link to="/">
-                        <div className="header-logo">
-                            <img src={logo} /><p>서울대학교 아마추어 천문회</p>
-                        </div>    
-                    </Link>
-                    {
-                        !loginState ?
-                        (<p>
-                            <Link to="/signup"> SIGN UP </Link>
-                            /
-                            <Link to="/login"> LOG IN </Link>
-                        </p>)
-                        :
-                        (<div className="profile-img-wrapper">
-                            <Image onClick={this.togglePopup} imgSrc={profile_path} defaultImgSrc={imgProfile} />
-                            {/* <img onClick={this.togglePopup} src={imgProfile}/> */}
-                            {
-                                isShowPopupUser && <PopupUser togglePopup={this.togglePopup} logout={this.props.onLogout}/>
-                            }
-                        </div>)
-                    }
+            <>
+                <div className="main-header-wrapper">
+                    <div className="main-header">
+                        <Link to="/">
+                            <div className="header-logo">
+                                <img src={logo} alt="logo" /><p>서울대학교 아마추어 천문회</p>
+                            </div>    
+                        </Link>
+                        {
+                            !loginState ?
+                            (<p>
+                                <Link to="/signup"> SIGN UP </Link>
+                                /
+                                <Link to="/login"> LOG IN </Link>
+                            </p>)
+                            :
+                            (<div className="profile-img-wrapper">
+                                <Image onClick={this.togglePopup} imgSrc={profile_path} defaultImgSrc={imgProfile} />
+                                {/* <img onClick={this.togglePopup} src={imgProfile}/> */}
+                                {
+                                    isShowPopupUser && <PopupUser togglePopup={this.togglePopup} logout={this.props.onLogout}/>
+                                }
+                            </div>)
+                        }
+                    </div>
                 </div>
                 <Navigation />
-            </div>
+            </>
         );
     }
 }

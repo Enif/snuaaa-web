@@ -11,11 +11,11 @@ class DocuMenu extends React.Component {
     }
  
     createGeneration = () => {
-        let currentGen = 2 * ((new Date).getFullYear() - 1980)
-        if((new Date).getMonth() > 5) currentGen++;
+        let currentGen = 2 * ((new Date()).getFullYear() - 1980)
+        if((new Date()).getMonth() > 5) currentGen++;
         let genList = [];
         for(let i = currentGen; i > 0; i--){
-            genList.push(<li onClick={() => this.props.retrieveDocumentsByGeneration(i)}>{i}대</li>)
+            genList.push(<li key={i} onClick={() => this.props.retrieveDocumentsByGeneration(i)}>{i}대</li>)
         }
         return genList
     }

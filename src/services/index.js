@@ -148,6 +148,10 @@ export function deletePhoto(photo_id) {
     return axios.delete(SERVER_URL + `api/photo/${photo_id}`)
 }
 
+export function retrieveDocument(doc_id) {
+    return axios.get(SERVER_URL + `api/document/${doc_id}`)
+}
+
 export function retrieveDocuments() {
     return axios.get(SERVER_URL + `api/document`)
 }
@@ -156,15 +160,34 @@ export function retrieveDocumentsByGeneration(generation) {
     return axios.get(SERVER_URL + `api/document/generation/${generation}`)
 }
 
-export function createDocument(data) {
-    return axios.post(SERVER_URL + `api/document`, data)
+export function createDocument(board_id, data) {
+    return axios.post(SERVER_URL + `api/board/${board_id}/document`, data)
 }
 
-export function downloadDocument(docuId, index) {
-    return axios.get(SERVER_URL + `api/document/${docuId}/download/${index}`)
+export function downloadDocument(doc_id, index) {
+    return axios.get(SERVER_URL + `api/document/${doc_id}/download/${index}`)
+}
+
+export function deleteDocument(doc_id) {
+    return axios.delete(SERVER_URL + `api/document/${doc_id}`)
 }
 
 export function retrieveSoundBox() {
-    return axios.get(SERVER_URL + `api/soundbox`);
+    return axios.get(SERVER_URL + `api/home/soundbox`);
 }
 
+export function retrieveRecentPosts() {
+    return axios.get(SERVER_URL + `api/home/posts`);
+}
+
+export function retrieveRecentComments() {
+    return axios.get(SERVER_URL + `api/home/comments`);
+}
+
+export function retrieveRecentMemory() {
+    return axios.get(SERVER_URL + `api/home/memory`);
+}
+
+export function retrieveRecentAstroPhoto() {
+    return axios.get(SERVER_URL + `api/home/astrophoto`);
+}
