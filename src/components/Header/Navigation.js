@@ -91,22 +91,22 @@ class Navigation extends React.Component {
                             </NavLink>
                         </li>
                         <li className="menu-nav" onClick={() => this.setShowAbout(true)} onMouseEnter={() => this.setShowAbout(true)} onMouseLeave={() => this.setShowAbout(false)}>
-                            <div className="menu-item-1"><span>동아리</span> 소개</div>
+                            <div className="menu-item-1"><span></span>AAA소개</div>
                             {
                                 <div className={subAboutClass}>
                                     <ul>
-                                        <Link to='/about/aboutAAA'><li>AAA는 ?</li></Link>
-                                        <Link to='/about/contact'><li>찾아오는길 &amp; 연락처</li></Link>
+                                        <Link to='/about/aboutAAA'><li>AAA는?</li></Link>
+                                        <Link to='/about/contact'><li>찾아오는길&amp;연락처</li></Link>
                                         <Link to='/about/equipment'><li>장비소개</li></Link>
-                                        <Link to='/about/observation'><li>김태영 기념 관측소 소개</li></Link>
+                                        <Link to='/about/observation'><li>김태영<span> 기념</span> 관측소<span> 소개</span></li></Link>
                                         <Link to='/about/history'><li>동아리 발자취</li></Link>
-                                        <Link to='/about/officers'><li>역대 회장단 / 임원진</li></Link>
+                                        <Link to='/about/officers'><li><span>역대 </span>회장단/임원진</li></Link>
                                     </ul>
                                 </div>
                             }
                         </li>
                         <li className="menu-nav" onClick={() => this.setShowNotice(true)} onMouseEnter={() => this.setShowNotice(true)} onMouseLeave={() => this.setShowNotice(false)}>
-                            <div className="menu-item-1"><span>별들의</span> 알림</div>
+                            <div className="menu-item-1"><span></span>AAA알림</div>
                             {
                                 <div className={subNoticeClass}>
                                     <ul>
@@ -117,7 +117,7 @@ class Navigation extends React.Component {
                             }
                         </li>
                         <li className="menu-nav" onClick={() => this.setShowBoard(true)} onMouseEnter={() => this.setShowBoard(true)} onMouseLeave={() => this.setShowBoard(false)}>
-                            <div className="menu-item-1"><span>별들의</span> 이야기</div>
+                            <div className="menu-item-1"><span></span>AAA일상</div>
                             {
                                 <div className={subBoardClass}>
                                     <ul>
@@ -128,7 +128,7 @@ class Navigation extends React.Component {
                             }
                         </li>
                         <li className="menu-nav" onClick={() => this.setShowOfficial(true)} onMouseEnter={() => this.setShowOfficial(true)} onMouseLeave={() => this.setShowOfficial(false)}>
-                            <div className="menu-item-1"><span>별들의</span> 회담</div>
+                            <div className="menu-item-1"><span></span>AAA기록</div>
                             {
                                 <div className={subOfficialClass}>
                                     <ul>
@@ -139,7 +139,7 @@ class Navigation extends React.Component {
                             }
                         </li>
                         <li className="menu-nav" onClick={() => this.setShowPhotoBoard(true)} onMouseEnter={() => this.setShowPhotoBoard(true)} onMouseLeave={() => this.setShowPhotoBoard(false)}>
-                            <div className="menu-item-1"><span>별들의</span> 순간</div>
+                            <div className="menu-item-1"><span></span>AAA사진</div>
                             {
                                 <div className={subPhotoBoardClass}>
                                     <ul>

@@ -16,7 +16,7 @@ function ProfileMini({profileImg, nickname, userDesc}) {
             </div>
             <div className="nickname">{nickname}</div>
             <div className={descClass}>{breakLine(userDesc)}</div>
-            <div>
+            <div className="icon-expand">
                 <i className="material-icons pointer" onClick={() => setIsExpand(!isExpand)}>{icon}</i>
             </div>
         </div>

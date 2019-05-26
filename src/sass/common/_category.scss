@@ -1,13 +1,14 @@
 .category-wrapper {
     display: flex;
+    margin: 5px 0px 0px 10px;
     .category-obj {
         display: flex;
         // border: 1px solid;
         color: #222222;
-        border-radius: 13px;
-        padding: 8px 25px 8px 25px;
-        margin: 10px;
-        font-size: 15px;
+        border-radius: 12px;
+        padding: 10px 30px;
+        margin: 5px;
+        font-size: 17px;
         cursor: pointer;
     }
 

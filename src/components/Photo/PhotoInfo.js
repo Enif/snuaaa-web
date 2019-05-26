@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Image from '../Common/Image';
 import ProfileMini from '../Common/ProfileMini';
 import ContentsStateEnum from '../../common/ContentStateEnum';
+import { breakLine } from '../../utils/breakLine';
 import { convertDate, convertFullDate } from '../../utils/convertDate'
 
 const PhotoInfo = ({photoInfo, albumInfo, tagInfo, likeInfo, my_id, setPhotoState, deletePhoto, likePhoto}) => {
@@ -40,37 +41,12 @@ const PhotoInfo = ({photoInfo, albumInfo, tagInfo, likeInfo, my_id, setPhotoStat
 
                 <div className="info-wrapper">
                     <h4>{photoInfo.title}</h4>
-                    <p>{convertFullDate(photoInfo.created_at)}</p>
                     <div className="info-tags">{makeTagList()}</div>
+                    <p className="info-date">{convertFullDate(photoInfo.created_at)}</p>
 
-                    <div className="actions-wrapper">
-                        {
-                            (my_id === photoInfo.author_id) &&
-                            <div className="edit-delete-wrapper">
-                                <div className="edit-wrapper">
-                                    <i className="material-icons pointer" onClick={() => setPhotoState(ContentsStateEnum.EDITTING)}>edit</i>
-                                </div>
-                                <div className="delete-wrapper">
-                                    <i className="material-icons pointer" onClick={deletePhoto}>delete</i>
-                                </div>
-                            </div>
-                        }
-                        <div className="like-comment-num-wrapper">
-                            <div className="like-num-wrapper">
-                                <i className="material-icons pointer" onClick={() => likePhoto()}>
-                                    {likeInfo ? 'favorite' : 'favorite_border'}
-                                </i>
-                                {photoInfo.like_num}
-                            </div>
-                            <div className="comment-num-wrapper">
-                                <i className="material-icons">comment</i>
-                                {photoInfo.comment_num}
-                            </div>
-                        </div>
-                    </div>
 
                     <div className="enif-divider"></div>
-                    <p>{photoInfo.contents}</p>
+                    <p>{breakLine(photoInfo.contents)}</p>
                     <div className="enif-divider"></div>
 
                     <table>
@@ -115,7 +91,34 @@ const PhotoInfo = ({photoInfo, albumInfo, tagInfo, likeInfo, my_id, setPhotoStat
                         </tr>)}
                     </table>
                 </div>
+                <div className="enif-divider"></div>
                 <ProfileMini profileImg={photoInfo.profile_path} nickname={photoInfo.nickname} userDesc={photoInfo.introduction}/>
+                <div className="enif-divider"></div>
+                <div className="actions-wrapper">
+                    {
+                        (my_id === photoInfo.author_id) &&
+                        <div className="edit-delete-wrapper">
+                            <div className="edit-wrapper">
+                                <i className="material-icons pointer" onClick={() => setPhotoState(ContentsStateEnum.EDITTING)}>edit</i>
+                            </div>
+                            <div className="delete-wrapper">
+                                <i className="material-icons pointer" onClick={deletePhoto}>delete</i>
+                            </div>
+                        </div>
+                    }
+                    <div className="like-comment-num-wrapper">
+                        <div className="like-num-wrapper">
+                            <i className="material-icons pointer" onClick={() => likePhoto()}>
+                                {likeInfo ? 'favorite' : 'favorite_border'}
+                            </i>
+                            {photoInfo.like_num}
+                        </div>
+                        <div className="comment-num-wrapper">
+                            <i className="material-icons">comment</i>
+                            {photoInfo.comment_num}
+                        </div>
+                    </div>
+                </div>
             </div>
         </>
     )

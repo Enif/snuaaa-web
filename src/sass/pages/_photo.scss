@@ -50,7 +50,9 @@
         padding-top: 10px;
         padding-bottom: 8px;
         a {
-            float: left;
+            position: absolute;
+            // left: 0;
+            margin-top: -3px;
             margin-left: 5px;
             color: #FFFFFF;
         }
@@ -79,28 +81,35 @@
 
             .info-tags {
                 display: flex;
+                flex-wrap: wrap;
                 .tag-unit {
                     border: 1px solid #e25d7f;
                     color: #eeeeee;
                     background-color: #e25d7f;
-                    margin: 5px;
-                    padding: 8px;
-                    border-radius: 7px;
-                    font-size: 14px;
+                    margin: 2px;
+                    padding: 6px 9px;
+                    border-radius: 10px;
+                    font-size: 13px;
                     user-select: none;
                 }
             }
+            .info-date {
+                padding: 7px 0px 0px 5px;
+                font-size: 13px;
+                color: #3E3E3E;
+            }
 
             h4 {
-                margin-top: 20px;
                 margin-bottom: 20px;
-                font-size: 25px;
-                font-weight: bold;
+                font-family: 'S-CoreDream-5Medium';
+                font-size: 23px;
             }
             p {
                 font-size: 15px;
+                line-height: 20px;
             }
             table {
+                margin: 10px 0px;
                 font-size: 15px;
                 tr {
                     margin: 10px 0px 10px 0px;
@@ -305,9 +314,7 @@
         }
 
         .photo-contents-wrapper {
-            margin: 1rem;
-            border-top: 1px solid #dddddd;
-            border-bottom: 1px solid #d3d3d3;
+            margin: 0.5rem;
             padding: 10px;
             display: block;
             .user-wrapper {

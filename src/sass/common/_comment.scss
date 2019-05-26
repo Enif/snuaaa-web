@@ -1,16 +1,15 @@
 /****** COMMENT *******/
 
 .comment-area-wrapper {
-    margin: 10px 0px 10px 0px;
-    padding: 20px;
-    border-radius: 20px;
+    margin: 5px 7px;
+    padding: 10px 15px 15px 15px;
+    border-radius: 30px;
     background-color: #f4f4f4;
-    
 
     .comment-list-wrapper {
         .comment-wrapper {
             display: flex;
-            margin-top: 10px;
+            margin-top: 5px;
             .profile {
                 flex-shrink: 0;
                 img {
@@ -23,6 +22,7 @@
                 // width: 480px;
                 flex-grow: 1;
                 position: relative;
+                padding-left: 5px;
                 h5 {
                     font-size: 15px;
                     font-weight: bold;
@@ -62,8 +62,6 @@
                 .delete-wrapper {
                     display: inline-block;
                 }
-        
-                
             }
         }
     }
@@ -71,12 +69,15 @@
     .comment-write {
         height: 40px;
         position: relative;
+        margin-top: 15px;
         // display: flex;
         textarea {
             height: 100%;
-            width: 85%;
+            width: 95%;
             resize: none;
+            padding: 5px 30px 0px 5px;         
             border: #b4b4b4;
+            border-radius: 15px;
             padding-right: 25px;
         }
         button {
@@ -88,7 +89,7 @@
             font-family: 'NIXGONM-Vb', 'Nanum Gothic', Arial, Tahoma, Verdana, sans-serif;
             color: $color_white;
             border: none;
-            border-radius: 10px;
+            border-radius: 15px;
             background: #fad55f;
             &:active {
                 background: #6d869c;

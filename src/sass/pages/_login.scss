@@ -150,9 +150,10 @@
     .login-wrapper {
         background-image: url("./assets/img/login_background_m.jpg");
         .logo-wrapper {
+            margin-bottom: -1rem;
             img {
-                height: 10rem;
-                width: 10rem;
+                height: 16rem;
+                width: 16rem;
             }
         }
         .inputs-wrapper {
