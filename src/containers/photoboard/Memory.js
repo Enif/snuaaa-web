@@ -101,7 +101,7 @@ class Memory extends React.Component {
         return (
             <>
                 <div className="photoboard-wrapper">
-                    <h2>{boardInfo.board_name}</h2>
+                    <h2 className="memory-title">{boardInfo.board_name}</h2>
                     <Category categories={categories} selected={selectedCategory} clickAll={this.clickAll} clickCategory={this.clickCategory} />
                         {(() => {
                             if (isReady) {

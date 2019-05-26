@@ -17,16 +17,18 @@
         background-position: center;
         .header-logo {
             float: left;
-            margin: 15px;
+            margin: 14px 10px 15px 30px;
             color: white;
             vertical-align: middle;
-            height: 50px;
+            height: 40px;
             display: flex;
             img {
                 height: 100%;
             }
             p {
-                line-height: 50px;
+                margin-left: 10px;
+                line-height: 40px;
+                font-size: 17px;
             }
         }
         .profile-img-wrapper {
@@ -54,7 +56,7 @@
 }
 
 .main-menu-nav-wrapper {
-    height: 40px;
+    height: 42px;
     text-align: center;
     // padding-top: 12px;
     background-color: #05070e;
@@ -65,8 +67,8 @@
 
     nav {
         color: aliceblue;
-        height: 40px;
-        background-color: #05070e;
+        height: 42px;
+        background-color: #000E2C;
         .nav-items {
             height: 100%;
         }
@@ -76,13 +78,14 @@
         height: inherit;
         display: inline-block;        
         color: aliceblue;
-        background-color: #05070e;
+        background-color: #000E2C;
         .menu-item-1 {
             display: block;
             height: 35px;
-            padding-top: 10px;
-            padding-left: 20px;
-            padding-right: 20px;
+            padding-top: 13px;
+            padding-left: 10px;
+            padding-right: 10px;
+            margin: 0px 10px 0px 10px;
             // line-height: 25px;
             color: aliceblue;
             cursor: pointer;
@@ -215,15 +218,20 @@
 
         .main-header {
             width: 100%;
-            height: 3.2rem;
+            height: auto;
             margin: 0 auto;
             background-color: #05070e;
             background-image: none;
             .header-logo {
                 margin: 0;
                 img {
+                    padding: 0.25rem;
                     width: 3rem;
                     height: 3rem;
+                }
+                p {
+                    margin-left: 0;
+                    line-height: 3rem;
                 }
             }
             .profile-img-wrapper {
@@ -250,6 +258,7 @@
                 background-color: #7092c4;
                 width: 100%;
                 position: absolute;
+                justify-content: space-around;
             }
         }
         
@@ -264,6 +273,7 @@
                 padding-top: 0;
                 padding-left: 0.5rem;
                 padding-right: 0.5rem;
+                margin: 0px 0px 0px 0px;
                 line-height: 2rem;
 
                 &:hover {
@@ -294,7 +304,7 @@
                     li {
                         height: 100%;
                         color: #05070e;
-                        padding-top: 0.5rem;
+                        padding: 0.7rem 0.5rem;
                         &:hover {
                             background-color: #ffdea6;
                         }
