@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { convertDate } from '../../utils/convertDate'
+import { convertDate } from 'utils/convertDate'
 
 const MyPostList = ({posts}) => {
 

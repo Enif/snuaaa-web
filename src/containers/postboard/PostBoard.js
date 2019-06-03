@@ -1,9 +1,9 @@
 import React from 'react';
-import * as service from '../../services'
-import Loading from '../../components/Common/Loading';
-import PostList from '../../components/Board/PostList';
-import CreatePost from '../../components/Board/CreatePost';
-import Paginator from '../../components/Common/Paginator';
+import * as service from 'services'
+import Loading from 'components/Common/Loading';
+import PostList from 'components/Board/PostList';
+import Paginator from 'components/Common/Paginator';
+import CreatePost from 'containers/PostBoard/CreatePost';
 
 const TAG = 'POSTBOARD'
 const POSTROWNUM = 10;
@@ -14,7 +14,7 @@ class PostBoard extends React.Component {
         console.log(`[${TAG}] Constructor`)
 
         super(props);
-        
+
         this.posts = [];
         this.postCount = 0;
 
@@ -52,7 +52,7 @@ class PostBoard extends React.Component {
         this.setState({
             pageIdx: idx
         },
-        this.retrievePosts
+            this.retrievePosts
         )
     }
 
@@ -61,20 +61,20 @@ class PostBoard extends React.Component {
 
         this.setIsReady(false);
         await service.retrievePostsInBoard(this.props.board_id, this.state.pageIdx)
-        .then((res) => {
-            console.log('[%s] Retrieve Posts Success', TAG);
-            this.posts = res.data.postInfo;
-            this.postCount = res.data.postCount.count;
-            this.setIsReady(true);
-        })
-        .catch((err) => {
-            console.error(err);
-        })
+            .then((res) => {
+                console.log('[%s] Retrieve Posts Success', TAG);
+                this.posts = res.data.postInfo;
+                this.postCount = res.data.postCount.count;
+                this.setIsReady(true);
+            })
+            .catch((err) => {
+                console.error(err);
+            })
     }
 
     retrieveCategories = () => {
         // console.log(this.props.ca)
-        if(this.props.categories.length > 0) {
+        if (this.props.categories.length > 0) {
             return (
                 <select>
                     {this.props.categories.map((cate) => (<option>{cate.category_name}</option>))}
@@ -82,7 +82,7 @@ class PostBoard extends React.Component {
             )
         }
     }
-  
+
 
     render() {
         console.log(`[${TAG}] render.. `)
@@ -94,27 +94,27 @@ class PostBoard extends React.Component {
             <div className="section-contents">
                 {
                     isReady ?
-                    (
-                        <div className="board-wrapper">
-                        <h2>{boardInfo.board_name}</h2>
-                        {
-                            popUpState ?
-                            <CreatePost board_id={board_id} togglePopUp={this.togglePopUp} retrievePosts={this.retrievePosts}/>
-                            :
-                            (
-                                <>
-                                    {this.postCount > 0 && <Paginator pageIdx={pageIdx} pageNum={Math.ceil(this.postCount / POSTROWNUM)} clickPage={this.clickPage} />}
-                                    {this.retrieveCategories()}
-                                    <PostList posts={this.posts} togglePopUp={this.togglePopUp} />
-                                </>
-                            )
-                        }
-                        </div>
-                    )
-                    :
-                    (
-                        <Loading />
-                    )
+                        (
+                            <div className="board-wrapper">
+                                <h2>{boardInfo.board_name}</h2>
+                                {
+                                    popUpState ?
+                                        <CreatePost board_id={board_id} togglePopUp={this.togglePopUp} retrievePosts={this.retrievePosts} />
+                                        :
+                                        (
+                                            <>
+                                                {this.postCount > 0 && <Paginator pageIdx={pageIdx} pageNum={Math.ceil(this.postCount / POSTROWNUM)} clickPage={this.clickPage} />}
+                                                {this.retrieveCategories()}
+                                                <PostList posts={this.posts} togglePopUp={this.togglePopUp} />
+                                            </>
+                                        )
+                                }
+                            </div>
+                        )
+                        :
+                        (
+                            <Loading />
+                        )
                 }
             </div>
         );

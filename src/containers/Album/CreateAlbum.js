@@ -1,5 +1,5 @@
 import React from 'react';
-import * as service from '../../services';
+import * as service from 'services';
 
 const TAG = 'CREATEALBUM'
 

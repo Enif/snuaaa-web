@@ -1,6 +1,6 @@
 import React from 'react';
 
-const InputText = ({inputType, name, className, handleChange, value, placeholder, pattern, isRequired }) => {
+const InputText = ({ inputType, name, className, handleChange, value, placeholder, pattern, isRequired }) => {
     return (
         <input
             type={inputType}

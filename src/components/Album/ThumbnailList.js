@@ -12,7 +12,7 @@ class ThumbnailList extends React.Component {
     shouldComponentUpdate(nextProps, nextState) {
         console.log(this.props)
         console.log(nextProps)
-        if(this.props.imgIdx === nextProps.imgIdx && this.props.uploadPhotos.length === nextProps.uploadPhotos.length) {
+        if (this.props.imgIdx === nextProps.imgIdx && this.props.uploadPhotos.length === nextProps.uploadPhotos.length) {
             console.log('false')
             return false
         }
@@ -29,7 +29,7 @@ class ThumbnailList extends React.Component {
         const thumbnailList = uploadPhotos.map((file, index) => {
             let imgSrc = URL.createObjectURL(file)
             let imgClass = index === imgIdx ? "photo-thumbnail selected" : "photo-thumbnail default";
-            return(<img key={index} className={imgClass} src={imgSrc} onClick={() => this.props.setImgIdx(index)} />)
+            return (<img key={index} className={imgClass} src={imgSrc} alt="thumbnail" onClick={() => this.props.setImgIdx(index)} />)
         })
         return thumbnailList
     }

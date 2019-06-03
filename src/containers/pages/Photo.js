@@ -1,12 +1,12 @@
 import React from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
-import * as service from '../../services'
-import Loading from '../../components/Common/Loading';
-import ContentStateEnum from '../../common/ContentStateEnum';
-import PhotoInfo from '../../components/Photo/PhotoInfo';
-import EditPhoto from '../photo/EditPhoto';
-import Comment from '../Comment';
+import * as service from 'services'
+import Loading from 'components/Common/Loading';
+import ContentStateEnum from 'common/ContentStateEnum';
+import PhotoInfo from 'components/Photo/PhotoInfo';
+import EditPhoto from 'containers/Photo/EditPhoto';
+import Comment from 'containers/Comment';
 
 const TAG = 'PHOTO'
 

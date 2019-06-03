@@ -1,11 +1,11 @@
 import React from 'react';
-import * as service from '../../services';
-import Loading from '../../components/Common/Loading';
-import SelectBox from '../../components/Common/SelectBox';
-import DocuMenu from '../../components/Document/DocuMenu';
-import DocuList from '../../components/Document/DocuList';
-import CreateDocu from '../../components/Document/CreateDocu';
-import Category from '../../components/Common/Category';
+import * as service from 'services';
+import Loading from 'components/Common/Loading';
+import SelectBox from 'components/Common/SelectBox';
+import DocuMenu from 'components/Document/DocuMenu';
+import DocuList from 'components/Document/DocuList';
+import CreateDocu from 'containers/DocuBoard/CreateDocu';
+import Category from 'components/Common/Category';
 
 const TAG = 'DOCUMENT'
 

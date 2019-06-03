@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
-function Tag({clickAll, clickTag, tags, selectedTags}) {
+function Tag({ clickAll, clickTag, tags, selectedTags }) {
 
     const [selectedAll, setSelectedAll] = useState(false);
 
     useEffect(() => {
-        if(selectedTags.length === 0) {
+        if (selectedTags.length === 0) {
             setSelectedAll(true);
         }
         else {
@@ -18,7 +18,7 @@ function Tag({clickAll, clickTag, tags, selectedTags}) {
             return (
                 <div className="tag-unit">
                     <input type="checkbox" id={tag.tag_id} checked={selectedTags.includes(tag.tag_id)}
-                    onChange={(e) => clickTag(e)} />
+                        onChange={(e) => clickTag(e)} />
                     <label htmlFor={tag.tag_id}>#{tag.tag_name}</label>
                 </div>
             )
@@ -30,7 +30,7 @@ function Tag({clickAll, clickTag, tags, selectedTags}) {
         <div className="tag-wrapper">
             <div className="tag-unit tag-all">
                 <input type="checkbox" id="all" checked={selectedAll}
-                onChange={() => clickAll()} />
+                    onChange={() => clickAll()} />
                 <label htmlFor="all">ALL</label>
             </div>
             {makeTagList(tags)}

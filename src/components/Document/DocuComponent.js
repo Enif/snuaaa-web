@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import ContentStateEnum from '../../common/ContentStateEnum';
-import Comment from '../../containers/Comment';
+import ContentStateEnum from 'common/ContentStateEnum';
+import Comment from 'containers/Comment';
 import ProfileMini from '../Common/ProfileMini';
 import Download from './Download';
-import { convertFullDate } from '../../utils/convertDate';
-import { breakLine } from '../../utils/breakLine';
+import { convertFullDate } from 'utils/convertDate';
+import { breakLine } from 'utils/breakLine';
 
 const DocuComponent = ({docData, my_id, setDocState, deleteDoc, likeDoc, isLiked}) => {
 

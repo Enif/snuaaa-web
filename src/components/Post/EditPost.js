@@ -1,5 +1,5 @@
 import React from 'react';
-import ContentStateEnum from '../../common/ContentStateEnum';
+import ContentStateEnum from 'common/ContentStateEnum';
 
 function EditPost({editingPostData, handleEditting, setPostState, updatePost}) {
 

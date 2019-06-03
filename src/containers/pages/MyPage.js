@@ -1,7 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import EditInfo from '../mypage/EditInfo';
-import MyInfo from '../mypage/MyInfo';
+import EditInfo from 'containers/MyPage/EditInfo';
+import MyInfo from 'containers/MyPage/MyInfo';
 
 const TAG = 'MYPAGE'
 

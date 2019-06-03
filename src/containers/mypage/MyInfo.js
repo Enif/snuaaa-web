@@ -1,16 +1,17 @@
 import React from 'react';
-import * as service from '../../services';
-import Loading from '../../components/Common/Loading';
-import MyProfile from '../../components/MyPage/MyProfile';
-import MyPostList from '../../components/MyPage/MyPostList';
-import MyPhotoList from '../../components/MyPage/MyPhotoList';
-import MyCommentList from '../../components/MyPage/MyCommentList';
+import * as service from 'services';
+import Loading from 'components/Common/Loading';
+import MyProfile from 'components/MyPage/MyProfile';
+import MyPostList from 'components/MyPage/MyPostList';
+import MyPhotoList from 'components/MyPage/MyPhotoList';
+import MyCommentList from 'components/MyPage/MyCommentList';
 
 const TAG = 'MYPOST'
 
 class MyInfo extends React.Component {
 
     constructor(props) {
+        console.log(`[${TAG}] Constructor`)
         super(props);
 
         this.profile = null;

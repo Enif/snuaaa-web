@@ -1,10 +1,10 @@
 import React from 'react';
-import SoundBox from '../../components/Home/SoundBox';
-import * as service from '../../services';
-import Loading from '../../components/Common/Loading';
-import NewPosts from '../../components/Home/NewPosts';
-import NewComments from '../../components/Home/NewComments';
-import NewPhotos from '../../components/Home/NewPhotos';
+import SoundBox from 'components/Home/SoundBox';
+import * as service from 'services';
+import Loading from 'components/Common/Loading';
+import NewPosts from 'components/Home/NewPosts';
+import NewComments from 'components/Home/NewComments';
+import NewPhotos from 'components/Home/NewPhotos';
 
 const TAG = 'HOME'
 

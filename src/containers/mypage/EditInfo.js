@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { authLogout } from '../../actions';
-import * as service from '../../services';
-import Loading from '../../components/Common/Loading';
-import ProfileComponent from '../../components/MyPage/ProfileComponent';
+import { authLogout } from 'actions';
+import * as service from 'services';
+import Loading from 'components/Common/Loading';
+import ProfileComponent from 'components/MyPage/ProfileComponent';
 
 const TAG = 'PROFILE'
 

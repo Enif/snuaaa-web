@@ -11,7 +11,7 @@ const CreatePhotoInfo = ({ title, desc, date, location, camera, lens, focal_leng
             <div className="photo-infos">
                 <div className="photo-info">
                     <div className="label-wrapper"><label>Date</label></div>
-                    <DatePicker selected={date} onChange={handleDate} dateFormat="yyyy/MM/dd"/>
+                    <DatePicker selected={date} onChange={handleDate} dateFormat="yyyy/MM/dd" />
                     {/* <input className="enif-wid-half" type="date" name="date" onChange={(e) => handleChange(e)} value={date}></input> */}
                 </div>
                 <div className="photo-info">
@@ -28,22 +28,22 @@ const CreatePhotoInfo = ({ title, desc, date, location, camera, lens, focal_leng
                 </div>
                 <div className="photo-info">
                     <div className="label-wrapper"><label>@</label></div>
-                    <input className="enif-wid-half" type="number" name="focal_length" onChange={(e) => handleChange(e)} value={focal_length}></input>
+                    <input className="enif-wid-half" type="text" name="focal_length" onChange={(e) => handleChange(e)} value={focal_length}></input>
                 </div>
                 <div className="photo-info">
                     <div className="label-wrapper">Setting</div>
                     <div className="input-wrapper">
                         <div>
                             <label>F/</label>
-                            <input className="enif-wid-quater" type="number" name="f_stop" onChange={(e) => handleChange(e)} value={f_stop}></input>
+                            <input className="enif-wid-quater" type="text" name="f_stop" onChange={(e) => handleChange(e)} value={f_stop}></input>
                         </div>
                         <div>
                             <input className="enif-wid-quater" type="text" name="exposure_time" onChange={(e) => handleChange(e)} value={exposure_time}></input>
-                            <label></label>
+                            <label>s</label>
                         </div>
                         <div>
                             <label>ISO</label>
-                            <input className="enif-wid-quater" type="number" name="iso" onChange={(e) => handleChange(e)} value={iso}></input>
+                            <input className="enif-wid-quater" type="text" name="iso" onChange={(e) => handleChange(e)} value={iso}></input>
                         </div>
                     </div>
                 </div>

@@ -28,7 +28,7 @@ class Officers extends React.Component {
     }
 
     render() {
-        return(
+        return (
 
             <div className="intro-div-wrapper" id="officers">
                 <div id="intro-top"></div>

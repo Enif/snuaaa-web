@@ -1,10 +1,10 @@
 import React from 'react';
-import * as service from '../../services';
-import AlbumList from '../../components/PhotoBoard/AlbumList';
-import CreateAlbum from '../../components/PhotoBoard/CreateAlbum';
-import Category from '../../components/Common/Category';
-import Loading from '../../components/Common/Loading';
-import Paginator from '../../components/Common/Paginator';
+import * as service from 'services';
+import CreateAlbum from 'containers/Album/CreateAlbum';
+import AlbumList from 'components/PhotoBoard/AlbumList';
+import Category from 'components/Common/Category';
+import Loading from 'components/Common/Loading';
+import Paginator from 'components/Common/Paginator';
 
 const TAG = 'MEMORY'
 const ALBUMROWNUM = 12;
@@ -38,29 +38,29 @@ class Memory extends React.Component {
     fetch = async () => {
         this.setIsReady(false);
 
-        if(this.state.selectedCategory) {
+        if (this.state.selectedCategory) {
             await service.retrieveAlbumsInPhotoBoardByCategory(this.props.board_id, this.state.selectedCategory, this.state.pageIdx)
-            .then((res) => {
-                console.log('[%s] Retrieve Albums Success', TAG);
-                this.albums = res.data.albumInfo;
-                this.albumCount = res.data.albumCount.count;
-                this.setIsReady(true);
-            })
-            .catch((err) => {
-                console.error(`[${TAG}] Retrieve Photos Fail >> ${err}`)
-            })
+                .then((res) => {
+                    console.log('[%s] Retrieve Albums Success', TAG);
+                    this.albums = res.data.albumInfo;
+                    this.albumCount = res.data.albumCount.count;
+                    this.setIsReady(true);
+                })
+                .catch((err) => {
+                    console.error(`[${TAG}] Retrieve Photos Fail >> ${err}`)
+                })
         }
         else {
             await service.retrieveAlbumsInPhotoBoard(this.props.board_id, this.state.pageIdx)
-            .then((res) => {
-                console.log('[%s] Retrieve Albums Success', TAG);
-                this.albums = res.data.albumInfo;
-                this.albumCount = res.data.albumCount.count;
-                this.setIsReady(true);
-            })
-            .catch((err) => {
-                console.error(`[${TAG}] Retrieve Photos Fail >> ${err}`)
-            })
+                .then((res) => {
+                    console.log('[%s] Retrieve Albums Success', TAG);
+                    this.albums = res.data.albumInfo;
+                    this.albumCount = res.data.albumCount.count;
+                    this.setIsReady(true);
+                })
+                .catch((err) => {
+                    console.error(`[${TAG}] Retrieve Photos Fail >> ${err}`)
+                })
         }
     }
 
@@ -68,7 +68,7 @@ class Memory extends React.Component {
         this.setState({
             selectedCategory: ctg_id
         },
-        this.fetch
+            this.fetch
         )
     }
 
@@ -76,7 +76,7 @@ class Memory extends React.Component {
         this.setState({
             selectedCategory: null
         },
-        this.fetch
+            this.fetch
         )
     }
 
@@ -90,7 +90,7 @@ class Memory extends React.Component {
         this.setState({
             pageIdx: idx
         },
-        this.fetch
+            this.fetch
         )
     }
 
@@ -103,26 +103,26 @@ class Memory extends React.Component {
                 <div className="photoboard-wrapper">
                     <h2 className="memory-title">{boardInfo.board_name}</h2>
                     <Category categories={categories} selected={selectedCategory} clickAll={this.clickAll} clickCategory={this.clickCategory} />
-                        {(() => {
-                            if (isReady) {
-                                return(
-                                    <>
-                                        <Paginator pageIdx={pageIdx} pageNum={Math.ceil(this.albumCount / ALBUMROWNUM)} clickPage={this.clickPage} />
-                                        <div className="enif-divider"></div>
-                                        <AlbumList board_id={board_id} albums={this.albums} togglePopUp={this.togglePopUp}/>
-                                        {
-                                            this.state.popUpState && <CreateAlbum board_id={board_id} categories={categories} fetch={this.fetch} togglePopUp={this.togglePopUp} />
-                                        }
-                                    </>)
-                            }
-                            else {
-                                return <Loading />
-                            }
-                        })()}
+                    {(() => {
+                        if (isReady) {
+                            return (
+                                <>
+                                    <Paginator pageIdx={pageIdx} pageNum={Math.ceil(this.albumCount / ALBUMROWNUM)} clickPage={this.clickPage} />
+                                    <div className="enif-divider"></div>
+                                    <AlbumList board_id={board_id} albums={this.albums} togglePopUp={this.togglePopUp} />
+                                    {
+                                        this.state.popUpState && <CreateAlbum board_id={board_id} categories={categories} fetch={this.fetch} togglePopUp={this.togglePopUp} />
+                                    }
+                                </>)
+                        }
+                        else {
+                            return <Loading />
+                        }
+                    })()}
                     {/* <div className="enif-fixed-btm"> */}
-                        <button className="enif-btn-circle enif-pos-sticky" onClick={() => this.togglePopUp()}>
-                            <i className="material-icons">library_add</i>
-                        </button>
+                    <button className="enif-btn-circle enif-pos-sticky" onClick={() => this.togglePopUp()}>
+                        <i className="material-icons">library_add</i>
+                    </button>
                     {/* </div> */}
                 </div>
 

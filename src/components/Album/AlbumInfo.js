@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import ContentStateEnum from '../../common/ContentStateEnum';
-import { breakLine } from '../../utils/breakLine';
+import ContentStateEnum from 'common/ContentStateEnum';
+import { breakLine } from 'utils/breakLine';
 
-const AlbumInfo = ({albumInfo, my_id, setAlbumState, deleteAlbum}) => {
+const AlbumInfo = ({ albumInfo, my_id, setAlbumState, deleteAlbum }) => {
     return (
         <div className="album-info">
             <div className="alb-header-wrapper">
                 <div className="alb-btn-back">
-                    <Link to={`/board/${albumInfo.board_id}`}><button>      
+                    <Link to={`/board/${albumInfo.board_id}`}><button>
                         <i className="material-icons">keyboard_backspace</i>
                     </button></Link>
                 </div>

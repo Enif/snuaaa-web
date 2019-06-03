@@ -1,9 +1,8 @@
 import React from 'react';
 
-class Footer extends React.Component {
+const Footer = () => {
 
-    render() {
-        return (
+    return (
         <footer>
             <div className="footer-contents">
                 <p>ⓒ 2019, 서울대학교 아마추어 천문회<br/>
@@ -12,9 +11,7 @@ class Footer extends React.Component {
                 </p>
             </div>
         </footer>
-        );
-
-    }
+    );
 }
 
 export default Footer;

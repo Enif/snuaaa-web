@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Image from './Image';
-import { breakLine } from '../../utils/breakLine';
+import { breakLine } from 'utils/breakLine';
 
-function ProfileMini({profileImg, nickname, userDesc}) {
+function ProfileMini({ profileImg, nickname, userDesc }) {
 
     const [isExpand, setIsExpand] = useState(false);
 
@@ -12,7 +12,7 @@ function ProfileMini({profileImg, nickname, userDesc}) {
     return (
         <div className="profile-mini-wrapper">
             <div className="profile-img">
-                <Image imgSrc={profileImg}/>
+                <Image imgSrc={profileImg} />
             </div>
             <div className="nickname">{nickname}</div>
             <div className={descClass}>{breakLine(userDesc)}</div>

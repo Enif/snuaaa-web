@@ -1,7 +1,7 @@
 import React from 'react';
 import InputText from '../Common/InputText'
-import Footer from '../../components/Footer'
-import logo from '../../assets/img/login_logo.gif'
+import Footer from 'components/Footer'
+import logo from 'assets/img/login_logo.gif'
 
 const LogInComponent = ({ handleChange, postLogIn, redirectToSignUp, checkAuto }) => {
     return (

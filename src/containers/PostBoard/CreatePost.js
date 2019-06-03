@@ -1,5 +1,5 @@
 import React from 'react';
-import * as service from '../../services';
+import * as service from 'services';
 
 const TAG = 'CREATEPOST'
 
@@ -24,7 +24,7 @@ class CreatePost extends React.Component {
         console.log('[%s] postLogIn', TAG);
 
 
-        if(!this.state.title) {
+        if (!this.state.title) {
             alert("제목을 입력해 주세요.");
         }
         else {
@@ -32,17 +32,17 @@ class CreatePost extends React.Component {
                 title: this.state.title,
                 contents: this.state.contents
             }
-    
+
             await service.createPost(this.props.board_id, postInfo)
-            .then((res) => {
-                console.log('[%s] Save Post Success', TAG)
-                this.props.retrievePosts();
-                this.props.togglePopUp();
-            })
-            .catch((err) => {
-                console.error(err);
-                alert("게시글 저장에 실패했습니다.");
-            })
+                .then((res) => {
+                    console.log('[%s] Save Post Success', TAG)
+                    this.props.retrievePosts();
+                    this.props.togglePopUp();
+                })
+                .catch((err) => {
+                    console.error(err);
+                    alert("게시글 저장에 실패했습니다.");
+                })
         }
     }
 

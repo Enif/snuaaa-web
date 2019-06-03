@@ -12,7 +12,7 @@ class PreviewImage extends React.Component {
     shouldComponentUpdate(nextProps, nextState) {
         console.log(this.props)
         console.log(nextProps)
-        if(this.props.imgIdx === nextProps.imgIdx && this.props.uploadPhotos.length === nextProps.uploadPhotos.length) {
+        if (this.props.imgIdx === nextProps.imgIdx && this.props.uploadPhotos.length === nextProps.uploadPhotos.length) {
             console.log('false')
             return false
         }
@@ -24,7 +24,7 @@ class PreviewImage extends React.Component {
 
     selectedImg = () => {
         const { uploadPhotos, imgIdx } = this.props;
-        if(uploadPhotos.length > 0 && imgIdx >= 0) {    
+        if (uploadPhotos.length > 0 && imgIdx >= 0) {
             let imgSrc = window.URL.createObjectURL(uploadPhotos[imgIdx])
             return (<img src={imgSrc} alt="previewImg" />)
         }
