@@ -1,10 +1,10 @@
 import React from 'react';
-import { SERVER_URL } from '../../common/environment'
+import { SERVER_URL } from 'common/environment'
 
-const Image = ({imgSrc, defaultImgSrc, className, onClick, local}) => {
+const Image = ({ imgSrc, defaultImgSrc, className, onClick, local }) => {
 
     let imgUrl;
-    if(local) {
+    if (local) {
         imgUrl = imgSrc
     } else {
         imgUrl = SERVER_URL + 'static' + imgSrc;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { SERVER_URL } from '../../common/environment'
+import { SERVER_URL } from 'common/environment'
 
 const Download = ({object_id, index, children}) => {
 

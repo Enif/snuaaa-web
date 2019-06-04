@@ -1,9 +1,9 @@
 import React from 'react';
-import * as service from '../../services';
-import PostBoard from '../postboard/PostBoard';
-import PhotoBoard from '../photoboard/PhotoBoard';
-import DocuBoard from '../docuboard/DocuBoard';
-import Loading from '../../components/Common/Loading';
+import * as service from 'services';
+import PostBoard from 'containers/PostBoard/PostBoard';
+import PhotoBoard from 'containers/PhotoBoard/PhotoBoard';
+import DocuBoard from 'containers/DocuBoard/DocuBoard';
+import Loading from 'components/Common/Loading';
 
 const TAG = 'BOARD'
 

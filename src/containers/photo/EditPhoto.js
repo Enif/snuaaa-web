@@ -1,8 +1,8 @@
 import React from 'react';
-import CreatePhotoInfo from '../../components/Album/CreatePhotoInfo';
-import * as service from '../../services';
-import Image from '../../components/Common/Image';
-import ContentsStateEnum from '../../common/ContentStateEnum';
+import * as service from 'services';
+import CreatePhotoInfo from 'components/Album/CreatePhotoInfo';
+import Image from 'components/Common/Image';
+import ContentsStateEnum from 'common/ContentStateEnum';
 
 const TAG = 'EDITPHOTO'
 
@@ -68,7 +68,7 @@ class EditPhoto extends React.Component {
     //         this.setState({
     //             selectedTags: this.state.selectedTags.concat(tagId)
     //         })
-            
+
     //     }
     // }
 
@@ -91,7 +91,7 @@ class EditPhoto extends React.Component {
             exposure_time: exposure_time,
             iso: iso
         }
-            
+
         // const photosForm = new FormData();
 
         // photosForm.append('title', title);
@@ -107,13 +107,13 @@ class EditPhoto extends React.Component {
         // photosForm.append('tags', selectedTags);
         // photosForm.append('uploadPhotos', this.state.uploadPhotos[i]);
         await service.updatePhoto(photo_id, photoInfo)
-        .then(() => {
-            this.props.fetch();
-        })
-        .catch((err) => {
-            console.error(err);
-            alert("업데이트 실패");
-        })
+            .then(() => {
+                this.props.fetch();
+            })
+            .catch((err) => {
+                console.error(err);
+                alert("업데이트 실패");
+            })
     }
 
     render() {
@@ -128,31 +128,31 @@ class EditPhoto extends React.Component {
                     </div>
                     <div className="crt-photo-body">
                         <div className="crt-photo-center">
-                            <Image imgSrc={this.state.file_path}/>
+                            <Image imgSrc={this.state.file_path} />
                             {/* <PreviewImage uploadPhotos={uploadPhotos} imgIdx={imgIdx} /> */}
                         </div>
 
                         <div className="crt-photo-right">
-                        
-                            {selectedTags.length > 0 && 
-                            <div className="tag-wrapper">
-                                {this.makeTagList()}
-                            </div>}
-                        
+
+                            {selectedTags.length > 0 &&
+                                <div className="tag-wrapper">
+                                    {this.makeTagList()}
+                                </div>}
+
                             <CreatePhotoInfo title={title} desc={desc} date={date} location={location}
-                            camera={camera} lens={lens} focal_length={focal_length} f_stop={f_stop}
-                            exposure_time={exposure_time} iso={iso} handleChange={this.handleChange} handleDate={this.handleDate}/>
-                        
+                                camera={camera} lens={lens} focal_length={focal_length} f_stop={f_stop}
+                                exposure_time={exposure_time} iso={iso} handleChange={this.handleChange} handleDate={this.handleDate} />
+
 
                             <div className="btn-wrapper">
-                                <button className="btn-cancel" onClick={()=>this.props.setPhotoState(ContentsStateEnum.READY)}>취소</button>
+                                <button className="btn-cancel" onClick={() => this.props.setPhotoState(ContentsStateEnum.READY)}>취소</button>
                                 <button className="btn-ok" onClick={() => this.updatePhoto()}>완료</button>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>            
-        ) 
+            </div>
+        )
     }
 }
 

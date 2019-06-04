@@ -1,13 +1,13 @@
 import React from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router'
-import * as service from '../../services';
+import * as service from 'services';
 import { connect } from 'react-redux'
-import { authLogin } from '../../actions'
-import LogInComponent from '../../components/Login/LogInComponent';
-import Loading from '../../components/Common/Loading';
-import PopUp from '../../components/Common/PopUp';
-import FullScreenPortal from '../../containers/FullScreenPortal';
+import { authLogin } from 'actions'
+import LogInComponent from 'components/Login/LogInComponent';
+import Loading from 'components/Common/Loading';
+import PopUp from 'components/Common/PopUp';
+import FullScreenPortal from 'containers/FullScreenPortal';
 
 const TAG = 'LOGIN'
 

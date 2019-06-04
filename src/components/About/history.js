@@ -1,7 +1,7 @@
 import React from 'react';
 
 class History extends React.Component {
-    
+
     //TODO : User who is admin can be edit data.
     //TODO : convert to database from json
 
@@ -12,7 +12,7 @@ class History extends React.Component {
             aaahistory: []
         }
     }
-        
+
 
     componentDidMount() {
         this.generateHistoryList();
@@ -22,35 +22,34 @@ class History extends React.Component {
         let historyList;
 
         await import('./history_tmp.json')
-        .then((historys) => {
-            console.dir(historys.default);
-            if(historys.default) {
-                historyList = historys.default.map((his) => {
-                    let occasions = his.occasion;
-                    let occasionList = occasions.map((occ, idx) => {
+            .then((historys) => {
+                console.dir(historys.default);
+                if (historys.default) {
+                    historyList = historys.default.map((his) => {
+                        let occasions = his.occasion;
+                        let occasionList = occasions.map((occ, idx) => {
+                            return (
+                                <div key={idx}>
+                                    <h5>{occ.date}</h5>
+                                    <p>{occ.desc}</p>
+                                </div>
+                            )
+                        })
                         return (
-                            <div key={idx}>
-                                <h5>{occ.date}</h5>
-                                <p>{occ.desc}</p>
+                            <div className="intro-history-unit" key={his.year}>
+                                <div className="unit-half">
+                                    <div className="mark-year"></div>
+                                    <h4>{his.year}년</h4>
+                                    {occasionList}
+                                </div>
                             </div>
                         )
                     })
-                    console.log(occasionList);
-                    return (
-                        <div className="intro-history-unit" key={his.year}>
-                            <div className="unit-half">
-                                <div className="mark-year"></div>
-                                <h4>{his.year}년</h4>
-                                {occasionList}
-                            </div>
-                        </div>
-                    )
-                })
-            }
-        })
-        .catch((err) => {
-            console.error(err)
-        })
+                }
+            })
+            .catch((err) => {
+                console.error(err)
+            })
 
         this.setState({
             aaahistory: historyList
@@ -59,7 +58,7 @@ class History extends React.Component {
 
 
     render() {
-        return(
+        return (
             <div className="intro-div-wrapper" id="history">
                 <div id="intro-top"></div>
                 <h3>동아리 발자취</h3>

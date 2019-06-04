@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { convertDate } from '../../utils/convertDate'
+import { convertDate } from 'utils/convertDate'
 
 const PostList = ({posts, togglePopUp}) => {
 
@@ -49,8 +49,7 @@ const PostList = ({posts, togglePopUp}) => {
                     <i className="material-icons">create</i>
                 </button>
             </>
-    ) 
-
+    )
 }
 
 export default PostList;

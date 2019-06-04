@@ -2,16 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Image from '../Common/Image';
 import ProfileMini from '../Common/ProfileMini';
-import ContentsStateEnum from '../../common/ContentStateEnum';
-import { breakLine } from '../../utils/breakLine';
-import { convertDate, convertFullDate } from '../../utils/convertDate'
+import ContentsStateEnum from 'common/ContentStateEnum';
+import { breakLine } from 'utils/breakLine';
+import { convertDate, convertFullDate } from 'utils/convertDate'
 
 const PhotoInfo = ({photoInfo, albumInfo, tagInfo, likeInfo, my_id, setPhotoState, deletePhoto, likePhoto}) => {
 
     const makeTagList = () => {
         let tagList = tagInfo.map((tag) => {
             return (
-                <div className="tag-unit"># {tag.tag_name}</div>
+                <div key={tag.tag_id} className="tag-unit"># {tag.tag_name}</div>
             )
         })
         return tagList;

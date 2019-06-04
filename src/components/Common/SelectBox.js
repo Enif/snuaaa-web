@@ -1,9 +1,9 @@
 import React from 'react';
 
-const SelectBox = ({selectName, optionList, onSelect, selectedOption}) => {
+const SelectBox = ({ selectName, optionList, onSelect, selectedOption }) => {
 
     const makeSelectList = () => {
-        if(optionList) {
+        if (optionList) {
             return optionList.map((option, i) => {
                 return <option value={option.id} key={i}>{option.name}</option>
             })

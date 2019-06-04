@@ -1,19 +1,11 @@
 import React from 'react';
 import Image from '../Common/Image';
-import { breakLine } from '../../utils/breakLine';
-import defaultProfile from '../../assets/img/profile.png';
+import { breakLine } from 'utils/breakLine';
+import defaultProfile from 'assets/img/profile.png';
 
-const TAG = 'COMMENTLIST'
+const CommentList = ({my_id, comments, commentInEdit, editingContents, editingContentsChange, setCommentInEdit, updateComment, deleteComment}) => {
 
-class CommentList extends React.Component {
-
-    constructor(props) {
-        console.log('[%s] constructor', TAG);
-        super(props);
-    }
-
-    retrieveComments = () => {
-        let comments = this.props.comments
+    const makeCommentList = () => {
         let commentList = comments.map(comment => {
             return (
                 <div key={comment.comment_id} className="comment-wrapper">
@@ -23,11 +15,11 @@ class CommentList extends React.Component {
                     <div className="com-cont-wrp">
                         <h5>{comment.nickname}</h5>
                         {
-                            comment.comment_id === this.props.commentInEdit ?
+                            comment.comment_id === commentInEdit ?
                             <>
-                                <textarea value={this.props.editingContents} onChange={(e)=> this.props.editingContentsChange(e)}>
+                                <textarea value={editingContents} onChange={editingContentsChange}>
                                 </textarea>
-                                <button onClick={(e) => this.props.updateComment(comment.comment_id)}>ENTER</button>
+                                <button onClick={(e) => updateComment(comment.comment_id)}>ENTER</button>
                             </>
                             :
                             <p>
@@ -36,13 +28,13 @@ class CommentList extends React.Component {
                         }
                     </div>
                     {
-                        this.props.my_id === comment.author_id &&
+                        my_id === comment.author_id &&
                         <div className="actions-wrapper">
                             <div className="edit-wrapper">
-                                <i className="material-icons pointer" onClick={() => this.props.setCommentInEdit(comment.comment_id, comment.contents)}>edit</i>
+                                <i className="material-icons pointer" onClick={() => setCommentInEdit(comment.comment_id, comment.contents)}>edit</i>
                             </div>
                             <div className="delete-wrapper">
-                                <i className="material-icons pointer" onClick={() => this.props.deleteComment(comment.comment_id)}>delete</i>
+                                <i className="material-icons pointer" onClick={() => deleteComment(comment.comment_id)}>delete</i>
                             </div>
                         </div>
                     }
@@ -52,14 +44,11 @@ class CommentList extends React.Component {
         return commentList
     }
 
-    render(){
-
-        return (
-            <div className="comment-list-wrapper">
-                {this.retrieveComments()}
-            </div>            
-        )
-    }
+    return (
+        <div className="comment-list-wrapper">
+            {makeCommentList()}
+        </div>            
+    )
 }
 
 export default CommentList;

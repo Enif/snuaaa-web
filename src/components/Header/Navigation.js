@@ -14,23 +14,7 @@ class Navigation extends React.Component {
             isShowBoard: false,
             isShowPhotoBoard: false,
             isShowOfficial: false,
-            isFixed: false
         }
-    }
-
-    componentDidMount() {
-        // document.addEventListener("scroll", (e) => {
-        //     if(e.target.scrollingElement.scrollTop > 263) {
-        //         this.setState({
-        //             isFixed: true
-        //         })
-        //     }
-        //     else {
-        //         this.setState({
-        //             isFixed: false
-        //         })
-        //     } 
-        // })
     }
 
     setShowAbout = (isShow) => {
@@ -71,7 +55,6 @@ class Navigation extends React.Component {
         let subBoardClass = 'menu-nav-sub' + (this.state.isShowBoard ? '' : ' menu-nav-hidden')
         let subPhotoBoardClass = 'menu-nav-sub' + (this.state.isShowPhotoBoard ? '' : ' menu-nav-hidden')
         let subOfficialClass = 'menu-nav-sub' + (this.state.isShowOfficial ? '' : ' menu-nav-hidden')
-        let wrapperClass = 'main-menu-nav-wrapper' + (this.state.isFixed ? ' enif-fixed-top' : ' pos-relative'); 
 
         const activeStyle = {
             fontWeight: 'bold',
@@ -79,7 +62,7 @@ class Navigation extends React.Component {
         };
 
         return (
-            <div className={wrapperClass}>
+            <div className="main-menu-nav-wrapper pos-relative">
                 <nav>
                     {/* <input className="nav-toggle" id="nav-toggle" type="checkbox"/> 
                     <label className="navicon" htmlFor="nav-toggle"><span className="navicon-bar"></span></label> */}

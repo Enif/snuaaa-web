@@ -1,19 +1,20 @@
 import React from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
-import * as service from '../../services'
-import Loading from '../../components/Common/Loading';
-import PhotoList from '../../components/Album/PhotoList';
-import CreatePhoto from '../../components/Album/CreatePhoto';
-import AlbumInfo from '../../components/Album/AlbumInfo';
-import ContentStateEnum from '../../common/ContentStateEnum';
-import EditAlbum from '../album/EditAlbum';
+import * as service from 'services'
+import ContentStateEnum from 'common/ContentStateEnum';
+import Loading from 'components/Common/Loading';
+import PhotoList from 'components/Album/PhotoList';
+import AlbumInfo from 'components/Album/AlbumInfo';
+import EditAlbum from 'containers/Album/EditAlbum';
+import CreatePhoto from 'containers/Photo/CreatePhoto';
 
 const TAG = 'ALBUM'
 
 class Album extends React.Component {
 
     constructor(props) {
+        console.log(`[${TAG}] Constructor`)
         super(props);
         this.photos = [];
         this.albumInfo = undefined;

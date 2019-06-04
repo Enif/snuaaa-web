@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import { downloadDocument } from '../../services';
 import Download from './Download'
 
 const DocuList = ({documents}) => {

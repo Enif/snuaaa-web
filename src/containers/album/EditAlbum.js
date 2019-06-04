@@ -1,6 +1,6 @@
 import React from 'react';
-import * as service from '../../services';
-import ContentStateEnum from '../../common/ContentStateEnum';
+import * as service from 'services';
+import ContentStateEnum from 'common/ContentStateEnum';
 
 const TAG = 'EDITALBUM'
 

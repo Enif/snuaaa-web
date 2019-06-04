@@ -1,12 +1,12 @@
 import React from 'react';
 
-const InputField = ({label, name, type, value, valid, 
-    placeholder, pattern, disabled, maxLength, required, 
-    invalidMessage, handleChange, handleBlur}) => {
+const InputField = ({ label, name, type, value, valid,
+    placeholder, pattern, disabled, maxLength, required,
+    invalidMessage, handleChange, handleBlur }) => {
 
     // this.inputRef = React.createRef();
     let fieldClass;
-    if(valid === true) {
+    if (valid === true) {
         fieldClass = "enif-input-field enif-input-valid";
     }
     else if (valid === false) {
@@ -16,7 +16,7 @@ const InputField = ({label, name, type, value, valid,
         fieldClass = "enif-input-field";
     }
 
-    return(
+    return (
         <div className={fieldClass}>
             <label htmlFor={name}>{label}</label>
             <input
@@ -28,7 +28,7 @@ const InputField = ({label, name, type, value, valid,
                     handleChange(e)
                 }}
                 onBlur={(e) => {
-                    if(handleBlur) {
+                    if (handleBlur) {
                         handleBlur(e);
                     }
                 }}
@@ -39,10 +39,10 @@ const InputField = ({label, name, type, value, valid,
                 maxLength={maxLength ? maxLength : 20}
                 required={required}
             />
-            { valid === false && <p>{invalidMessage}</p> }
+            {valid === false && <p>{invalidMessage}</p>}
         </div>
     )
-    
+
 }
 
 export default InputField;

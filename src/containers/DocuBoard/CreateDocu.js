@@ -1,5 +1,5 @@
 import React from 'react';
-import * as service from '../../services';
+import * as service from 'services';
 
 const TAG = 'CREATEDOCU'
 
@@ -32,7 +32,7 @@ class CreateDocu extends React.Component {
 
     uploadFile = (e) => {
         const { uploadFiles } = this.state;
-        if(e.target.files.length + uploadFiles.length > 3) {
+        if (e.target.files.length + uploadFiles.length > 3) {
             alert("파일은 최대 3개까지만 첨부해주세요.")
             e.target.value = null;
         }
@@ -45,7 +45,7 @@ class CreateDocu extends React.Component {
 
     createDocu = async () => {
         console.log('[%s] createDocuments', TAG);
-        if(!this.state.title) {
+        if (!this.state.title) {
             alert("제목을 입력해주세요");
         }
         else if (!this.state.category) {
@@ -59,27 +59,27 @@ class CreateDocu extends React.Component {
             docuInfo.append('generation', this.state.generation);
             docuInfo.append('category_id', this.state.category);
             docuInfo.append('title', this.state.title);
-            for(let i = 0, max = this.state.uploadFiles.length; i < max; i++) {
-                docuInfo.append('uploadFiles', this.state.uploadFiles[i]); 
+            for (let i = 0, max = this.state.uploadFiles.length; i < max; i++) {
+                docuInfo.append('uploadFiles', this.state.uploadFiles[i]);
             }
-            
+
             await service.createDocument(this.props.board_id, docuInfo)
-            .then(() => {
-                console.log('[%s] Create Docu Success', TAG);
-                this.props.togglePopUp();
-                this.props.retrieveDocuments()
-            })
-            .catch((err) => {
-                console.error(err);
-            })    
+                .then(() => {
+                    console.log('[%s] Create Docu Success', TAG);
+                    this.props.togglePopUp();
+                    this.props.retrieveDocuments()
+                })
+                .catch((err) => {
+                    console.error(err);
+                })
         }
     }
 
     createGeneration = () => {
         let currentGen = 2 * ((new Date()).getFullYear() - 1980)
-        if((new Date()).getMonth() > 5) currentGen++;
+        if ((new Date()).getMonth() > 5) currentGen++;
         let genOptions = [];
-        for(let i = currentGen; i > 0; i--){
+        for (let i = currentGen; i > 0; i--) {
             genOptions.push(<option key={i}>{i}</option>)
         }
         return genOptions
@@ -102,7 +102,7 @@ class CreateDocu extends React.Component {
             return (
                 <div className="category-unit" key={category.category_id}>
                     <input type="radio" id={category.category_id} name="category" value={category.category_id}
-                        onChange={this.handleChange}/>
+                        onChange={this.handleChange} />
                     <label htmlFor={category.category_id}>{category.category_name}</label>
                 </div>
             )
@@ -122,7 +122,7 @@ class CreateDocu extends React.Component {
 
     render() {
         console.log('[%s] render', TAG)
-        
+
         return (
             <div className="enif-popup">
                 <div className="enif-popup-content crt-docu-wrapper">
@@ -139,28 +139,28 @@ class CreateDocu extends React.Component {
                     </div>
                     <div className="docu-title-wrapper">
                         <label htmlFor="crtDocTitle">제목</label>
-                        <input type="text" className="docu-title" id="crtDocTitle" name="title" placeholder="제목" onChange={(e) => this.handleChange(e)}/>
+                        <input type="text" className="docu-title" id="crtDocTitle" name="title" placeholder="제목" onChange={(e) => this.handleChange(e)} />
                     </div>
                     <div className="docu-desc-wrapper">
                         <label htmlFor="crtDocDesc">본문</label>
-                        <textarea className="docu-desc" id="crtDocDesc" name="desc" placeholder="본문" onChange={(e) => this.handleChange(e)}/>
+                        <textarea className="docu-desc" id="crtDocDesc" name="desc" placeholder="본문" onChange={(e) => this.handleChange(e)} />
                     </div>
                     <div className="docu-files-wrapper">
                         <label htmlFor="crtDocFile">
                             <i className="material-icons pointer">attach_file</i>
                         </label>
-                        <input type="file" multiple id="crtDocFile" className="docu-input-file" onChange={(e) => this.uploadFile(e)} /* value={this.state.uploadPhoto} *//>
+                        <input type="file" multiple id="crtDocFile" className="docu-input-file" onChange={(e) => this.uploadFile(e)} /* value={this.state.uploadPhoto} */ />
                         <div>
                             {this.state.uploadFiles.length > 0 && this.makeAttachedFileList(this.state.uploadFiles)}
                         </div>
                     </div>
                     <div>
                         <button className="enif-btn-common enif-btn-ok" onClick={() => this.createDocu()}>OK</button>
-                        <button className="enif-btn-common enif-btn-cancel" onClick={()=>this.props.togglePopUp()}>CANCEL</button>                    
+                        <button className="enif-btn-common enif-btn-cancel" onClick={() => this.props.togglePopUp()}>CANCEL</button>
                     </div>
                 </div>
-            </div>            
-        ) 
+            </div>
+        )
     }
 }
 

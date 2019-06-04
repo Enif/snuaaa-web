@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Image from '../Common/Image';
-import { breakLine } from '../../utils/breakLine';
+import { breakLine } from 'utils/breakLine';
 
 function MyProfile({profileImg, nickname, userDesc}) {
 

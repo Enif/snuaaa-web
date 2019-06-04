@@ -1,11 +1,11 @@
 import React from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
-import * as service from '../../services';
-import ContentStateEnum from '../../common/ContentStateEnum';
-import Loading from '../../components/Common/Loading';
-import PostComponent from '../../components/Post/PostComponent';
-import EditPost from '../../components/Post/EditPost';
+import * as service from 'services';
+import ContentStateEnum from 'common/ContentStateEnum';
+import Loading from 'components/Common/Loading';
+import PostComponent from 'components/Post/PostComponent';
+import EditPost from 'components/Post/EditPost';
 
 const TAG = 'POST'
 

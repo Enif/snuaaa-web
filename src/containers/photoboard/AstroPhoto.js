@@ -1,12 +1,12 @@
 import React from 'react';
-import * as service from '../../services';
-import AlbumList from '../../components/PhotoBoard/AlbumList';
-import CreateAlbum from '../../components/PhotoBoard/CreateAlbum';
-import PhotoList from '../../components/Album/PhotoList';
-import CreatePhoto from '../../components/Album/CreatePhoto';
-import Tag from '../../components/Common/Tag';
-import Loading from '../../components/Common/Loading';
-import Paginator from '../../components/Common/Paginator';
+import * as service from 'services';
+import CreatePhoto from 'containers/Photo/CreatePhoto';
+import CreateAlbum from 'containers/Album/CreateAlbum';
+import AlbumList from 'components/PhotoBoard/AlbumList';
+import PhotoList from 'components/Album/PhotoList';
+import Tag from 'components/Common/Tag';
+import Loading from 'components/Common/Loading';
+import Paginator from 'components/Common/Paginator';
 
 const TAG = 'ASTROPHOTO';
 const ALBUMROWNUM = 12;
@@ -39,43 +39,43 @@ class AstroPhoto extends React.Component {
         const board_id = this.props.board_id;
         const { isViewPhotos } = this.state;
         this.setIsReady(false);
-        if(!isViewPhotos) {
+        if (!isViewPhotos) {
             await service.retrieveAlbumsInPhotoBoard(board_id, this.state.pageIdx)
-            .then((res) => {
-                this.albums = res.data.albumInfo;
-                this.count = res.data.albumCount.count;
-                this.setIsReady(true);
-            })
-            .catch((err) => {
-                console.error(err);
-            })
-        }
-        else {
-            if(this.state.selectedTags.length > 0) {
-                service.retrievePhotosInPhotoBoardByTag(this.props.board_id ,this.state.selectedTags, this.state.pageIdx)
                 .then((res) => {
-                    this.photos = res.data.photoInfo;
-                    this.count = res.data.photoCount.count;
+                    this.albums = res.data.albumInfo;
+                    this.count = res.data.albumCount.count;
                     this.setIsReady(true);
                 })
                 .catch((err) => {
                     console.error(err);
                 })
+        }
+        else {
+            if (this.state.selectedTags.length > 0) {
+                service.retrievePhotosInPhotoBoardByTag(this.props.board_id, this.state.selectedTags, this.state.pageIdx)
+                    .then((res) => {
+                        this.photos = res.data.photoInfo;
+                        this.count = res.data.photoCount.count;
+                        this.setIsReady(true);
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                    })
             }
             else {
                 await Promise.all([
                     service.retrieveTagsInBoard(board_id),
                     service.retrievePhotosInPhotoBoard(board_id, this.state.pageIdx)
                 ])
-                .then((res) => {
-                    this.tags = res[0].data;
-                    this.photos = res[1].data.photoInfo;
-                    this.count = res[1].data.photoCount.count;
-                    this.setIsReady(true);
-                })
-                .catch((err) => {
-                    console.error(err);
-                })
+                    .then((res) => {
+                        this.tags = res[0].data;
+                        this.photos = res[1].data.photoInfo;
+                        this.count = res[1].data.photoCount.count;
+                        this.setIsReady(true);
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                    })
             }
         }
     }
@@ -91,12 +91,12 @@ class AstroPhoto extends React.Component {
             isViewPhotos: isViewPhotos,
             pageIdx: 1
         },
-        this.fetch
+            this.fetch
         )
     }
 
     clickTag = (e) => {
-        if(this.state.selectedTags.includes(e.target.id)) {
+        if (this.state.selectedTags.includes(e.target.id)) {
             let idx = this.state.selectedTags.indexOf(e.target.id);
             this.state.selectedTags.splice(idx, 1);
         }
@@ -106,7 +106,7 @@ class AstroPhoto extends React.Component {
         this.setState({
             pageIdx: 1
         },
-        this.fetch
+            this.fetch
         )
     }
 
@@ -114,7 +114,7 @@ class AstroPhoto extends React.Component {
         this.setState({
             selectedTags: []
         },
-        this.fetch
+            this.fetch
         )
     }
 
@@ -128,7 +128,7 @@ class AstroPhoto extends React.Component {
         this.setState({
             pageIdx: idx
         },
-        this.fetch
+            this.fetch
         )
     }
 

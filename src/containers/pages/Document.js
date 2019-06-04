@@ -1,10 +1,10 @@
 import React from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
-import * as service from '../../services';
-import ContentStateEnum from '../../common/ContentStateEnum';
-import Loading from '../../components/Common/Loading';
-import DocuComponent from '../../components/Document/DocuComponent';
+import * as service from 'services';
+import ContentStateEnum from 'common/ContentStateEnum';
+import Loading from 'components/Common/Loading';
+import DocuComponent from 'components/Document/DocuComponent';
 
 const TAG = 'DOCU'
 

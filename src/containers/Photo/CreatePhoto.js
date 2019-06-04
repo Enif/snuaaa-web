@@ -1,8 +1,8 @@
 import React from 'react';
-import CreatePhotoInfo from './CreatePhotoInfo';
-import * as service from '../../services';
-import ThumbnailList from './ThumbnailList';
-import PreviewImage from './PreviewImage';
+import * as service from 'services';
+import CreatePhotoInfo from 'components/Album/CreatePhotoInfo';
+import ThumbnailList from 'components/Album/ThumbnailList';
+import PreviewImage from 'components/Album/PreviewImage';
 
 const TAG = 'CREATEPHOTO'
 
@@ -46,12 +46,12 @@ class CreatePhoto extends React.Component {
 
     uploadFile = (e) => {
         const { uploadPhotos } = this.state;
-        if(e.target.files) {
+        if (e.target.files) {
             this.setState({
                 uploadPhotos: uploadPhotos.concat(...e.target.files)
             })
         }
-        for(let i = 0; i < e.target.files.length; i++) {
+        for (let i = 0; i < e.target.files.length; i++) {
             this.photoInfos.push({
                 title: '',
                 desc: '',
@@ -70,10 +70,10 @@ class CreatePhoto extends React.Component {
 
     setImgIdx = (index) => {
 
-        const { imgIdx, title, desc, date, location, camera, lens, 
+        const { imgIdx, title, desc, date, location, camera, lens,
             focal_length, f_stop, exposure_time, iso, selectedTags } = this.state;
 
-        if(imgIdx >= 0) {
+        if (imgIdx >= 0) {
             this.photoInfos[imgIdx] = {
                 title: title,
                 desc: desc,
@@ -110,7 +110,7 @@ class CreatePhoto extends React.Component {
             return (
                 <div className="tag-unit" key={tag.tag_id} >
                     <input type="checkbox" id={"crt_" + tag.tag_id} checked={this.state.selectedTags.includes(tag.tag_id)}
-                    onChange={(e) => this.clickTag(e)} />
+                        onChange={(e) => this.clickTag(e)} />
                     <label htmlFor={"crt_" + tag.tag_id}># {tag.tag_name}</label>
                 </div>
             )
@@ -121,7 +121,7 @@ class CreatePhoto extends React.Component {
     clickTag = (e) => {
         let tagId = e.target.id.replace('crt_', '');
 
-        if(this.state.selectedTags.includes(tagId)) {
+        if (this.state.selectedTags.includes(tagId)) {
             this.setState({
                 selectedTags: this.state.selectedTags.filter(tag => tagId !== tag)
             })
@@ -130,12 +130,12 @@ class CreatePhoto extends React.Component {
             this.setState({
                 selectedTags: this.state.selectedTags.concat(tagId)
             })
-            
+
         }
     }
 
     checkForm = () => {
-        if(!this.state.uploadPhotos) {
+        if (!this.state.uploadPhotos) {
             alert("사진을 첨부해주세요")
         }
         else {
@@ -147,7 +147,7 @@ class CreatePhoto extends React.Component {
 
         const { imgIdx, title, desc, date, location, camera, lens,
             focal_length, f_stop, exposure_time, iso, selectedTags } = this.state;
-        if(imgIdx >= 0) {
+        if (imgIdx >= 0) {
             this.photoInfos[imgIdx] = {
                 title: title,
                 desc: desc,
@@ -165,7 +165,7 @@ class CreatePhoto extends React.Component {
 
         const photosForm = new FormData();
 
-        for(let i = 0, max = this.state.uploadPhotos.length; i < max; i++) {
+        for (let i = 0, max = this.state.uploadPhotos.length; i < max; i++) {
             console.log(this.photoInfos[i])
             photosForm.append('board_id', this.props.board_id);
             photosForm.append('title', this.photoInfos[i].title);
@@ -182,32 +182,32 @@ class CreatePhoto extends React.Component {
             photosForm.append('uploadPhotos', this.state.uploadPhotos[i]);
         }
 
-        if(this.props.album_id) {
-    
+        if (this.props.album_id) {
+
             await service.createPhotosInAlbum(this.props.album_id, photosForm)
-            .then(() => {
-                console.log('[%s] Create Photos Success', TAG);
-                console.log(this.props)
-                this.props.togglePopUp();
-                this.props.fetch();
-            })
-            .catch(() => {
-                console.error(`[${TAG}] Create Photos Fail`);
-                alert('사진 생성 실패');
-            })
+                .then(() => {
+                    console.log('[%s] Create Photos Success', TAG);
+                    console.log(this.props)
+                    this.props.togglePopUp();
+                    this.props.fetch();
+                })
+                .catch(() => {
+                    console.error(`[${TAG}] Create Photos Fail`);
+                    alert('사진 생성 실패');
+                })
         }
-        else if(this.props.board_id) {
+        else if (this.props.board_id) {
 
             await service.createPhotosInPhotoBoard(this.props.board_id, photosForm)
-            .then(() => {
-                console.log('[%s] Create Photos Success', TAG);
-                this.props.togglePopUp();
-                this.props.retrievePhotos(this.props.board_id);
-            })
-            .catch(() => {
-                console.error(`[${TAG}] Create Photos Fail`);
-                alert('사진 생성 실패');
-            })
+                .then(() => {
+                    console.log('[%s] Create Photos Success', TAG);
+                    this.props.togglePopUp();
+                    this.props.retrievePhotos(this.props.board_id);
+                })
+                .catch(() => {
+                    console.error(`[${TAG}] Create Photos Fail`);
+                    alert('사진 생성 실패');
+                })
         }
         else {
             console.error(`[${TAG}] Unhandled Exception`);
@@ -232,8 +232,8 @@ class CreatePhoto extends React.Component {
                                     <i className="material-icons md-36">add</i>
                                 </div>
                             </label>
-                            <input type="file" id="photos" multiple accept="image/*" onChange={(e) => this.uploadFile(e)}/>
-                            <ThumbnailList uploadPhotos={uploadPhotos} imgIdx={imgIdx} setImgIdx={this.setImgIdx}/>
+                            <input type="file" id="photos" multiple accept="image/*" onChange={(e) => this.uploadFile(e)} />
+                            <ThumbnailList uploadPhotos={uploadPhotos} imgIdx={imgIdx} setImgIdx={this.setImgIdx} />
                         </div>
 
                         <div className="crt-photo-center">
@@ -242,36 +242,36 @@ class CreatePhoto extends React.Component {
 
                         <div className="crt-photo-right">
 
-                        {(() => {
-                            if(this.state.imgIdx >= 0) {
-                                return(
-                                    <>
-                                        {this.props.tags && 
-                                        <div className="tag-wrapper">
-                                            {this.makeTagList()}
-                                        </div>}
-                                    
-                                    <CreatePhotoInfo title={title} desc={desc} date={date} location={location}
-                                    camera={camera} lens={lens} focal_length={focal_length} f_stop={f_stop}
-                                    exposure_time={exposure_time} iso={iso} handleChange={this.handleChange} handleDate={this.handleDate}/>
-                                    </>
-                                )
-                            }
-                            else {
-                                return(
-                                    <div className="message-info">사진을 선택해주세요</div>
-                                )
-                            }
-                        })()}
+                            {(() => {
+                                if (this.state.imgIdx >= 0) {
+                                    return (
+                                        <>
+                                            {this.props.tags &&
+                                                <div className="tag-wrapper">
+                                                    {this.makeTagList()}
+                                                </div>}
+
+                                            <CreatePhotoInfo title={title} desc={desc} date={date} location={location}
+                                                camera={camera} lens={lens} focal_length={focal_length} f_stop={f_stop}
+                                                exposure_time={exposure_time} iso={iso} handleChange={this.handleChange} handleDate={this.handleDate} />
+                                        </>
+                                    )
+                                }
+                                else {
+                                    return (
+                                        <div className="message-info">사진을 선택해주세요</div>
+                                    )
+                                }
+                            })()}
                             <div className="btn-wrapper">
-                                <button className="btn-cancel" onClick={()=>this.props.togglePopUp()}>취소</button>
+                                <button className="btn-cancel" onClick={() => this.props.togglePopUp()}>취소</button>
                                 <button className="btn-ok" onClick={() => this.checkForm()}>완료</button>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>            
-        ) 
+            </div>
+        )
     }
 
     componentDidMount() {

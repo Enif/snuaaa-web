@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import ContentStateEnum from '../../common/ContentStateEnum';
-import Comment from '../../containers/Comment';
+import ContentStateEnum from 'common/ContentStateEnum';
+import Comment from 'containers/Comment';
 import ProfileMini from '../Common/ProfileMini';
-import { convertFullDate } from '../../utils/convertDate';
-import { breakLine } from '../../utils/breakLine';
+import { convertFullDate } from 'utils/convertDate';
+import { breakLine } from 'utils/breakLine';
 
 const PostComponent = ({postData, post_id, my_id, likeInfo, likePost, setPostState, deletePost}) => {
 
