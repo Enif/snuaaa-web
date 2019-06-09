@@ -6,9 +6,9 @@
     flex-wrap: wrap;
     justify-content: flex-start;
     .photo-wrapper {
-        width: 174px;
-        height: 174px;
-        margin: 0.5px;  
+        width: 173px;
+        height: 173px;
+        margin: 1px;
         position: relative;
         img {
             width: 100%;
@@ -76,6 +76,7 @@
     .photo-contents-wrapper {
         padding: 10px;
         display: flex;
+        flex-direction: column;
         .info-wrapper {
             flex-basis: 50%;
 
@@ -99,6 +100,18 @@
                 color: #3E3E3E;
             }
 
+            .info-text-infos-wrapper {
+                display: flex;
+                .info-text-wrapper {
+                    width: 50%;
+                    padding: 10px;
+                    border-right: 2px dashed #F1F1F1
+                }
+                .info-infos-wrapper {
+                    width: 50%;
+                }
+            }
+
             h4 {
                 margin-bottom: 20px;
                 font-family: 'S-CoreDream-5Medium';
@@ -109,7 +122,7 @@
                 line-height: 20px;
             }
             table {
-                margin: 10px 0px;
+                margin: 10px;
                 font-size: 15px;
                 tr {
                     margin: 10px 0px 10px 0px;
@@ -317,6 +330,19 @@
             margin: 0.5rem;
             padding: 10px;
             display: block;
+            .info-wrapper {
+                .info-text-infos-wrapper {
+                    flex-direction: column;
+                    .info-text-wrapper {
+                        border: none;
+                        width: 100%;
+                    }
+                    .info-infos-wrapper {
+                        width: 100%;
+                    }
+                }
+            }
+
             .user-wrapper {
                 padding: 0.5rem;
                 display: flex;

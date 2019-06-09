@@ -6,7 +6,7 @@ import ContentsStateEnum from 'common/ContentStateEnum';
 import { breakLine } from 'utils/breakLine';
 import { convertDate, convertFullDate } from 'utils/convertDate'
 
-const PhotoInfo = ({photoInfo, albumInfo, tagInfo, likeInfo, my_id, setPhotoState, deletePhoto, likePhoto}) => {
+const PhotoInfo = ({ photoInfo, albumInfo, tagInfo, likeInfo, my_id, setPhotoState, deletePhoto, likePhoto }) => {
 
     const makeTagList = () => {
         let tagList = tagInfo.map((tag) => {
@@ -18,7 +18,7 @@ const PhotoInfo = ({photoInfo, albumInfo, tagInfo, likeInfo, my_id, setPhotoStat
     }
 
     let backLink;
-    if(!albumInfo) {
+    if (!albumInfo) {
         backLink = `/board/brd08`;
     }
     else {
@@ -46,53 +46,56 @@ const PhotoInfo = ({photoInfo, albumInfo, tagInfo, likeInfo, my_id, setPhotoStat
 
 
                     <div className="enif-divider"></div>
-                    <p>{breakLine(photoInfo.contents)}</p>
-                    <div className="enif-divider"></div>
+                    <div className="info-text-infos-wrapper">
+                        <div className="info-text-wrapper">
+                            <p>{breakLine(photoInfo.contents)}</p>
+                        </div>
+                        <div className="enif-divider enif-hide-desktop"></div>
+                        <table className="info-infos-wrapper">
+                            {photoInfo.date && (
+                                <tr>
+                                    <td>Date</td>
+                                    <td>{convertDate(photoInfo.date)}</td>
+                                </tr>)}
 
-                    <table>
-                        { photoInfo.date && (
-                        <tr>
-                            <td>Date</td>
-                            <td>{convertDate(photoInfo.date)}</td>
-                        </tr>)}
+                            {photoInfo.location && (
+                                <tr>
+                                    <td>Location</td>
+                                    <td>{photoInfo.location}</td>
+                                </tr>)}
 
-                        { photoInfo.location && (
-                        <tr>
-                            <td>Location</td>
-                            <td>{photoInfo.location}</td>
-                        </tr>)}
+                            {photoInfo.camera && (
+                                <tr>
+                                    <td>Camera</td>
+                                    <td>{photoInfo.camera}</td>
+                                </tr>)}
 
-                        { photoInfo.camera && (
-                        <tr>
-                            <td>Camera</td>
-                            <td>{photoInfo.camera}</td>
-                        </tr>)}
+                            {photoInfo.lens && (
+                                <tr>
+                                    <td>Lens</td>
+                                    <td>{photoInfo.lens}</td>
+                                </tr>)}
 
-                        { photoInfo.lens && (
-                        <tr>
-                            <td>Lens</td>
-                            <td>{photoInfo.lens}</td>
-                        </tr>)}
+                            {photoInfo.focal_length && (
+                                <tr>
+                                    <td>@</td>
+                                    <td>{photoInfo.focal_length}</td>
+                                </tr>)}
 
-                        { photoInfo.focal_length && (
-                        <tr>
-                            <td>@</td>
-                            <td>{photoInfo.focal_length}</td>
-                        </tr>)}
-
-                        { (photoInfo.f_stop || photoInfo.exposure_time || photoInfo.iso) && (
-                        <tr>
-                            <td>Setting</td>
-                            <td>
-                                {photoInfo.f_stop && <>F/{photoInfo.f_stop}</>}
-                                {photoInfo.exposure_time && <> {photoInfo.exposure_time}</>}
-                                {photoInfo.iso && <> ISO{photoInfo.iso}</>}
-                            </td>
-                        </tr>)}
-                    </table>
+                            {(photoInfo.f_stop || photoInfo.exposure_time || photoInfo.iso) && (
+                                <tr>
+                                    <td>Setting</td>
+                                    <td>
+                                        {photoInfo.f_stop && <>F/{photoInfo.f_stop}</>}
+                                        {photoInfo.exposure_time && <> {photoInfo.exposure_time}</>}
+                                        {photoInfo.iso && <> ISO{photoInfo.iso}</>}
+                                    </td>
+                                </tr>)}
+                        </table>
+                    </div>
                 </div>
                 <div className="enif-divider"></div>
-                <ProfileMini profileImg={photoInfo.profile_path} nickname={photoInfo.nickname} userDesc={photoInfo.introduction}/>
+                <ProfileMini profileImg={photoInfo.profile_path} nickname={photoInfo.nickname} userDesc={photoInfo.introduction} />
                 <div className="enif-divider"></div>
                 <div className="actions-wrapper">
                     {
