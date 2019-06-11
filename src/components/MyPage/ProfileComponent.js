@@ -5,7 +5,7 @@ import imgDefaultProfile from 'assets/img/profile.png';
 
 const ProfileComponent = ({profilePath, userInfo, handleChange, uploadProfileImg, updateInfo, deleteUser, isProfileImgChanged, valid}) => {
 
-    let idInfo, nameInfo,
+    let idInfo, usernameInfo,
     emailInfo, mobileInfo, aaaNumInfo, colNumInfo,
     nicknameInfo, majorInfo, introInfo = null;
 
@@ -13,8 +13,8 @@ const ProfileComponent = ({profilePath, userInfo, handleChange, uploadProfileImg
         if(info.label === 'id') {
             idInfo = info;
         }
-        else if(info.label === 'name') {
-            nameInfo = info;
+        else if(info.label === 'username') {
+            usernameInfo = info;
         }
         else if(info.label === 'email') {
             emailInfo = info;
@@ -56,7 +56,7 @@ const ProfileComponent = ({profilePath, userInfo, handleChange, uploadProfileImg
             </div>
 
                 <InputField label="ID" name="id" value={idInfo.value} disabled={true} valid={idInfo.valid}/>
-                <InputField label="이름" name="name" value={nameInfo.value} required={true} valid={nameInfo.valid}
+                <InputField label="이름" name="username" value={usernameInfo.value} required={true} valid={usernameInfo.valid}
                 handleChange={handleChange} invalidMessage="2-10자의 한글 혹은 영문" />
                 <InputField label="E-mail" name="email" value={emailInfo.value} handleChange={handleChange} maxLength={30} valid={emailInfo.valid}
                 invalidMessage="이메일 형식에 맞게 입력해주세요"/>

@@ -82,18 +82,20 @@
         &:last-child {
             border-bottom: 1px solid #E8E8E8;
         }
-        a {
-            color: #000000;
-        }
         .new-post-boardname {
             display: inline-block;
             width: 25%;
-            color: #A3A3A3;
+            a {
+                color: #A3A3A3;
+            }
         }
         .new-post-title {
             display: inline-block;
             width: 55%;
             flex-grow: 1;
+            a {
+                color: #000000;
+            }
         }
         .new-post-date {
             display: inline-block;

@@ -63,7 +63,7 @@ class Home extends React.Component {
                 isReady ?
                 <div className="section-contents">
                     <div className="home-wrapper">
-                        <SoundBox title={this.soundBoxData.title} contents={this.soundBoxData.contents}/>
+                        <SoundBox soundBoxInfo={this.soundBoxData} />
                         <div className="home-row">
                             <NewPosts posts={this.recentPosts} />
                             <NewComments comments={this.recentComments} />

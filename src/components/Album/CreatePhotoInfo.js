@@ -2,12 +2,12 @@ import React from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css"
 
-const CreatePhotoInfo = ({ title, desc, date, location, camera, lens, focal_length, f_stop,
+const CreatePhotoInfo = ({ title, text, date, location, camera, lens, focal_length, f_stop,
     exposure_time, iso, handleChange, handleDate }) => {
     return (
         <div className="photo-infos-wrapper">
             <input className="input-title" type="text" name="title" placeholder="제목" onChange={handleChange} value={title} />
-            <textarea className="input-desc" placeholder="설명" name="desc" onChange={handleChange} value={desc} />
+            <textarea className="input-desc" placeholder="설명" name="text" onChange={handleChange} value={text} />
             <div className="photo-infos">
                 <div className="photo-info">
                     <div className="label-wrapper"><label>Date</label></div>

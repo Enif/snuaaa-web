@@ -7,13 +7,14 @@ const CommentList = ({my_id, comments, commentInEdit, editingContents, editingCo
 
     const makeCommentList = () => {
         let commentList = comments.map(comment => {
+            let user = comment.user;
             return (
                 <div key={comment.comment_id} className="comment-wrapper">
                     <div className="profile">
-                        <Image imgSrc={comment.profile_path} defaultImgSrc={defaultProfile} />
+                        <Image imgSrc={user.profile_path} defaultImgSrc={defaultProfile} />
                     </div>
                     <div className="com-cont-wrp">
-                        <h5>{comment.nickname}</h5>
+                        <h5>{user.nickname}</h5>
                         {
                             comment.comment_id === commentInEdit ?
                             <>
@@ -23,7 +24,7 @@ const CommentList = ({my_id, comments, commentInEdit, editingContents, editingCo
                             </>
                             :
                             <p>
-                                {breakLine(comment.contents)}
+                                {breakLine(comment.text)}
                             </p>
                         }
                     </div>
@@ -31,7 +32,7 @@ const CommentList = ({my_id, comments, commentInEdit, editingContents, editingCo
                         my_id === comment.author_id &&
                         <div className="actions-wrapper">
                             <div className="edit-wrapper">
-                                <i className="material-icons pointer" onClick={() => setCommentInEdit(comment.comment_id, comment.contents)}>edit</i>
+                                <i className="material-icons pointer" onClick={() => setCommentInEdit(comment.comment_id, comment.text)}>edit</i>
                             </div>
                             <div className="delete-wrapper">
                                 <i className="material-icons pointer" onClick={() => deleteComment(comment.comment_id)}>delete</i>

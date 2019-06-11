@@ -10,7 +10,7 @@ class CreatePost extends React.Component {
 
         this.state = {
             title: '',
-            contents: ''
+            text: ''
         }
     }
 
@@ -30,7 +30,7 @@ class CreatePost extends React.Component {
         else {
             let postInfo = {
                 title: this.state.title,
-                contents: this.state.contents
+                text: this.state.text
             }
 
             await service.createPost(this.props.board_id, postInfo)
@@ -53,7 +53,7 @@ class CreatePost extends React.Component {
                     <input name="title" value={this.state.title} onChange={this.handleChange} placeholder="제목을 입력하세요." />
                 </div>
                 <div className="writepost-content">
-                    <textarea name="contents" value={this.state.contents} onChange={this.handleChange} placeholder="내용을 입력하세요" />
+                    <textarea name="text" value={this.state.text} onChange={this.handleChange} placeholder="내용을 입력하세요" />
                 </div>
                 {/* <div>
                     <Editor editorState={this.state.editorState} onEditorStateChange={this.onEditorStateChange} wrapperClassName="editor-wrapper" toolbarClassName="editor-toolbar" editorClassName="editor-textarea"/>

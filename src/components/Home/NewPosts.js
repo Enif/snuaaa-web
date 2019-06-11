@@ -6,15 +6,21 @@ const NewPosts = ({posts}) => {
 
     const makePostList = () => {
         return posts.map(post => {
+            let content = post.content;
+            let boardInfo = post.content.board;
             return (
-                <div className="new-post-list" key={post.object_id}>
-                    <div className="new-post-boardname">{post.board_name}</div>
-                    <div className="new-post-title">
-                        <Link to={`/post/${post.object_id}`}>
-                            <h5>{post.title}</h5>
+                <div className="new-post-list" key={content.content_id}>
+                    <div className="new-post-boardname">
+                        <Link to={`/board/${boardInfo.board_id}`}>
+                            {boardInfo.board_name}
                         </Link>
                     </div>
-                    <div className="new-post-date">{convertDate(post.created_at)}</div>
+                    <div className="new-post-title">
+                        <Link to={`/post/${content.content_id}`}>
+                            <h5>{`${content.title} [${content.comment_num}]`}</h5>
+                        </Link>
+                    </div>
+                    <div className="new-post-date">{convertDate(content.createdAt)}</div>
                 </div>
             )
         })

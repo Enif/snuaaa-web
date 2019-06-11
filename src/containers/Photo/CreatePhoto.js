@@ -16,7 +16,7 @@ class CreatePhoto extends React.Component {
 
         this.state = {
             title: '',
-            desc: '',
+            text: '',
             date: '',
             location: '',
             camera: '',
@@ -54,7 +54,7 @@ class CreatePhoto extends React.Component {
         for (let i = 0; i < e.target.files.length; i++) {
             this.photoInfos.push({
                 title: '',
-                desc: '',
+                text: '',
                 date: '',
                 location: '',
                 camera: '',
@@ -70,13 +70,13 @@ class CreatePhoto extends React.Component {
 
     setImgIdx = (index) => {
 
-        const { imgIdx, title, desc, date, location, camera, lens,
+        const { imgIdx, title, text, date, location, camera, lens,
             focal_length, f_stop, exposure_time, iso, selectedTags } = this.state;
 
         if (imgIdx >= 0) {
             this.photoInfos[imgIdx] = {
                 title: title,
-                desc: desc,
+                text: text,
                 date: date,
                 location: location,
                 camera: camera,
@@ -92,7 +92,7 @@ class CreatePhoto extends React.Component {
         this.setState({
             imgIdx: index,
             title: this.photoInfos[index].title,
-            desc: this.photoInfos[index].desc,
+            text: this.photoInfos[index].text,
             date: this.photoInfos[index].date,
             location: this.photoInfos[index].location,
             camera: this.photoInfos[index].camera,
@@ -145,12 +145,12 @@ class CreatePhoto extends React.Component {
 
     createPhotos = async () => {
 
-        const { imgIdx, title, desc, date, location, camera, lens,
+        const { imgIdx, title, text, date, location, camera, lens,
             focal_length, f_stop, exposure_time, iso, selectedTags } = this.state;
         if (imgIdx >= 0) {
             this.photoInfos[imgIdx] = {
                 title: title,
-                desc: desc,
+                text: text,
                 date: date,
                 location: location,
                 camera: camera,
@@ -169,7 +169,7 @@ class CreatePhoto extends React.Component {
             console.log(this.photoInfos[i])
             photosForm.append('board_id', this.props.board_id);
             photosForm.append('title', this.photoInfos[i].title);
-            photosForm.append('desc', this.photoInfos[i].desc);
+            photosForm.append('text', this.photoInfos[i].text);
             photosForm.append('date', this.photoInfos[i].date);
             photosForm.append('location', this.photoInfos[i].location);
             photosForm.append('camera', this.photoInfos[i].camera);
@@ -217,7 +217,7 @@ class CreatePhoto extends React.Component {
 
     render() {
         console.log('[%s] render', TAG)
-        const { uploadPhotos, imgIdx, title, desc, date, location, camera, lens, focal_length, f_stop, exposure_time, iso } = this.state
+        const { uploadPhotos, imgIdx, title, text, date, location, camera, lens, focal_length, f_stop, exposure_time, iso } = this.state
 
         return (
             <div className="crt-photo-popup">
@@ -251,7 +251,7 @@ class CreatePhoto extends React.Component {
                                                     {this.makeTagList()}
                                                 </div>}
 
-                                            <CreatePhotoInfo title={title} desc={desc} date={date} location={location}
+                                            <CreatePhotoInfo title={title} text={text} date={date} location={location}
                                                 camera={camera} lens={lens} focal_length={focal_length} f_stop={f_stop}
                                                 exposure_time={exposure_time} iso={iso} handleChange={this.handleChange} handleDate={this.handleDate} />
                                         </>

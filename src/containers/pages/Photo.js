@@ -17,7 +17,7 @@ class Photo extends React.Component {
 
         super(props);
         this.photoInfo = undefined;
-        this.tagInfo = undefined;
+        // this.tagInfo = undefined;
         this.albumInfo = undefined;
         this.state = {
             photo_id: this.props.match.params.pNo,
@@ -34,7 +34,7 @@ class Photo extends React.Component {
         await service.retrievePhoto(this.props.match.params.pNo)
         .then((res) => {
             this.photoInfo = res.data.photoInfo;
-            this.tagInfo = res.data.tagInfo;
+            // this.tagInfo = res.data.tagInfo;
             this.albumInfo = res.data.albumInfo;
             this.setState({
                 likeInfo: res.data.likeInfo,
@@ -97,12 +97,12 @@ class Photo extends React.Component {
                     else if(photoState === ContentStateEnum.READY || photoState === ContentStateEnum.EDITTING) {
                         return (
                             <div className="photo-section-wrapper">
-                                <PhotoInfo photoInfo={this.photoInfo} albumInfo={this.albumInfo} likeInfo={likeInfo} tagInfo={this.tagInfo}
+                                <PhotoInfo photoInfo={this.photoInfo} albumInfo={this.albumInfo} likeInfo={likeInfo}
                                     my_id={my_id} setPhotoState={this.setPhotoState} deletePhoto={this.deletePhoto} likePhoto={this.likePhoto}/>
                                 <Comment parent_id={this.state.photo_id}/>
                                 {
                                     photoState === ContentStateEnum.EDITTING &&
-                                    <EditPhoto photoInfo={this.photoInfo} tagInfo={this.tagInfo} fetch={this.fetch} setPhotoState={this.setPhotoState} />
+                                    <EditPhoto photoInfo={this.photoInfo} fetch={this.fetch} setPhotoState={this.setPhotoState} />
                                 }
                             </div>
                         )

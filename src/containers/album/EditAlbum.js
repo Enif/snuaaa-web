@@ -12,8 +12,8 @@ class EditAlbum extends React.Component {
 
         console.log(props)
         this.state = {
-            title: props.albumInfo.title,
-            contents: props.albumInfo.contents,
+            title: props.albumInfo.content.title,
+            contents: props.albumInfo.content.text,
             // checkedCategory: ''
         }
     }
