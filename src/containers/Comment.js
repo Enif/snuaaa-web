@@ -12,7 +12,7 @@ class Comment extends React.Component {
         super(props);
         this.comments = [];
         this.state = {
-            contents: '',
+            text: '',
             isReady: false,
             commentInEdit: '',
             editingContents: ''
@@ -23,10 +23,10 @@ class Comment extends React.Component {
         this.retrieveComments(this.props.parent_id)
     }
     
-    setCommentInEdit = (comment_id, contents) => {
+    setCommentInEdit = (comment_id, text) => {
         this.setState({
             commentInEdit: comment_id,
-            editingContents: contents
+            editingContents: text
         })
     }
 
@@ -48,18 +48,18 @@ class Comment extends React.Component {
 
     createComment = async () => {
 
-        if(!this.state.contents) {
+        if(!this.state.text) {
             alert("내용을 입력하세요.")
         }
         else {
             let commentInfo = {
-                contents: this.state.contents
+                text: this.state.text
             }
             await service.createComment(this.props.parent_id, commentInfo)
             .then((res) => {
                 console.log('[%s] Create Comment Success', TAG);
                 this.setState({
-                    contents: ''
+                    text: ''
                 })
                 this.retrieveComments();
             })
@@ -80,7 +80,7 @@ class Comment extends React.Component {
         }
         else {
             let commentInfo = {
-                contents: this.state.editingContents
+                text: this.state.editingContents
             }
     
             await service.updateComment(comment_id, commentInfo)
@@ -121,7 +121,7 @@ class Comment extends React.Component {
 
     handleChange = (e) => {
         this.setState({
-            contents: e.target.value
+            text: e.target.value
         });
     }
     
@@ -143,7 +143,7 @@ class Comment extends React.Component {
                     setCommentInEdit={this.setCommentInEdit} editingContents={this.state.editingContents}
                     editingContentsChange={this.editingContentsChange}/>
                 <div className="comment-write">
-                    <textarea placeholder="댓글을 입력하세요" name="contents" onChange={(e) => this.handleChange(e)} value={this.state.contents}></textarea>
+                    <textarea placeholder="댓글을 입력하세요" name="text" onChange={(e) => this.handleChange(e)} value={this.state.text}></textarea>
                     <button onClick={this.createComment}>ENTER</button>
                 </div>
             </div>            

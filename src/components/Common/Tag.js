@@ -16,7 +16,7 @@ function Tag({ clickAll, clickTag, tags, selectedTags }) {
     const makeTagList = (tags) => {
         const tagList = tags.map((tag) => {
             return (
-                <div className="tag-unit">
+                <div className="tag-unit" key={tag.tag_id}>
                     <input type="checkbox" id={tag.tag_id} checked={selectedTags.includes(tag.tag_id)}
                         onChange={(e) => clickTag(e)} />
                     <label htmlFor={tag.tag_id}>#{tag.tag_name}</label>

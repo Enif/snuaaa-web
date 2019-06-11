@@ -4,15 +4,16 @@ import Image from '../Common/Image'
 
 const MyPhotoList = ({photos}) => {
 
-    const retrievePhotos = () => {
+    const makePhotoList = () => {
 
         let photoList = photos.map(photo => {
+            let contentInfo = photo.contentPhoto;
             return (
-                <div className="photo-wrapper" key={photo.object_id}>
-                    <Link to={`/photo/${photo.object_id}`}>
+                <div className="photo-wrapper" key={contentInfo.content_id}>
+                    <Link to={`/photo/${contentInfo.content_id}`}>
                         <div className="photo-cover">
-                            <i className="material-icons">favorite</i> {photo.like_num}&nbsp;
-                            <i className="material-icons">comment</i> {photo.comment_num}
+                            <i className="material-icons">favorite</i> {contentInfo.like_num}&nbsp;
+                            <i className="material-icons">comment</i> {contentInfo.comment_num}
                         </div>
                         <Image imgSrc={photo.file_path} />
                     </Link>
@@ -26,7 +27,7 @@ const MyPhotoList = ({photos}) => {
         <div className="my-list-wrapper">
             <h4>등록한 사진</h4>
             <div className="photo-list-wrapper">
-                {retrievePhotos()}
+                {makePhotoList()}
             </div>
         </div>
     )

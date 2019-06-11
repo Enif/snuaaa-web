@@ -23,7 +23,7 @@ class Post extends React.Component {
             postState: ContentStateEnum.LOADING,
             editingPostData: {
                 title: '',
-                contents: ''
+                text: ''
             }
         }
     }
@@ -67,8 +67,8 @@ class Post extends React.Component {
                 likeInfo: res.data.likeInfo,
                 postState: ContentStateEnum.READY,
                 editingPostData: {
-                    title: res.data.postInfo.title,
-                    contents: res.data.postInfo.contents
+                    title: res.data.postInfo.content.title,
+                    text: res.data.postInfo.content.text
                 }
             })
         })
@@ -110,10 +110,10 @@ class Post extends React.Component {
         await service.likeObject(this.state.post_id)
         .then(() => {
             if(this.state.likeInfo) {
-                this.postData.like_num--;
+                this.postData.content.like_num--;
             }
             else {
-                this.postData.like_num++;
+                this.postData.content.like_num++;
             }
             this.setState({
                 likeInfo: !this.state.likeInfo
@@ -158,7 +158,7 @@ class Post extends React.Component {
                     )
                     else if(postState === ContentStateEnum.DELETED)
                         return (
-                            <Redirect to={`/board/${this.postData.board_id}`} />
+                            <Redirect to={`/board/${this.postData.content.board_id}`} />
                         )
                     else {
                         return (

@@ -7,24 +7,28 @@ const NewComments = ({comments}) => {
     const makeCommentList = () => {
         return comments.map(comment => {
 
+            console.log(comment)
+            let contentInfo = comment.content;
+            let boardInfo = comment.content.board;
+
             let linkTo = '';
-            if(comment.type === "PO") {
+            if(contentInfo.type === "PO") {
                 linkTo = `/post/${comment.parent_id}`
             }
-            else if(comment.type === "PH") {
+            else if(contentInfo.type === "PH") {
                 linkTo = `/photo/${comment.parent_id}`
             }
 
             return (
                 <div className="new-comment-list" key={comment.comment_id}>
-                    <div className="new-comment-boardname">{comment.board_name}</div>
+                    <div className="new-comment-boardname">{boardInfo.board_name}</div>
                     <div className="new-comment-contents">
                         <Link to={linkTo}>
-                            <p>{comment.title ? comment.title : "제목없음"}</p>
+                            <p>{contentInfo.title ? contentInfo.title : "제목없음"}</p>
                         </Link>
                         <div className="new-comment-contents-bot">
-                            <p className="new-comment-comment">{comment.contents}</p>
-                            <div className="new-comment-date">{convertDate(comment.created_at)}</div>
+                            <p className="new-comment-comment">{comment.text}</p>
+                            <div className="new-comment-date">{convertDate(comment.createdAt)}</div>
                         </div>
                     </div>
                 </div>

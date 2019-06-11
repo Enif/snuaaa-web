@@ -2,24 +2,28 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { convertDate } from 'utils/convertDate'
 
-const MyPostList = ({posts}) => {
+const MyPostList = ({ posts }) => {
 
-    const retrievePosts = () => {
+    const makePostList = () => {
 
         let postList = posts.map(post => {
-            return (
-                <div className="my-post-wrapper" key={post.object_id}>
-                    <div className="my-post-boardname">{post.board_name}</div>
-                    <div className="my-post-title">
-                        <Link to={`/post/${post.object_id}`}>
-                            <h5>{post.title}</h5>
-                        </Link>
+            let contentInfo = post.content;
+            let boardInfo = post.content.board;
+            if(contentInfo) {
+                return (
+                    <div className="my-post-wrapper" key={contentInfo.content_id}>
+                        <div className="my-post-boardname">{boardInfo.board_name}</div>
+                        <div className="my-post-title">
+                            <Link to={`/post/${contentInfo.content_id}`}>
+                                <h5>{contentInfo.title}</h5>
+                            </Link>
+                        </div>
+                        <div className="my-post-date">
+                            {convertDate(contentInfo.createdAt)}
+                        </div>
                     </div>
-                    <div className="my-post-date">
-                        {convertDate(post.created_at)}
-                    </div>
-                </div>
-            )
+                )
+            }
         });
         return postList
     }
@@ -27,7 +31,7 @@ const MyPostList = ({posts}) => {
     return (
         <div className="my-list-wrapper">
             <h4>등록한 게시글</h4>
-            {retrievePosts()}
+            {makePostList()}
         </div>
     )
 }

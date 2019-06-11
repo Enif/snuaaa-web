@@ -68,10 +68,10 @@ class Docu extends React.Component {
         await service.likeObject(this.state.doc_id)
         .then(() => {
             if(this.state.isLiked) {
-                this.docData.like_num--;
+                this.docData.content.like_num--;
             }
             else {
-                this.docData.like_num++;
+                this.docData.content.like_num++;
             }
             this.setState({
                 isLiked: !this.state.isLiked
@@ -101,12 +101,13 @@ class Docu extends React.Component {
                                 my_id={my_id}
                                 isLiked={isLiked}
                                 likeDoc={this.likeDoc}
-                                deleteDoc={this.deleteDoc} />
+                                deleteDoc={this.deleteDoc}
+                                setDocState={this.setDocState} />
                         )
                     }
                     else if(docState === ContentStateEnum.DELETED)
                         return (
-                            <Redirect to={`/board/${this.docData.board_id}`} />
+                            <Redirect to={`/board/${this.docData.content.board_id}`} />
                         )
                     else {
                         return <div>ERROR</div>

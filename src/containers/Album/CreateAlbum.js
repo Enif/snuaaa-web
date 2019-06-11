@@ -11,8 +11,8 @@ class CreateAlbum extends React.Component {
 
         this.state = {
             title: '',
-            contents: '',
-            checkedCategory: ''
+            text: '',
+            checkedCategory: null
         }
     }
 
@@ -58,7 +58,7 @@ class CreateAlbum extends React.Component {
             let albumInfo = {
                 category_id: this.state.checkedCategory,
                 title: this.state.title,
-                contents: this.state.contents
+                text: this.state.text
             }
             
             await service.createAlbum(this.props.board_id, albumInfo)
@@ -102,7 +102,7 @@ class CreateAlbum extends React.Component {
                             </tr>
                             <tr>
                                 <th>설명</th>
-                                <td className="crt-alb-contents"><textarea name="contents" placeholder="앨범 설명" onChange={(e) => this.handleChange(e)}/></td>
+                                <td className="crt-alb-contents"><textarea name="text" placeholder="앨범 설명" onChange={(e) => this.handleChange(e)}/></td>
                             </tr>
                         </tbody>
                     </table>

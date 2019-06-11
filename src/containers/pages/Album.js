@@ -93,9 +93,9 @@ class Album extends React.Component {
                                 <div className="album-wrapper">
                                     <AlbumInfo albumInfo={this.albumInfo} my_id={my_id} setAlbumState={this.setAlbumState} deleteAlbum={this.deleteAlbum} />
                                     <div className="enif-divider"></div>
-                                    <PhotoList photos={this.photos} redirectPhoto={this.redirectPhoto} togglePopUp={this.togglePopUp}/>
+                                    <PhotoList photos={this.photos} togglePopUp={this.togglePopUp}/>
                                     {
-                                        popUpState && <CreatePhoto album_id={album_id} board_id={this.albumInfo.board_id} tags={this.tagInfo} retrievePhotos={this.retrievePhotos} fetch={this.fetch} togglePopUp={this.togglePopUp} />
+                                        popUpState && <CreatePhoto album_id={album_id} board_id={this.albumInfo.content.board_id} tags={this.tagInfo} retrievePhotos={this.retrievePhotos} fetch={this.fetch} togglePopUp={this.togglePopUp} />
                                     }
                                     {
                                         (albumState === ContentStateEnum.EDITTING) &&
@@ -107,7 +107,7 @@ class Album extends React.Component {
                     }
                     else if (albumState === ContentStateEnum.DELETED) {
                         return (
-                            <Redirect to={`/board/${this.albumInfo.board_id}`} />
+                            <Redirect to={`/board/${this.albumInfo.content.board_id}`} />
                         )
                     }
                     else {

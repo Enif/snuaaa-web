@@ -22,8 +22,8 @@ class AlbumList extends React.Component {
             }
             
             return (
-                <div className="album-list" key={album.object_id} >
-                    <Link to={`/album/${album.object_id}`}>
+                <div className="album-list" key={album.content_id} >
+                    <Link to={`/album/${album.content_id}`}>
 
                         <Image imgSrc={album.file_path} defaultImgSrc={albumCover} />
                         <div className="album-cover">

@@ -9,7 +9,7 @@ function EditPost({editingPostData, handleEditting, setPostState, updatePost}) {
                 <input name="title" value={editingPostData.title} onChange={(e) => handleEditting(e)} placeholder="제목" />
             </div>
             <div className="writepost-content">
-                <textarea name="contents" value={editingPostData.contents} onChange={(e) => handleEditting(e)} placeholder="내용을 입력하세요" />
+                <textarea name="text" value={editingPostData.text} onChange={(e) => handleEditting(e)} placeholder="내용을 입력하세요" />
             </div>
             <div className="btn-wrapper">
                 <button className="enif-btn-common enif-btn-cancel" onClick={() => setPostState(ContentStateEnum.READY)}> 취소 </button>

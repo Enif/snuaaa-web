@@ -43,7 +43,7 @@ class Memory extends React.Component {
                 .then((res) => {
                     console.log('[%s] Retrieve Albums Success', TAG);
                     this.albums = res.data.albumInfo;
-                    this.albumCount = res.data.albumCount.count;
+                    this.albumCount = res.data.albumCount;
                     this.setIsReady(true);
                 })
                 .catch((err) => {
@@ -55,7 +55,7 @@ class Memory extends React.Component {
                 .then((res) => {
                     console.log('[%s] Retrieve Albums Success', TAG);
                     this.albums = res.data.albumInfo;
-                    this.albumCount = res.data.albumCount.count;
+                    this.albumCount = res.data.albumCount;
                     this.setIsReady(true);
                 })
                 .catch((err) => {
