@@ -23,7 +23,7 @@ const PhotoInfo = ({photoInfo, likeInfo, my_id, setPhotoState, deletePhoto, like
     }
 
     let backLink;
-    if(!albumInfo) {
+    if (!albumInfo) {
         backLink = `/board/brd08`;
     }
     else {
@@ -51,50 +51,53 @@ const PhotoInfo = ({photoInfo, likeInfo, my_id, setPhotoState, deletePhoto, like
 
 
                     <div className="enif-divider"></div>
-                    <p>{breakLine(content.text)}</p>
-                    <div className="enif-divider"></div>
+                    <div className="info-text-infos-wrapper">
+                        <div className="info-text-wrapper">
+                            <p>{breakLine(content.text)}</p>
+                        </div>
+                        <div className="enif-divider enif-hide-desktop"></div>
+                        <table className="info-infos-wrapper">
+                            {photoInfo.date && (
+                                <tr>
+                                    <td>Date</td>
+                                    <td>{convertDate(photoInfo.date)}</td>
+                                </tr>)}
 
-                    <table>
-                        { photoInfo.date && (
-                        <tr>
-                            <td>Date</td>
-                            <td>{convertDate(photoInfo.date)}</td>
-                        </tr>)}
+                            {photoInfo.location && (
+                                <tr>
+                                    <td>Location</td>
+                                    <td>{photoInfo.location}</td>
+                                </tr>)}
 
-                        { photoInfo.location && (
-                        <tr>
-                            <td>Location</td>
-                            <td>{photoInfo.location}</td>
-                        </tr>)}
+                            {photoInfo.camera && (
+                                <tr>
+                                    <td>Camera</td>
+                                    <td>{photoInfo.camera}</td>
+                                </tr>)}
 
-                        { photoInfo.camera && (
-                        <tr>
-                            <td>Camera</td>
-                            <td>{photoInfo.camera}</td>
-                        </tr>)}
+                            {photoInfo.lens && (
+                                <tr>
+                                    <td>Lens</td>
+                                    <td>{photoInfo.lens}</td>
+                                </tr>)}
 
-                        { photoInfo.lens && (
-                        <tr>
-                            <td>Lens</td>
-                            <td>{photoInfo.lens}</td>
-                        </tr>)}
+                            {photoInfo.focal_length && (
+                                <tr>
+                                    <td>@</td>
+                                    <td>{photoInfo.focal_length}</td>
+                                </tr>)}
 
-                        { photoInfo.focal_length && (
-                        <tr>
-                            <td>@</td>
-                            <td>{photoInfo.focal_length}</td>
-                        </tr>)}
-
-                        { (photoInfo.f_stop || photoInfo.exposure_time || photoInfo.iso) && (
-                        <tr>
-                            <td>Setting</td>
-                            <td>
-                                {photoInfo.f_stop && <>F/{photoInfo.f_stop}</>}
-                                {photoInfo.exposure_time && <> {photoInfo.exposure_time}</>}
-                                {photoInfo.iso && <> ISO{photoInfo.iso}</>}
-                            </td>
-                        </tr>)}
-                    </table>
+                            {(photoInfo.f_stop || photoInfo.exposure_time || photoInfo.iso) && (
+                                <tr>
+                                    <td>Setting</td>
+                                    <td>
+                                        {photoInfo.f_stop && <>F/{photoInfo.f_stop}</>}
+                                        {photoInfo.exposure_time && <> {photoInfo.exposure_time}</>}
+                                        {photoInfo.iso && <> ISO{photoInfo.iso}</>}
+                                    </td>
+                                </tr>)}
+                        </table>
+                    </div>
                 </div>
                 <div className="enif-divider"></div>
                 <ProfileMini profileImg={userInfo.profile_path} nickname={userInfo.nickname} userDesc={userInfo.introduction}/>

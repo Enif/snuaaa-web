@@ -2,7 +2,7 @@
   "name": "snuaaa-react",
   "version": "0.7.0",
   "private": true,
-  "homepage": "http://52.78.161.191:8080/",
+  "homepage": "http://52.78.161.191/",
   "license": "UNLICENSED",
   "author": {
     "name": "Youngjae Kim",
@@ -12,11 +12,11 @@
     "Sooyeon Ahn"
   ],
   "dependencies": {
-    "axios": "^0.18.0",
-    "node-sass": "^4.11.0",
+    "axios": "^0.18.1",
+    "node-sass": "^4.12.0",
     "react": "^16.8.6",
     "react-app-polyfill": "^0.2.2",
-    "react-datepicker": "^2.5.0",
+    "react-datepicker": "^2.7.0",
     "react-dom": "^16.8.6",
     "react-redux": "^5.1.1",
     "react-router": "^4.3.1",

@@ -213,7 +213,7 @@
 
 .enif-divider {
     margin: 10px 0px;
-    height: 3px;
+    height: 2px;
     background-color: #E8E8E8;
 }
 
@@ -223,6 +223,9 @@
     top: 0;
 }
 
+.enif-hide-desktop {
+    visibility: hidden;
+}
 
 // .enif-input-field input:invalid {
 //     // background-color: #fff4f4;
@@ -253,6 +256,14 @@
         display: inline-block;
         margin-left: calc(95% - 3.5rem);
         bottom: 2rem;
+    }
+
+    .enif-hide-desktop {
+        visibility: visible;
+    }
+
+    .enif-hide-mobile {
+        display: none;
     }
 }
 
