@@ -5,23 +5,22 @@ import Image from 'components/Common/Image';
 const PhotoList = ({ photos, togglePopUp }) => {
 
     const makePhotoList = () => {
-        let photoList = photos.map(photo => {
-            let contentInfo = photo.contentPhoto;
-            if(contentInfo) {
+        if (photos.length > 0) {
+            return photos.map(photo => {
+                let contentInfo = photo.contentPhoto;
                 return (
                     <div className="photo-wrapper" key={contentInfo.content_id}>
                         <Link to={`/photo/${contentInfo.content_id}`}>
                             <div className="photo-cover">
                                 <i className="material-icons">favorite</i> {contentInfo.like_num}&nbsp;
-                                <i className="material-icons">comment</i> {contentInfo.comment_num}
+                                    <i className="material-icons">comment</i> {contentInfo.comment_num}
                             </div>
                             <Image imgSrc={photo.file_path} />
                         </Link>
                     </div>
                 )
-            }
-        })
-        return photoList
+            })
+        }
     }
 
     return (

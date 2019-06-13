@@ -6,10 +6,10 @@ const MyPostList = ({ posts }) => {
 
     const makePostList = () => {
 
-        let postList = posts.map(post => {
-            let contentInfo = post.content;
-            let boardInfo = post.content.board;
-            if(contentInfo) {
+        if (posts.length > 0) {
+            return posts.map(post => {
+                let contentInfo = post.content;
+                let boardInfo = post.content.board;
                 return (
                     <div className="my-post-wrapper" key={contentInfo.content_id}>
                         <div className="my-post-boardname">{boardInfo.board_name}</div>
@@ -23,9 +23,8 @@ const MyPostList = ({ posts }) => {
                         </div>
                     </div>
                 )
-            }
-        });
-        return postList
+            });
+        }
     }
 
     return (
