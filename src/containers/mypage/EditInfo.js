@@ -29,7 +29,7 @@ class EditInfo extends React.Component {
                     regExp: '^[A-Za-z0-9]{4,12}$'
                 },
                 {
-                    label: 'name',
+                    label: 'username',
                     value: '',
                     valid: null,
                     isRequired: true,
@@ -158,8 +158,8 @@ class EditInfo extends React.Component {
                     if(info.label === 'nickname') {
                         info.value = resInfo.nickname
                     }
-                    if(info.label === 'name') {
-                        info.value = resInfo.name 
+                    if(info.label === 'username') {
+                        info.value = resInfo.username 
                     }
                     if(info.label === 'aaa_no') {
                         info.value = resInfo.aaa_no

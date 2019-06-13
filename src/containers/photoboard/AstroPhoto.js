@@ -43,7 +43,7 @@ class AstroPhoto extends React.Component {
             await service.retrieveAlbumsInPhotoBoard(board_id, this.state.pageIdx)
                 .then((res) => {
                     this.albums = res.data.albumInfo;
-                    this.count = res.data.albumCount.count;
+                    this.count = res.data.albumCount;
                     this.setIsReady(true);
                 })
                 .catch((err) => {
@@ -55,7 +55,7 @@ class AstroPhoto extends React.Component {
                 service.retrievePhotosInPhotoBoardByTag(this.props.board_id, this.state.selectedTags, this.state.pageIdx)
                     .then((res) => {
                         this.photos = res.data.photoInfo;
-                        this.count = res.data.photoCount.count;
+                        this.count = res.data.photoCount;
                         this.setIsReady(true);
                     })
                     .catch((err) => {
@@ -70,7 +70,7 @@ class AstroPhoto extends React.Component {
                     .then((res) => {
                         this.tags = res[0].data;
                         this.photos = res[1].data.photoInfo;
-                        this.count = res[1].data.photoCount.count;
+                        this.count = res[1].data.photoCount;
                         this.setIsReady(true);
                     })
                     .catch((err) => {

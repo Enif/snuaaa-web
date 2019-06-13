@@ -6,7 +6,12 @@ import ContentsStateEnum from 'common/ContentStateEnum';
 import { breakLine } from 'utils/breakLine';
 import { convertDate, convertFullDate } from 'utils/convertDate'
 
-const PhotoInfo = ({ photoInfo, albumInfo, tagInfo, likeInfo, my_id, setPhotoState, deletePhoto, likePhoto }) => {
+const PhotoInfo = ({photoInfo, likeInfo, my_id, setPhotoState, deletePhoto, likePhoto}) => {
+
+    let content = photoInfo.contentPhoto;
+    let albumInfo = photoInfo.album;
+    let userInfo = photoInfo.contentPhoto.user;
+    let tagInfo = photoInfo.contentPhoto.tags;
 
     const makeTagList = () => {
         let tagList = tagInfo.map((tag) => {
@@ -22,7 +27,7 @@ const PhotoInfo = ({ photoInfo, albumInfo, tagInfo, likeInfo, my_id, setPhotoSta
         backLink = `/board/brd08`;
     }
     else {
-        backLink = `/album/${albumInfo.object_id}`
+        backLink = `/album/${albumInfo.content_id}`
     }
 
     return (
@@ -31,7 +36,7 @@ const PhotoInfo = ({ photoInfo, albumInfo, tagInfo, likeInfo, my_id, setPhotoSta
                 <Link to={backLink}>
                     <i className="material-icons">keyboard_backspace</i>
                 </Link>
-                <h5>{albumInfo && albumInfo.title}</h5>
+                <h5>{albumInfo ? albumInfo.title : "기본앨범"}</h5>
             </div>
             <div className="photo-img-wrapper">
                 <Image imgSrc={photoInfo.file_path} />
@@ -40,15 +45,15 @@ const PhotoInfo = ({ photoInfo, albumInfo, tagInfo, likeInfo, my_id, setPhotoSta
             <div className="photo-contents-wrapper">
 
                 <div className="info-wrapper">
-                    <h4>{photoInfo.title}</h4>
+                    <h4>{content.title}</h4>
                     <div className="info-tags">{makeTagList()}</div>
-                    <p className="info-date">{convertFullDate(photoInfo.created_at)}</p>
+                    <p className="info-date">{convertFullDate(content.createdAt)}</p>
 
 
                     <div className="enif-divider"></div>
                     <div className="info-text-infos-wrapper">
                         <div className="info-text-wrapper">
-                            <p>{breakLine(photoInfo.contents)}</p>
+                            <p>{breakLine(content.text)}</p>
                         </div>
                         <div className="enif-divider enif-hide-desktop"></div>
                         <table className="info-infos-wrapper">
@@ -95,11 +100,11 @@ const PhotoInfo = ({ photoInfo, albumInfo, tagInfo, likeInfo, my_id, setPhotoSta
                     </div>
                 </div>
                 <div className="enif-divider"></div>
-                <ProfileMini profileImg={photoInfo.profile_path} nickname={photoInfo.nickname} userDesc={photoInfo.introduction} />
+                <ProfileMini profileImg={userInfo.profile_path} nickname={userInfo.nickname} userDesc={userInfo.introduction}/>
                 <div className="enif-divider"></div>
                 <div className="actions-wrapper">
                     {
-                        (my_id === photoInfo.author_id) &&
+                        (my_id === userInfo.user_id) &&
                         <div className="edit-delete-wrapper">
                             <div className="edit-wrapper">
                                 <i className="material-icons pointer" onClick={() => setPhotoState(ContentsStateEnum.EDITTING)}>edit</i>
@@ -114,11 +119,11 @@ const PhotoInfo = ({ photoInfo, albumInfo, tagInfo, likeInfo, my_id, setPhotoSta
                             <i className="material-icons pointer" onClick={() => likePhoto()}>
                                 {likeInfo ? 'favorite' : 'favorite_border'}
                             </i>
-                            {photoInfo.like_num}
+                            {content.like_num}
                         </div>
                         <div className="comment-num-wrapper">
                             <i className="material-icons">comment</i>
-                            {photoInfo.comment_num}
+                            {content.comment_num}
                         </div>
                     </div>
                 </div>

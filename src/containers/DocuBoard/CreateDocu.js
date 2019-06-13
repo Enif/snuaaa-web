@@ -12,6 +12,7 @@ class CreateDocu extends React.Component {
         this.state = {
             generation: "",
             title: "",
+            text: "",
             category: null,
             uploadFiles: [],
         }
@@ -59,6 +60,7 @@ class CreateDocu extends React.Component {
             docuInfo.append('generation', this.state.generation);
             docuInfo.append('category_id', this.state.category);
             docuInfo.append('title', this.state.title);
+            docuInfo.append('text', this.state.text);
             for (let i = 0, max = this.state.uploadFiles.length; i < max; i++) {
                 docuInfo.append('uploadFiles', this.state.uploadFiles[i]);
             }
@@ -143,7 +145,7 @@ class CreateDocu extends React.Component {
                     </div>
                     <div className="docu-desc-wrapper">
                         <label htmlFor="crtDocDesc">본문</label>
-                        <textarea className="docu-desc" id="crtDocDesc" name="desc" placeholder="본문" onChange={(e) => this.handleChange(e)} />
+                        <textarea className="docu-desc" id="crtDocDesc" name="text" placeholder="본문" onChange={(e) => this.handleChange(e)} />
                     </div>
                     <div className="docu-files-wrapper">
                         <label htmlFor="crtDocFile">

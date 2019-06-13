@@ -13,8 +13,8 @@ class EditPhoto extends React.Component {
         super(props);
 
         this.state = {
-            title: props.photoInfo.title,
-            desc: props.photoInfo.contents,
+            title: props.photoInfo.contentPhoto.title,
+            text: props.photoInfo.contentPhoto.text,
             date: props.photoInfo.date && new Date(props.photoInfo.date),
             location: props.photoInfo.location,
             camera: props.photoInfo.camera,
@@ -23,8 +23,8 @@ class EditPhoto extends React.Component {
             f_stop: props.photoInfo.f_stop,
             exposure_time: props.photoInfo.exposure_time,
             iso: props.photoInfo.iso,
-            selectedTags: props.tagInfo,
-            photo_id: props.photoInfo.object_id,
+            selectedTags: props.photoInfo.contentPhoto.tags,
+            photo_id: props.photoInfo.content_id,
             file_path: props.photoInfo.file_path,
             // uploadPhotos: [],
             imgDatas: [],
@@ -76,12 +76,12 @@ class EditPhoto extends React.Component {
 
         this.props.setPhotoState(ContentsStateEnum.LOADING);
 
-        const { photo_id, title, desc, date, location, camera, lens,
+        const { photo_id, title, text, date, location, camera, lens,
             focal_length, f_stop, exposure_time, iso } = this.state;
 
         const photoInfo = {
             title: title,
-            desc: desc,
+            text: text,
             date: date,
             location: location,
             camera: camera,
@@ -95,7 +95,7 @@ class EditPhoto extends React.Component {
         // const photosForm = new FormData();
 
         // photosForm.append('title', title);
-        // photosForm.append('desc', desc);
+        // photosForm.append('text', text);
         // photosForm.append('date', date);
         // photosForm.append('location', location);
         // photosForm.append('camera', camera);
@@ -118,7 +118,7 @@ class EditPhoto extends React.Component {
 
     render() {
         console.log('[%s] render', TAG)
-        const { title, desc, date, location, camera, lens, focal_length, f_stop, exposure_time, iso, selectedTags } = this.state
+        const { title, text, date, location, camera, lens, focal_length, f_stop, exposure_time, iso, selectedTags } = this.state
 
         return (
             <div className="crt-photo-popup">
@@ -139,7 +139,7 @@ class EditPhoto extends React.Component {
                                     {this.makeTagList()}
                                 </div>}
 
-                            <CreatePhotoInfo title={title} desc={desc} date={date} location={location}
+                            <CreatePhotoInfo title={title} text={text} date={date} location={location}
                                 camera={camera} lens={lens} focal_length={focal_length} f_stop={f_stop}
                                 exposure_time={exposure_time} iso={iso} handleChange={this.handleChange} handleDate={this.handleDate} />
 

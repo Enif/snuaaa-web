@@ -64,7 +64,7 @@ export function createPost(board_id, data) {
 }
 
 export function retrieveComments(parent_id) {
-    return axios.get(SERVER_URL + `api/object/${parent_id}/comment`);
+    return axios.get(SERVER_URL + `api/object/${parent_id}/comments`);
 }
 
 export function createComment(parent_id, data) {

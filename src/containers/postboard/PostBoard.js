@@ -64,7 +64,7 @@ class PostBoard extends React.Component {
             .then((res) => {
                 console.log('[%s] Retrieve Posts Success', TAG);
                 this.posts = res.data.postInfo;
-                this.postCount = res.data.postCount.count;
+                this.postCount = res.data.postCount;
                 this.setIsReady(true);
             })
             .catch((err) => {
