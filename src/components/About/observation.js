@@ -1,5 +1,5 @@
 import React from 'react';
-import domImg from '../../assets/img/dome.jpg'
+import domImg from 'assets/img/dome.jpg'
 
 class Ovservation extends React.Component {
 
@@ -8,7 +8,10 @@ class Ovservation extends React.Component {
             <div className="intro-div-wrapper" id="observation">
                 <h3>김태영 기념 관측소 소개</h3>
                 <div className="intro-content">
-                    <img className='img-right' src={domImg} />
+                    <div className='img-right'>
+                        <img src={domImg} alt="dom" />
+                        <p>We ♡ Dome! 09곽세종 작</p>
+                    </div>
                     <p>
                         &nbsp;김태영 기념 관측소는 AAA 관측활동의 대부분이 일어나는 동아리 전용 관측소 입니다.<br />
                         <br />

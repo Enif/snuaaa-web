@@ -1,53 +1,63 @@
 import React from 'react';
-import Comment from '../../containers/Comment';
+import { Link } from 'react-router-dom';
+import ContentStateEnum from 'common/ContentStateEnum';
+import Comment from 'containers/Comment';
 import ProfileMini from '../Common/ProfileMini';
-import { convertFullDate } from '../../utils/convertDate';
-import { breakLine } from '../../utils/breakLine';
+import { convertFullDate } from 'utils/convertDate';
+import { breakLine } from 'utils/breakLine';
 
-const PostComponent = ({postData, post_id, likeInfo, likePost}) => {
+const PostComponent = ({postData, post_id, my_id, likeInfo, likePost, setPostState, deletePost}) => {
+
+    let content = postData.content;
+    let user = postData.content.user;
 
     return (
-
         <div className="post-wrapper">
             <div className="post-title">
-                <h5>{postData.title}</h5>
+                <Link to={`/board/${content.board_id}`}>
+                    <i className="material-icons">keyboard_backspace</i>
+                </Link>
+                <h5>{content.title}</h5>
             </div>
             <div className="post-info-other">
                 <div className="post-author">
-                    {postData.nickname}
+                    {user.nickname}
                 </div>
                 <div className="post-date">
-                    {convertFullDate(postData.created_at)}
+                    {convertFullDate(content.createdAt)}
                 </div>
             </div>
             <div className="post-content">
-                {breakLine(postData.contents)}
+                {breakLine(content.text)}
             </div>
-            <ProfileMini profileImg={postData.profile_path} nickname={postData.nickname} userDesc={postData.introduction}/>
+            <ProfileMini profileImg={user.profile_path} nickname={user.nickname} userDesc={user.introduction}/>
             <div className="enif-divider"></div>
             <div className="actions-wrapper">
-                <div className="edit-delete-wrapper">
-                    <div className="edit-wrapper">
-                        <i className="material-icons pointer">edit</i>
+                {
+                    (my_id === content.author_id) &&
+                    <div className="edit-delete-wrapper">
+                        <div className="edit-wrapper">
+                            <i className="material-icons pointer" onClick={() => setPostState(ContentStateEnum.EDITTING)}>edit</i>
+                        </div>
+                        <div className="delete-wrapper">
+                            <i className="material-icons pointer" onClick={() => deletePost()}>delete</i>
+                        </div>
                     </div>
-                    <div className="delete-wrapper">
-                        <i className="material-icons pointer">delete</i>
-                    </div>
-                </div>
+                }
                 <div className="like-comment-num-wrapper">
                     <div className="like-num-wrapper">
                         <i className="material-icons pointer" onClick={() => likePost()}>
                             { likeInfo ? 'favorite' : 'favorite_border'}
                         </i>
-                        {postData.like_num}                  
+                        {content.like_num}
                     </div>
                     <div className="comment-num-wrapper">
                         <i className="material-icons">comment</i>
-                        {postData.comment_num}
+                        {content.comment_num}
                     </div>
                 </div>
             </div>
-            <Comment parent_id={post_id}/>
+            <Comment parent_id={content.content_id}/>
         </div>
     )
 }

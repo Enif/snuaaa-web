@@ -7,7 +7,7 @@
     }
     
 .intro-div-wrapper {
-    padding: 10px;
+    padding: 30px 10px 10px 10px;
     line-height: 1.3em;
     h3 {
         color: #75a3e6;
@@ -17,7 +17,7 @@
         font-weight: bold;
     }
     h4 {
-        padding: 10px;
+        // padding: 10px;
         font-size: 16px;
         font-weight: bold;
     }
@@ -25,6 +25,7 @@
         font-size: 16px;
         line-height: 1.5;
         display: block;
+        margin-bottom: 20px;
         .img-left {
             margin: 10px;
             float: left;
@@ -36,6 +37,11 @@
             float: right;
             width: 200px;
             display: block;
+            p {
+                text-align: right;
+                color: #646464;
+                font-size: 14px;
+            }
         }
         .img-sanghui {
             width: 150px;
@@ -67,19 +73,16 @@
     }
 }
 
-
-.intro-div-wrapper table,
-.intro-div-wrapper th,
-.intro-div-wrapper td{
-    font-size: 0.9em;
-    border: 1px solid black;
-    padding: 0.5em;
+.intro-contact-wrapper {
+    h4 {
+        margin: 10px 0px;
+    }
 }
 
 .officers-wrapper {
     .gen-wrapper {
         display: flex;
-        height: 70px;
+        min-height: 70px;
         margin-top: 10px;
         .generation {
             flex-basis: 12%;
@@ -117,11 +120,122 @@
     }
 }
 
+.intro-history-wrapper {
+    // height: 1000px;
+    position: relative;
+    padding-top: 20px;
+    .intro-line {
+        position: absolute;
+        left: 50%;
+        width: 2px;
+        height: 100%;
+        background-color: #b4b4b4;
+        z-index: 0;
+    }
+    .intro-history-unit {
+        margin-top: -40px;
+        h4 {
+            padding: 5px 0px;
+        }
+        p {
+            word-spacing: -0.1rem;
+        }
+
+        &:nth-child(odd) {
+            text-align: left;
+            .unit-half {
+                padding-left: calc(50% + 30px);
+            }
+            .mark-year {
+                right: 39px;
+                &::after {
+                    position: absolute;
+                    top: 3px;
+                    left: 24px;
+                    height: 5px;
+                    width: 5px;
+                    border: 2px solid #CDD9EA;
+                    border-radius: 50%;
+                    background-color: #CDD9EA;
+                    content: "";
+                }
+            }
+        }
+        &:nth-child(even) {
+            text-align: right;
+            .unit-half {
+                padding-right: calc(50% + 30px);
+            }
+            .mark-year {
+                left: 41px;
+                &::before {
+                    position: absolute;
+                    top: 3px;
+                    right: 24px;
+                    height: 5px;
+                    width: 5px;
+                    border: 2px solid #CDD9EA;
+                    border-radius: 50%;
+                    background-color: #CDD9EA;
+                    content: "";
+                }
+            }
+        }
+        &:nth-child(2) {
+            .mark-year {
+                top: 34px;
+                left: 49px;
+                height: 36px;
+                width: 36px;
+                border: 7px solid #7193C4;
+                background-color: #FFFFFF;
+                &::before {
+                    top: 5px;
+                    right: 32px;
+                }
+            }
+        }
+
+        .mark-year {
+            display: inline-block;
+            position: relative;
+            top: 28px;
+            height: 20px;
+            width: 20px;
+            border: 2px solid #7193C4;
+            border-radius: 50%;
+            background-color: #7193C4;
+        }
+    }
+}
+
+.arrow-wrapper {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #49A0AE;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 1px 1px 3px 0px #949494;
+    .material-icons {
+        color: #FFFFFF;
+    }
+}
+
 @media screen and (max-width: 800px) {
+
+    .intro-div-wrapper {
+        padding-top: 1.3rem;
+        padding-bottom: 1rem;
+    }
+
+
     .officers-wrapper {
 
         .gen-wrapper {
-            height: 4rem;
+            min-height: 4rem;
             .generation {
                 border-radius: 1rem;
                 flex-basis: 20%;

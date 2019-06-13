@@ -1,7 +1,11 @@
 import * as types from './ActionTypes';
 
-export const authLogin = () => ({
-    type: types.AUTH_LOGIN
+export const authLogin = (user_id, nickname, level, profile_path) => ({
+    type: types.AUTH_LOGIN,
+    user_id: user_id,
+    nickname: nickname,
+    level: level,
+    profile_path: profile_path
 });
 
 export const authLogout = () => ({

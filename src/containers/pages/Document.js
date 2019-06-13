@@ -1,33 +1,80 @@
 import React from 'react';
-import * as service from '../../services';
-import Loading from '../../components/Common/Loading';
-import DocuMenu from '../../components/Document/DocuMenu';
-import DocuList from '../../components/Document/DocuList';
-import CreateDocu from '../../components/Document/CreateDocu';
+import { Redirect } from 'react-router';
+import { connect } from 'react-redux';
+import * as service from 'services';
+import ContentStateEnum from 'common/ContentStateEnum';
+import Loading from 'components/Common/Loading';
+import DocuComponent from 'components/Document/DocuComponent';
 
-const TAG = 'DOCUMENT'
+const TAG = 'DOCU'
 
-class Document extends React.Component {
+class Docu extends React.Component {
 
     constructor(props) {
+        console.log(`[${TAG}] constructor`);
         super(props);
-        this.documents = [];
+
+        this.docData = undefined;
+
         this.state = {
-            isDocuListReady: false,
-            popUpState: false
+            doc_id: this.props.match.params.doc_id,
+            isLiked: false,
+            docState: ContentStateEnum.LOADING
         }
-        this.retrieveDocuments();
     }
 
-    retrieveDocuments = async() => {
-        this.setState({
-            isDocuListReady: false
-        })
-        await service.retrieveDocuments()
+    componentDidMount() {
+        this.fetch();
+    }
+
+    fetch = async() => {
+        await service.retrieveDocument(this.state.doc_id)
         .then((res) => {
-            this.documents = res.data;
+            this.docData = res.data.docuInfo;
             this.setState({
-                isDocuListReady: true
+                isLiked: res.data.likeInfo,
+                docState: ContentStateEnum.READY
+            })
+        })
+        .catch((err) => {
+            console.error(err);
+            this.setDocState(ContentStateEnum.ERROR);
+        })
+    }
+
+    setDocState = (state) => {
+        this.setState({
+            docState: state
+        })
+    }
+
+    deleteDoc = async () => {
+
+        let goDrop = window.confirm("정말로 삭제하시겠습니까? 삭제한 게시글은 다시 복원할 수 없습니다.");
+        if(goDrop) {
+            await service.deleteDocument(this.state.doc_id)
+            .then(() => {
+                alert("게시글이 삭제되었습니다.");
+                this.setDocState(ContentStateEnum.DELETED);
+            })
+            .catch((err) => {
+                console.error(err);
+                alert("삭제 실패");
+            })
+        }
+    }
+
+    likeDoc = async() => {
+        await service.likeObject(this.state.doc_id)
+        .then(() => {
+            if(this.state.isLiked) {
+                this.docData.content.like_num--;
+            }
+            else {
+                this.docData.content.like_num++;
+            }
+            this.setState({
+                isLiked: !this.state.isLiked
             })
         })
         .catch((err) => {
@@ -35,55 +82,47 @@ class Document extends React.Component {
         })
     }
 
-    retrieveDocumentsByGeneration = async(generation) => {
-        this.setState({
-            isDocuListReady: false
-        })
-        await service.retrieveDocumentsByGeneration(generation)
-        .then((res) => {
-            this.documents = res.data;
-            this.setState({
-                isDocuListReady: true
-            })
-        })
-        .catch((err) => {
-            console.error(err)
-        })
-    }
-
-    togglePopUp = () => {
-        this.setState({
-            popUpState: !this.state.popUpState
-        })
-    }
 
     render() {
-        let { isDocuListReady } = this.state
-        return(
-            <div className="board-wrapper">
-                <h2>문서게시판</h2>
-                <DocuMenu retrieveDocumentsByGeneration={this.retrieveDocumentsByGeneration} />
-                {(() => {
-                    if(isDocuListReady) {
-                        return(
-                            <>
-                                <DocuList documents={this.documents} />
-                                <button className="enif-btn-circle" onClick={() => this.togglePopUp()}>+</button>
-                                {
-                                    this.state.popUpState && <CreateDocu retrieveDocuments={this.retrieveDocuments} togglePopUp={this.togglePopUp} />
-                                }
-                            </>           
+        const { docState, isLiked } = this.state;
+        const { my_id } = this.props;
+
+        return (
+            <>
+            {
+                (() => {
+                    if(docState === ContentStateEnum.LOADING) {
+                        return <Loading />
+                    }
+                    else if(docState === ContentStateEnum.READY) {
+                        return (
+                            <DocuComponent
+                                docData={this.docData}
+                                my_id={my_id}
+                                isLiked={isLiked}
+                                likeDoc={this.likeDoc}
+                                deleteDoc={this.deleteDoc}
+                                setDocState={this.setDocState} />
                         )
                     }
+                    else if(docState === ContentStateEnum.DELETED)
+                        return (
+                            <Redirect to={`/board/${this.docData.content.board_id}`} />
+                        )
                     else {
-                        return(
-                            <Loading />
-                        )
+                        return <div>ERROR</div>
                     }
-                })()}
-            </div>
+                })()
+            }
+            </>
         )
     }
 }
 
-export default Document;
+const mapStateToProps = (state) => {
+    return {
+        my_id: state.authentication.user_id
+    }
+}
+
+export default connect(mapStateToProps, null)(Docu);

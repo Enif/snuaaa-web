@@ -7,9 +7,9 @@
     background-color: #05070e;
 
     .main-header {
-        max-width: 1640px;
+        max-width: 1920px;
         width: 100%;
-        height: 300px;
+        height: 263px;
         margin: 0 auto;
         background-image: url("./assets/img/header.gif");
         background-repeat: no-repeat;
@@ -17,16 +17,18 @@
         background-position: center;
         .header-logo {
             float: left;
-            margin: 15px;
+            margin: 14px 10px 15px 30px;
             color: white;
             vertical-align: middle;
-            height: 50px;
+            height: 40px;
             display: flex;
             img {
                 height: 100%;
             }
             p {
-                line-height: 50px;
+                margin-left: 10px;
+                line-height: 40px;
+                font-size: 17px;
             }
         }
         .profile-img-wrapper {
@@ -34,9 +36,14 @@
             margin: 15px;
             float: right;
             color: white;
+
             img {
                 width: 50px;
+                height: 50px;
                 cursor: pointer;
+                border-radius: 50%;
+                object-fit: cover;
+                // background-color: #FFFFFF;
             }
         }       
     }
@@ -49,16 +56,19 @@
 }
 
 .main-menu-nav-wrapper {
-    height: 30px;
-    // position: relative;
+    height: 42px;
+    text-align: center;
+    // padding-top: 12px;
     background-color: #05070e;
     width: 100%;
     z-index: 10;
+    position: sticky;
+    top: 0;
 
     nav {
         color: aliceblue;
-        height: 30px;
-        background-color: #05070e;
+        height: 42px;
+        background-color: #000E2C;
         .nav-items {
             height: 100%;
         }
@@ -68,12 +78,15 @@
         height: inherit;
         display: inline-block;        
         color: aliceblue;
-        background-color: #05070e;
+        background-color: #000E2C;
         .menu-item-1 {
             display: block;
-            height: 25px;    
-            padding-left: 20px;
-            padding-right: 20px;
+            height: 35px;
+            padding-top: 13px;
+            padding-left: 10px;
+            padding-right: 10px;
+            margin: 0px 10px 0px 10px;
+            // line-height: 25px;
             color: aliceblue;
             cursor: pointer;
             &:hover {
@@ -176,8 +189,10 @@
 }
 
 .popup-user-wrapper {
+    position: absolute;
+    z-index: 11;
     display: block;
-    width: 100%;
+    width: 150px;
     height: 200px;
     margin-top: 10px;
     padding-top: 20px;
@@ -188,7 +203,8 @@
         display: none;
     }
     p {
-        line-height: 30px;
+        color: #FFFFFF;
+        line-height: 40px;
         cursor: pointer;
     }
 }
@@ -202,18 +218,28 @@
 
         .main-header {
             width: 100%;
-            height: 50px;
+            height: auto;
             margin: 0 auto;
             background-color: #05070e;
             background-image: none;
             .header-logo {
                 margin: 0;
+                img {
+                    padding: 0.25rem;
+                    width: 3rem;
+                    height: 3rem;
+                }
+                p {
+                    margin-left: 0;
+                    line-height: 3rem;
+                }
             }
             .profile-img-wrapper {
                 width: 3rem;
-                margin: 0.7rem;
+                margin: 0.3rem;
                 img {
-                    width: 2rem;
+                    width: 2.5rem;
+                    height: 2.5rem;
                 }
             }
         }
@@ -225,13 +251,14 @@
         font-size: 0.8rem;
 
         nav {
-            // height: 2rem;
+            height: 2rem;
             margin: 0;
             .nav-items {
                 display: flex;
                 background-color: #7092c4;
                 width: 100%;
                 position: absolute;
+                justify-content: space-around;
             }
         }
         
@@ -243,8 +270,10 @@
                 display: none;
             }
             .menu-item-1 {
+                padding-top: 0;
                 padding-left: 0.5rem;
                 padding-right: 0.5rem;
+                margin: 0px 0px 0px 0px;
                 line-height: 2rem;
 
                 &:hover {
@@ -275,7 +304,7 @@
                     li {
                         height: 100%;
                         color: #05070e;
-                        padding-top: 0.5rem;
+                        padding: 0.7rem 0.5rem;
                         &:hover {
                             background-color: #ffdea6;
                         }
@@ -296,12 +325,6 @@
         width: 100%;
         background-color: #fff;
         box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(0, 0, 0, 0.05);
-    }
-    // .nav-items > li  {
-    //     // display: block;
-    // }
-    .nav-items > li > a {
-        // vertical-align: middle;
     }
     
     .popup-user-wrapper {
@@ -325,9 +348,12 @@
             right: 0;
             margin: 1rem;
             width: 2rem;
-            font-size: 3rem;
-        }    
+            .material-icons {
+                font-size: 2rem;
+            }
+        }
         p {
+
             font-size: 1.5rem;
             line-height: 4rem;
         }

@@ -1,55 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-const TAG = 'CATEGORY';
+function Category({ categories, selected, clickAll, clickCategory }) {
 
-class Category extends React.Component {
+    const makeCategories = () => {
 
-    // board_id, categories, clickAll, clickCategory
-    // const [selected, setSelected] = useState('all')
-    constructor(props) {
-        console.log(`[${TAG}] constructor`)
-        super(props);
-
-        this.state = {
-            selected: undefined
-        }
-    }
-
-    componentDidMount() {
-        this.setState({
-            selected: 'all'
-        })
-    }
-
-    setSelectedCategory = (category_id) => {
-        console.log(category_id)
-        this.setState({
-            selected: category_id
-        })
-    }
-
-    makeCategories = () => {
-
-        let selected = this.state.selected
-        
-        let categoryList = this.props.categories.map(category => {
+        let categoryList = categories.map(category => {
             let style = {
                 "border": `1px solid ${category.category_color}`
             }
             let style_selected = {
                 "border": `1px solid ${category.category_color}`,
-                "background-color": category.category_color,
+                "backgroundColor": category.category_color,
                 "color": "#eeeeee"
             }
             return (
-                
+
                 <div className="category-obj"
-                key={category.category_id}
-                style={selected === category.category_id ? style_selected : style}
-                onClick={() => {
-                    this.setSelectedCategory(category.category_id)
-                    this.props.clickCategory(this.props.board_id, category.category_id)
-                }}>
+                    key={category.category_id}
+                    style={selected === category.category_id ? style_selected : style}
+                    onClick={() => {
+                        clickCategory(category.category_id)
+                    }}>
                     {category.category_name}
                 </div>
             )
@@ -57,29 +28,24 @@ class Category extends React.Component {
         return categoryList
     }
 
-    render() {
-        let selected = this.state.selected
-        let style = {
-            "border": `1px solid #aaaaaa`
-        }
-        let style_selected = {
-            "backgroundColor": "#aaaaaa",
-            "color": "#eeeeee"
-        }
-        return (
-            <div className="category-wrapper">
-                <div className="category-obj category-all"
-                style={selected === 'all' ? style_selected : style}
-                onClick={() => {
-                    this.setSelectedCategory('all')
-                    this.props.clickAll(this.props.board_id)
-                }}>
-                    ALL
-                </div>
-                {this.makeCategories()}
-            </div>
-        )
+    let style = {
+        "border": `1px solid #aaaaaa`
     }
+    let style_selected = {
+        "backgroundColor": "#aaaaaa",
+        "color": "#eeeeee"
+    }
+
+    return (
+        <div className="category-wrapper">
+            <div className="category-obj category-all"
+                style={!selected ? style_selected : style}
+                onClick={clickAll}>
+                ALL
+            </div>
+            {makeCategories()}
+        </div>
+    )
 }
 
 export default Category;

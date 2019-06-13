@@ -6,12 +6,20 @@
     // border-top: 1px solid #c9c9c9;
     .post-title {
         font-size: 20px;
-        padding: 15px;
+        padding-top: 10px;
+        padding-bottom: 4px;
         background-color: #008f94;
         color: #FFFFFF;
+        display: flex;
+        a {
+            float: left;
+            margin-left: 5px;
+            color: #FFFFFF;
+        }
         h5 {
-            display: inline;
+            flex-grow: 1;
             font-weight: bold;
+            text-align: center;
         }
     }
     .post-info-other {
@@ -28,6 +36,15 @@
         min-height: 300px;
         line-height: 200%;
         border-top: none;
+    }
+    .file-download-wrapper {
+        .file-download-list {
+            a {
+                display: inline-flex;
+                align-items: center;
+                color: $color_gray1;
+            }
+        }
     }
 }
 

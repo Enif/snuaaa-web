@@ -1,33 +1,34 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { convertDate } from '../../utils/convertDate'
+import { convertDate } from 'utils/convertDate'
 
 const MyCommentList = ({comments}) => {
 
-    const retrieveComments = () => {
+    const makeCommentList = () => {
 
-        let commentList = comments.map(comment => {
-
+        let commentList = comments.map(comment => {            
+            let contentInfo = comment.content;
+            let boardInfo = comment.content.board;
             let linkTo = '';
-            if(comment.type === "PO") {
+            if(contentInfo.type === "PO") {
                 linkTo = `/post/${comment.parent_id}`
             }
-            else if(comment.type === "PH") {
+            else if(contentInfo.type === "PH") {
                 linkTo = `/photo/${comment.parent_id}`
             }
 
             return (
                 <div className="my-cmt-wrapper" key={comment.comment_id}>
-                    <div className="my-cmt-boardname">{comment.board_name}</div>
+                    <div className="my-cmt-boardname">{boardInfo.board_name}</div>
 
                     <Link to={linkTo}>
                         <div className="my-cmt-contents">
-                            <p>{comment.title}</p>
-                            <p className="my-cmt-cmt">{comment.contents}</p>
+                            <p>{contentInfo.title}</p>
+                            <p className="my-cmt-cmt">{comment.text}</p>
                         </div>
                     </Link>
                     <div className="my-cmt-date">
-                        <p>{convertDate(comment.created_at)}</p>
+                        <p>{convertDate(comment.createdAt)}</p>
                     </div>
                 </div>
             )
@@ -38,7 +39,7 @@ const MyCommentList = ({comments}) => {
     return (
         <div className="my-list-wrapper">
             <h4>등록한 댓글</h4>
-            {retrieveComments()}
+            {makeCommentList()}
         </div>
     )
 }

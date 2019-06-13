@@ -1,13 +1,13 @@
 import React from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router'
-import * as service from '../../services';
+import * as service from 'services';
 import { connect } from 'react-redux'
-import { authLogin } from '../../actions'
-import LogInComponent from '../../components/Login/LogInComponent';
-import Loading from '../../components/Common/Loading';
-import PopUp from '../../components/Common/PopUp';
-import FullScreenPortal from '../../containers/FullScreenPortal';
+import { authLogin } from 'actions'
+import LogInComponent from 'components/Login/LogInComponent';
+import Loading from 'components/Common/Loading';
+import PopUp from 'components/Common/PopUp';
+import FullScreenPortal from 'containers/FullScreenPortal';
 
 const TAG = 'LOGIN'
 
@@ -86,7 +86,7 @@ class LogIn extends React.Component {
             this.setState({
                 isLoading: false
             })
-            const { token } = res.data;
+            const { token, user_id, nickname, level, profile_path } = res.data;
             if(this.state.autoLogin) {
                 localStorage.setItem('token', token);
                 axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
@@ -95,7 +95,7 @@ class LogIn extends React.Component {
                 sessionStorage.setItem('token', token);
                 axios.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token');
             }
-            this.props.onAuthLogin();
+            this.props.onLogin(user_id, nickname, level, profile_path);
         })
         .catch((res) => {
             console.log('[%s] Log In Fail', TAG)
@@ -136,7 +136,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onAuthLogin: () => dispatch(authLogin())
+        onLogin: (user_id, nickname, level, profile_path) => dispatch(authLogin(user_id, nickname, level, profile_path))
     }
 }
 

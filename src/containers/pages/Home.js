@@ -1,52 +1,81 @@
 import React from 'react';
-import { Redirect } from 'react-router'
-import { connect } from 'react-redux'
-import SoundBox from '../../components/Home/SoundBox';
+import SoundBox from 'components/Home/SoundBox';
+import * as service from 'services';
+import Loading from 'components/Common/Loading';
+import NewPosts from 'components/Home/NewPosts';
+import NewComments from 'components/Home/NewComments';
+import NewPhotos from 'components/Home/NewPhotos';
 
 const TAG = 'HOME'
 
 class Home extends React.Component {
+    
     constructor(props){
+        console.log(`[${TAG}] Constructor`)
+
         super(props)
+
+        this.soundBoxData = undefined;
+        this.recentPosts = undefined;
+        this.recentComments = undefined;
+        this.recentMemory = undefined;
+        this.recentAstrophoto = undefined;
+        this.state = {
+            isReady: false
+        }
+    }
+
+    componentDidMount() {
+        this.fetch();
+    }
+
+    fetch = async () => {
+        this.setState({
+            isReady: false
+        })
+        await Promise.all([
+            service.retrieveSoundBox(),
+            service.retrieveRecentPosts(),
+            service.retrieveRecentComments(),
+            service.retrieveRecentMemory(),
+            service.retrieveRecentAstroPhoto()
+        ])
+        .then((res) => {
+            this.soundBoxData = res[0].data;
+            this.recentPosts = res[1].data;
+            this.recentComments = res[2].data;
+            this.recentMemory = res[3].data;
+            this.recentAstrophoto = res[4].data;
+            this.setState({
+                isReady: true
+            })
+        })
+        .catch((err) => {
+            console.error(err)
+        })
     }
 
     render() {
 
+        const { isReady } = this.state;
+
         return (
+                isReady ?
                 <div className="section-contents">
-                    <div id="calendar-wrapper" className="content">
-                        <div className="title-left">
-                            <h5>천문현상 &amp; 일정</h5>
+                    <div className="home-wrapper">
+                        <SoundBox soundBoxInfo={this.soundBoxData} />
+                        <div className="home-row">
+                            <NewPosts posts={this.recentPosts} />
+                            <NewComments comments={this.recentComments} />
                         </div>
-                        <div className="title-right">
-                            <h5>2018년 5월</h5>
+                        <div className="home-row">
+                            <NewPhotos title="New 별사진" photos={this.recentAstrophoto} />
+                            <NewPhotos title="New 추억만들기" photos={this.recentMemory} />
                         </div>
-                        
-                        <table id="calendar-tb">
-                            <tbody>
-                                <tr>
-                                    <th>25(Fri)</th>
-                                    <th>26(Sat)</th>
-                                    <th>27(Sun)</th>
-                                    <th>28(Mon)</th>
-                                    <th>29(Tue)</th>
-                                    <th>30(Wed)</th>
-                                    <th>31(Thu)</th>
-                                </tr>
-                                <tr>
-                                    <td>불금</td>
-                                    <td>77대 총회</td>
-                                    <td>일요일</td>
-                                    <td>월요병</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>5월 안녕모임~</td>
-                                </tr>
-                            </tbody>
-                        </table>
                     </div>
-                    <SoundBox />
                 </div>
+                :
+                <Loading />
         );
     }
 }

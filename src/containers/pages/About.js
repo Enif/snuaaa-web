@@ -1,11 +1,10 @@
 import React from 'react';
-import { Redirect } from 'react-router'
-import AboutAAA from '../../components/About/aboutAAA';
-import Contact from '../../components/About/contact';
-import Equipment from '../../components/About/equipment';
-import Observation from '../../components/About/observation';
-import History from '../../components/About/history';
-import Officers from '../../components/About/officers';
+import AboutAAA from 'components/About/aboutAAA';
+import Contact from 'components/About/contact';
+import Equipment from 'components/About/equipment';
+import Observation from 'components/About/observation';
+import History from 'components/About/history';
+import Officers from 'components/About/officers';
 
 class About extends React.Component {
 

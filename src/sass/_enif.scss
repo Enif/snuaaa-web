@@ -108,26 +108,49 @@
 .enif-btn-cancel {
     color: #b4b4b4;
     font-size: 20px;
+    font-family: 'NIXGONM-Vb';
     &:hover {
         // font-weight: bold;
-        color: rgb(105, 105, 105);    
+        color: rgb(105, 105, 105);
     }
 }
 
 .enif-btn-ok {
     color: #57adb6;
     font-size: 20px;
+    font-family: 'NIXGONM-Vb';
 }
 
 .enif-btn-circle {
     width: 50px;
     height: 50px;
-    border-radius: 50%;
-    font-size: 2rem;
-    /* font-weight: bold; */
+    // font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $color_aqua;
+    box-shadow: 1px 1px 3px 0px #949494;
     border: none;
-    background: #00115e;
+    border-radius: 50%;
     color: #fff;
+    transition: all 0.3s;
+    cursor: pointer;
+    &:hover {
+        background-color: darken(#49A0AE, 10%);
+    }
+    .material-icons {
+        color: #FFFFFF;
+    }
+}
+
+.enif-pos-right {
+    right: 20px;
+}
+
+.enif-pos-sticky {
+    position: sticky;
+    margin-left: 105%;
+    bottom: 20px;
 }
 
 
@@ -137,9 +160,13 @@
     margin: 1em auto;
     letter-spacing: 0.2rem;
     color: white;
-    background-color: #447294;
+    background-color: #49a0ae;
     border: none;
     // font-weight: bold;
+    &:disabled {
+        background-color: #666666;
+        cursor: not-allowed;
+    }
 }
 
 .enif-input {
@@ -150,6 +177,10 @@
 
 .enif-input-invalid {
     border: 2px solid #cd5c5c;
+}
+
+.enif-input-valid {
+    border: 2px solid #1761ff;
 }
 
 .enif-input-field {
@@ -181,9 +212,9 @@
 }
 
 .enif-divider {
-    margin: 20px 0px 20px 0px;
+    margin: 10px 0px;
     height: 2px;
-    background-color: #C9C9C9;
+    background-color: #E8E8E8;
 }
 
 
@@ -192,6 +223,9 @@
     top: 0;
 }
 
+.enif-hide-desktop {
+    visibility: hidden;
+}
 
 // .enif-input-field input:invalid {
 //     // background-color: #fff4f4;
@@ -201,12 +235,13 @@
 @media screen and (max-width: 800px) {
     .enif-popup-content {
         width: 90%;
+        margin-top: 10%;
     }
 
     .enif-btn-circle {
-        position: fixed;
-        right: 3rem;
-        bottom: 3rem;
+        // position: fixed;
+        width: 3.5rem;
+        height: 3.5rem;
         z-index: 5;
     }
 
@@ -214,6 +249,21 @@
         width: 100%;
         position: fixed;
         bottom: 0;
+    }
+
+    .enif-pos-sticky {
+        position: sticky;
+        display: inline-block;
+        margin-left: calc(95% - 3.5rem);
+        bottom: 2rem;
+    }
+
+    .enif-hide-desktop {
+        visibility: visible;
+    }
+
+    .enif-hide-mobile {
+        display: none;
     }
 }
 

@@ -7,16 +7,23 @@
     color: #a3a3a3;
 }
 
+.break-line {
+    word-break: break-word;
+}
 
 .actions-wrapper {
-    display: flex;
-    justify-content: space-between;
+    // display: flex;
+    // justify-content: space-between;
     // padding-top: 5px;
+    position: relative;
+    height: 30px;
 
     .edit-delete-wrapper {
+        position: absolute;
+        left: 0px;
         .edit-wrapper {
             display: inline-block;
-            margin-right: 12px;
+            margin-right: 8px;
         }
         .delete-wrapper {
             display: inline-block;
@@ -26,6 +33,8 @@
 
     .like-comment-num-wrapper {
         font-size: 20px;
+        position: absolute;
+        right: 0px;
         // padding-bottom: 10px;
         .like-num-wrapper {
             display: inline-block;
@@ -77,5 +86,23 @@
             color: #eeeeee;
             background-color: #686868;
         }
+    }
+}
+
+.paginator-wrapper {
+    display: flex;
+    margin: 10px;
+    ul {
+        display: flex;
+    }
+    li {
+        padding: 5px;
+        cursor: pointer;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    .current {
+        font-weight: bold;
     }
 }

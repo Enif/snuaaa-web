@@ -1,5 +1,5 @@
 import React from 'react';
-import * as service from '../../services';
+import * as service from 'services';
 
 const TAG = 'CREATEALBUM'
 
@@ -11,8 +11,8 @@ class CreateAlbum extends React.Component {
 
         this.state = {
             title: '',
-            contents: '',
-            checkedCategory: ''
+            text: '',
+            checkedCategory: null
         }
     }
 
@@ -30,7 +30,7 @@ class CreateAlbum extends React.Component {
             }            
             let style_selected = {
                 "border": `1px solid ${category.category_color}`,
-                "background-color": category.category_color,
+                "backgroundColor": category.category_color,
                 "color": "#eeeeee"
             }
             return (
@@ -58,19 +58,18 @@ class CreateAlbum extends React.Component {
             let albumInfo = {
                 category_id: this.state.checkedCategory,
                 title: this.state.title,
-                contents: this.state.contents
+                text: this.state.text
             }
             
             await service.createAlbum(this.props.board_id, albumInfo)
             .then(() => {
                 console.log('[%s] Create Album Success', TAG);
                 this.props.togglePopUp();
-                this.props.retrieveAlbums(this.props.board_id)
+                this.props.fetch()
             })
             .catch((err) => {
-                console.log('[%s] Create Album Fail', TAG);
                 console.error(err)
-                this.props.togglePopUp();
+                alert("앨범 생성 실패");
             })
         }
     }
@@ -103,7 +102,7 @@ class CreateAlbum extends React.Component {
                             </tr>
                             <tr>
                                 <th>설명</th>
-                                <td className="crt-alb-contents"><textarea name="contents" placeholder="앨범 설명" onChange={(e) => this.handleChange(e)}/></td>
+                                <td className="crt-alb-contents"><textarea name="text" placeholder="앨범 설명" onChange={(e) => this.handleChange(e)}/></td>
                             </tr>
                         </tbody>
                     </table>

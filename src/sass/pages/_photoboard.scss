@@ -23,6 +23,15 @@
             }
         }
     }
+
+    .memory-title {
+        display: inline-block;
+        background-image: url("./assets/img/title_memory.png");
+        background-size: contain;
+        width: 277px;
+        height: 68px;
+        padding: 25px 0px 20px 100px;
+    }
 }
 
 .btn-crt-album {
@@ -33,8 +42,10 @@
 
 @media screen and (max-width: 800px) {
     .btn-crt-album {
-        top: -5rem;
-        right: 2rem;
+        position: sticky;
+        margin-left: 75%;
+        // top: -5rem;
+        // right: 2rem;
         // position: fixed;
         // top: initial;
         // right: 70px;

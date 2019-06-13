@@ -1,16 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import defaultAlbumCover from '../../assets/img/default_photo_img.png'
-import defaultStarAlbumCover from '../../assets/img/default_photo_img_star.png'
+import defaultAlbumCover from 'assets/img/default_photo_img.png'
+import defaultStarAlbumCover from 'assets/img/default_photo_img_star.png'
 import Image from '../Common/Image'
 
 const TAG = 'ALBUMLIST'
 
 class AlbumList extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
 
     retrieveAlbums = () => {
 
@@ -26,8 +22,8 @@ class AlbumList extends React.Component {
             }
             
             return (
-                <div className="album-list" key={album.object_id} >
-                    <Link to={`/album/${album.object_id}`}>
+                <div className="album-list" key={album.content_id} >
+                    <Link to={`/album/${album.content_id}`}>
 
                         <Image imgSrc={album.file_path} defaultImgSrc={albumCover} />
                         <div className="album-cover">
