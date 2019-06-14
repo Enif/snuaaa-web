@@ -7,10 +7,11 @@ const DocuList = ({documents}) => {
     const makeDocuList = () => {
         let docuList = documents.map(document => {
             let contentInfo = document.content;
+            let categoryInfo = document.content.category;
             return (
                 <div className="doculist-body" key={contentInfo.content_id}>
                     <div className="docu-generation">{document.generation}</div>
-                    <div className="docu-category">{contentInfo.category_name}</div>
+                    <div className="docu-category">{categoryInfo && categoryInfo.category_name}</div>
                     <div className="docu-memo">
                         <Link to={`/document/${contentInfo.content_id}`}>{contentInfo.title}</Link>
                     </div>
