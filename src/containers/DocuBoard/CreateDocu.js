@@ -69,7 +69,7 @@ class CreateDocu extends React.Component {
                 .then(() => {
                     console.log('[%s] Create Docu Success', TAG);
                     this.props.togglePopUp();
-                    this.props.retrieveDocuments()
+                    this.props.fetch()
                 })
                 .catch((err) => {
                     console.error(err);

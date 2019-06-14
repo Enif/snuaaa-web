@@ -106,6 +106,8 @@ class Navigation extends React.Component {
                                     <ul>
                                         <Link to='/board/brd03'><li>낡은읽기장</li></Link>
                                         <Link to='/board/brd04'><li>관측게시판</li></Link>
+                                        <Link to='/board/brd10'><li>후기게시판</li></Link>
+                                        <Link to='/board/brd91'><li>운영자에게</li></Link>
                                     </ul>
                                 </div>
                             }

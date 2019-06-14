@@ -152,8 +152,12 @@ export function retrieveDocument(doc_id) {
     return axios.get(SERVER_URL + `api/document/${doc_id}`)
 }
 
-export function retrieveDocuments() {
-    return axios.get(SERVER_URL + `api/document`)
+export function retrieveDocuments(pageIdx, ctg_id, generation) {
+    let categoryUrl = '';
+    let genUrl = '';
+    ctg_id && (categoryUrl = `&category=${ctg_id}`);
+    generation && (genUrl = `&generation=${generation}`);
+    return axios.get(SERVER_URL + `api/document?page=${pageIdx}${categoryUrl}${genUrl}`)
 }
 
 export function retrieveDocumentsByGeneration(generation) {

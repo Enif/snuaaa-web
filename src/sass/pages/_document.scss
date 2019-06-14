@@ -111,6 +111,16 @@
     }
 }
 
+.doc-select-wrapper {
+    display: flex;
+    .select-wrapper {
+        margin: 10px;
+        select {
+            padding: 5px;
+            background-color: #FFFFFF;
+        }
+    }
+}
 
 .doculist-wrapper {
     .doculist-head {
@@ -119,7 +129,7 @@
         flex-wrap: nowrap;
         color: #ffffff;
         background-color: #bcbdbc;
-        padding: 15px;
+        padding: 15px 10px;
     }
     .doculist-body {
         display: flex;
