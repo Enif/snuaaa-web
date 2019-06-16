@@ -7,7 +7,7 @@ import imgProfile from '../assets/img/profile.png';
 import Navigation from '../components/Header/Navigation'
 import PopupUser from '../components/Header/PopupUser'
 import Image from '../components/Common/Image';
-
+import * as service from 'services';
 
 
 const TAG = 'HEADER';
@@ -18,7 +18,8 @@ class Header extends React.Component {
         console.log(`[%s] constructor`, TAG)
         super(props);
         this.state = {
-            isShowPopupUser: false
+            isShowPopupUser: false,
+            boards: []
         }
     }
 
@@ -30,15 +31,25 @@ class Header extends React.Component {
 
     componentDidMount() {
         console.log(`[%s] componentDidMount`, TAG)
+        this.fetch();
+    }
+
+    fetch = async () => {
+        await service.retrieveBoards()
+        .then((res) => {
+            this.setState({
+                boards: res.data
+            })
+        })
+        .catch((err) => {
+            console.error(err);
+        })
     }
 
     render() {
 
-        console.log(window.location.pathname)
-
         const { loginState, profile_path } = this.props;
-        let { isShowPopupUser } = this.state;
-        console.log(this.props)
+        let { isShowPopupUser, boards } = this.state;
         return (
             <>
                 <div className="main-header-wrapper">
@@ -66,7 +77,7 @@ class Header extends React.Component {
                         }
                     </div>
                 </div>
-                <Navigation />
+                <Navigation boards={boards} />
             </>
         );
     }
