@@ -35,6 +35,10 @@ export function retrieveUserPosts() {
     return axios.get(SERVER_URL + 'api/userinfo/posts');
 }
 
+export function retrieveBoards() {
+    return axios.get(SERVER_URL + `api/board`)
+}
+
 export function retrieveBoardInfo(board_id) {
     return axios.get(SERVER_URL + `api/board/${board_id}`);
 }
