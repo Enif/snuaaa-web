@@ -4,7 +4,7 @@ import { breakLine } from 'utils/breakLine';
 
 const SoundBox = ({soundBoxInfo}) => {
 
-    let contentInfo = soundBoxInfo;
+    let contentInfo = soundBoxInfo.content;
     return(
         <div className="soundbox-wrapper">
             <Link to ='/board/brd01'><div className="soundbox-title">NOTICE</div></Link>

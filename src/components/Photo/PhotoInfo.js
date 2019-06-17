@@ -24,7 +24,7 @@ const PhotoInfo = ({photoInfo, likeInfo, my_id, setPhotoState, deletePhoto, like
 
     let backLink;
     if (!albumInfo) {
-        backLink = `/board/brd08`;
+        backLink = `/board/brd32`;
     }
     else {
         backLink = `/album/${albumInfo.content_id}`

@@ -110,7 +110,7 @@ class Photo extends React.Component {
                     else if(photoState === ContentStateEnum.DELETED) {
                         let backLink;
                         if(!this.albumInfo) {
-                            backLink = `/board/brd08`;
+                            backLink = `/board/brd32`;
                         }
                         else {
                             backLink = `/album/${this.albumInfo.object_id}`
