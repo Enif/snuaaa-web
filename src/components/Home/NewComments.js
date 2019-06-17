@@ -23,11 +23,15 @@ const NewComments = ({comments}) => {
                 <div className="new-comment-list" key={comment.comment_id}>
                     <div className="new-comment-boardname">{boardInfo.board_name}</div>
                     <div className="new-comment-contents">
-                        <Link to={linkTo}>
-                            <p>{contentInfo.title ? contentInfo.title : "제목없음"}</p>
-                        </Link>
+                        <div className="new-comment-contents-top">
+                            <Link to={linkTo}>
+                                <p className="new-comment-contents-title">{contentInfo.title ? contentInfo.title : "제목없음"}</p>
+                            </Link>
+                        </div>
                         <div className="new-comment-contents-bot">
-                            <p className="new-comment-comment">{comment.text}</p>
+                            {/* <Link to={linkTo}> */}
+                                <p className="new-comment-comment">{comment.text}</p>
+                            {/* </Link> */}
                             <div className="new-comment-date">{convertDate(comment.createdAt)}</div>
                         </div>
                     </div>

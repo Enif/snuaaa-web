@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Image from './Image';
+import defaultProfile from 'assets/img/profile.png';
 import { breakLine } from 'utils/breakLine';
 
 function ProfileMini({ profileImg, nickname, userDesc }) {
@@ -12,7 +13,7 @@ function ProfileMini({ profileImg, nickname, userDesc }) {
     return (
         <div className="profile-mini-wrapper">
             <div className="profile-img">
-                <Image imgSrc={profileImg} />
+                <Image imgSrc={profileImg} defaultImgSrc={defaultProfile} />
             </div>
             <div className="nickname">{nickname}</div>
             <div className={descClass}>{breakLine(userDesc)}</div>
