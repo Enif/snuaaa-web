@@ -4,6 +4,10 @@ import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router';
 
 import './App.scss';
+import 'react-quill/dist/quill.snow.css';
+import 'react-quill/dist/quill.bubble.css';
+import 'react-quill/dist/quill.core.css';
+
 import Header from './containers/Header'
 //import Aside from './components/Aside';
 import Section from './containers/Section';

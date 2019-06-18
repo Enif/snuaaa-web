@@ -4,7 +4,8 @@ import CreatePhotoInfo from 'components/Album/CreatePhotoInfo';
 import ThumbnailList from 'components/Album/ThumbnailList';
 import PreviewImage from 'components/Album/PreviewImage';
 
-const TAG = 'CREATEPHOTO'
+const TAG = 'CREATEPHOTO';
+const MAX_SIZE = 100 * 1024 * 1024;
 
 class CreatePhoto extends React.Component {
 
@@ -13,6 +14,7 @@ class CreatePhoto extends React.Component {
         super(props);
 
         this.photoInfos = [];
+        this.currentSize = 0;
 
         this.state = {
             title: '',
@@ -46,25 +48,38 @@ class CreatePhoto extends React.Component {
 
     uploadFile = (e) => {
         const { uploadPhotos } = this.state;
-        if (e.target.files) {
-            this.setState({
-                uploadPhotos: uploadPhotos.concat(...e.target.files)
-            })
+        if(uploadPhotos.length + e.target.files.length > 20) {
+            alert("한 번에 20장 이상의 사진은 업로드 할 수 없습니다.")
         }
-        for (let i = 0; i < e.target.files.length; i++) {
-            this.photoInfos.push({
-                title: '',
-                text: '',
-                date: '',
-                location: '',
-                camera: '',
-                lens: '',
-                focal_length: '',
-                f_stop: '',
-                exposure_time: '',
-                iso: '',
-                selectedTags: []
-            })
+        else if (e.target.files) {
+            let tmpSize = this.currentSize;
+            for (let i = 0; i < e.target.files.length; i++) {
+                tmpSize += e.target.files[i].size;
+            }
+            if(tmpSize > MAX_SIZE) {
+                alert("한 번에 100MB 이상의 사진은 업로드 할 수 없습니다.")
+            }
+            else {
+                this.currentSize = tmpSize;
+                this.setState({
+                    uploadPhotos: uploadPhotos.concat(...e.target.files)
+                })
+                for (let i = 0; i < e.target.files.length; i++) {
+                    this.photoInfos.push({
+                        title: '',
+                        text: '',
+                        date: '',
+                        location: '',
+                        camera: '',
+                        lens: '',
+                        focal_length: '',
+                        f_stop: '',
+                        exposure_time: '',
+                        iso: '',
+                        selectedTags: []
+                    })
+                }
+            }
         }
     }
 

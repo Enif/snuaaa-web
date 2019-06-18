@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactQuill from 'react-quill';
 import { Link } from 'react-router-dom';
 import { breakLine } from 'utils/breakLine';
 
@@ -10,7 +11,8 @@ const SoundBox = ({soundBoxInfo}) => {
             <div className="soundbox-contents-wrapper">
                 <div className="soundbox-contents">
                     <h5>{soundBoxInfo && soundBoxInfo.content.title}</h5>
-                    <p>{breakLine(soundBoxInfo && soundBoxInfo.content.text)}</p>
+                    <ReactQuill value={soundBoxInfo && soundBoxInfo.content.text} readOnly={true} theme="bubble" />
+                    {/* <p>{breakLine(soundBoxInfo && soundBoxInfo.content.text)}</p> */}
                 </div>
             </div>
         </div>

@@ -7,7 +7,6 @@ const NewComments = ({comments}) => {
     const makeCommentList = () => {
         return comments.map(comment => {
 
-            console.log(comment)
             let contentInfo = comment.content;
             let boardInfo = comment.content.board;
 
@@ -17,6 +16,9 @@ const NewComments = ({comments}) => {
             }
             else if(contentInfo.type === "PH") {
                 linkTo = `/photo/${comment.parent_id}`
+            }
+            else if(contentInfo.type === "DO") {
+                linkTo = `/document/${comment.parent_id}`
             }
 
             return (

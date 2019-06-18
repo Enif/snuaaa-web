@@ -56,6 +56,17 @@ class Post extends React.Component {
         })
     }
 
+    handleEdittingText = (value) => {
+        const { editingPostData } = this.state
+
+        this.setState({
+            editingPostData: {
+                ...editingPostData,
+                text: value
+            }
+        })
+    }
+
     retrievePost = async () => {
 
         await service.retrievePost(this.state.post_id)
@@ -153,6 +164,7 @@ class Post extends React.Component {
                             <EditPost
                                 editingPostData={editingPostData}
                                 handleEditting={this.handleEditting}
+                                handleEdittingText={this.handleEdittingText}
                                 setPostState={this.setPostState}
                                 updatePost={this.updatePost}/>
                     )
