@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactQuill from 'react-quill';
 import { Link } from 'react-router-dom';
 import ContentStateEnum from 'common/ContentStateEnum';
 import Comment from 'containers/Comment';
@@ -28,7 +29,8 @@ const PostComponent = ({postData, post_id, my_id, likeInfo, likePost, setPostSta
                 </div>
             </div>
             <div className="post-content">
-                {breakLine(content.text)}
+                <ReactQuill value={content.text} readOnly={true} theme="bubble" />
+                {/* {breakLine(content.text)} */}
             </div>
             <ProfileMini profileImg={user.profile_path} nickname={user.nickname} userDesc={user.introduction}/>
             <div className="enif-divider"></div>

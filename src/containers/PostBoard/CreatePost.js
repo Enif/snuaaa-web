@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactQuill from 'react-quill';
 import * as service from 'services';
 
 const TAG = 'CREATEPOST'
@@ -18,6 +19,12 @@ class CreatePost extends React.Component {
         this.setState({
             [e.target.name]: e.target.value
         });
+    }
+
+    handleEditor = (value) => {
+        this.setState({
+            text: value
+        })
     }
 
     createPost = async () => {
@@ -46,14 +53,33 @@ class CreatePost extends React.Component {
         }
     }
 
+
+
     render() {
+
+        const modules = {
+            toolbar: [
+                [{ 'header': [1, 2, false] }],
+                ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+            ],
+        }
+
+        const formats = [
+            'header',
+            'bold', 'italic', 'underline', 'strike', 'blockquote',
+            'list', 'bullet', 'indent',
+        ]
+
+
         return (
             <div className="writepost-wrapper">
                 <div className="writepost-title">
-                    <input name="title" value={this.state.title} onChange={this.handleChange} placeholder="제목을 입력하세요." />
+                    <input name="title" value={this.state.title} maxLength={32} onChange={this.handleChange} placeholder="제목을 입력하세요." />
                 </div>
                 <div className="writepost-content">
-                    <textarea name="text" value={this.state.text} onChange={this.handleChange} placeholder="내용을 입력하세요" />
+                    <ReactQuill className="writepost-quill" value={this.state.text} onChange={this.handleEditor} modules={modules} formats={formats}/>
+                    {/* <textarea name="text" value={this.state.text} onChange={this.handleChange} placeholder="내용을 입력하세요" /> */}
                 </div>
                 {/* <div>
                     <Editor editorState={this.state.editorState} onEditorStateChange={this.onEditorStateChange} wrapperClassName="editor-wrapper" toolbarClassName="editor-toolbar" editorClassName="editor-textarea"/>
