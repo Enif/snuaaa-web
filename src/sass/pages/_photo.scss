@@ -183,14 +183,40 @@
                 justify-content: flex-start;
                 align-content: flex-start;
                 overflow: auto;
+                .block-constant {
+                    width: 33%;
+                    position: relative;
+                    &::before {
+                        content: '';
+                        padding-top: 100%;
+                        float: left;
+                    }
+                    &::after {
+                        content: '';
+                        display: block;
+                        clear: both;
+                    }
+
+                }
                 label {
-                    width: 135px;
-                    height: 135px;
+                    // height: 135px;
+                    width: 100%;
+                    height: 100%;
                     flex: none;
                     display: flex;
                     justify-content: center;
                     align-items: center;
                     cursor: pointer;
+                    &::before {
+                        content: '';
+                        padding-top: 100%;
+                        float: left;
+                    }
+                    &::after {
+                        content: '';
+                        display: block;
+                        clear: both;
+                    }
                     .add-photo {
                         border: 1px solid #C9C9C9;
                         border-radius: 50%;
@@ -205,8 +231,10 @@
                     display: none;
                 }
                 .photo-thumbnail {
-                    width: 135px;
-                    height: 135px;
+                    position: absolute;
+                    height: 100%;
+                    width: 100%;
+                    object-fit: cover;
                     cursor: pointer;
                 }
                 .selected {
@@ -219,17 +247,30 @@
             .crt-photo-center {
                 background-color: #1d1d1d;
                 width: 500px;
-                text-align: center;
+                display: flex;
+                justify-content: center;
+                align-content: center;
+                // text-align: center;
                 img {
-                    max-height: 100%;
+                    max-width: 100%;
+                    object-fit: contain;
+                    // max-height: 100%;
                 }
             }
             .crt-photo-right {
-                background-color: #ffffff;
+                display: flex;
                 position: relative;
+                flex-direction: column;
+                background-color: #ffffff;
                 width: 450px;
+                .crt-photo-right-top {
+                    // height: 80%;
+                    flex-grow: 1;
+                    overflow: auto;
+                }
                 .photo-infos-wrapper {
                     padding: 10px;
+                    overflow: auto;
                     .input-title {
                         width: 100%;
                         height: 40px;
@@ -266,9 +307,10 @@
                     }    
                 }
                 .btn-wrapper {
+                    margin-top: auto;
                     width: 100%;
-                    position: absolute;
-                    bottom: 0;
+                    // position: absolute;
+                    // bottom: 0;
                     display: flex;
                     button {
                         height: 50px;
@@ -310,6 +352,17 @@
     }
 }
 
+
+@media screen and (max-width: 1500px) {
+    .crt-photo-popup {
+        .crt-photo-wrp {
+            width: 1000px;
+            .crt-photo-body {
+                height: 500px;
+            }
+        }
+    }
+}
 
 
 @media screen and (max-width: 800px) {
@@ -389,22 +442,18 @@
                     overflow: auto;
                     flex-shrink: 0;
                     flex-wrap: nowrap;
-                    label {
-                        width: 5rem;
+                    .block-constant {
+                        width: 6rem;
                         height: 6rem;
                         flex: none;
+                    }
+                    label {
                         user-select: none;
                         .add-photo {
                             width: 3.5rem;
                             height: 3.5rem;
                         }
-                    }
-                    
-                    .photo-thumbnail {
-                        width: 6rem;
-                        height: 6rem;
-                        flex: none;
-                    }
+                    }                    
                 }
                 .crt-photo-center {
                     display: none;
