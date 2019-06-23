@@ -242,12 +242,14 @@ class CreatePhoto extends React.Component {
                     </div>
                     <div className="crt-photo-body">
                         <div className="crt-photo-left">
-                            <label htmlFor="photos">
-                                <div className="add-photo">
-                                    <i className="material-icons md-36">add</i>
-                                </div>
-                            </label>
-                            <input type="file" id="photos" multiple accept="image/*" onChange={(e) => this.uploadFile(e)} />
+                            <div className="block-constant">
+                                <label htmlFor="photos">
+                                    <div className="add-photo">
+                                        <i className="material-icons md-36">add</i>
+                                    </div>
+                                </label>
+                                <input type="file" id="photos" multiple accept="image/*" onChange={(e) => this.uploadFile(e)} />
+                            </div>
                             <ThumbnailList uploadPhotos={uploadPhotos} imgIdx={imgIdx} setImgIdx={this.setImgIdx} />
                         </div>
 
@@ -256,7 +258,7 @@ class CreatePhoto extends React.Component {
                         </div>
 
                         <div className="crt-photo-right">
-
+                            <div className="crt-photo-right-top" >
                             {(() => {
                                 if (this.state.imgIdx >= 0) {
                                     return (
@@ -278,6 +280,7 @@ class CreatePhoto extends React.Component {
                                     )
                                 }
                             })()}
+                            </div>
                             <div className="btn-wrapper">
                                 <button className="btn-cancel" onClick={() => this.props.togglePopUp()}>취소</button>
                                 <button className="btn-ok" onClick={() => this.checkForm()}>완료</button>

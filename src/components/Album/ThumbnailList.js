@@ -29,7 +29,11 @@ class ThumbnailList extends React.Component {
         const thumbnailList = uploadPhotos.map((file, index) => {
             let imgSrc = URL.createObjectURL(file)
             let imgClass = index === imgIdx ? "photo-thumbnail selected" : "photo-thumbnail default";
-            return (<img key={index} className={imgClass} src={imgSrc} alt="thumbnail" onClick={() => this.props.setImgIdx(index)} />)
+            return (
+            <div className="block-constant">
+                <img key={index} className={imgClass} src={imgSrc} alt="thumbnail" onClick={() => this.props.setImgIdx(index)} />
+            </div>
+            )
         })
         return thumbnailList
     }

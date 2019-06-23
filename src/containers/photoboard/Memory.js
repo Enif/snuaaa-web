@@ -1,6 +1,6 @@
 import React from 'react';
 import * as service from 'services';
-import CreateAlbum from 'containers/Album/CreateAlbum';
+import CreateAlbum from 'containers/album/CreateAlbum';
 import AlbumList from 'components/PhotoBoard/AlbumList';
 import Category from 'components/Common/Category';
 import Loading from 'components/Common/Loading';

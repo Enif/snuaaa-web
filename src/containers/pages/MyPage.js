@@ -1,6 +1,6 @@
 import React from 'react';
-import EditInfo from 'containers/MyPage/EditInfo';
-import MyInfo from 'containers/MyPage/MyInfo';
+import EditInfo from 'containers/mypage/EditInfo';
+import MyInfo from 'containers/mypage/MyInfo';
 
 const TAG = 'MYPAGE'
 

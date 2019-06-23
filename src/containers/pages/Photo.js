@@ -5,7 +5,7 @@ import * as service from 'services'
 import Loading from 'components/Common/Loading';
 import ContentStateEnum from 'common/ContentStateEnum';
 import PhotoInfo from 'components/Photo/PhotoInfo';
-import EditPhoto from 'containers/Photo/EditPhoto';
+import EditPhoto from 'containers/photo/EditPhoto';
 import Comment from 'containers/Comment';
 
 const TAG = 'PHOTO'
