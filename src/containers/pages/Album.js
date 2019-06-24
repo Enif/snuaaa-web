@@ -6,8 +6,8 @@ import ContentStateEnum from 'common/ContentStateEnum';
 import Loading from 'components/Common/Loading';
 import PhotoList from 'components/Album/PhotoList';
 import AlbumInfo from 'components/Album/AlbumInfo';
-import EditAlbum from 'containers/album/EditAlbum';
-import CreatePhoto from 'containers/photo/CreatePhoto';
+import EditAlbum from 'containers/Album/EditAlbum';
+import CreatePhoto from 'containers/Photo/CreatePhoto';
 
 const TAG = 'ALBUM'
 

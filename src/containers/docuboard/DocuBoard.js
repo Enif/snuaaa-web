@@ -5,7 +5,7 @@ import SelectBox from 'components/Common/SelectBox';
 import Paginator from 'components/Common/Paginator';
 // import DocuMenu from 'components/Document/DocuMenu';
 import DocuList from 'components/Document/DocuList';
-import CreateDocu from 'containers/docuboard/CreateDocu';
+import CreateDocu from 'containers/DocuBoard/CreateDocu';
 
 const TAG = 'DOCUMENT'
 const DOCROWNUM = 10;

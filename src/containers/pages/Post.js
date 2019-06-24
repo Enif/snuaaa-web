@@ -16,6 +16,7 @@ class Post extends React.Component {
         super(props);
 
         this.postData = undefined;
+        this.fileInfo = undefined;
 
         this.state = {
             post_id: this.props.match.params.pNo,
@@ -73,6 +74,7 @@ class Post extends React.Component {
         .then((res) => {
             console.log(`[${TAG}] Retrieve Post Success`);
             this.postData = res.data.postInfo;
+            this.fileInfo = res.data.fileInfo;
 
             this.setState({
                 likeInfo: res.data.likeInfo,
@@ -154,6 +156,7 @@ class Post extends React.Component {
                                 post_id={post_id}
                                 my_id={my_id}
                                 likeInfo={likeInfo}
+                                fileInfo={this.fileInfo}
                                 likePost={this.likePost}
                                 setPostState={this.setPostState}
                                 deletePost={this.deletePost}/>
