@@ -3,7 +3,7 @@ import * as service from 'services'
 import Loading from 'components/Common/Loading';
 import PostList from 'components/Board/PostList';
 import Paginator from 'components/Common/Paginator';
-import CreatePost from 'containers/postboard/CreatePost';
+import CreatePost from 'containers/PostBoard/CreatePost';
 
 const TAG = 'POSTBOARD'
 const POSTROWNUM = 10;

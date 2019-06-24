@@ -1,7 +1,7 @@
 import React from 'react';
 import * as service from 'services';
-import CreatePhoto from 'containers/photo/CreatePhoto';
-import CreateAlbum from 'containers/album/CreateAlbum';
+import CreatePhoto from 'containers/Photo/CreatePhoto';
+import CreateAlbum from 'containers/Album/CreateAlbum';
 import AlbumList from 'components/PhotoBoard/AlbumList';
 import PhotoList from 'components/Album/PhotoList';
 import Tag from 'components/Common/Tag';
