@@ -53,10 +53,10 @@ class Photo extends React.Component {
         await service.likeObject(this.state.photo_id)
         .then(() => {
             if(this.state.likeInfo) {
-                this.photoInfo.like_num--;
+                this.photoInfo.contentPhoto.like_num--;
             }
             else {
-                this.photoInfo.like_num++;
+                this.photoInfo.contentPhoto.like_num++;
             }
             this.setState({
                 likeInfo: !this.state.likeInfo
