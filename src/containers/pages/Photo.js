@@ -17,7 +17,7 @@ class Photo extends React.Component {
 
         super(props);
         this.photoInfo = undefined;
-        // this.tagInfo = undefined;
+        this.boardTagInfo = undefined;
         this.albumInfo = undefined;
         this.state = {
             photo_id: this.props.match.params.pNo,
@@ -36,6 +36,7 @@ class Photo extends React.Component {
             this.photoInfo = res.data.photoInfo;
             // this.tagInfo = res.data.tagInfo;
             this.albumInfo = res.data.albumInfo;
+            this.boardTagInfo = res.data.boardTagInfo
             this.setState({
                 likeInfo: res.data.likeInfo,
                 photoState: ContentStateEnum.READY
@@ -102,7 +103,7 @@ class Photo extends React.Component {
                                 <Comment parent_id={this.state.photo_id}/>
                                 {
                                     photoState === ContentStateEnum.EDITTING &&
-                                    <EditPhoto photoInfo={this.photoInfo} fetch={this.fetch} setPhotoState={this.setPhotoState} />
+                                    <EditPhoto photoInfo={this.photoInfo} boardTagInfo={this.boardTagInfo} fetch={this.fetch} setPhotoState={this.setPhotoState} />
                                 }
                             </div>
                         )

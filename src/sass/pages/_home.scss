@@ -133,8 +133,10 @@
         }
         .new-comment-boardname {
             width: 25%;
-            color: #A3A3A3;
             flex-shrink: 0;
+            a {
+                color: #A3A3A3;
+            }
         }
         .new-comment-contents {
             width: 75%;

@@ -23,7 +23,11 @@ const NewComments = ({comments}) => {
 
             return (
                 <div className="new-comment-list" key={comment.comment_id}>
-                    <div className="new-comment-boardname">{boardInfo.board_name}</div>
+                    <div className="new-comment-boardname">
+                        <Link to={`/board/${boardInfo.board_id}`}>
+                            {boardInfo.board_name}
+                        </Link>
+                    </div>
                     <div className="new-comment-contents">
                         <div className="new-comment-contents-top">
                             <Link to={linkTo}>

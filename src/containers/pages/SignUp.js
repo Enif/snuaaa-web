@@ -29,14 +29,14 @@ class SignUp extends React.Component {
                     value: '',
                     valid: null,
                     isRequired: true,
-                    regExp: '^[A-Za-z0-9]{4,12}$'
+                    regExp: '^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9^()@$!%*#?&]{8,20}$'
                 },
                 {
                     label: 'passwordCf',
                     value: '',
                     valid: null,
                     isRequired: true,
-                    regExp: '^[A-Za-z0-9]{4,12}$'
+                    regExp: '^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9^()@$!%*#?&]{8,20}$'
                 },    
                 {
                     label: 'username',

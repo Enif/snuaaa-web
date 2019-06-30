@@ -201,13 +201,11 @@ class CreatePhoto extends React.Component {
 
             await service.createPhotosInAlbum(this.props.album_id, photosForm)
                 .then(() => {
-                    console.log('[%s] Create Photos Success', TAG);
-                    console.log(this.props)
                     this.props.togglePopUp();
                     this.props.fetch();
                 })
-                .catch(() => {
-                    console.error(`[${TAG}] Create Photos Fail`);
+                .catch((err) => {
+                    console.error(`[${TAG}] ${err}`);
                     alert('사진 생성 실패');
                 })
         }
@@ -215,12 +213,11 @@ class CreatePhoto extends React.Component {
 
             await service.createPhotosInPhotoBoard(this.props.board_id, photosForm)
                 .then(() => {
-                    console.log('[%s] Create Photos Success', TAG);
                     this.props.togglePopUp();
                     this.props.retrievePhotos(this.props.board_id);
                 })
-                .catch(() => {
-                    console.error(`[${TAG}] Create Photos Fail`);
+                .catch((err) => {
+                    console.error(`[${TAG}] ${err}`);
                     alert('사진 생성 실패');
                 })
         }
