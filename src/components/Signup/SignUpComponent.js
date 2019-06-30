@@ -122,7 +122,7 @@ const SignUpComponent = ({ userInfo, validAll, dupId, checkDubId,
                 <InputField label="아이디*" name="id" handleChange={handleChange} handleBlur={checkDubId} required={true} valid={idInfo.valid}
                     invalidMessage={dupId ? "이미 사용중인 ID입니다" : "4-12자리의 영문 혹은 숫자"}/> 
                 <InputField label="비밀번호*" type="password" name="password" handleChange={handleChange} required={true} valid={pwInfo.valid} 
-                    invalidMessage="4-12자리의 영문 혹은 숫자"/>
+                    invalidMessage="8-20자리의 영문/숫자/특수문자"/>
                 <InputField label="비밀번호확인*" type="password" name="passwordCf" handleChange={handleChange} required={true} valid={pwCfInfo.valid}
                     invalidMessage="비밀번호가 일치하지 않습니다."/>
                 <InputField label="이름*" name="username" handleChange={handleChange} required={true} valid={usernameInfo.valid}

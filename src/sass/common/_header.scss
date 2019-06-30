@@ -353,9 +353,22 @@
             }
         }
         p {
-
             font-size: 1.5rem;
             line-height: 4rem;
+        }
+    }
+}
+
+@media screen and (max-width: 350px) {
+
+    .main-menu-nav-wrapper {
+        font-size: 0.77rem;
+                
+        .menu-nav {
+            .menu-item-1 {
+                padding-left: 0.2rem;
+                padding-right: 0.2rem;
+            }
         }
     }
 }

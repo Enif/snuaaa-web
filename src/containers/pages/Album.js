@@ -18,6 +18,7 @@ class Album extends React.Component {
         super(props);
         this.photos = [];
         this.albumInfo = undefined;
+        this.categoryInfo = undefined;
         this.tagInfo = undefined;
         this.state = {
             album_id: this.props.match.params.aNo,
@@ -37,6 +38,7 @@ class Album extends React.Component {
         ])
         .then((infos) => {
             this.albumInfo = infos[0].data.albumInfo;
+            this.categoryInfo = infos[0].data.categoryInfo;
             this.tagInfo = infos[0].data.tagInfo;
             this.photos = infos[1].data
             this.setState({
@@ -99,7 +101,7 @@ class Album extends React.Component {
                                     }
                                     {
                                         (albumState === ContentStateEnum.EDITTING) &&
-                                        <EditAlbum album_id={album_id} albumInfo={this.albumInfo} fetch={this.fetch} setAlbumState={this.setAlbumState} />
+                                        <EditAlbum album_id={album_id} albumInfo={this.albumInfo} categoryInfo={this.categoryInfo} fetch={this.fetch} setAlbumState={this.setAlbumState} />
                                     }
                                 </div>
                             </div>
