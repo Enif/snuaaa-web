@@ -15,7 +15,7 @@ const PhotoList = ({ photos, togglePopUp }) => {
                                 <i className="material-icons">favorite</i> {contentInfo.like_num}&nbsp;
                                     <i className="material-icons">comment</i> {contentInfo.comment_num}
                             </div>
-                            <Image imgSrc={photo.file_path} />
+                            <Image imgSrc={photo.thumbnail_path} />
                         </Link>
                     </div>
                 )

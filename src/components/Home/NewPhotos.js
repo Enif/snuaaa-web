@@ -10,7 +10,7 @@ const NewPhotos = ({ title, photos }) => {
                 return (
                     <div className="new-photo-list" key={photo.contentPhoto.content_id}>
                         <Link to={`/photo/${photo.contentPhoto.content_id}`}>
-                            <Image imgSrc={photo.file_path} />
+                            <Image imgSrc={photo.thumbnail_path} />
                         </Link>
                     </div>
                 )

@@ -25,7 +25,7 @@ class AlbumList extends React.Component {
                 <div className="album-list" key={album.content_id} >
                     <Link to={`/album/${album.content_id}`}>
 
-                        <Image imgSrc={album.file_path} defaultImgSrc={albumCover} />
+                        <Image imgSrc={album.thumbnail_path} defaultImgSrc={albumCover} />
                         <div className="album-cover">
                             <div className="album-category-marker" style={color}>
 
