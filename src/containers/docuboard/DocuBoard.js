@@ -23,7 +23,7 @@ class DocuBoard extends React.Component {
             boardState: BoardStateEnum.LOADING,
             // isDocuListReady: false,
             // popUpState: false,
-            category: (hisState && hisState.category) ? hisState.category : null,
+            category: (hisState && hisState.category) ? hisState.category : '',
             generation: (hisState && hisState.generation) ? hisState.generation : 0,
             pageIdx: (hisState && hisState.page) ? hisState.page : 1,
         }
@@ -38,7 +38,7 @@ class DocuBoard extends React.Component {
         console.log(`[${TAG}] getDerivedStateFromProps`);
         const hisState = history.location.state;
         return {
-            category: (hisState && hisState.category) ? hisState.category : null,
+            category: (hisState && hisState.category) ? hisState.category : '',
             generation: (hisState && hisState.generation) ? hisState.generation : 0,
             pageIdx: (hisState && hisState.page) ? hisState.page : 1
         }
