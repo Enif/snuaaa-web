@@ -3,7 +3,7 @@ import ReactQuill from 'react-quill';
 import AttachFile from './AttachFile';
 
 
-function CreatePostComponent({ title, text, attachedFiles, handleChange, handleEditor, togglePopUp, createPost, attachFile, removeAttachedFile }) {
+function CreatePostComponent({ title, text, attachedFiles, handleChange, handleEditor, close, createPost, attachFile, removeAttachedFile }) {
 
     const modules = {
         toolbar: [
@@ -29,7 +29,7 @@ function CreatePostComponent({ title, text, attachedFiles, handleChange, handleE
             </div>
             <AttachFile files={attachedFiles} attachFile={attachFile} removeFile={removeAttachedFile} />
             <div className="btn-wrapper">
-                <button className="enif-btn-common enif-btn-cancel" onClick={togglePopUp}> 취소 </button>
+                <button className="enif-btn-common enif-btn-cancel" onClick={close}> 취소 </button>
                 <button className="enif-btn-common enif-btn-ok" onClick={createPost}> 확인 </button>
             </div>
         </div>

@@ -5,6 +5,7 @@ import AlbumList from 'components/PhotoBoard/AlbumList';
 import Category from 'components/Common/Category';
 import Loading from 'components/Common/Loading';
 import Paginator from 'components/Common/Paginator';
+import history from 'common/history'
 
 const TAG = 'MEMORY'
 const ALBUMROWNUM = 12;
@@ -17,16 +18,37 @@ class Memory extends React.Component {
         this.albums = [];
         this.albumCount = 0;
 
+        const hisState = history.location.state;
         this.state = {
             popUpState: false,
             isReady: false,
-            pageIdx: 1,
-            selectedCategory: null
+            pageIdx: (hisState && hisState.page) ? hisState.page : 1,
+            category: (hisState && hisState.category) ? hisState.category : null
         }
     }
 
     componentDidMount() {
-        this.fetch()
+        const { category, pageIdx } = this.state;
+        this.fetch(category, pageIdx);
+    }
+    
+    static getDerivedStateFromProps(props, state) {
+        console.log(`[${TAG}] getDerivedStateFromProps`);
+        const hisState = history.location.state;
+        return {
+            category: (hisState && hisState.category) ? hisState.category : null,
+            pageIdx: (hisState && hisState.page) ? hisState.page : 1
+        }
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log(`[${TAG}] shouldComponentUpdate`);
+        if (this.state.category !== nextState.category ||
+            this.state.pageIdx !== nextState.pageIdx) {
+            this.fetch(nextState.category, nextState.pageIdx);
+            return false;
+        }
+        return true
     }
 
     setIsReady = (isReady) => {
@@ -35,13 +57,13 @@ class Memory extends React.Component {
         })
     }
 
-    fetch = async () => {
-        this.setIsReady(false);
+    fetch = async (category, pageIdx) => {
 
-        if (this.state.selectedCategory) {
-            await service.retrieveAlbumsInPhotoBoardByCategory(this.props.board_id, this.state.selectedCategory, this.state.pageIdx)
+        const { board_id } = this.props;
+        this.setIsReady(false);
+        if (category) {
+            await service.retrieveAlbumsInPhotoBoardByCategory(board_id, category, pageIdx)
                 .then((res) => {
-                    console.log('[%s] Retrieve Albums Success', TAG);
                     this.albums = res.data.albumInfo;
                     this.albumCount = res.data.albumCount;
                     this.setIsReady(true);
@@ -51,9 +73,8 @@ class Memory extends React.Component {
                 })
         }
         else {
-            await service.retrieveAlbumsInPhotoBoard(this.props.board_id, this.state.pageIdx)
+            await service.retrieveAlbumsInPhotoBoard(board_id, pageIdx)
                 .then((res) => {
-                    console.log('[%s] Retrieve Albums Success', TAG);
                     this.albums = res.data.albumInfo;
                     this.albumCount = res.data.albumCount;
                     this.setIsReady(true);
@@ -65,19 +86,21 @@ class Memory extends React.Component {
     }
 
     clickCategory = (ctg_id) => {
-        this.setState({
-            selectedCategory: ctg_id
-        },
-            this.fetch
-        )
+        history.push({
+            state: {
+                category: ctg_id,
+                page: 1
+            }
+        })
     }
 
     clickAll = () => {
-        this.setState({
-            selectedCategory: null
-        },
-            this.fetch
-        )
+        history.push({
+            state: {
+                category: null,
+                page: 1
+            }
+        })
     }
 
     togglePopUp = () => {
@@ -87,22 +110,24 @@ class Memory extends React.Component {
     }
 
     clickPage = (idx) => {
-        this.setState({
-            pageIdx: idx
-        },
-            this.fetch
-        )
+        const { category } = this.state;
+        history.push({
+            state: {
+                category: category,
+                page: idx
+            }
+        })
     }
 
     render() {
-        let { isReady, pageIdx, selectedCategory } = this.state;
+        let { isReady, pageIdx, category } = this.state;
         let { board_id, boardInfo, categories } = this.props;
 
         return (
             <>
                 <div className="photoboard-wrapper">
                     <h2 className="memory-title">{boardInfo.board_name}</h2>
-                    <Category categories={categories} selected={selectedCategory} clickAll={this.clickAll} clickCategory={this.clickCategory} />
+                    <Category categories={categories} selected={category} clickAll={this.clickAll} clickCategory={this.clickCategory} />
                     {(() => {
                         if (isReady) {
                             return (

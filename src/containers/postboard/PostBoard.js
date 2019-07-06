@@ -4,6 +4,8 @@ import Loading from 'components/Common/Loading';
 import PostList from 'components/Board/PostList';
 import Paginator from 'components/Common/Paginator';
 import CreatePost from 'containers/PostBoard/CreatePost';
+import BoardStateEnum from 'common/BoardStateEnum';
+import history from 'common/history';
 
 const TAG = 'POSTBOARD'
 const POSTROWNUM = 10;
@@ -12,68 +14,71 @@ class PostBoard extends React.Component {
 
     constructor(props) {
         console.log(`[${TAG}] Constructor`)
-
         super(props);
-
         this.posts = [];
         this.postCount = 0;
-
+        const hisState = history.location.state;
         this.state = {
-            popUpState: false,
-            pageIdx: 1,
-            isReady: false,
+            boardState: BoardStateEnum.LOADING,
+            pageIdx: (hisState && hisState.page) ? hisState.page : 1,
         }
     }
 
     componentDidMount() {
         console.log(`[${TAG}] ComponentDidMount`)
-        this.retrievePosts()
+        this.fetch()
     }
 
-    componentWillUnmount() {
-        console.log(`[${TAG}] ComponentWillUnmount`)
-
+    static getDerivedStateFromProps(props, state) {
+        console.log(`[${TAG}] getDerivedStateFromProps`);
+        const hisState = history.location.state;
+        return {
+            pageIdx: (hisState && hisState.page) ? hisState.page : 1,
+        }
     }
 
-    togglePopUp = () => {
-        window.history.pushState(null, null, window.location.pathname)
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log(`[${TAG}] shouldComponentUpdate`)
+        if (this.state.pageIdx !== nextState.pageIdx) {
+            this.fetch(nextState.pageIdx);
+            return true;
+        }
+        return true;
+    }
+
+    setBoardState = (state) => {
         this.setState({
-            popUpState: !this.state.popUpState
-        })
-    }
-
-    setIsReady = (isReady) => {
-        this.setState({
-            isReady: isReady
+            boardState: state
         })
     }
 
     clickPage = (idx) => {
-        this.setState({
-            pageIdx: idx
-        },
-            this.retrievePosts
-        )
+        history.push({
+            state: {
+                page: idx
+            }
+        })
     }
 
-    retrievePosts = async () => {
-        console.log('[%s] Retrieve Posts', TAG);
+    fetch = async (pageIdx) => {
+        const { board_id } = this.props;
+        if(!pageIdx) {
+            pageIdx = this.state.pageIdx;
+        }
 
-        this.setIsReady(false);
-        await service.retrievePostsInBoard(this.props.board_id, this.state.pageIdx)
+        this.setBoardState(BoardStateEnum.LOADING)
+        await service.retrievePostsInBoard(board_id, pageIdx)
             .then((res) => {
-                console.log('[%s] Retrieve Posts Success', TAG);
                 this.posts = res.data.postInfo;
                 this.postCount = res.data.postCount;
-                this.setIsReady(true);
+                this.setBoardState(BoardStateEnum.READY)
             })
             .catch((err) => {
                 console.error(err);
             })
     }
 
-    retrieveCategories = () => {
-        // console.log(this.props.ca)
+    makeCategoryList = () => {
         if (this.props.categories.length > 0) {
             return (
                 <select>
@@ -88,33 +93,43 @@ class PostBoard extends React.Component {
         console.log(`[${TAG}] render.. `)
 
         const { board_id, boardInfo } = this.props;
-        const { isReady, popUpState, pageIdx } = this.state;
+        const { pageIdx, boardState } = this.state;
 
         return (
             <div className="section-contents">
                 {
-                    isReady ?
-                        (
-                            <div className="board-wrapper">
-                                <h2>{boardInfo.board_name}</h2>
-                                {
-                                    popUpState ?
-                                        <CreatePost board_id={board_id} togglePopUp={this.togglePopUp} retrievePosts={this.retrievePosts} />
-                                        :
-                                        (
-                                            <>
-                                                {this.postCount > 0 && <Paginator pageIdx={pageIdx} pageNum={Math.ceil(this.postCount / POSTROWNUM)} clickPage={this.clickPage} />}
-                                                {this.retrieveCategories()}
-                                                <PostList posts={this.posts} togglePopUp={this.togglePopUp} />
-                                            </>
-                                        )
-                                }
-                            </div>
+                    (() => {
+                        if (boardState === BoardStateEnum.LOADING) {
+                            return <Loading />
+                        }
+                        else if (boardState === BoardStateEnum.READY || boardState === BoardStateEnum.WRITING) {
+                            return (
+                                <div className="board-wrapper">
+                                    <h2>{boardInfo.board_name}</h2>
+                                    {
+                                        boardState === BoardStateEnum.READY &&
+                                        <>
+                                            {this.postCount > 0 && <Paginator pageIdx={pageIdx} pageNum={Math.ceil(this.postCount / POSTROWNUM)} clickPage={this.clickPage} />}
+                                            {this.makeCategoryList()}
+                                            <PostList
+                                                posts={this.posts}
+                                                clickCrtBtn={() => this.setBoardState(BoardStateEnum.WRITING)} />
+                                        </>
+                                    }
+                                    {
+                                        boardState === BoardStateEnum.WRITING &&
+                                        <CreatePost
+                                            board_id={board_id}
+                                            close={() => this.setBoardState(BoardStateEnum.READY)}
+                                            fetch={this.fetch} />
+                                    }
+                                </div>
+                            )
+                        }
+                        else return (
+                            <div>ERROR PAGE</div>
                         )
-                        :
-                        (
-                            <Loading />
-                        )
+                    })()
                 }
             </div>
         );

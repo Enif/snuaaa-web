@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { SERVER_URL } from '../common/environment'
 
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + (sessionStorage.getItem('token') || localStorage.getItem('token') );
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + (sessionStorage.getItem('token') || localStorage.getItem('token'));
 
 export function updateToken() {
     return axios.get(SERVER_URL + 'api/check')
@@ -109,8 +109,9 @@ export function createPhotosInPhotoBoard(board_id, data) {
 
 export function retrievePhotosInPhotoBoardByTag(board_id, tags, pageIdx) {
     let tagUrl = '';
+
     tags.forEach((tag) => {
-        if(!tagUrl) {
+        if (!tagUrl) {
             tagUrl += `tag=${tag}`
         }
         else {

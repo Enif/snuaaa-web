@@ -68,7 +68,6 @@ class CreateDocu extends React.Component {
             await service.createDocument(this.props.board_id, docuInfo)
                 .then(() => {
                     console.log('[%s] Create Docu Success', TAG);
-                    this.props.togglePopUp();
                     this.props.fetch()
                 })
                 .catch((err) => {
@@ -158,7 +157,7 @@ class CreateDocu extends React.Component {
                     </div>
                     <div>
                         <button className="enif-btn-common enif-btn-ok" onClick={() => this.createDocu()}>OK</button>
-                        <button className="enif-btn-common enif-btn-cancel" onClick={() => this.props.togglePopUp()}>CANCEL</button>
+                        <button className="enif-btn-common enif-btn-cancel" onClick={() => this.props.close()}>CANCEL</button>
                     </div>
                 </div>
             </div>

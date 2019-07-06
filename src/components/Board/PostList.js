@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { convertDate } from 'utils/convertDate'
 
-const PostList = ({posts, togglePopUp}) => {
+const PostList = ({posts, clickCrtBtn}) => {
 
     const makePostList = () => {
 
@@ -48,7 +48,7 @@ const PostList = ({posts, togglePopUp}) => {
                 <div className="post-list-wrapper">
                     {makePostList()}
                 </div>
-                <button className="enif-btn-circle enif-pos-sticky" onClick={togglePopUp}>
+                <button className="enif-btn-circle enif-pos-sticky" onClick={clickCrtBtn}>
                     <i className="material-icons">create</i>
                 </button>
             </>
