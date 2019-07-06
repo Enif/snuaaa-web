@@ -8,10 +8,10 @@ const MAX_SIZE = 20 * 1024 * 1024;
 class CreatePost extends React.Component {
 
     constructor(props) {
+        console.log('[%s] constructor', TAG);
         super(props);
 
         this.currentSize = 0;
-
         this.state = {
             title: '',
             text: '',
@@ -64,8 +64,8 @@ class CreatePost extends React.Component {
     }
 
     createPost = async () => {
-        console.log('[%s] postLogIn', TAG);
-        const { title, text, attachedFiles } = this.state
+        const { title, text, attachedFiles } = this.state;
+        const { board_id, fetch, close } = this.props;
 
         if (!title) {
             alert("제목을 입력해 주세요.");
@@ -78,11 +78,10 @@ class CreatePost extends React.Component {
                 postInfo.append('attachedFiles', attachedFiles[i]);
             }
 
-            await service.createPost(this.props.board_id, postInfo)
+            await service.createPost(board_id, postInfo)
                 .then(() => {
-                    console.log('[%s] Save Post Success', TAG)
-                    this.props.retrievePosts();
-                    this.props.togglePopUp();
+                    fetch();
+                    close();
                 })
                 .catch((err) => {
                     console.error(err);
@@ -95,7 +94,7 @@ class CreatePost extends React.Component {
     render() {
 
         const { title, text, attachedFiles } = this.state;
-        const { togglePopUp } = this.props;
+        const { close } = this.props;
         const { handleChange, handleEditor, createPost, attachFile, removeAttachedFile } = this;
 
 
@@ -106,7 +105,7 @@ class CreatePost extends React.Component {
                 attachedFiles={attachedFiles}
                 handleChange={handleChange}
                 handleEditor={handleEditor}
-                togglePopUp={togglePopUp}
+                close={close}
                 createPost={createPost}
                 attachFile={attachFile}
                 removeAttachedFile={removeAttachedFile}

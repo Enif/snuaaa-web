@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'react-app-polyfill/ie11';
-import { BrowserRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux'
+import history from 'common/history'
 // import { CookiesProvider } from 'react-cookie';
 
 import './index.css';
@@ -16,9 +17,9 @@ const store = createStore(reducers);
 ReactDOM.render(
     // <CookiesProvider>
         <Provider store={store}>
-                <BrowserRouter basename="/page">
+                <Router basename="/page" history={history} >
                     <App/>
-                </BrowserRouter>
+                </Router>
         </Provider>
     // </CookiesProvider>
     , 

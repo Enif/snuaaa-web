@@ -6,6 +6,7 @@ function Paginator({ pageIdx, pageNum, clickPage }) {
 
     const [pageIdxOffset, setPageIdxOffset] = useState(Math.floor((pageIdx - 1) / PAGELISTNUM) * PAGELISTNUM + 1);
 
+    pageIdx = Number(pageIdx)
     const makePaginator = () => {
         const pageList = [];
         for (let i = 0; i < PAGELISTNUM; i++) {
