@@ -77,6 +77,10 @@
     h4 {
         margin: 10px 0px;
     }
+    .kakao-map {
+        width: 100%;
+        height: 400px;
+    }
 }
 
 .officers-wrapper {
@@ -231,6 +235,12 @@
         padding-bottom: 1rem;
     }
 
+    .intro-contact-wrapper {
+        .kakao-map {
+            width: 100%;
+            height: 15rem;
+        }
+    }
 
     .officers-wrapper {
 

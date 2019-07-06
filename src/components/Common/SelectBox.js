@@ -13,7 +13,7 @@ const SelectBox = ({ selectName, optionList, onSelect, selectedOption }) => {
     return (
         <div className="select-wrapper">
             <select name={selectName} onChange={onSelect} value={selectedOption} >
-                <option value="" selected={!selectedOption}>All</option>
+                <option value="" >All</option>
                 {makeSelectList()}
             </select>
         </div>

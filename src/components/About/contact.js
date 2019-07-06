@@ -1,14 +1,40 @@
 import React from 'react';
-import map from 'assets/img/map_google.png'
+const kakao = window.kakao;
 
 class Contact extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.mapRef = React.createRef();
+    }
+
+    componentDidMount() {
+
+        const position = new kakao.maps.LatLng(37.459473, 126.950562);
+        const options = {
+            center: position,
+            level: 3
+        };
+
+        const kakaoMap = new kakao.maps.Map(this.mapRef.current, options)
+        const marker = new kakao.maps.Marker({
+            position: position
+        });
+        marker.setClickable(true);
+        marker.setTitle('서울대학교 아마추어 천문회');
+        marker.setMap(kakaoMap)
+    }
 
     render() {
         return (
             <div className="intro-div-wrapper" id="contact">
                 <h3>Contact Us</h3>
                 <div className="intro-contact-wrapper">
-                    <img src={map} alt="map" />
+                    <div ref={this.mapRef} className="kakao-map"></div>
+                    <a href="https://map.kakao.com/link/to/17561274">
+                        <i className="material-icons">directions</i>길 찾기
+                    </a>
+
                     <h4>서울대학교 아마추어 천문회<br />
                         Amateur Astronomy Association
                     </h4>
