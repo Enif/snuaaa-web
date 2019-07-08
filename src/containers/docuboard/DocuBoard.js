@@ -64,7 +64,7 @@ class DocuBoard extends React.Component {
     fetch = async (category, generation, pageIdx) => {
         // if(!category) category = this.state.category;
         // if(!generation) generation = this.state.generation;
-        if(!pageIdx) pageIdx = this.state.pageIdx;
+        if (!pageIdx) pageIdx = this.state.pageIdx;
 
         this.setBoardState(BoardStateEnum.LOADING);
         await service.retrieveDocuments(pageIdx, category, generation)
@@ -105,23 +105,23 @@ class DocuBoard extends React.Component {
     handleChange = (e) => {
         console.log(e.target.name)
         const { category, generation } = this.state;
-        if(e.target.name === 'category') {
+        if (e.target.name === 'category') {
             history.push({
                 state: {
                     category: e.target.value,
                     generation: generation,
                     page: 1
                 }
-            })            
+            })
         }
-        if(e.target.name === 'generation') {
+        if (e.target.name === 'generation') {
             history.push({
                 state: {
                     category: category,
                     generation: e.target.value,
                     page: 1
                 }
-            })            
+            })
         }
     }
 
@@ -161,13 +161,18 @@ class DocuBoard extends React.Component {
 
         return (
             <div className="board-wrapper">
-                <h2>{boardInfo.board_name}</h2>
-                <div className="doc-select-wrapper">
-                    <SelectBox selectName="category" optionList={categoryOptions} onSelect={this.handleChange} selectedOption={this.state.category}/>
-                    <SelectBox selectName="generation" optionList={generationOptions} onSelect={this.handleChange} selectedOption={this.state.generation}/>
+                <div className="postboard-title-wrapper">
+                    <div className="background-star">★</div>
+                    <h2>{boardInfo.board_name}</h2>
+                    <div className="background-star">★★★★★★★★★★★★★★★★★★★★★★</div>
                 </div>
-                {this.docCount > 0 && <Paginator pageIdx={pageIdx} pageNum={Math.ceil(this.docCount / DOCROWNUM)} clickPage={this.clickPage} />}
-
+                <div className="docboard-top-menu-wrapper">
+                    <div className="doc-select-wrapper">
+                        <SelectBox selectName="category" optionList={categoryOptions} onSelect={this.handleChange} selectedOption={this.state.category} />
+                        <SelectBox selectName="generation" optionList={generationOptions} onSelect={this.handleChange} selectedOption={this.state.generation} />
+                    </div>
+                    {this.docCount > 0 && <Paginator pageIdx={pageIdx} pageNum={Math.ceil(this.docCount / DOCROWNUM)} clickPage={this.clickPage} />}
+                </div>
                 {(() => {
                     if (boardState === BoardStateEnum.LOADING) {
                         return <Loading />

@@ -1,6 +1,23 @@
 .board-wrapper {
     padding-top: 15px;
+    .postboard-title-wrapper {
+        display: flex;
+        padding: 20px 0px;
+        .background-star {
+            color: #ffd45f;
+            font-size: 17px;
+            letter-spacing: 15px;
+            overflow: hidden;
+            flex-shrink: 1;
+        }
+        h2 {
+            flex-shrink: 0;
+            padding: 0px 17px 0px 10px;
+        }
+
+    }
 }
+
 
 .post-list-wrapper {
     margin: 20px 0px;
@@ -110,6 +127,11 @@
             float: right;
         }
     }
+}
+
+.docboard-top-menu-wrapper {
+    display: flex;
+    padding-bottom: 10px;
 }
 
 @media screen and (max-width: 800px) {

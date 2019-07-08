@@ -104,8 +104,12 @@ class PostBoard extends React.Component {
                         }
                         else if (boardState === BoardStateEnum.READY || boardState === BoardStateEnum.WRITING) {
                             return (
-                                <div className="board-wrapper">
-                                    <h2>{boardInfo.board_name}</h2>
+                                <div className="board-wrapper postboard-wrapper">
+                                    <div className="postboard-title-wrapper">
+                                        <div className="background-star">★</div>
+                                        <h2>{boardInfo.board_name}</h2>
+                                        <div className="background-star">★★★★★★★★★★★★★★★★★★★★★★</div>
+                                    </div>
                                     {
                                         boardState === BoardStateEnum.READY &&
                                         <>
