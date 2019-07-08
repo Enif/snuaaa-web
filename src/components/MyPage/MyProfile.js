@@ -25,14 +25,15 @@ function MyProfile({profileImg, nickname, userDesc}) {
                 </div>
 
             </div>
+            <div className="enif-divider"></div>
             <div className="my-right">
                 <div className={descClass}>{breakLine(userDesc)}</div>
-                <div>
+                <div className="icon-expand">
                     <i className="material-icons pointer" onClick={() => setIsExpand(!isExpand)}>{icon}</i>
                 </div>
             </div>
         </div>
-    )
+    )   
 }
 
 export default MyProfile;

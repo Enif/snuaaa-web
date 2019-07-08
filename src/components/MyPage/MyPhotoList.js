@@ -26,7 +26,7 @@ const MyPhotoList = ({photos}) => {
     return (
         <div className="my-list-wrapper">
             <h4>등록한 사진</h4>
-            <div className="photo-list-wrapper">
+            <div className="photo-list-wrapper my-photo-list-wrapper">
                 {makePhotoList()}
             </div>
         </div>

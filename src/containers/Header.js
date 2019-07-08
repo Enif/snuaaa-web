@@ -68,10 +68,10 @@ class Header extends React.Component {
                             </p>)
                             :
                             (<div className="profile-img-wrapper">
-                                <Image onClick={this.togglePopup} imgSrc={profile_path} defaultImgSrc={imgProfile} />
+                                <Image className="profile-img" onClick={this.togglePopup} imgSrc={profile_path} defaultImgSrc={imgProfile} />
                                 {/* <img onClick={this.togglePopup} src={imgProfile}/> */}
                                 {
-                                    isShowPopupUser && <PopupUser togglePopup={this.togglePopup} logout={this.props.onLogout}/>
+                                    isShowPopupUser && <PopupUser profile_path={profile_path} togglePopup={this.togglePopup} logout={this.props.onLogout}/>
                                 }
                             </div>)
                         }

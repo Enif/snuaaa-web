@@ -139,7 +139,6 @@
             }
         }
         .new-comment-contents {
-            width: 75%;
             flex-grow: 1;
         }
         .new-comment-contents-top {
@@ -147,7 +146,8 @@
                 width: 100%;
                 text-overflow: ellipsis;
                 overflow: hidden;
-                white-space: nowrap;    
+                white-space: nowrap;
+                color: #A3A3A3;
             }
         }
         .new-comment-contents-bot {
@@ -164,7 +164,7 @@
             text-overflow: ellipsis;
             overflow: hidden;
             white-space: nowrap;
-            color: #C9C9C9;
+            color: #000000;
         }
         .new-comment-date {
             flex-shrink: 0;

@@ -37,7 +37,7 @@
             float: right;
             color: white;
 
-            img {
+            .profile-img {
                 width: 50px;
                 height: 50px;
                 cursor: pointer;
@@ -202,6 +202,9 @@
     .btn-toggle {
         display: none;
     }
+    .poup-profile-wrapper {
+        display: none;
+    }
     p {
         color: #FFFFFF;
         line-height: 40px;
@@ -237,7 +240,7 @@
             .profile-img-wrapper {
                 width: 3rem;
                 margin: 0.3rem;
-                img {
+                .profile-img {
                     width: 2.5rem;
                     height: 2.5rem;
                 }
@@ -355,6 +358,14 @@
         p {
             font-size: 1.5rem;
             line-height: 4rem;
+        }
+        .poup-profile-wrapper {
+            display: inline;
+            .poup-profile {
+                width: 8rem;
+                height: 8rem;
+                border-radius: 50%;
+            }
         }
     }
 }

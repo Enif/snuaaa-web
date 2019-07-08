@@ -16,14 +16,21 @@ const MyCommentList = ({comments}) => {
             else if(contentInfo.type === "PH") {
                 linkTo = `/photo/${comment.parent_id}`
             }
+            else if(contentInfo.type === "DO") {
+                linkTo = `/document/${comment.parent_id}`
+            }
 
             return (
                 <div className="my-cmt-wrapper" key={comment.comment_id}>
-                    <div className="my-cmt-boardname">{boardInfo.board_name}</div>
+                    <div className="my-cmt-boardname">
+                        <Link to={`/board/${boardInfo.board_id}`}>
+                            {boardInfo.board_name}
+                        </Link>
+                    </div>
 
-                    <Link to={linkTo}>
+                    <Link to={linkTo} className="my-cmt-contents-link">
                         <div className="my-cmt-contents">
-                            <p>{contentInfo.title}</p>
+                            <p className="my-cmt-title">{contentInfo.title}</p>
                             <p className="my-cmt-cmt">{comment.text}</p>
                         </div>
                     </Link>
