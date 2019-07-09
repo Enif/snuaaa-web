@@ -279,6 +279,11 @@
             display: inline-block;
             width: 55%;
             flex-grow: 1;
+            h5 {
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;    
+            }
         }
         .my-post-date {
             display: inline-block;

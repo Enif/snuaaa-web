@@ -140,8 +140,10 @@
         }
         .new-comment-contents {
             flex-grow: 1;
+            width: 55%;
         }
         .new-comment-contents-top {
+            // flex-grow: 1;
             .new-comment-contents-title {
                 width: 100%;
                 text-overflow: ellipsis;

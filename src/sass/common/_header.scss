@@ -359,12 +359,13 @@
             font-size: 1.5rem;
             line-height: 4rem;
         }
-        .poup-profile-wrapper {
+        .popup-profile-wrapper {
             display: inline;
-            .poup-profile {
+            .popup-profile {
                 width: 8rem;
                 height: 8rem;
                 border-radius: 50%;
+                object-fit: cover;
             }
         }
     }

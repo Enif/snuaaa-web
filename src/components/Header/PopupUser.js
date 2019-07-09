@@ -10,8 +10,8 @@ const PopupUser = ({profile_path, togglePopup, logout}) => {
             <div className="btn-toggle" onClick={togglePopup}>
                 <i className="material-icons">close</i>
             </div>
-            <div className="poup-profile-wrapper">
-                <Image imgSrc={profile_path} defaultImgSrc={imgProfile} className="poup-profile" />
+            <div className="popup-profile-wrapper">
+                <Image imgSrc={profile_path} defaultImgSrc={imgProfile} className="popup-profile" />
             </div>
             <Link to="/mypage/info" onClick={togglePopup}>
                 <p>My Page</p>
