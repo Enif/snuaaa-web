@@ -21,7 +21,7 @@ export function setToken(token, isAutoLogin) {
         }
     }
     cookies.set('token', token, cookieOption);
-    axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
 }
 
 export function removeToken() {
