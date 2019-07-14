@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+
 import { authLogout } from '../actions';
 import logo from '../assets/img/logo_white.png'
 import imgProfile from '../assets/img/profile.png';
@@ -36,14 +37,14 @@ class Header extends React.Component {
 
     fetch = async () => {
         await service.retrieveBoards()
-        .then((res) => {
-            this.setState({
-                boards: res.data
+            .then((res) => {
+                this.setState({
+                    boards: res.data
+                })
             })
-        })
-        .catch((err) => {
-            console.error(err);
-        })
+            .catch((err) => {
+                console.error(err);
+            })
     }
 
     render() {
@@ -57,23 +58,31 @@ class Header extends React.Component {
                         <Link to="/">
                             <div className="header-logo">
                                 <img src={logo} alt="logo" /><p>서울대학교 아마추어 천문회</p>
-                            </div>    
+                            </div>
                         </Link>
                         {
                             !loginState ?
-                            (<p>
-                                <Link to="/signup"> SIGN UP </Link>
-                                /
+                                (<p>
+                                    <Link to="/signup"> SIGN UP </Link>
+                                    /
                                 <Link to="/login"> LOG IN </Link>
-                            </p>)
-                            :
-                            (<div className="profile-img-wrapper">
-                                <Image className="profile-img" onClick={this.togglePopup} imgSrc={profile_path} defaultImgSrc={imgProfile} />
-                                {/* <img onClick={this.togglePopup} src={imgProfile}/> */}
-                                {
-                                    isShowPopupUser && <PopupUser profile_path={profile_path} togglePopup={this.togglePopup} logout={this.props.onLogout}/>
-                                }
-                            </div>)
+                                </p>)
+                                :
+                                (<div className="profile-img-wrapper">
+                                    <Image className="profile-img" onClick={this.togglePopup} imgSrc={profile_path} defaultImgSrc={imgProfile} />
+                                    {/* <img onClick={this.togglePopup} src={imgProfile}/> */}
+                                    {
+                                        isShowPopupUser &&
+                                        <PopupUser
+                                            profile_path={profile_path}
+                                            togglePopup={this.togglePopup}
+                                            logout={
+                                                () => {
+                                                    this.props.onLogout();
+                                                }
+                                            } />
+                                    }
+                                </div>)
                         }
                     </div>
                 </div>
@@ -98,4 +107,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps, null, {pure: false})(Header);
+export default connect(mapStateToProps, mapDispatchToProps, null, { pure: false })(Header);

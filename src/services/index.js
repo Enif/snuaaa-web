@@ -1,7 +1,11 @@
 import axios from 'axios';
+import Cookies from 'universal-cookie';
 import { SERVER_URL } from '../common/environment'
 
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + (sessionStorage.getItem('token') || localStorage.getItem('token'));
+const cookies = new Cookies();
+
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + cookies.get('token');
+// axios.defaults.headers.common['Authorization'] = 'Bearer ' + (sessionStorage.getItem('token') || localStorage.getItem('token'));
 
 export function updateToken() {
     return axios.get(SERVER_URL + 'api/check')

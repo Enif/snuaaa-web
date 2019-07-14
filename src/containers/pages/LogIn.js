@@ -1,9 +1,9 @@
 import React from 'react';
-import axios from 'axios';
-import { Redirect } from 'react-router'
+import { Redirect } from 'react-router';
+import { connect } from 'react-redux';
+
 import * as service from 'services';
-import { connect } from 'react-redux'
-import { authLogin } from 'actions'
+import { authLogin } from 'actions';
 import LogInComponent from 'components/Login/LogInComponent';
 import Loading from 'components/Common/Loading';
 import PopUp from 'components/Common/PopUp';
@@ -12,8 +12,11 @@ import FullScreenPortal from 'containers/FullScreenPortal';
 const TAG = 'LOGIN'
 
 class LogIn extends React.Component {
+    // static propTypes = {
+    //     cookies: instanceOf(Cookies).isRequired
+    //   };
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
@@ -21,6 +24,7 @@ class LogIn extends React.Component {
             password: '',
             isLoading: false,
             popUp: false,
+            errPopUp: false,
             toSignUp: false,
             autoLogin: false,
         }
@@ -36,15 +40,21 @@ class LogIn extends React.Component {
 
     checkAuto = (e) => {
         this.setState({
-            autoLogin: e.target.checked
+            autoLogin: e.target.checked,
+            popUp: e.target.checked
         })
-        if(e.target.checked) {
-            this.makePopUp('자동 로그인 기능을 사용하시겠습니까?',
-            `자동 로그인 사용시 다음 접속부터는
-            로그인을 하실 필요가 없습니다.\n
-            단, 게임방, 학교 등 공공장소에서 이용 시
-            개인정보가 유출될 수 있으니 주의해주세요.`)
-        }
+    }
+
+    setAutoLoginState = (state) => {
+        this.setState({
+            autoLogin: state
+        })
+    }
+
+    setPopUpState = (state) => {
+        this.setState({
+            popUp: state
+        })
     }
 
     redirectToSignUp = () => {
@@ -55,73 +65,88 @@ class LogIn extends React.Component {
         })
     }
 
-    makePopUp = (title, contents) => {
-        console.log(`[${TAG}] makePopUp`);
-        this.popupTitle = title;
-        this.popupContents = contents;
+    makeErrPopUp = () => {
         this.setState({
-            popUp: true
+            errPopUp: true
         })
-
         setTimeout(() => {
             this.setState({
-            popUp: false
-        })}, 1500)
+                errPopUp: false
+            })
+        }, 1500)
     }
 
     postLogIn = async () => {
-        console.log('[%s] postLogIn', TAG);
+
+        const { id, password, autoLogin } = this.state;
+
         this.setState({
             isLoading: true
         })
         let logInInfo = {
-            id: this.state.id,
-            password: this.state.password,
-            autoLogin: this.state.autoLogin
+            id: id,
+            password: password,
+            autoLogin: autoLogin
         }
-        
+
         await service.postLogIn(logInInfo)
-        .then((res) => {
-            console.log('[%s] Log In Success', TAG)
-            this.setState({
-                isLoading: false
+            .then((res) => {
+                console.log('[%s] Log In Success', TAG)
+                this.setState({
+                    isLoading: false
+                })
+                const { token, user_id, nickname, level, profile_path, autoLogin } = res.data;
+
+                this.props.onLogin(user_id, nickname, level, profile_path, token, autoLogin);
             })
-            const { token, user_id, nickname, level, profile_path } = res.data;
-            if(this.state.autoLogin) {
-                localStorage.setItem('token', token);
-                axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
-            }
-            else {
-                sessionStorage.setItem('token', token);
-                axios.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token');
-            }
-            this.props.onLogin(user_id, nickname, level, profile_path);
-        })
-        .catch((res) => {
-            console.log('[%s] Log In Fail', TAG)
-            this.setState({
-                isLoading: false
+            .catch((err) => {
+                console.error(err);
+                this.setState({
+                    isLoading: false
+                })
+                this.makeErrPopUp()
             })
-            this.makePopUp("", "로그인에 실패하였습니다.\n아이디나 비밀번호를 확인해주세요.")
-        })
     }
- 
+
     render() {
 
         const { loginState } = this.props
-        const { isLoading, toSignUp, popUp } = this.state
+        const { isLoading, toSignUp, popUp, errPopUp, autoLogin } = this.state
+        const popUpTitle = '자동 로그인 기능을 사용하시겠습니까?';
+        const popUpText = `자동 로그인 사용시 다음 접속부터는 로그인을 하실 필요가 없습니다.\n
+            단, 게임방, 학교 등 공공장소에서 이용 시 개인정보가 유출될 수 있으니 주의해주세요.`;
+        const errText = "로그인에 실패하였습니다.\n아이디나 비밀번호를 확인해주세요.";
+
+
         return (
             <>
-                { loginState && <Redirect to='/' /> }
-                { toSignUp && <Redirect to='/signup' /> } 
-                { isLoading && <Loading/> }
-                { popUp && <PopUp title={this.popupTitle} contents={this.popupContents}/> }
+                {loginState && <Redirect to='/' />}
+                {toSignUp && <Redirect to='/signup' />}
+                {isLoading && <Loading />}
+                {errPopUp &&
+                    <PopUp
+                        contents={errText}
+                    />}
+                }
+                {popUp &&
+                    <PopUp
+                        title={popUpTitle}
+                        contents={popUpText}
+                        isAction={true}
+                        cancel={() => {
+                            this.setPopUpState(false);
+                            this.setAutoLoginState(false);
+                        }}
+                        confirm={() => {
+                            this.setPopUpState(false);
+                        }} />}
                 <FullScreenPortal>
                     <LogInComponent
-                    handleChange = {this.handleChange}
-                    postLogIn = {this.postLogIn}
-                    redirectToSignUp = {this.redirectToSignUp}
-                    checkAuto = {this.checkAuto} />
+                        autoLogin={autoLogin}
+                        handleChange={this.handleChange}
+                        postLogIn={this.postLogIn}
+                        redirectToSignUp={this.redirectToSignUp}
+                        checkAuto={this.checkAuto} />
                 </FullScreenPortal>
             </>
         )
@@ -136,7 +161,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onLogin: (user_id, nickname, level, profile_path) => dispatch(authLogin(user_id, nickname, level, profile_path))
+        onLogin: (user_id, nickname, level, profile_path, token, autoLogin) => dispatch(authLogin(user_id, nickname, level, profile_path, token, autoLogin))
     }
 }
 
