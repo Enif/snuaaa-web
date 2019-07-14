@@ -3,7 +3,7 @@ import InputText from '../Common/InputText'
 import Footer from 'components/Footer'
 import logo from 'assets/img/login_logo.gif'
 
-const LogInComponent = ({ handleChange, postLogIn, redirectToSignUp, checkAuto }) => {
+const LogInComponent = ({ autoLogin, handleChange, postLogIn, redirectToSignUp, checkAuto }) => {
     return (
         <div className="login-wrapper">
             <div className="logo-wrapper">
@@ -11,7 +11,10 @@ const LogInComponent = ({ handleChange, postLogIn, redirectToSignUp, checkAuto }
             </div>
             <div className="inputs-wrapper">
                 <div className="auto-checker">
-                    <input type="checkbox" onChange={checkAuto} /> <p>자동 로그인</p>
+                    <input type="checkbox" id="toggle" onChange={checkAuto} checked={autoLogin} />
+                    <label htmlFor="toggle" className="toggle-switch" />
+                    <p className="auto-checker-text">자동 로그인</p>
+
                 </div>
                 <div className="login-inputs-wrapper">
                     <div className="login-inputs">

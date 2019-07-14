@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router';
 
@@ -13,6 +12,7 @@ import Header from './containers/Header'
 import Section from './containers/Section';
 import Footer from './components/Footer';
 import Loading from './components/Common/Loading';
+import { getToken } from 'utils/tokenManager';
 import { updateToken } from './services';
 import { authLogin, authLogout } from './actions';
 // import UserContext from './UserContext';
@@ -43,8 +43,12 @@ class App extends Component {
 
     checkToken = async () => {
         console.log(`[%s] checkToken`, TAG)
-        const token = (sessionStorage.getItem('token') || localStorage.getItem('token'))
-        if(!token){
+
+        // const { cookies } = this.props;
+        // const token = (sessionStorage.getItem('token') || localStorage.getItem('token'))
+        const accessToken = getToken();
+        
+        if(!accessToken){
             //토큰이 없으면 logout
             this.props.onLogout();
             this.setState({
@@ -56,18 +60,10 @@ class App extends Component {
             await updateToken()
             .then((res) => {
                 console.log(`[${TAG}] Token is valid`)
-                // [TODO] token에 autoLogin 정보 저장하여 사용해야 함. (현재 자동 로그인 유지 되지 않음)
-                const { token, user_id, nickname, level, profile_path } = res.data;
-                if(this.state.autoLogin) {
-                    localStorage.setItem('token', token);
-                    axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
-                }
-                else {
-                    sessionStorage.setItem('token', token);
-                    axios.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token');
-                }
-                this.props.onAuthLogin(user_id, nickname, level, profile_path);
-                // this.props.onLogin();
+
+                const { token, user_id, nickname, level, profile_path, autoLogin } = res.data;
+
+                this.props.onAuthLogin(user_id, nickname, level, profile_path, token, autoLogin);
                 this.setState({
                     isReady: true
                 })
@@ -123,7 +119,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onAuthLogin: (user_id, nickname, level, profile_path) => dispatch(authLogin(user_id, nickname, level, profile_path)),
+        onAuthLogin: (user_id, nickname, level, profile_path, token, autoLogin) => dispatch(authLogin(user_id, nickname, level, profile_path, token, autoLogin)),
         onLogout: () => dispatch(authLogout())
     }
 }
