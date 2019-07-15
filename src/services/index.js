@@ -1,11 +1,9 @@
 import axios from 'axios';
-import Cookies from 'universal-cookie';
-import { SERVER_URL } from '../common/environment'
+import { getToken } from 'utils/tokenManager';
 
-const cookies = new Cookies();
+const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + cookies.get('token');
-// axios.defaults.headers.common['Authorization'] = 'Bearer ' + (sessionStorage.getItem('token') || localStorage.getItem('token'));
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + getToken();
 
 export function updateToken() {
     return axios.get(SERVER_URL + 'api/check')
