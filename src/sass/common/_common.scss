@@ -54,16 +54,14 @@
 .tag-wrapper {
     margin-top: 10px;
     margin-bottom: 0px;
+}
+.tag-list-wrapper {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: wrap;    
     .tag-unit {
-        // display: inline-block;
-        // width: 100px;
         margin: 15px 5px 10px 5px;
-
         label {
             width: 100%;
-            border: 1px solid #e25d7f;
             padding: 8px;
             border-radius: 7px;
             font-size: 14px;
@@ -73,9 +71,19 @@
         input {
             display: none;
         }
-        input:checked + label {
+        .tag-label-1 {
+            border: 1px solid #e25d7f;
+        }
+        input:checked + .tag-label-1 {
             color: #eeeeee;
             background-color: #e25d7f;
+        }
+        .tag-label-2 {
+            border: 1px solid #5d81e2;
+        }
+        input:checked + .tag-label-2 {
+            color: #eeeeee;
+            background-color: #5d81e2;
         }
     }
     .tag-all {

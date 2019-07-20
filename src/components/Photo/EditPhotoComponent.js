@@ -7,6 +7,7 @@ const EditPhotoComponent = ({ photoInfo, selectedTags, boardTags, handleChange, 
 
     const makeTagList = () => {
         const tagList = boardTags.map((tag) => {
+            let labelClassName = (tag.tag_type === 'M') ? 'tag-label-1' : 'tag-label-2';
             return (
                 <div className="tag-unit" key={tag.tag_id} >
                     <input
@@ -14,7 +15,7 @@ const EditPhotoComponent = ({ photoInfo, selectedTags, boardTags, handleChange, 
                         id={"crt_" + tag.tag_id}
                         checked={selectedTags.includes(tag.tag_id)}
                         onChange={clickTag} />
-                    <label htmlFor={"crt_" + tag.tag_id}># {tag.tag_name}</label>
+                    <label className={labelClassName} htmlFor={"crt_" + tag.tag_id}># {tag.tag_name}</label>
                 </div>
             )
         })
@@ -35,7 +36,7 @@ const EditPhotoComponent = ({ photoInfo, selectedTags, boardTags, handleChange, 
                     <div className="crt-photo-right">
 
                         {boardTags.length > 0 &&
-                            <div className="tag-wrapper">
+                            <div className="tag-list-wrapper">
                                 {makeTagList()}
                             </div>}
 

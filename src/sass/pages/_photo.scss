@@ -347,6 +347,9 @@
                         &:hover {
                             background-color: darken($color: #7193C4, $amount: 10%);                            
                         }
+                        &:disabled {
+                            background-color: #646464;
+                        }
                     }
                 }
                 .message-info {

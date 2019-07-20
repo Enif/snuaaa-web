@@ -30,7 +30,8 @@ class CreatePhoto extends React.Component {
             selectedTags: [],
             uploadPhotos: [],
             imgDatas: [],
-            imgIdx: -1
+            imgIdx: -1,
+            btnDisabled: false
         }
     }
 
@@ -48,7 +49,7 @@ class CreatePhoto extends React.Component {
 
     uploadFile = (e) => {
         const { uploadPhotos } = this.state;
-        if(uploadPhotos.length + e.target.files.length > 20) {
+        if (uploadPhotos.length + e.target.files.length > 20) {
             alert("한 번에 20장 이상의 사진은 업로드 할 수 없습니다.")
         }
         else if (e.target.files) {
@@ -56,7 +57,7 @@ class CreatePhoto extends React.Component {
             for (let i = 0; i < e.target.files.length; i++) {
                 tmpSize += e.target.files[i].size;
             }
-            if(tmpSize > MAX_SIZE) {
+            if (tmpSize > MAX_SIZE) {
                 alert("한 번에 100MB 이상의 사진은 업로드 할 수 없습니다.")
             }
             else {
@@ -122,11 +123,12 @@ class CreatePhoto extends React.Component {
 
     makeTagList = () => {
         const tagList = this.props.tags.map((tag) => {
+            let labelClassName = (tag.tag_type === 'M') ? 'tag-label-1' : 'tag-label-2';
             return (
                 <div className="tag-unit" key={tag.tag_id} >
                     <input type="checkbox" id={"crt_" + tag.tag_id} checked={this.state.selectedTags.includes(tag.tag_id)}
                         onChange={(e) => this.clickTag(e)} />
-                    <label htmlFor={"crt_" + tag.tag_id}># {tag.tag_name}</label>
+                    <label className={labelClassName} htmlFor={"crt_" + tag.tag_id}># {tag.tag_name}</label>
                 </div>
             )
         })
@@ -160,8 +162,16 @@ class CreatePhoto extends React.Component {
 
     createPhotos = async () => {
 
+        const { setReadyState } = this.props;
         const { imgIdx, title, text, date, location, camera, lens,
             focal_length, f_stop, exposure_time, iso, selectedTags } = this.state;
+        const photosForm = new FormData();
+
+        setReadyState();
+        this.setState({
+            btnDisabled: true
+        })
+
         if (imgIdx >= 0) {
             this.photoInfos[imgIdx] = {
                 title: title,
@@ -177,8 +187,6 @@ class CreatePhoto extends React.Component {
                 selectedTags: selectedTags
             }
         }
-
-        const photosForm = new FormData();
 
         for (let i = 0, max = this.state.uploadPhotos.length; i < max; i++) {
             console.log(this.photoInfos[i])
@@ -207,6 +215,9 @@ class CreatePhoto extends React.Component {
                 .catch((err) => {
                     console.error(`[${TAG}] ${err}`);
                     alert('사진 생성 실패');
+                    this.setState({
+                        btnDisabled: false
+                    })
                 })
         }
         else if (this.props.board_id) {
@@ -219,6 +230,9 @@ class CreatePhoto extends React.Component {
                 .catch((err) => {
                     console.error(`[${TAG}] ${err}`);
                     alert('사진 생성 실패');
+                    this.setState({
+                        btnDisabled: false
+                    })
                 })
         }
         else {
@@ -229,7 +243,7 @@ class CreatePhoto extends React.Component {
 
     render() {
         console.log('[%s] render', TAG)
-        const { uploadPhotos, imgIdx, title, text, date, location, camera, lens, focal_length, f_stop, exposure_time, iso } = this.state
+        const { uploadPhotos, imgIdx, title, text, date, location, camera, lens, focal_length, f_stop, exposure_time, iso, btnDisabled } = this.state
 
         return (
             <div className="crt-photo-popup">
@@ -256,31 +270,31 @@ class CreatePhoto extends React.Component {
 
                         <div className="crt-photo-right">
                             <div className="crt-photo-right-top" >
-                            {(() => {
-                                if (this.state.imgIdx >= 0) {
-                                    return (
-                                        <>
-                                            {this.props.tags &&
-                                                <div className="tag-wrapper">
-                                                    {this.makeTagList()}
-                                                </div>}
+                                {(() => {
+                                    if (this.state.imgIdx >= 0) {
+                                        return (
+                                            <>
+                                                {this.props.tags &&
+                                                    <div className="tag-list-wrapper">
+                                                        {this.makeTagList()}
+                                                    </div>}
 
-                                            <CreatePhotoInfo title={title} text={text} date={date} location={location}
-                                                camera={camera} lens={lens} focal_length={focal_length} f_stop={f_stop}
-                                                exposure_time={exposure_time} iso={iso} handleChange={this.handleChange} handleDate={this.handleDate} />
-                                        </>
-                                    )
-                                }
-                                else {
-                                    return (
-                                        <div className="message-info">사진을 선택해주세요</div>
-                                    )
-                                }
-                            })()}
+                                                <CreatePhotoInfo title={title} text={text} date={date} location={location}
+                                                    camera={camera} lens={lens} focal_length={focal_length} f_stop={f_stop}
+                                                    exposure_time={exposure_time} iso={iso} handleChange={this.handleChange} handleDate={this.handleDate} />
+                                            </>
+                                        )
+                                    }
+                                    else {
+                                        return (
+                                            <div className="message-info">사진을 선택해주세요</div>
+                                        )
+                                    }
+                                })()}
                             </div>
                             <div className="btn-wrapper">
                                 <button className="btn-cancel" onClick={() => this.props.togglePopUp()}>취소</button>
-                                <button className="btn-ok" onClick={() => this.checkForm()}>완료</button>
+                                <button className="btn-ok" disabled={btnDisabled} onClick={() => this.checkForm()}>완료</button>
                             </div>
                         </div>
                     </div>
