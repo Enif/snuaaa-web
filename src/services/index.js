@@ -114,10 +114,10 @@ export function retrievePhotosInPhotoBoardByTag(board_id, tags, pageIdx) {
 
     tags.forEach((tag) => {
         if (!tagUrl) {
-            tagUrl += `tag=${tag}`
+            tagUrl += `tags[]=${tag}`
         }
         else {
-            tagUrl += `&tag=${tag}`
+            tagUrl += `&tags[]=${tag}`
         }
     })
     return axios.get(SERVER_URL + `api/photoboard/${board_id}/photos?${tagUrl}&page=${pageIdx}`)
