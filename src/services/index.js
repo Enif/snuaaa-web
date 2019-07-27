@@ -12,13 +12,17 @@ export function updateToken() {
 export function postSignUp(data) {
     return axios.post(SERVER_URL + 'api/signup/', data);
 }
-//GM modified
+
 export function duplicateCheck(data) {
     return axios.post(SERVER_URL + `api/signup/dupcheck`, data);
 }
 
-export function postLogIn(data) {
+export function userLogIn(data) {
     return axios.post(SERVER_URL + 'api/login/', data);
+}
+
+export function guestLogIn() {
+    return axios.get(SERVER_URL + 'api/login/guest');
 }
 
 export function retrieveUserInfo() {

@@ -76,7 +76,7 @@ class LogIn extends React.Component {
         }, 1500)
     }
 
-    postLogIn = async () => {
+    userLogIn = async () => {
 
         const { id, password, autoLogin } = this.state;
 
@@ -89,7 +89,32 @@ class LogIn extends React.Component {
             autoLogin: autoLogin
         }
 
-        await service.postLogIn(logInInfo)
+        await service.userLogIn(logInInfo)
+            .then((res) => {
+                console.log('[%s] Log In Success', TAG)
+                this.setState({
+                    isLoading: false
+                })
+                const { token, user_id, nickname, level, profile_path, autoLogin } = res.data;
+
+                this.props.onLogin(user_id, nickname, level, profile_path, token, autoLogin);
+            })
+            .catch((err) => {
+                console.error(err);
+                this.setState({
+                    isLoading: false
+                })
+                this.makeErrPopUp()
+            })
+    }
+
+    guestLogIn = async () => {
+
+        this.setState({
+            isLoading: true
+        })
+
+        await service.guestLogIn()
             .then((res) => {
                 console.log('[%s] Log In Success', TAG)
                 this.setState({
@@ -144,7 +169,8 @@ class LogIn extends React.Component {
                     <LogInComponent
                         autoLogin={autoLogin}
                         handleChange={this.handleChange}
-                        postLogIn={this.postLogIn}
+                        userLogIn={this.userLogIn}
+                        guestLogIn={this.guestLogIn}
                         redirectToSignUp={this.redirectToSignUp}
                         checkAuto={this.checkAuto} />
                 </FullScreenPortal>

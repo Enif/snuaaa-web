@@ -6,6 +6,7 @@ import ContentStateEnum from 'common/ContentStateEnum';
 import Loading from 'components/Common/Loading';
 import PostComponent from 'components/Post/PostComponent';
 import EditPost from 'components/Post/EditPost';
+import history from 'common/history';
 
 const TAG = 'POST'
 
@@ -30,7 +31,7 @@ class Post extends React.Component {
     }
 
     componentDidMount() {
-        this.retrievePost();
+        this.fetch();
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -68,7 +69,7 @@ class Post extends React.Component {
         })
     }
 
-    retrievePost = async () => {
+    fetch = async () => {
 
         await service.retrievePost(this.state.post_id)
         .then((res) => {
@@ -87,7 +88,13 @@ class Post extends React.Component {
         })
         .catch((err) => {
             console.error(err);
-            this.setPostState(ContentStateEnum.ERROR);
+            if(err.response && err.response.data && err.response.data.code === 4001) {
+                alert("권한이 없습니다.")
+                history.goBack();
+            }
+            else {
+                this.setPostState(ContentStateEnum.ERROR);
+            }
         })
     }
 
@@ -95,7 +102,7 @@ class Post extends React.Component {
 
         await service.updatePost(this.state.post_id, this.state.editingPostData)
         .then((res) => {
-            this.retrievePost();
+            this.fetch();
         })
         .catch((err) => {
             console.error(err);

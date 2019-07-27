@@ -4,6 +4,7 @@ import PostBoard from 'containers/PostBoard/PostBoard';
 import PhotoBoard from 'containers/PhotoBoard/PhotoBoard';
 import DocuBoard from 'containers/DocuBoard/DocuBoard';
 import Loading from 'components/Common/Loading';
+import history from 'common/history';
 
 const TAG = 'BOARD'
 
@@ -65,6 +66,10 @@ class Board extends React.Component {
             })
             .catch((err) => {
                 console.error(err);
+                if(err.response && err.response.data && err.response.data.code === 4001) {
+                    alert("권한이 없습니다.")
+                    history.goBack();
+                }
             })
     }
 
