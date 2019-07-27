@@ -49,7 +49,7 @@ class Header extends React.Component {
 
     render() {
 
-        const { loginState, profile_path } = this.props;
+        const { loginState, level, profile_path } = this.props;
         let { isShowPopupUser, boards } = this.state;
         return (
             <>
@@ -61,28 +61,27 @@ class Header extends React.Component {
                             </div>
                         </Link>
                         {
-                            !loginState ?
-                                (<p>
-                                    <Link to="/signup"> SIGN UP </Link>
-                                    /
-                                <Link to="/login"> LOG IN </Link>
-                                </p>)
-                                :
-                                (<div className="profile-img-wrapper">
-                                    <Image className="profile-img" onClick={this.togglePopup} imgSrc={profile_path} defaultImgSrc={imgProfile} />
-                                    {/* <img onClick={this.togglePopup} src={imgProfile}/> */}
-                                    {
-                                        isShowPopupUser &&
-                                        <PopupUser
-                                            profile_path={profile_path}
-                                            togglePopup={this.togglePopup}
-                                            logout={
-                                                () => {
-                                                    this.props.onLogout();
-                                                }
-                                            } />
-                                    }
-                                </div>)
+                            level > 0 &&
+                            <div className="profile-img-wrapper">
+                                <Image className="profile-img" onClick={this.togglePopup} imgSrc={profile_path} defaultImgSrc={imgProfile} />
+                                {
+                                    isShowPopupUser &&
+                                    <PopupUser
+                                        profile_path={profile_path}
+                                        togglePopup={this.togglePopup}
+                                        logout={
+                                            () => {
+                                                this.props.onLogout();
+                                            }
+                                        } />
+                                }
+                            </div>
+                            // :
+                            // (<p>
+                            //     <Link to="/signup"> SIGN UP </Link>
+                            //     /
+                            // <Link to="/login"> LOG IN </Link>
+                            // </p>)
                         }
                     </div>
                 </div>
