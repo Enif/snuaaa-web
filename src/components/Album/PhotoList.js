@@ -12,8 +12,11 @@ const PhotoList = ({ photos, togglePopUp }) => {
                     <div className="photo-wrapper" key={contentInfo.content_id}>
                         <Link to={`/photo/${contentInfo.content_id}`}>
                             <div className="photo-cover">
-                                <i className="material-icons">favorite</i> {contentInfo.like_num}&nbsp;
-                                    <i className="material-icons">comment</i> {contentInfo.comment_num}
+                                <i className="material-icons">favorite</i>
+                                <p>{contentInfo.like_num}</p>
+                                &nbsp;
+                                <i className="material-icons">comment</i>
+                                <p>{contentInfo.comment_num}</p>
                             </div>
                             <Image imgSrc={photo.thumbnail_path} />
                         </Link>

@@ -8,11 +8,12 @@
         font-size: 20px;
         padding-top: 10px;
         padding-bottom: 4px;
-        background-color: #008f94;
-        color: #FFFFFF;
+        background-color: $color_aqua;
+        color: #F1F1F1;
         display: flex;
         a {
-            float: left;
+            position: absolute;
+            margin-top: -3px;
             margin-left: 5px;
             color: #FFFFFF;
         }
@@ -20,6 +21,8 @@
             flex-grow: 1;
             font-weight: bold;
             text-align: center;
+            word-break: break-all;
+            padding: 0px 30px;
         }
     }
     .post-info-other {

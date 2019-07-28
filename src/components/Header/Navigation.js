@@ -92,7 +92,7 @@ function Navigation({ boards }) {
                         </div>
                     </li>
                     <li className="menu-nav" onClick={() => setIsShowBoard(true)} onMouseEnter={() => setIsShowBoard(true)} onMouseLeave={() => setIsShowBoard(false)}>
-                        <div className="menu-item-1"><span></span>A-Daily</div>
+                        <div className="menu-item-1"><span></span>A-Life</div>
                         <div className={subBoardClass}>
                             {makeBoardList(communityBoards)}
                         </div>
