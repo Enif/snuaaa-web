@@ -29,6 +29,7 @@
         .photo-cover {
             position: absolute;
             // visibility: hidden;
+            display: flex;
             color: #C9C9C9;
             bottom: 0;
             z-index: 1;
@@ -72,6 +73,7 @@
             flex-grow: 1;
             font-weight: bold;
             text-align: center;
+            padding: 0px 30px;
         }
     }
     .photo-img-wrapper {

@@ -125,32 +125,31 @@ class Memory extends React.Component {
 
         return (
             <>
-                <div className="photoboard-wrapper">
-                    <h2 className="memory-title">{boardInfo.board_name}</h2>
-                    <Category categories={categories} selected={category} clickAll={this.clickAll} clickCategory={this.clickCategory} />
-                    {(() => {
-                        if (isReady) {
-                            return (
-                                <>
-                                    <Paginator pageIdx={pageIdx} pageNum={Math.ceil(this.albumCount / ALBUMROWNUM)} clickPage={this.clickPage} />
-                                    <div className="enif-divider"></div>
-                                    <AlbumList board_id={board_id} albums={this.albums} togglePopUp={this.togglePopUp} />
-                                    {
-                                        this.state.popUpState && <CreateAlbum board_id={board_id} categories={categories} fetch={this.fetch} togglePopUp={this.togglePopUp} />
-                                    }
-                                </>)
-                        }
-                        else {
-                            return <Loading />
-                        }
-                    })()}
-                    {/* <div className="enif-fixed-btm"> */}
-                    <button className="enif-btn-circle enif-pos-sticky" onClick={() => this.togglePopUp()}>
-                        <i className="material-icons">library_add</i>
-                    </button>
-                    {/* </div> */}
-                </div>
-
+                <h2 className="memory-title">{boardInfo.board_name}</h2>
+                <Category categories={categories} selected={category} clickAll={this.clickAll} clickCategory={this.clickCategory} />
+                {(() => {
+                    if (isReady) {
+                        return (
+                            <>
+                                {/* <div className="enif-divider"></div> */}
+                                <AlbumList board_id={board_id} albums={this.albums} togglePopUp={this.togglePopUp} />
+                                {
+                                    this.state.popUpState && <CreateAlbum board_id={board_id} categories={categories} fetch={this.fetch} togglePopUp={this.togglePopUp} />
+                                }
+                                {
+                                    this.albumCount > 0 && <Paginator pageIdx={pageIdx} pageNum={Math.ceil(this.albumCount / ALBUMROWNUM)} clickPage={this.clickPage} />
+                                }                                
+                            </>)
+                    }
+                    else {
+                        return <Loading />
+                    }
+                })()}
+                {/* <div className="enif-fixed-btm"> */}
+                <button className="enif-btn-circle enif-pos-sticky" onClick={() => this.togglePopUp()}>
+                    <i className="material-icons">library_add</i>
+                </button>
+                {/* </div> */}
             </>
         );
     }

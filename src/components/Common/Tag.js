@@ -41,11 +41,11 @@ function Tag({ clickAll, clickTag, tags, selectedTags }) {
                 {makeTagList(tags, 'M')}
             </div>
             <div className="tag-list-wrapper">
-                <div className="tag-unit tag-all">
-                    {/* <input type="checkbox" id="all" checked={selectedAll}
+                {/* <div className="tag-unit tag-all">
+                    <input type="checkbox" id="all" checked={selectedAll}
                         onChange={() => clickAll()} />
-                    <label htmlFor="all">ALL</label> */}
-                </div>
+                    <label htmlFor="all">ALL</label>
+                </div> */}
                 {makeTagList(tags, 'T')}
             </div>
         </div>

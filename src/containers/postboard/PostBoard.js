@@ -96,7 +96,7 @@ class PostBoard extends React.Component {
         const { pageIdx, boardState } = this.state;
 
         return (
-            <div className="section-contents">
+            <>
                 {
                     (() => {
                         if (boardState === BoardStateEnum.LOADING) {
@@ -113,11 +113,12 @@ class PostBoard extends React.Component {
                                     {
                                         boardState === BoardStateEnum.READY &&
                                         <>
-                                            {this.postCount > 0 && <Paginator pageIdx={pageIdx} pageNum={Math.ceil(this.postCount / POSTROWNUM)} clickPage={this.clickPage} />}
+
                                             {this.makeCategoryList()}
                                             <PostList
                                                 posts={this.posts}
                                                 clickCrtBtn={() => this.setBoardState(BoardStateEnum.WRITING)} />
+                                            {this.postCount > 0 && <Paginator pageIdx={pageIdx} pageNum={Math.ceil(this.postCount / POSTROWNUM)} clickPage={this.clickPage} />}
                                         </>
                                     }
                                     {
@@ -135,7 +136,7 @@ class PostBoard extends React.Component {
                         )
                     })()
                 }
-            </div>
+            </>
         );
     }
 }

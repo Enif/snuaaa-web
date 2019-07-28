@@ -198,35 +198,32 @@ class AstroPhoto extends React.Component {
         return (
             <>
                 {!isReady && <Loading />}
-                <div className="photoboard-wrapper">
-                    <h2>{boardInfo.board_name}</h2>
-                    <div className="view-type-selector-wrapper">
-                        <div className={albumSelectorClassName} onClick={() => this.setIsViewPhotos(false)}>앨범</div>
-                        <div className={photoSelectorClassName} onClick={() => this.setIsViewPhotos(true)}>사진</div>
-                    </div>
-                    <Paginator pageIdx={pageIdx} pageNum={Math.ceil(this.count / ALBUMROWNUM)} clickPage={this.clickPage} />
-                    <div className="enif-divider"></div>
-                    {
-                        this.state.isViewPhotos ?
-                            (
-                                <>
-                                    <Tag tags={this.tags} clickAll={this.clickAll} selectedTags={this.state.selectedTags} clickTag={this.clickTag} />
-                                    <PhotoList photos={this.photos} togglePopUp={this.togglePopUp} />
-                                    {this.state.popUpState && <CreatePhoto board_id={board_id} tags={this.tags} retrievePhotos={this.fetch} togglePopUp={this.togglePopUp} setReadyState={() => this.setIsReady(true)}/>}
-                                </>
-                            )
-                            :
-                            (
-                                <>
-                                    <AlbumList board_id={board_id} albums={this.albums} togglePopUp={this.togglePopUp} />
-                                    {this.state.popUpState && <CreateAlbum board_id={board_id} fetch={this.fetch} togglePopUp={this.togglePopUp} setReadyState={() => this.setIsReady(true)}/>}
-                                    <button className="enif-btn-circle enif-pos-sticky" onClick={this.togglePopUp}>
-                                        <i className="material-icons">library_add</i>
-                                    </button>
-                                </>
-                            )
-                    }
+                <h2 className="astrophoto-title">{boardInfo.board_name}</h2>
+                <div className="view-type-selector-wrapper">
+                    <div className={albumSelectorClassName} onClick={() => this.setIsViewPhotos(false)}>앨범</div>
+                    <div className={photoSelectorClassName} onClick={() => this.setIsViewPhotos(true)}>사진</div>
                 </div>
+                {
+                    this.state.isViewPhotos ?
+                        (
+                            <>
+                                <Tag tags={this.tags} clickAll={this.clickAll} selectedTags={this.state.selectedTags} clickTag={this.clickTag} />
+                                <PhotoList photos={this.photos} togglePopUp={this.togglePopUp} />
+                                {this.state.popUpState && <CreatePhoto board_id={board_id} tags={this.tags} retrievePhotos={this.fetch} togglePopUp={this.togglePopUp} setReadyState={() => this.setIsReady(true)}/>}
+                            </>
+                        )
+                        :
+                        (
+                            <>
+                                <AlbumList board_id={board_id} albums={this.albums} togglePopUp={this.togglePopUp} />
+                                {this.state.popUpState && <CreateAlbum board_id={board_id} fetch={this.fetch} togglePopUp={this.togglePopUp} setReadyState={() => this.setIsReady(true)}/>}
+                                <button className="enif-btn-circle enif-pos-sticky" onClick={this.togglePopUp}>
+                                    <i className="material-icons">library_add</i>
+                                </button>
+                            </>
+                        )
+                }
+                {this.count > 0 && <Paginator pageIdx={pageIdx} pageNum={Math.ceil(this.count / ALBUMROWNUM)} clickPage={this.clickPage} />}
             </>
         );
     }

@@ -1,5 +1,8 @@
 .board-wrapper {
     padding-top: 15px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     .postboard-title-wrapper {
         display: flex;
         padding: 20px 0px;
@@ -14,7 +17,9 @@
             flex-shrink: 0;
             padding: 0px 17px 0px 10px;
         }
-
+    }
+    .enif-btn-circle {
+        margin-top: auto;
     }
 }
 
@@ -49,6 +54,9 @@
         margin-bottom: 10px;
         font-size: 16px;
         cursor: pointer;
+        h5 {
+            word-break: break-all;
+        }
     }
     
     .post-author {
