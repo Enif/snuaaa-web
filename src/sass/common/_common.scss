@@ -57,13 +57,14 @@
 }
 .tag-list-wrapper {
     display: flex;
-    flex-wrap: wrap;    
+    flex-wrap: wrap;
+    padding-left: 10px;
     .tag-unit {
         margin: 15px 5px 10px 5px;
         label {
             width: 100%;
             padding: 8px;
-            border-radius: 7px;
+            border-radius: 12px;
             font-size: 14px;
             user-select: none;
             cursor: pointer;
@@ -79,11 +80,11 @@
             background-color: #e25d7f;
         }
         .tag-label-2 {
-            border: 1px solid #5d81e2;
+            border: 1px solid #3a68a0;
         }
         input:checked + .tag-label-2 {
             color: #eeeeee;
-            background-color: #5d81e2;
+            background-color: #3a68a0;
         }
     }
     .tag-all {

@@ -78,7 +78,7 @@ class Board extends React.Component {
         const { boardInfo } = this.state;
 
         return (
-            <div className="section-contents">
+            <>
                 {(() => {
                     // if(this.state.isReady) {
                     if (boardInfo) {
@@ -104,7 +104,7 @@ class Board extends React.Component {
                         )
                     }
                 })()}
-            </div>
+            </>
         );
     }
 }

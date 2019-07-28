@@ -24,14 +24,14 @@ const PhotoList = ({ photos, togglePopUp }) => {
     }
 
     return (
-        <div className="board-wrapper">
+        <>
             <div className="photo-list-wrapper">
                 {makePhotoList()}
             </div>
             <button className="enif-btn-circle enif-pos-sticky" onClick={togglePopUp}>
                 <i className="material-icons">add_photo_alternate</i>
             </button>
-        </div>
+        </>
     )
 }
 

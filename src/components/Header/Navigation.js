@@ -71,7 +71,7 @@ function Navigation({ boards }) {
                         </NavLink>
                     </li>
                     <li className="menu-nav" onClick={() => setIsShowAbout(true)} onMouseEnter={() => setIsShowAbout(true)} onMouseLeave={() => setIsShowAbout(false)}>
-                        <div className="menu-item-1"><span></span>AAA소개</div>
+                        <div className="menu-item-1"><span></span>A.A.A.</div>
                         {
                             <div className={subAboutClass}>
                                 <ul>
@@ -86,25 +86,25 @@ function Navigation({ boards }) {
                         }
                     </li>
                     <li className="menu-nav" onClick={() => setIsShowNotice(true)} onMouseEnter={() => setIsShowNotice(true)} onMouseLeave={() => setIsShowNotice(false)}>
-                        <div className="menu-item-1"><span></span>AAA알림</div>
+                        <div className="menu-item-1"><span></span>A-Notice</div>
                         <div className={subNoticeClass}>
                             {makeBoardList(noticeBoards)}
                         </div>
                     </li>
                     <li className="menu-nav" onClick={() => setIsShowBoard(true)} onMouseEnter={() => setIsShowBoard(true)} onMouseLeave={() => setIsShowBoard(false)}>
-                        <div className="menu-item-1"><span></span>AAA일상</div>
+                        <div className="menu-item-1"><span></span>A-Daily</div>
                         <div className={subBoardClass}>
                             {makeBoardList(communityBoards)}
                         </div>
                     </li>
                     <li className="menu-nav" onClick={() => setIsShowOfficial(true)} onMouseEnter={() => setIsShowOfficial(true)} onMouseLeave={() => setIsShowOfficial(false)}>
-                        <div className="menu-item-1"><span></span>AAA기록</div>
+                        <div className="menu-item-1"><span></span>A-Docu</div>
                         <div className={subOfficialClass}>
                             {makeBoardList(officialBoards)}
                         </div>
                     </li>
                     <li className="menu-nav" onClick={() => setIsShowPhotoBoard(true)} onMouseEnter={() => setIsShowPhotoBoard(true)} onMouseLeave={() => setIsShowPhotoBoard(false)}>
-                        <div className="menu-item-1"><span></span>AAA사진</div>
+                        <div className="menu-item-1"><span></span>A-Photo</div>
                         <div className={subPhotoBoardClass}>
                             {makeBoardList(photoBoards)}
                         </div>

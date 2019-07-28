@@ -48,9 +48,10 @@ const PhotoInfo = ({ photoInfo, likeInfo, my_id, setPhotoState, deletePhoto, lik
                     <h4>{content.title}</h4>
                     <div className="info-tags">{makeTagList()}</div>
                     <p className="info-date">{convertFullDate(content.createdAt)}</p>
-
-
-                    <div className="enif-divider"></div>
+                    {
+                        content.text &&
+                        <div className="enif-divider"></div>
+                    }                    
                     <div className="info-text-infos-wrapper">
                         <div className="info-text-wrapper">
                             <p>{breakLine(content.text)}</p>
