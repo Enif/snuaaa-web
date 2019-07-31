@@ -206,3 +206,7 @@ export function retrieveRecentMemory() {
 export function retrieveRecentAstroPhoto() {
     return axios.get(SERVER_URL + `api/home/astrophoto`);
 }
+
+export function retrieveRiseSet() {
+    return axios.get(SERVER_URL + `api/home/riseset`);
+}
