@@ -14,6 +14,8 @@ function AttachFile({ files, attachFile, removeFile }) {
         }
     }
 
+    const acceptFileList = ['.jpg', '.jpeg', '.png', '.docx', 'xlsx', 'pptx', '.hwp', '.zip']
+
     return (
         <div className="attach-file-wrapper">
             <div className="file-list">
@@ -24,9 +26,10 @@ function AttachFile({ files, attachFile, removeFile }) {
             <label htmlFor="attach_file" >
                 <div className="attach-btn-wrapper">
                     <i className="material-icons pointer">attach_file</i>
+                    파일첨부
                 </div>
             </label>
-            <input type="file" multiple id="attach_file" onChange={attachFile} />
+            <input type="file" multiple accept={acceptFileList} id="attach_file" onChange={attachFile} />
         </div>
     )
 }

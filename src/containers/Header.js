@@ -76,12 +76,12 @@ class Header extends React.Component {
                                         } />
                                 }
                             </div>
-                            // :
-                            // (<p>
-                            //     <Link to="/signup"> SIGN UP </Link>
-                            //     /
-                            // <Link to="/login"> LOG IN </Link>
-                            // </p>)
+                        }
+                        {
+                            level === 0 &&
+                            <div className="guest-logout-wrapper">
+                                <p onClick={this.props.onLogout}>LOGOUT</p>
+                            </div>
                         }
                     </div>
                 </div>

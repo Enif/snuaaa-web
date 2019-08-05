@@ -13,8 +13,8 @@ const PopUp = ({ title, contents, isAction, cancel, confirm }) => {
                 </div>
                 {isAction &&
                     <div className="popup-action">
-                        <button onClick={confirm}>OK</button>
-                        <button onClick={cancel}>CANCEL</button>
+                        <button className="btn-ok" onClick={confirm}>OK</button>
+                        <button className="btn-cancel" onClick={cancel}>CANCEL</button>
                     </div>
                 }
             </div>

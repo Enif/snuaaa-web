@@ -5,6 +5,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: flex-start;
+    margin-top: 10px;
     .photo-wrapper {
         width: calc(25% - 2px);
         margin: 1px;
@@ -383,6 +384,7 @@
 
 @media screen and (max-width: 800px) {
     .photo-list-wrapper {
+        padding: 0rem 0.5rem;
         .photo-wrapper {
             width: calc(50% - 2px);
         }
