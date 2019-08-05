@@ -131,7 +131,7 @@ class Memory extends React.Component {
                     if (isReady) {
                         return (
                             <>
-                                {/* <div className="enif-divider"></div> */}
+                                <div className="enif-divider"></div>
                                 <AlbumList board_id={board_id} albums={this.albums} togglePopUp={this.togglePopUp} />
                                 {
                                     this.state.popUpState && <CreateAlbum board_id={board_id} categories={categories} fetch={this.fetch} togglePopUp={this.togglePopUp} />

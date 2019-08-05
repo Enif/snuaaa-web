@@ -73,8 +73,8 @@ class Home extends React.Component {
                             <NewComments comments={this.recentComments} />
                         </div>
                         <div className="home-row">
-                            <NewPhotos title="New 별사진" photos={this.recentAstrophoto} />
-                            <NewPhotos title="New 추억만들기" photos={this.recentMemory} />
+                            <NewPhotos title="New 별사진" board_id="brd32" photos={this.recentAstrophoto} />
+                            <NewPhotos title="New 추억만들기" board_id="brd31" photos={this.recentMemory} />
                         </div>
                     </div>
                 :

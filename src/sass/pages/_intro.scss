@@ -132,7 +132,7 @@
         position: absolute;
         left: 50%;
         width: 2px;
-        height: 100%;
+        height: calc(100% - 75px);
         background-color: #b4b4b4;
         z-index: 0;
     }
@@ -186,6 +186,20 @@
             }
         }
         &:nth-child(2) {
+            .mark-year {
+                top: 34px;
+                left: 49px;
+                height: 36px;
+                width: 36px;
+                border: 7px solid #7193C4;
+                background-color: #FFFFFF;
+                &::before {
+                    top: 5px;
+                    right: 32px;
+                }
+            }
+        }
+        &:nth-last-child(1) {
             .mark-year {
                 top: 34px;
                 left: 49px;

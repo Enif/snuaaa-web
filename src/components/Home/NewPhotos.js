@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import Image from '../Common/Image';
 
-const NewPhotos = ({ title, photos }) => {
+const NewPhotos = ({ title, board_id, photos }) => {
 
     const makePhotoList = () => {
         if (photos) {
@@ -20,7 +20,9 @@ const NewPhotos = ({ title, photos }) => {
 
     return (
         <div className="new-photos-wrapper">
-            <h4>{title}</h4>
+            <Link to={`/board/${board_id}`}>
+                <h4>{title}</h4>
+            </Link>
             <div className="new-photo-list-wrapper">
                 {makePhotoList()}
             </div>

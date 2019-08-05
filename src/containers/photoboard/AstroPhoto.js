@@ -208,6 +208,7 @@ class AstroPhoto extends React.Component {
                         (
                             <>
                                 <Tag tags={this.tags} clickAll={this.clickAll} selectedTags={this.state.selectedTags} clickTag={this.clickTag} />
+                                <div className="enif-divider"></div>
                                 <PhotoList photos={this.photos} togglePopUp={this.togglePopUp} />
                                 {this.state.popUpState && <CreatePhoto board_id={board_id} tags={this.tags} retrievePhotos={this.fetch} togglePopUp={this.togglePopUp} setReadyState={() => this.setIsReady(true)}/>}
                             </>
@@ -215,6 +216,7 @@ class AstroPhoto extends React.Component {
                         :
                         (
                             <>
+                                <div className="enif-divider"></div>
                                 <AlbumList board_id={board_id} albums={this.albums} togglePopUp={this.togglePopUp} />
                                 {this.state.popUpState && <CreateAlbum board_id={board_id} fetch={this.fetch} togglePopUp={this.togglePopUp} setReadyState={() => this.setIsReady(true)}/>}
                                 <button className="enif-btn-circle enif-pos-sticky" onClick={this.togglePopUp}>

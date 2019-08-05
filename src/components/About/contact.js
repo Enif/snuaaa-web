@@ -30,23 +30,25 @@ class Contact extends React.Component {
             <div className="intro-div-wrapper" id="contact">
                 <h3>Contact Us</h3>
                 <div className="intro-contact-wrapper">
+                    <h4>서울대학교 아마추어 천문회<br />
+                        Amateur Astronomy Association
+                    </h4>
+                    <p className="intro-content">
+                        {/* 08826<br /> */}
+                        서울특별시 관악구 관악로 1,<br /> 서울대학교 학생회관 63동 611호 (08826)<br />
+                        {/* Seoul National University, Students' union, Building 63, 6F, 611<br /> */}
+                        Rm. 611, Bldg. 63 (Students' Union), Seoul National University<br />
+                        1, Gwanak-ro, Gwanak-gu, Seoul 08826, KR<br />
+                        <br />
+                        www.snuaaa.net<br />
+                        02-874-9374<br />
+                    </p>
+
                     <div ref={this.mapRef} className="kakao-map"></div>
                     <a href="https://map.kakao.com/link/to/17561274">
                         <i className="material-icons">directions</i>길 찾기
                     </a>
 
-                    <h4>서울대학교 아마추어 천문회<br />
-                        Amateur Astronomy Association
-                    </h4>
-                    <p className="intro-content">
-                        08826<br />
-                        서울특별시 관악구 관악로 1, 서울대학교 학생회관 63동 611호<br />
-                        Seoul National University, Students' union, Building 63, 6F, 611<br />
-                        1 Gwanak-ro, Gwanak-gu, Seoul, KR<br />
-                        <br />
-                        www.snuaaa.net<br />
-                        02-874-9374<br />
-                    </p>
                 </div>
             </div>
         )

@@ -56,6 +56,11 @@
                 justify-content: center;
                 align-items: center;
                 background-color: $color_gray2;
+                cursor: pointer;
+                transition: all 0.2s;
+                &:hover {
+                    background-color: $color-gray1;
+                }
                 .material-icons {
                     color: #FFFFFF;
                 }
@@ -196,6 +201,7 @@
             height: 150px;
             width: 150px;
             border-radius: 50%;
+            object-fit: cover;
         }
     }
     .icon-expand {
