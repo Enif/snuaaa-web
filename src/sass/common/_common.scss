@@ -100,7 +100,9 @@
 
 .paginator-wrapper {
     display: flex;
-    margin: 10px;
+    margin: auto 10px;
+    padding: 20px 0px;
+    // margin-top: auto;
     justify-content: center;
     .material-icons {
         color: $color-gray4;
@@ -122,4 +124,38 @@
     .current {
         font-weight: bold;
     }
+}
+
+.file-icon {
+    margin: 3px 3px;
+    .file-name {
+        display: none;
+    }
+    &:hover {
+        .file-name {
+            font-size: 13px;
+            color: $color-gray1;
+            background-color: $color-gray5;
+            border: 1px solid black;
+            padding: 5px;
+            position: absolute;
+            display: block;
+        }
+    }
+}
+
+.color-img {
+    color: #0ba3ad;
+}
+.color-doc {
+    color: #2f48bb;
+}
+.color-xls {
+    color: #00791a;
+}
+.color-pdf {
+    color: #9b221e;
+}
+.color-zip {
+    color: rgb(192, 142, 3);
 }

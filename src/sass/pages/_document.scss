@@ -45,7 +45,9 @@
     .docu-category-list-wrapper {
         display: flex;
         margin: 15px 0px;
+        // flex-wrap: wrap;s
         .category-unit {
+            flex-shrink: 0;
             input {
                 display: none;
             }
@@ -123,6 +125,7 @@
 }
 
 .doculist-wrapper {
+    font-size: 15px;
     .doculist-head {
         display: flex;
         justify-content: space-around;
