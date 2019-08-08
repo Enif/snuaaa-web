@@ -10,18 +10,18 @@ import history from 'common/history'
 import './index.css';
 import App from './App';
 import reducers from './reducers';
-import registerServiceWorker from './registerServiceWorker';
+import * as serviceWorker from './serviceWorker';
 
 const store = createStore(reducers);
 
 ReactDOM.render(
     // <CookiesProvider>
-        <Provider store={store}>
-                <Router basename="/page" history={history} >
-                    <App/>
-                </Router>
-        </Provider>
+    <Provider store={store}>
+        <Router basename="/page" history={history} >
+            <App />
+        </Router>
+    </Provider>
     // </CookiesProvider>
-    , 
+    ,
     document.getElementById('root'));
-registerServiceWorker();
+serviceWorker.unregister();

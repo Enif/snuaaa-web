@@ -149,8 +149,9 @@ class DocuBoard extends React.Component {
         });
 
         const generationOptions = [];
-        let currentGen = 2 * ((new Date()).getFullYear() - 1980);
-        if ((new Date()).getMonth() > 5) currentGen++;
+        const today = new Date();
+        let currentGen = 2 * (today.getFullYear() - 1980);
+        if (today.getMonth() > 5) currentGen++;
 
         for (let i = currentGen; i > 0; i--) {
             generationOptions.push({
@@ -171,7 +172,6 @@ class DocuBoard extends React.Component {
                         <SelectBox selectName="category" optionList={categoryOptions} onSelect={this.handleChange} selectedOption={this.state.category} />
                         <SelectBox selectName="generation" optionList={generationOptions} onSelect={this.handleChange} selectedOption={this.state.generation} />
                     </div>
-                    {this.docCount > 0 && <Paginator pageIdx={pageIdx} pageNum={Math.ceil(this.docCount / DOCROWNUM)} clickPage={this.clickPage} />}
                 </div>
                 {(() => {
                     if (boardState === BoardStateEnum.LOADING) {
@@ -181,6 +181,7 @@ class DocuBoard extends React.Component {
                         return (
                             <>
                                 <DocuList documents={this.documents} />
+                                {this.docCount > 0 && <Paginator pageIdx={pageIdx} pageNum={Math.ceil(this.docCount / DOCROWNUM)} clickPage={this.clickPage} />}
                                 <button className="enif-btn-circle enif-pos-sticky" onClick={() => this.setBoardState(BoardStateEnum.WRITING)}>
                                     <i className="material-icons">note_add</i>
                                 </button>
