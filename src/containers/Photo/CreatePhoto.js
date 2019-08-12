@@ -1,8 +1,6 @@
 import React from 'react';
 import * as service from 'services';
-import CreatePhotoInfo from 'components/Album/CreatePhotoInfo';
-import ThumbnailList from 'components/Album/ThumbnailList';
-import PreviewImage from 'components/Album/PreviewImage';
+import CreatePhotoComponent from 'components/Photo/CreatePhotoComponent';
 
 const TAG = 'CREATEPHOTO';
 const MAX_SIZE = 100 * 1024 * 1024;
@@ -13,9 +11,9 @@ class CreatePhoto extends React.Component {
         console.log('[%s] constructor', TAG)
         super(props);
 
-        this.photoInfos = [];
         this.currentSize = 0;
-
+        this.photoInfos = [];
+        this.imgUrls = [];
         this.state = {
             title: '',
             text: '',
@@ -65,7 +63,9 @@ class CreatePhoto extends React.Component {
                 this.setState({
                     uploadPhotos: uploadPhotos.concat(...e.target.files)
                 })
+                // this.imgUrls.push(...(e.target.files.map(file => URL.createObjectURL(file))))
                 for (let i = 0; i < e.target.files.length; i++) {
+                    this.imgUrls.push(URL.createObjectURL(e.target.files[i]))
                     this.photoInfos.push({
                         title: '',
                         text: '',
@@ -135,6 +135,21 @@ class CreatePhoto extends React.Component {
         return tagList;
     }
 
+    removeImg = (index) => {
+        const { uploadPhotos } = this.state;
+        this.photoInfos = this.photoInfos.filter((value, idx) => {
+            return index !== idx;
+        })
+        this.imgUrls = this.imgUrls.filter((value, idx) => {
+            return index !== idx;
+        })
+        this.setState({
+            uploadPhotos: uploadPhotos.filter((value, idx) => {
+                return index !== idx;
+            })
+        })
+    }
+
     clickTag = (e) => {
         let tagId = e.target.id.replace('crt_', '');
 
@@ -189,7 +204,6 @@ class CreatePhoto extends React.Component {
         }
 
         for (let i = 0, max = this.state.uploadPhotos.length; i < max; i++) {
-            console.log(this.photoInfos[i])
             photosForm.append('board_id', this.props.board_id);
             photosForm.append('title', this.photoInfos[i].title);
             photosForm.append('text', this.photoInfos[i].text);
@@ -243,68 +257,37 @@ class CreatePhoto extends React.Component {
 
     render() {
         console.log('[%s] render', TAG)
-        const { uploadPhotos, imgIdx, title, text, date, location, camera, lens, focal_length, f_stop, exposure_time, iso, btnDisabled } = this.state
+        const { handleChange, handleDate, uploadFile, clickTag, imgUrls, setImgIdx, removeImg, checkForm } = this;
+        const { tags, togglePopUp } = this.props;
+        const { imgIdx, selectedTags, title, text, date, location, camera, lens, focal_length, f_stop, exposure_time, iso, btnDisabled } = this.state
 
         return (
-            <div className="crt-photo-popup">
-                <div className="crt-photo-wrp">
-                    <div className="crt-photo-header">
-                        <h3>사진 업로드</h3>
-                    </div>
-                    <div className="crt-photo-body">
-                        <div className="crt-photo-left">
-                            <div className="block-constant">
-                                <label htmlFor="photos">
-                                    <div className="add-photo">
-                                        <i className="material-icons md-36">add</i>
-                                    </div>
-                                </label>
-                                <input type="file" id="photos" multiple accept="image/*" onChange={(e) => this.uploadFile(e)} />
-                            </div>
-                            <ThumbnailList uploadPhotos={uploadPhotos} imgIdx={imgIdx} setImgIdx={this.setImgIdx} />
-                        </div>
-
-                        <div className="crt-photo-center">
-                            <PreviewImage uploadPhotos={uploadPhotos} imgIdx={imgIdx} />
-                        </div>
-
-                        <div className="crt-photo-right">
-                            <div className="crt-photo-right-top" >
-                                {(() => {
-                                    if (this.state.imgIdx >= 0) {
-                                        return (
-                                            <>
-                                                {this.props.tags &&
-                                                    <div className="tag-list-wrapper">
-                                                        {this.makeTagList()}
-                                                    </div>}
-
-                                                <CreatePhotoInfo title={title} text={text} date={date} location={location}
-                                                    camera={camera} lens={lens} focal_length={focal_length} f_stop={f_stop}
-                                                    exposure_time={exposure_time} iso={iso} handleChange={this.handleChange} handleDate={this.handleDate} />
-                                            </>
-                                        )
-                                    }
-                                    else {
-                                        return (
-                                            <div className="message-info">사진을 선택해주세요</div>
-                                        )
-                                    }
-                                })()}
-                            </div>
-                            <div className="btn-wrapper">
-                                <button className="btn-cancel" onClick={() => this.props.togglePopUp()}>취소</button>
-                                <button className="btn-ok" disabled={btnDisabled} onClick={() => this.checkForm()}>완료</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <CreatePhotoComponent
+                handleChange={handleChange}
+                handleDate={handleDate}
+                uploadFile={uploadFile}
+                clickTag={clickTag}
+                imgUrls={imgUrls}
+                setImgIdx={setImgIdx}
+                removeImg={removeImg}
+                checkForm={checkForm}
+                tags={tags}
+                togglePopUp={togglePopUp}
+                imgIdx={imgIdx}
+                selectedTags={selectedTags}
+                title={title}
+                text={text}
+                date={date}
+                location={location}
+                camera={camera}
+                lens={lens}
+                focal_length={focal_length}
+                f_stop={f_stop}
+                exposure_time={exposure_time}
+                iso={iso}
+                btnDisabled={btnDisabled}
+            />
         )
-    }
-
-    componentDidMount() {
-        console.log('[%s] componentDidMount', TAG)
     }
 }
 

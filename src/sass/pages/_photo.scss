@@ -78,12 +78,50 @@
         }
     }
     .photo-img-wrapper {
+        position: relative;
         display: flex;
         justify-content: center;
         background-color: #1d1d1d;
         max-height: 500px;
         img {
             object-fit: contain;
+        }
+        .photo-move-action {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 0px;
+            overflow: hidden;
+            height: 100%;
+            z-index: 1;
+            background-color: rgba(200, 200, 200, 0.5);
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+            &.prev {
+                left: 0;
+            }
+            &.next {
+                right: 0;
+            }
+        }
+        .photo-action-fullscreen-wrapper {
+            position: absolute;
+            right: 25px;
+            bottom: 0px;
+            z-index: 1;
+            background-color: rgba(200, 200, 200, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+        &:hover {
+            .photo-move-action {
+                max-width: 100px;
+            }
         }
     }
 
@@ -119,7 +157,7 @@
                 .info-text-wrapper {
                     width: 50%;
                     padding: 10px;
-                    border-right: 2px dashed #F1F1F1
+                    border-right: 2px dashed #F1F1F1;
                 }
                 .info-infos-wrapper {
                     width: 50%;
@@ -210,8 +248,20 @@
                         display: block;
                         clear: both;
                     }
-
                 }
+                .remove-icon-wrapper {
+                    position: absolute;
+                    top: 2px;
+                    right: 2px;
+                    z-index: 1;
+                    &:hover {
+                        .material-icons {
+                            color: #cc0033;
+                            transition: all 0.1s;
+                        }
+                    }
+                }
+
                 label {
                     // height: 135px;
                     width: 100%;
