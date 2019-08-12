@@ -115,6 +115,7 @@
 
 .doc-select-wrapper {
     display: flex;
+    padding: 0px 10px;
     .select-wrapper {
         margin: 10px;
         select {
@@ -132,30 +133,38 @@
         flex-wrap: nowrap;
         color: #ffffff;
         background-color: #bcbdbc;
-        padding: 15px 10px;
+        padding: 15px 15px;
     }
     .doculist-body {
         display: flex;
         justify-content: space-around;
         flex-wrap: nowrap;
         align-items: center;
-        padding: 10px;
+        padding: 10px 15px;
         border-bottom: 2px solid #ececec
     }
     .docu-generation {
         flex-basis: 40px;
+        display: flex;
+        justify-content: center;
+        // align-items: center;
     }
     .docu-category {
-        flex-basis: 70px;
+        flex-basis: 55px;
+        display: flex;
+        justify-content: center;
     }
     .docu-memo {
         flex-grow: 1;
+        padding-left: 11px;
         a {
             color: #070707;
         }
     }
     .docu-download {
         flex-basis: 80px;
+        display: flex;
+        justify-content: center;
         a {
             color: $color_gray2;
             transition: all 0.2s;

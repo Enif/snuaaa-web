@@ -62,7 +62,7 @@ class PostBoard extends React.Component {
 
     fetch = async (pageIdx) => {
         const { board_id } = this.props;
-        if(!pageIdx) {
+        if (!pageIdx) {
             pageIdx = this.state.pageIdx;
         }
 
@@ -119,6 +119,9 @@ class PostBoard extends React.Component {
                                                 posts={this.posts}
                                                 clickCrtBtn={() => this.setBoardState(BoardStateEnum.WRITING)} />
                                             {this.postCount > 0 && <Paginator pageIdx={pageIdx} pageNum={Math.ceil(this.postCount / POSTROWNUM)} clickPage={this.clickPage} />}
+                                            <button className="enif-btn-circle enif-pos-sticky" onClick={() => this.setBoardState(BoardStateEnum.WRITING)}>
+                                                <i className="material-icons">create</i>
+                                            </button>
                                         </>
                                     }
                                     {

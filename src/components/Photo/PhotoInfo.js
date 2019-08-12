@@ -17,8 +17,9 @@ const PhotoInfo = ({ photoInfo, likeInfo, moveToPhoto,
 
     const makeTagList = () => {
         let tagList = tagInfo.map((tag) => {
+            let tagClassName = (tag.tag_type === 'M') ? 'tag-type-1' : 'tag-type-2';
             return (
-                <div key={tag.tag_id} className="tag-unit"># {tag.tag_name}</div>
+                <div key={tag.tag_id} className={`tag-unit ${tagClassName}`}># {tag.tag_name}</div>
             )
         })
         return tagList;
@@ -56,9 +57,11 @@ const PhotoInfo = ({ photoInfo, likeInfo, moveToPhoto,
             <div className="photo-contents-wrapper">
 
                 <div className="info-wrapper">
-                    <h4>{content.title}</h4>
+                    <div className="info-title-date">
+                        <h4>{content.title}</h4>
+                        <p className="info-date">{convertFullDate(content.createdAt)}</p>
+                    </div>
                     <div className="info-tags">{makeTagList()}</div>
-                    <p className="info-date">{convertFullDate(content.createdAt)}</p>
                     {
                         content.text &&
                         <div className="enif-divider"></div>

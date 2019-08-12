@@ -55,6 +55,7 @@
 
 
 .photo-section-wrapper {
+    padding-top: 30px;
     .photo-alb-title-wrp {
         // height: 50px;
         background-color: $color_aqua;
@@ -95,22 +96,27 @@
             overflow: hidden;
             height: 100%;
             z-index: 1;
-            background-color: rgba(200, 200, 200, 0.5);
-            transition: all 0.2s;
+            // transition: all 0.2s;
             cursor: pointer;
             user-select: none;
             &.prev {
                 left: 0;
+                background: linear-gradient(-90deg, rgba(128, 128, 128, 0.01), rgba(128, 128, 128, 0.3));
             }
             &.next {
                 right: 0;
+                background: linear-gradient(90deg, rgba(232, 232, 232, 0.01),rgba(232, 232, 232, 0.3));
+            }
+            .material-icons {
+                font-size: 45px;
+                color: #FFFFFF;
             }
         }
         .photo-action-fullscreen-wrapper {
             position: absolute;
-            right: 25px;
+            right: 0px;
             bottom: 0px;
-            z-index: 1;
+            z-index: 2;
             background-color: rgba(200, 200, 200, 0.5);
             display: flex;
             justify-content: center;
@@ -120,13 +126,15 @@
         }
         &:hover {
             .photo-move-action {
-                max-width: 100px;
+                width: 50px;
+                max-width: 200px;
             }
         }
     }
 
     .photo-contents-wrapper {
-        padding: 10px;
+        margin-top: 10px;
+        // padding: 10px 0px;
         display: flex;
         flex-direction: column;
         .info-wrapper {
@@ -135,28 +143,43 @@
             .info-tags {
                 display: flex;
                 flex-wrap: wrap;
+                padding: 0px 23px 3px 23px;
                 .tag-unit {
-                    border: 1px solid #e25d7f;
                     color: #eeeeee;
-                    background-color: #e25d7f;
-                    margin: 2px;
-                    padding: 6px 9px;
+                    margin: 3px;
+                    padding: 5px 9px;
                     border-radius: 10px;
                     font-size: 13px;
                     user-select: none;
                 }
+                .tag-type-1 {
+                    border: 1px solid #e25d7f;
+                    background-color: #e25d7f;
+                }
+                .tag-type-2 {
+                    border: 1px solid #3a68a0;
+                    background-color: #3a68a0;
+                }
+            }
+            .info-title-date {
+                display: flex;
+                margin: 10px 0px;
             }
             .info-date {
-                padding: 7px 0px 0px 5px;
+                // padding: 7px 0px 0px 5px;
+                width: 50%;
+                padding-right: 23px;
+                text-align: right;
                 font-size: 13px;
                 color: #3E3E3E;
             }
 
             .info-text-infos-wrapper {
                 display: flex;
+                padding: 0px 24px;
                 .info-text-wrapper {
                     width: 50%;
-                    padding: 10px;
+                    padding: 10px 0px;
                     border-right: 2px dashed #F1F1F1;
                 }
                 .info-infos-wrapper {
@@ -165,7 +188,9 @@
             }
 
             h4 {
-                margin-bottom: 20px;
+                margin-left: 23px;
+                // margin-bottom: 20px;
+                width: 50%;
                 font-family: 'S-CoreDream-5Medium';
                 font-size: 23px;
             }
@@ -174,7 +199,7 @@
                 line-height: 20px;
             }
             table {
-                margin: 10px;
+                margin: 10px 10px 10px 23px;
                 font-size: 15px;
                 tr {
                     margin: 10px 0px 10px 0px;
@@ -446,12 +471,22 @@
         }
 
         .photo-contents-wrapper {
-            margin: 0.5rem;
-            padding: 10px;
+            padding: 0.5rem 1.5rem;
             display: block;
             .info-wrapper {
+                h4 {
+                    margin-left: 0px;
+                    font-size: 1.4rem;
+                }
+                .info-date {
+                    padding-right: 0px;
+                }
+                .info-tags {
+                    padding: 0px 0px 0.5rem 0px;
+                }
                 .info-text-infos-wrapper {
                     flex-direction: column;
+                    padding: 0px;
                     .info-text-wrapper {
                         border: none;
                         width: 100%;
@@ -459,6 +494,10 @@
                     .info-infos-wrapper {
                         width: 100%;
                     }
+                    table {
+                        margin: 0px;
+                    }
+
                 }
             }
 
@@ -475,6 +514,9 @@
                 }
             }
         }
+        .actions-wrapper {
+            margin: 0rem 0rem;
+        }    
     }
 
 

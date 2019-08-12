@@ -6,13 +6,13 @@ import DownloadFile from '../Post/DownloadFile';
 const DocuList = ({ documents }) => {
 
     const makeDocuList = () => {
-        let docuList = documents.map(document => {
-            let contentInfo = document.content;
-            let categoryInfo = document.content.category;
-            let attachedFileInfo = document.content.AttachedFiles;
+        let docuList = documents.map(doc => {
+            let contentInfo = doc.content;
+            let categoryInfo = doc.content.category;
+            let attachedFileInfo = doc.content.AttachedFiles;
             return (
                 <div className="doculist-body" key={contentInfo.content_id}>
-                    <div className="docu-generation">{document.generation}</div>
+                    <div className="docu-generation">{doc.generation}</div>
                     <div className="docu-category">{categoryInfo && categoryInfo.category_name}</div>
                     <div className="docu-memo">
                         <Link to={`/document/${contentInfo.content_id}`}>{contentInfo.title}</Link>
@@ -44,7 +44,7 @@ const DocuList = ({ documents }) => {
                     {
                         files.map((file) => {
                             return (
-                                <DownloadFile content_id={file.parent_id} file_id={file.file_id}>
+                                <DownloadFile key={file.file_id} content_id={file.parent_id} file_id={file.file_id}>
                                     {/* <i className="material-icons">insert_drive_file</i> */}
                                     {(() => {
                                         if (file.file_type === 'IMG') {

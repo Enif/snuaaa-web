@@ -17,6 +17,8 @@
     // padding-top: 5px;
     position: relative;
     height: 30px;
+    user-select: none;
+    margin: 0px 23px;
 
     .edit-delete-wrapper {
         position: absolute;
@@ -35,14 +37,19 @@
         font-size: 20px;
         position: absolute;
         right: 0px;
+        display: flex;
         // padding-bottom: 10px;
         .like-num-wrapper {
-            display: inline-block;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             margin-right: 12px;
             color: #f0645e;
         }
         .comment-num-wrapper {
-            display: inline-block;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             color: #a3a3a3;
         }
         .material-icons {
@@ -144,18 +151,28 @@
     }
 }
 
+.q1-container {
+    font-family: 'NIXGONM-Vb', 'Nanum Gothic', Arial, Tahoma, Verdana, sans-serif;
+}
+
 .color-img {
-    color: #0ba3ad;
+    color: #010e2c;
 }
 .color-doc {
-    color: #2f48bb;
+    color: #6677c5;
 }
 .color-xls {
     color: #00791a;
 }
 .color-pdf {
-    color: #9b221e;
+    color: #ff2d1e;
 }
 .color-zip {
-    color: rgb(192, 142, 3);
+    color: #fbc327;
+}
+
+@media screen and (max-width: 800px) {
+    .actions-wrapper {
+        margin: 0rem 1.5rem;
+    }
 }

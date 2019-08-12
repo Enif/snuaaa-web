@@ -1,15 +1,15 @@
 /****** COMMENT *******/
 
 .comment-area-wrapper {
-    margin: 5px 7px;
-    padding: 10px 15px 15px 15px;
+    margin: 5px 0px;
+    padding: 20px 23px 25px 23px;
     border-radius: 30px;
     background-color: #f4f4f4;
 
     .comment-list-wrapper {
         .comment-wrapper {
             display: flex;
-            margin-top: 5px;
+            margin: 12px 0px;
             .profile {
                 flex-shrink: 0;
                 img {
@@ -24,6 +24,16 @@
                 flex-grow: 1;
                 position: relative;
                 padding-left: 5px;
+                .com-cont-top {
+                    display: flex;
+                    .com-date {
+                        margin-left: auto;
+                        color: $color_gray1;
+                    }
+                }
+                .com-cont-bot {
+                    display: flex;
+                }
                 h5 {
                     font-size: 15px;
                     font-weight: bold;
@@ -31,7 +41,7 @@
                 }
                 p {
                     font-size: 14px;
-                    padding: 5px;
+                    padding: 3px 5px;
                 }
                 textarea {
                     width: 100%;
@@ -41,7 +51,7 @@
                 }
                 button {
                     position: absolute;
-                    right: -35px;
+                    right: 0px;
                     height: 50px;
                     font-family: 'NIXGONM-Vb', 'Nanum Gothic', Arial, Tahoma, Verdana, sans-serif;
                     font-size: 16px;
@@ -49,13 +59,19 @@
                     background-color: $color_gray2;
                     border: none;
                     border-radius: 10px;
-        
+                    z-index: 1;
                 }
             }
             .actions-wrapper {
                 display: flex;
+                margin-left: auto;
+                margin-right: 0px;
                 justify-content: space-between;
                 // padding-top: 5px;
+                .action-icons {
+                    color: $color_gray1;
+                    font-size: 20px;
+                }
         
                 .edit-wrapper {
                     display: inline-block;
@@ -71,6 +87,7 @@
         height: 40px;
         position: relative;
         margin-top: 15px;
+        margin-bottom: 10px;
         background-color: #FFFFFF;
         border-radius: 15px;
         // display: flex;
@@ -99,5 +116,12 @@
                 background: #6d869c;
             }
         }
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .comment-area-wrapper {
+        margin: 5px 7px;
+        padding: 1.1rem;
     }
 }

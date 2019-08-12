@@ -6,8 +6,8 @@
     // border-top: 1px solid #c9c9c9;
     .post-title {
         font-size: 20px;
-        padding-top: 10px;
-        padding-bottom: 4px;
+        padding-top: 11px;
+        padding-bottom: 9px;
         background-color: $color_aqua;
         color: #F1F1F1;
         display: flex;
@@ -27,15 +27,15 @@
     }
     .post-info-other {
         font-size: 15px;
-        border: 1px solid #C9C9C9;
+        border: 2px solid #E8E8E8;
+        border-top: none;
         display: flex;
         justify-content: space-between;
-        padding: 10px;
+        padding: 10px 23px;
     }
     .post-content {
-        padding-top: 1rem;
-        padding: 1rem;
-        border: 1px solid #C9C9C9;
+        padding: 0.5rem;
+        border: 2px solid #E8E8E8;
         min-height: 300px;
         line-height: 200%;
         border-top: none;
@@ -54,6 +54,8 @@
     }
 
     .file-download-wrapper {
+        padding: 10px 23px;
+        background-color: #E8E8E8;
         .file-download-list {
             a {
                 display: inline-flex;
@@ -61,6 +63,9 @@
                 color: $color_gray1;
             }
         }
+    }
+    .enif-divider {
+        margin: 0px 0px 10px 0px;
     }
 }
 
@@ -113,5 +118,12 @@
 @media screen and (max-width: 800px) {
     .post-wrapper {
         width: 100%;
+        .post-info-other {
+            padding: 0.8rem 1.5rem;
+        }
+        .post-title {
+            padding-top: 0.8rem;
+            padding-bottom: 0.8rem;
+        }
     }
 }
