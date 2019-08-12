@@ -1,9 +1,10 @@
 import React from 'react';
 import Image from '../Common/Image';
 import { breakLine } from 'utils/breakLine';
+import { convertFullDate } from 'utils/convertDate';
 import defaultProfile from 'assets/img/profile.png';
 
-const CommentList = ({my_id, comments, commentInEdit, editingContents, editingContentsChange, setCommentInEdit, updateComment, deleteComment}) => {
+const CommentList = ({ my_id, comments, commentInEdit, editingContents, editingContentsChange, setCommentInEdit, updateComment, deleteComment }) => {
 
     const makeCommentList = () => {
         let commentList = comments.map(comment => {
@@ -14,31 +15,36 @@ const CommentList = ({my_id, comments, commentInEdit, editingContents, editingCo
                         <Image imgSrc={user.profile_path} defaultImgSrc={defaultProfile} />
                     </div>
                     <div className="com-cont-wrp">
-                        <h5>{user.nickname}</h5>
-                        {
-                            comment.comment_id === commentInEdit ?
-                            <>
-                                <textarea value={editingContents} onChange={editingContentsChange}>
-                                </textarea>
-                                <button onClick={(e) => updateComment(comment.comment_id)}>ENTER</button>
-                            </>
-                            :
-                            <p>
-                                {breakLine(comment.text)}
-                            </p>
-                        }
-                    </div>
-                    {
-                        my_id === comment.author_id &&
-                        <div className="actions-wrapper">
-                            <div className="edit-wrapper">
-                                <i className="material-icons pointer" onClick={() => setCommentInEdit(comment.comment_id, comment.text)}>edit</i>
-                            </div>
-                            <div className="delete-wrapper">
-                                <i className="material-icons pointer" onClick={() => deleteComment(comment.comment_id)}>delete</i>
-                            </div>
+                        <div className="com-cont-top">
+                            <h5>{user.nickname}</h5>
+                            <p className="com-date">{convertFullDate(comment.createdAt)}</p>
                         </div>
-                    }
+                        <div className="com-cont-bot">
+                            {
+                                comment.comment_id === commentInEdit ?
+                                    <>
+                                        <textarea value={editingContents} onChange={editingContentsChange}>
+                                        </textarea>
+                                        <button onClick={(e) => updateComment(comment.comment_id)}>ENTER</button>
+                                    </>
+                                    :
+                                    <p>
+                                        {breakLine(comment.text)}
+                                    </p>
+                            }
+                            {
+                                my_id === comment.author_id &&
+                                <div className="actions-wrapper">
+                                    <div className="edit-wrapper">
+                                        <i className="material-icons pointer action-icons" onClick={() => setCommentInEdit(comment.comment_id, comment.text)}>edit</i>
+                                    </div>
+                                    <div className="delete-wrapper">
+                                        <i className="material-icons pointer action-icons" onClick={() => deleteComment(comment.comment_id)}>delete</i>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
                 </div>
             )
         })
@@ -48,7 +54,7 @@ const CommentList = ({my_id, comments, commentInEdit, editingContents, editingCo
     return (
         <div className="comment-list-wrapper">
             {makeCommentList()}
-        </div>            
+        </div>
     )
 }
 

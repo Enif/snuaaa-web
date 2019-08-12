@@ -34,13 +34,13 @@
     top: 70px;
     background: #7193C4;
     width: 170px;
-    padding: 20px 0px;
+    padding: 30px 0px 25px 0px;
     border-radius: 20px;
     color: $color-white;
     text-align: center;
     .moon-phase-wrapper {
-        height: 60px;
-        width: 60px;
+        height: 70px;
+        width: 70px;
         border-radius: 50%;
         margin: auto;
         background-color: $color-white;
@@ -48,19 +48,19 @@
         justify-content: center;
         align-items: center;
         .moon-phase {
-            height: 56px;
-            width: 56px;
+            height: 64px;
+            width: 64px;
             border-radius: 50%;
             box-shadow: inset -8px 0px 3px 0px $color-white ;
             background-color: #ffda0a;
         }
     }
     h5 {
-        margin: 20px 0px;
+        margin: 20px 0px 25px 0px;
         font-size: 15px;
     }
     p {
-        margin: 5px 0px;        
+        margin: 10px 0px;
     }
 }
 
