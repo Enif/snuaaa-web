@@ -17,7 +17,7 @@ const DocuComponent = ({docData, my_id, setDocState, deleteDoc, likeDoc, isLiked
         for(let i = 0; i < docData.file_path.length; i++) {
             fileList.push(
                 <div className="file-download-list" key={i}>
-                    <Download object_id={contentInfo.content_id} index={i}>
+                    <Download content_id={contentInfo.content_id} index={i}>
                         <i className="material-icons">insert_drive_file</i>
                         <p>{docData.file_path[i].substring(20)}</p>
                     </Download>

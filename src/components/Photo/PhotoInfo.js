@@ -6,7 +6,9 @@ import ContentsStateEnum from 'common/ContentStateEnum';
 import { breakLine } from 'utils/breakLine';
 import { convertDate, convertFullDate } from 'utils/convertDate'
 
-const PhotoInfo = ({ photoInfo, likeInfo, my_id, setPhotoState, deletePhoto, likePhoto }) => {
+const PhotoInfo = ({ photoInfo, likeInfo, moveToPhoto,
+    fullscreenRef, toggleFullscreen, my_id, isFullscreen,
+    setPhotoState, deletePhoto, likePhoto }) => {
 
     let content = photoInfo.contentPhoto;
     let albumInfo = photoInfo.album;
@@ -38,8 +40,17 @@ const PhotoInfo = ({ photoInfo, likeInfo, my_id, setPhotoState, deletePhoto, lik
                 </Link>
                 <h5>{albumInfo ? albumInfo.title : "기본앨범"}</h5>
             </div>
-            <div className="photo-img-wrapper">
+            <div className="photo-img-wrapper" ref={fullscreenRef}>
+                <div className="photo-move-action prev" onClick={() => moveToPhoto(-1)}>
+                    <i className="material-icons pointer">keyboard_arrow_left</i>
+                </div>
                 <Image imgSrc={photoInfo.file_path} />
+                <div className="photo-move-action next" onClick={() => moveToPhoto(1)}>
+                    <i className="material-icons pointer">keyboard_arrow_right</i>
+                </div>
+                <div className="photo-action-fullscreen-wrapper">
+                    <i className="material-icons pointer" onClick={toggleFullscreen}>{isFullscreen ? 'fullscreen_exit' : 'fullscreen'}</i>
+                </div>
             </div>
 
             <div className="photo-contents-wrapper">
@@ -51,7 +62,7 @@ const PhotoInfo = ({ photoInfo, likeInfo, my_id, setPhotoState, deletePhoto, lik
                     {
                         content.text &&
                         <div className="enif-divider"></div>
-                    }                    
+                    }
                     <div className="info-text-infos-wrapper">
                         <div className="info-text-wrapper">
                             <p>{breakLine(content.text)}</p>

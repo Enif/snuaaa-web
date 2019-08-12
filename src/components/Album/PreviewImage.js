@@ -1,43 +1,18 @@
 import React from 'react';
 
-const TAG = 'PREVIEWIMAGE'
+const PreviewImage = ({ imgUrls, imgIdx }) => {
 
-class PreviewImage extends React.Component {
-
-    constructor(props) {
-        super(props);
-        console.log('[%s] constructor', TAG)
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        console.log(this.props)
-        console.log(nextProps)
-        if (this.props.imgIdx === nextProps.imgIdx && this.props.uploadPhotos.length === nextProps.uploadPhotos.length) {
-            console.log('false')
-            return false
-        }
-        else {
-            console.log('true')
-            return true;
+    const selectedImg = () => {
+        if (imgUrls.length > 0 && imgIdx >= 0) {
+            return (<img src={imgUrls[imgIdx]} alt="previewImg" />)
         }
     }
 
-    selectedImg = () => {
-        const { uploadPhotos, imgIdx } = this.props;
-        if (uploadPhotos.length > 0 && imgIdx >= 0) {
-            let imgSrc = window.URL.createObjectURL(uploadPhotos[imgIdx])
-            return (<img src={imgSrc} alt="previewImg" />)
-        }
-    }
-
-    render() {
-        console.log('[%s] render', TAG)
-        return (
-            <>
-                {this.selectedImg()}
-            </>
-        )
-    }
+    return (
+        <>
+            {selectedImg()}
+        </>
+    )
 }
 
 export default PreviewImage;

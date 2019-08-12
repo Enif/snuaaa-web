@@ -104,7 +104,7 @@ const DocuList = ({ documents }) => {
         // let contentInfo = document.content;
         // for (let i = 0; i < document.file_path.length; i++) {
         //     fileList.push(
-        //         <Download object_id={contentInfo.content_id} index={i} key={contentInfo.content_id + '_' + i}>
+        //         <Download content_id={contentInfo.content_id} index={i} key={contentInfo.content_id + '_' + i}>
         //             <i className="material-icons">insert_drive_file</i>
         //         </Download>)
         // }
