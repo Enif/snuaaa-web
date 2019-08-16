@@ -8,6 +8,7 @@ import LogInComponent from 'components/Login/LogInComponent';
 import Loading from 'components/Common/Loading';
 import PopUp from 'components/Common/PopUp';
 import FullScreenPortal from 'containers/FullScreenPortal';
+import history from 'common/history';
 
 const TAG = 'LOGIN'
 
@@ -96,8 +97,8 @@ class LogIn extends React.Component {
                     isLoading: false
                 })
                 const { token, user_id, nickname, level, profile_path, autoLogin } = res.data;
-
                 this.props.onLogin(user_id, nickname, level, profile_path, token, autoLogin);
+                history.goBack();
             })
             .catch((err) => {
                 console.error(err);

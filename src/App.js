@@ -12,6 +12,7 @@ import Loading from './components/Common/Loading';
 import { getToken } from 'utils/tokenManager';
 import { updateToken } from './services';
 import { authLogin, authLogout } from './actions';
+import history from 'common/history';
 // import UserContext from './UserContext';
 
 const TAG = 'App'
@@ -47,6 +48,8 @@ class App extends Component {
 
         if (!accessToken) {
             //토큰이 없으면 logout
+            console.log(window.location.pathname);
+            history.push(window.location.pathname);
             this.props.onLogout();
             this.setState({
                 isReady: true
@@ -68,6 +71,8 @@ class App extends Component {
                 .catch((res) => {
                     console.log(`[${TAG}] Token is not valid`)
                     alert("토큰이 만료되어 로그아웃 됩니다.")
+                    console.log(window.location.pathname);
+                    history.push(window.location.pathname);
                     this.props.onLogout();
                     this.setState({
                         isReady: true
