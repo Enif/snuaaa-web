@@ -179,6 +179,10 @@ export function createDocument(board_id, data) {
     return axios.post(SERVER_URL + `api/board/${board_id}/document`, data)
 }
 
+export function updateDocument(doc_id, data) {
+    return axios.patch(SERVER_URL + `api/document/${doc_id}`, data)
+}
+
 export function downloadDocument(doc_id, index) {
     return axios.get(SERVER_URL + `api/document/${doc_id}/download/${index}`)
 }
