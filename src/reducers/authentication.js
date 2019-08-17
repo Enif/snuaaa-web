@@ -1,6 +1,5 @@
 import * as types from '../actions/ActionTypes';
-//import update from 'react-addons-update';
-//import LoginStatusEnum from '../common/LoginStatusEnum';
+import { setToken, removeToken } from 'utils/tokenManager';
 
 const initialState = {
     isLoggedIn: false,
@@ -14,6 +13,7 @@ function authentication(state = initialState, action) {
     
     switch (action.type) {
         case types.AUTH_LOGIN:
+            setToken(action.token, action.isAutoLogin);
             return {
                 ...state,
                 isLoggedIn: true,
@@ -23,8 +23,7 @@ function authentication(state = initialState, action) {
                 profile_path: action.profile_path
             };
         case types.AUTH_LOGOUT:
-            localStorage.removeItem('token')
-            sessionStorage.removeItem('token')
+            removeToken();
             return {
                 ...state,
                 isLoggedIn: false,

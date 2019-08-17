@@ -3,7 +3,7 @@ import InputText from '../Common/InputText'
 import Footer from 'components/Footer'
 import logo from 'assets/img/login_logo.gif'
 
-const LogInComponent = ({ handleChange, postLogIn, redirectToSignUp, checkAuto }) => {
+const LogInComponent = ({ autoLogin, handleChange, userLogIn, guestLogIn, redirectToSignUp, checkAuto }) => {
     return (
         <div className="login-wrapper">
             <div className="logo-wrapper">
@@ -11,7 +11,9 @@ const LogInComponent = ({ handleChange, postLogIn, redirectToSignUp, checkAuto }
             </div>
             <div className="inputs-wrapper">
                 <div className="auto-checker">
-                    <input type="checkbox" onChange={checkAuto} /> <p>자동 로그인</p>
+                    <input type="checkbox" id="toggle" onChange={checkAuto} checked={autoLogin} />
+                    <label htmlFor="toggle" className="toggle-switch" />
+                    <p className="auto-checker-text">자동 로그인</p>
                 </div>
                 <div className="login-inputs-wrapper">
                     <div className="login-inputs">
@@ -25,13 +27,13 @@ const LogInComponent = ({ handleChange, postLogIn, redirectToSignUp, checkAuto }
                         <input type="password" className="login-input" placeholder=" PASSWORD"
                             name="password"
                             onChange={handleChange}
-                            onKeyDown={(e) => {if(e.keyCode === 13) postLogIn()}}
+                            onKeyDown={(e) => {if(e.keyCode === 13) userLogIn()}}
                             required />
                     </div>
-                    <button className="login-btn" onClick={postLogIn}>로그인</button>
+                    <button className="login-btn" onClick={userLogIn}>로그인</button>
                 </div>
                 <div>
-                    <button className="btn-guest">Guest</button>
+                    <button className="btn-guest" onClick={guestLogIn}>Guest</button>
                 </div>
                 <div className="menu-txt-wrapper">
                     <p className="menu-txt-signup" onClick={() => redirectToSignUp()}>회원가입</p>

@@ -4,6 +4,7 @@ import PostBoard from 'containers/PostBoard/PostBoard';
 import PhotoBoard from 'containers/PhotoBoard/PhotoBoard';
 import DocuBoard from 'containers/DocuBoard/DocuBoard';
 import Loading from 'components/Common/Loading';
+import history from 'common/history';
 
 const TAG = 'BOARD'
 
@@ -13,11 +14,11 @@ class Board extends React.Component {
         console.log(`[${TAG}] Constructor`)
 
         super(props);
-        
-        this.boardInfo = undefined;
+
         this.categories = undefined;
         this.state = {
             isReady: false,
+            boardInfo: undefined,
             board_id: this.props.match.params.bNo,
         }
     }
@@ -29,13 +30,11 @@ class Board extends React.Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         console.log(`[${TAG}] shouldComponentUpdate`)
-        if(this.state.isReady && nextState.isReady) {
+        if (this.state.board_id !== nextState.board_id) {
             this.retrieveBoardInfo(nextState.board_id)
             return false;
         }
-        else {
-            return true;
-        }
+        return true;
     }
 
     componentWillUnmount() {
@@ -50,41 +49,52 @@ class Board extends React.Component {
     }
 
     retrieveBoardInfo = async (board_id) => {
+        console.log('[%s] retrieveBoardInfo', TAG);
+
         this.setState({
-            isReady: false
+            isReady: false,
+            boardInfo: null
         })
         await service.retrieveBoardInfo(board_id)
-        .then((res) => {
-            this.boardInfo = res.data.resBoardInfo;
-            this.categories = res.data.resCategoryInfo;
-            this.setState({
-                isReady: true
+            .then((res) => {
+                // this.boardInfo = res.data.resBoardInfo;
+                this.categories = res.data.resCategoryInfo;
+                this.setState({
+                    isReady: true,
+                    boardInfo: res.data.resBoardInfo
+                })
             })
-        })
-        .catch((err) => {
-            console.error(err);
-        })
+            .catch((err) => {
+                console.error(err);
+                if(err.response && err.response.data && err.response.data.code === 4001) {
+                    alert("권한이 없습니다.")
+                    history.goBack();
+                }
+            })
     }
-    
+
     render() {
         console.log(`[${TAG}] render.. `)
+        const { boardInfo } = this.state;
+
         return (
-            <div className="section-contents">
+            <>
                 {(() => {
-                    if(this.state.isReady) {
-                        if(this.boardInfo.board_type === 'N') {
+                    // if(this.state.isReady) {
+                    if (boardInfo) {
+                        if (boardInfo.board_type === 'N') {
                             return (
-                                <PostBoard boardInfo={this.boardInfo} board_id={this.state.board_id} categories={this.categories} />
+                                <PostBoard boardInfo={boardInfo} board_id={this.state.board_id} categories={this.categories} />
                             )
                         }
-                        else if(this.boardInfo.board_type === 'P') {
+                        else if (boardInfo.board_type === 'P') {
                             return (
-                                <PhotoBoard boardInfo={this.boardInfo} board_id={this.state.board_id} categories={this.categories} />
+                                <PhotoBoard boardInfo={boardInfo} board_id={this.state.board_id} categories={this.categories} />
                             )
                         }
-                        else if(this.boardInfo.board_type === 'D') {
+                        else if (boardInfo.board_type === 'D') {
                             return (
-                                <DocuBoard boardInfo={this.boardInfo} board_id={this.state.board_id} categories={this.categories} />
+                                <DocuBoard boardInfo={boardInfo} board_id={this.state.board_id} categories={this.categories} />
                             )
                         }
                     }
@@ -94,7 +104,7 @@ class Board extends React.Component {
                         )
                     }
                 })()}
-            </div>
+            </>
         );
     }
 }

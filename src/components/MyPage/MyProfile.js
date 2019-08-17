@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Image from '../Common/Image';
+import imgDefaultProfile from 'assets/img/profile.png';
 import { breakLine } from 'utils/breakLine';
 
 function MyProfile({profileImg, nickname, userDesc}) {
@@ -14,7 +15,7 @@ function MyProfile({profileImg, nickname, userDesc}) {
         <div className="my-profile-wrapper">
             <div className="my-left">
                 <div className="profile-img">
-                    <Image imgSrc={profileImg}/>
+                    <Image imgSrc={profileImg} defaultImgSrc={imgDefaultProfile}/>
                 </div>
                 <div className="nickname">{nickname}</div>
                 <div className="btn-edit-info">
@@ -24,14 +25,15 @@ function MyProfile({profileImg, nickname, userDesc}) {
                 </div>
 
             </div>
+            <div className="enif-divider"></div>
             <div className="my-right">
                 <div className={descClass}>{breakLine(userDesc)}</div>
-                <div>
+                <div className="icon-expand">
                     <i className="material-icons pointer" onClick={() => setIsExpand(!isExpand)}>{icon}</i>
                 </div>
             </div>
         </div>
-    )
+    )   
 }
 
 export default MyProfile;

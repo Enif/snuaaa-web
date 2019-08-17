@@ -4,33 +4,50 @@
         display: flex;
         width: 100%;
         font-size: 20px;
+        // margin-bottom: 12px;
         .view-type-selector {
             width: 50%;
             text-align: center;
             padding: 10px 0px 10px 0px;
-            border: 2px solid #686868;
+            // border: 2px solid #686868;
+            background-color: $color-gray5;
+            color: $color-gray2;
             cursor: pointer;
             transition: all 0.5s;
             &:hover {
-                background-color: #cfcfcf;
+                color: $color-gray1;
             }
         }
         .selected {
-            background-color: #686868;
+            background-color: $color-aqua;
             color: #ffffff;
             &:hover {
-                background-color: #686868;
+                color: #ffffff;
             }
         }
     }
 
     .memory-title {
         display: inline-block;
-        background-image: url("./assets/img/title_memory.png");
+        background-image: url("./assets/img/board/title_memory.png");
         background-size: contain;
-        width: 277px;
-        height: 68px;
-        padding: 25px 0px 20px 100px;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 270px;
+        height: 60px;
+        padding: 19px 0px 20px 100px;
+        margin: 10px 0px 15px 0px;
+    }
+    .astrophoto-title {
+        display: inline-block;
+        background-image: url("./assets/img/board/title_astrophoto_mini.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 250px;
+        height: 60px;
+        padding: 19px 0px 20px 107px;
+        margin: 10px 0px 15px 5px;
     }
 }
 

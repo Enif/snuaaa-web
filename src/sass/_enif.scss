@@ -147,6 +147,12 @@
     right: 20px;
 }
 
+.enif-pos-bottom-right {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
 .enif-pos-sticky {
     position: sticky;
     margin-left: 105%;
@@ -235,6 +241,7 @@
 @media screen and (max-width: 800px) {
     .enif-popup-content {
         width: 90%;
+        padding: 1rem 1rem 3rem 1rem;
         margin-top: 10%;
     }
 

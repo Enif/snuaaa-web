@@ -1,7 +1,9 @@
 import axios from 'axios';
-import { SERVER_URL } from '../common/environment'
+import { getToken } from 'utils/tokenManager';
 
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + (sessionStorage.getItem('token') || localStorage.getItem('token') );
+const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + getToken();
 
 export function updateToken() {
     return axios.get(SERVER_URL + 'api/check')
@@ -10,13 +12,17 @@ export function updateToken() {
 export function postSignUp(data) {
     return axios.post(SERVER_URL + 'api/signup/', data);
 }
-//GM modified
+
 export function duplicateCheck(data) {
     return axios.post(SERVER_URL + `api/signup/dupcheck`, data);
 }
 
-export function postLogIn(data) {
+export function userLogIn(data) {
     return axios.post(SERVER_URL + 'api/login/', data);
+}
+
+export function guestLogIn() {
+    return axios.get(SERVER_URL + 'api/login/guest');
 }
 
 export function retrieveUserInfo() {
@@ -33,6 +39,10 @@ export function deleteUserInfo() {
 
 export function retrieveUserPosts() {
     return axios.get(SERVER_URL + 'api/userinfo/posts');
+}
+
+export function retrieveBoards() {
+    return axios.get(SERVER_URL + `api/board`)
 }
 
 export function retrieveBoardInfo(board_id) {
@@ -64,11 +74,11 @@ export function createPost(board_id, data) {
 }
 
 export function retrieveComments(parent_id) {
-    return axios.get(SERVER_URL + `api/object/${parent_id}/comments`);
+    return axios.get(SERVER_URL + `api/content/${parent_id}/comments`);
 }
 
 export function createComment(parent_id, data) {
-    return axios.post(SERVER_URL + `api/object/${parent_id}/comment`, data);
+    return axios.post(SERVER_URL + `api/content/${parent_id}/comment`, data);
 }
 //GM modified 
 export function updateComment(comment_id, data) {
@@ -79,8 +89,8 @@ export function deleteComment(comment_id) {
     return axios.delete(SERVER_URL + `api/comment/${comment_id}`);
 }
 
-export function likeObject(object_id) {
-    return axios.post(SERVER_URL + `api/object/${object_id}/like`);
+export function likeObject(content_id) {
+    return axios.post(SERVER_URL + `api/content/${content_id}/like`);
 }
 
 export function retrieveAlbumsInPhotoBoard(board_id, pageIdx) {
@@ -105,12 +115,13 @@ export function createPhotosInPhotoBoard(board_id, data) {
 
 export function retrievePhotosInPhotoBoardByTag(board_id, tags, pageIdx) {
     let tagUrl = '';
+
     tags.forEach((tag) => {
-        if(!tagUrl) {
-            tagUrl += `tag=${tag}`
+        if (!tagUrl) {
+            tagUrl += `tags[]=${tag}`
         }
         else {
-            tagUrl += `&tag=${tag}`
+            tagUrl += `&tags[]=${tag}`
         }
     })
     return axios.get(SERVER_URL + `api/photoboard/${board_id}/photos?${tagUrl}&page=${pageIdx}`)
@@ -152,8 +163,12 @@ export function retrieveDocument(doc_id) {
     return axios.get(SERVER_URL + `api/document/${doc_id}`)
 }
 
-export function retrieveDocuments() {
-    return axios.get(SERVER_URL + `api/document`)
+export function retrieveDocuments(pageIdx, ctg_id, generation) {
+    let categoryUrl = '';
+    let genUrl = '';
+    ctg_id && (categoryUrl = `&category=${ctg_id}`);
+    generation && (genUrl = `&generation=${generation}`);
+    return axios.get(SERVER_URL + `api/document?page=${pageIdx}${categoryUrl}${genUrl}`)
 }
 
 export function retrieveDocumentsByGeneration(generation) {
@@ -162,6 +177,10 @@ export function retrieveDocumentsByGeneration(generation) {
 
 export function createDocument(board_id, data) {
     return axios.post(SERVER_URL + `api/board/${board_id}/document`, data)
+}
+
+export function updateDocument(doc_id, data) {
+    return axios.patch(SERVER_URL + `api/document/${doc_id}`, data)
 }
 
 export function downloadDocument(doc_id, index) {
@@ -190,4 +209,8 @@ export function retrieveRecentMemory() {
 
 export function retrieveRecentAstroPhoto() {
     return axios.get(SERVER_URL + `api/home/astrophoto`);
+}
+
+export function retrieveRiseSet() {
+    return axios.get(SERVER_URL + `api/home/riseset`);
 }

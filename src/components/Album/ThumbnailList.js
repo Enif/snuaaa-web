@@ -1,47 +1,32 @@
 import React from 'react';
 
-const TAG = 'THUMBNAILLIST'
+const ThumbnailList = ({ imgUrls, imgIdx, setImgIdx, removeImg }) => {
 
-class ThumbnailList extends React.Component {
+    const makeThumbnails = () => {
 
-    constructor(props) {
-        super(props);
-        console.log('[%s] constructor', TAG)
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        console.log(this.props)
-        console.log(nextProps)
-        if (this.props.imgIdx === nextProps.imgIdx && this.props.uploadPhotos.length === nextProps.uploadPhotos.length) {
-            console.log('false')
-            return false
-        }
-        else {
-            console.log('true')
-            return true;
-        }
-    }
-
-    makeThumbnails = () => {
-        console.log('[%s] makeThumnails', TAG)
-        const { uploadPhotos, imgIdx } = this.props;
-
-        const thumbnailList = uploadPhotos.map((file, index) => {
-            let imgSrc = URL.createObjectURL(file)
+        const thumbnailList = imgUrls.map((imgUrl, index) => {
             let imgClass = index === imgIdx ? "photo-thumbnail selected" : "photo-thumbnail default";
-            return (<img key={index} className={imgClass} src={imgSrc} alt="thumbnail" onClick={() => this.props.setImgIdx(index)} />)
+            return (
+                <div key={index} className="block-constant">
+                    <div className="remove-icon-wrapper" onClick={() => removeImg(index)}>
+                        <i className="material-icons pointer">remove_circle_outline</i>
+                    </div>
+                    <img
+                        className={imgClass}
+                        src={imgUrl}
+                        alt="thumbnail"
+                        onClick={() => setImgIdx(index)} />
+                </div>
+            )
         })
         return thumbnailList
     }
 
-    render() {
-        console.log('[%s] render', TAG)
-        return (
-            <>
-                {this.makeThumbnails()}
-            </>
-        )
-    }
+    return (
+        <>
+            {makeThumbnails()}
+        </>
+    )
 }
 
 export default ThumbnailList;

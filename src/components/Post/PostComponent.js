@@ -1,15 +1,37 @@
 import React from 'react';
+import ReactQuill from 'react-quill';
 import { Link } from 'react-router-dom';
 import ContentStateEnum from 'common/ContentStateEnum';
 import Comment from 'containers/Comment';
 import ProfileMini from '../Common/ProfileMini';
 import { convertFullDate } from 'utils/convertDate';
-import { breakLine } from 'utils/breakLine';
+import DownloadFile from './DownloadFile';
+// import { breakLine } from 'utils/breakLine';
 
-const PostComponent = ({postData, post_id, my_id, likeInfo, likePost, setPostState, deletePost}) => {
+const PostComponent = ({ postData, my_id, likeInfo, fileInfo, likePost, setPostState, deletePost }) => {
 
     let content = postData.content;
     let user = postData.content.user;
+
+    const makeFileList = () => {
+        if (fileInfo && fileInfo.length > 0) {
+            return (
+                <div className="post-filelist-wrapper">
+                    <ul>
+                        {fileInfo.map((file) => {
+                            return (
+                                <li>
+                                    <DownloadFile content_id={content.content_id} file_id={file.file_id}>
+                                        {file.original_name}
+                                    </DownloadFile>
+                                </li>
+                            )
+                        })}
+                    </ul>
+                </div>
+            )
+        }
+    }
 
     return (
         <div className="post-wrapper">
@@ -28,9 +50,13 @@ const PostComponent = ({postData, post_id, my_id, likeInfo, likePost, setPostSta
                 </div>
             </div>
             <div className="post-content">
-                {breakLine(content.text)}
+                <ReactQuill value={content.text} readOnly={true} theme="bubble" />
+                {/* {breakLine(content.text)} */}
             </div>
-            <ProfileMini profileImg={user.profile_path} nickname={user.nickname} userDesc={user.introduction}/>
+            {
+                makeFileList()
+            }
+            <ProfileMini profileImg={user.profile_path} nickname={user.nickname} userDesc={user.introduction} />
             <div className="enif-divider"></div>
             <div className="actions-wrapper">
                 {
@@ -47,7 +73,7 @@ const PostComponent = ({postData, post_id, my_id, likeInfo, likePost, setPostSta
                 <div className="like-comment-num-wrapper">
                     <div className="like-num-wrapper">
                         <i className="material-icons pointer" onClick={() => likePost()}>
-                            { likeInfo ? 'favorite' : 'favorite_border'}
+                            {likeInfo ? 'favorite' : 'favorite_border'}
                         </i>
                         {content.like_num}
                     </div>
@@ -57,7 +83,7 @@ const PostComponent = ({postData, post_id, my_id, likeInfo, likePost, setPostSta
                     </div>
                 </div>
             </div>
-            <Comment parent_id={content.content_id}/>
+            <Comment parent_id={content.content_id} />
         </div>
     )
 }

@@ -56,14 +56,17 @@ class MyInfo extends React.Component {
         return (
             isShow ?
             <div className="my-wrapper">
+                <div className="my-title-wrapper">
+                    <h3>My Page</h3>
+                </div>
                 <MyProfile profileImg={this.profile.profile_path} nickname={this.profile.nickname} userDesc={this.profile.introduction} />
                 <div className="my-objects-wrapper">
                     <div className="my-left">
                         <MyPostList posts={this.postList} />
-                        <MyPhotoList photos={this.photoList} />
+                        <MyCommentList comments={this.commentList} />
                     </div>
                     <div className="my-right">
-                        <MyCommentList comments={this.commentList} />
+                        <MyPhotoList photos={this.photoList} />
                     </div>
                 </div>
             </div>

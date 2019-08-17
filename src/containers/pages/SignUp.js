@@ -1,8 +1,10 @@
 import React from 'react';
+import { Redirect } from 'react-router';
 import * as service from 'services';
 import SignUpComponent from 'components/Signup/SignUpComponent';
 import SignUpSuccess from 'components/Signup/SignUpSuccess';
 import SignUpFailure from 'components/Signup/SignUpFailure';
+import PopUp from 'components/Common/PopUp';
 import Loading from 'components/Common/Loading';
 import FullScreenPortal from 'containers/FullScreenPortal';
 
@@ -29,15 +31,15 @@ class SignUp extends React.Component {
                     value: '',
                     valid: null,
                     isRequired: true,
-                    regExp: '^[A-Za-z0-9]{4,12}$'
+                    regExp: '^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9^()@$!%*#?&]{8,20}$'
                 },
                 {
                     label: 'passwordCf',
                     value: '',
                     valid: null,
                     isRequired: true,
-                    regExp: '^[A-Za-z0-9]{4,12}$'
-                },    
+                    regExp: '^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9^()@$!%*#?&]{8,20}$'
+                },
                 {
                     label: 'username',
                     value: '',
@@ -98,7 +100,7 @@ class SignUp extends React.Component {
     }
 
     uploadFile = (event) => {
-        if(event.target.files[0]){
+        if (event.target.files[0]) {
             this.setState({
                 profile: event.target.files[0]
             })
@@ -126,37 +128,37 @@ class SignUp extends React.Component {
         const { userInfo } = this.state
         this.setState({
             userInfo: userInfo.map((info) => {
-                if(info.label === e.target.name) {
-                    if(info.label === 'passwordCf') {
-                        if(this.findInfo('password').value === e.target.value) {
-                            return {...info, value: e.target.value, valid: true}
+                if (info.label === e.target.name) {
+                    if (info.label === 'passwordCf') {
+                        if (this.findInfo('password').value === e.target.value) {
+                            return { ...info, value: e.target.value, valid: true }
                         }
                         else {
-                            return {...info, value: e.target.value, valid: false}
+                            return { ...info, value: e.target.value, valid: false }
                         }
                     }
-                    else if(info.label === 'mobile') {
+                    else if (info.label === 'mobile') {
                         // auto generate '-'
                         let showString = e.target.value.replace(/-/gi, "");
                         if (e.target.value.slice(-1) === "-") {
                             e.target.value = e.target.value.slice(0, -1);
                         }
                         if (showString.length === 4) {
-                            e.target.value = e.target.value.slice(0,3) + "-" + e.target.value.slice(-1);
+                            e.target.value = e.target.value.slice(0, 3) + "-" + e.target.value.slice(-1);
                         } else if (showString.length === 8) {
-                            e.target.value = e.target.value.slice(0,8) + "-" + e.target.value.slice(-1);
+                            e.target.value = e.target.value.slice(0, 8) + "-" + e.target.value.slice(-1);
                         }
                         let re = new RegExp(info.regExp);
                         let valid = re.test(e.target.value)
-                        return {...info, value: e.target.value, valid: valid}
+                        return { ...info, value: e.target.value, valid: valid }
                     }
-                    if(info.regExp) {
+                    if (info.regExp) {
                         let re = new RegExp(info.regExp);
                         let valid = e.target.value ? re.test(e.target.value) : null
-                        return {...info, value: e.target.value, valid: valid}
+                        return { ...info, value: e.target.value, valid: valid }
                     }
                     else {
-                        return {...info, value: e.target.value}
+                        return { ...info, value: e.target.value }
                     }
                 }
                 else {
@@ -169,40 +171,40 @@ class SignUp extends React.Component {
     checkDubId = () => {
 
         const { userInfo } = this.state
-        service.duplicateCheck({check_id: this.findInfo('id').value})
-        .then((res) => {
-            // Available ID
-            this.setState({
-                userInfo: userInfo.map((info) => {
-                    if(info.label === 'id' && info.valid) {
-                        return {...info, valid: true}
-                    }
-                    else {
-                        return info;
-                    }
-                }),
-                dupId: false
+        service.duplicateCheck({ check_id: this.findInfo('id').value })
+            .then((res) => {
+                // Available ID
+                this.setState({
+                    userInfo: userInfo.map((info) => {
+                        if (info.label === 'id' && info.valid) {
+                            return { ...info, valid: true }
+                        }
+                        else {
+                            return info;
+                        }
+                    }),
+                    dupId: false
+                })
             })
-        })
-        .catch((res) => {
-            // Existing ID
-            this.setState({
-                userInfo: userInfo.map((info) => {
-                    if(info.label === 'id' && info.valid) {
-                        return {...info, valid: false}
-                    }
-                    else {
-                        return info;
-                    }
-                }),
-                dupId: true
-            })
-        });
+            .catch((res) => {
+                // Existing ID
+                this.setState({
+                    userInfo: userInfo.map((info) => {
+                        if (info.label === 'id' && info.valid) {
+                            return { ...info, valid: false }
+                        }
+                        else {
+                            return info;
+                        }
+                    }),
+                    dupId: true
+                })
+            });
     }
 
 
     postSignUp = async () => {
-        
+
         this.setState({ signUpState: 'LOADING' })
         const { userInfo } = this.state;
 
@@ -218,6 +220,9 @@ class SignUp extends React.Component {
         await service.postSignUp(data)
             .then(() => {
                 this.setState({ signUpState: 'SUCCESS' })
+                setTimeout(() => {
+                    this.setState({ signUpState: 'REDIRECT' })
+                }, 10000)
             })
             .catch((err) => {
                 console.error(err);
@@ -229,7 +234,7 @@ class SignUp extends React.Component {
         let valid = true;
         const { userInfo, isTermAgree } = this.state;
         userInfo.forEach((info) => {
-            if(info.isRequired || (info.valid !== null)) {
+            if (info.isRequired || (info.valid !== null)) {
                 valid = valid && info.valid;
             }
         })
@@ -239,32 +244,25 @@ class SignUp extends React.Component {
 
     render() {
         const valid = this.checkValid();
-
+        const { signUpState } = this.state;
         return (
-            <div>
-                {
-                    (() => {
-                        if (this.state.signUpState === 'READY') return (
-                            <FullScreenPortal>
-                                <SignUpComponent
-                                    userInfo={this.state.userInfo}
-                                    validAll = {valid}
-                                    dupId = {this.state.dupId}
-                                    handleChange={this.handleChange}
-                                    handleCheckBox={this.handleCheckBox}
-                                    checkDubId={this.checkDubId}
-                                    postSignUp={this.postSignUp}
-                                    uploadFile={this.uploadFile}
-                                    profile={this.state.profile}
-                                />
-                            </FullScreenPortal>
-                            );
-                        else if (this.state.signUpState === 'LOADING') return (<Loading />)
-                        else if (this.state.signUpState === 'SUCCESS') return (<SignUpSuccess />)
-                        else return (<SignUpFailure />)
-                    })()
-                }
-            </div>
+            <>
+                <SignUpComponent
+                    userInfo={this.state.userInfo}
+                    validAll={valid}
+                    dupId={this.state.dupId}
+                    handleChange={this.handleChange}
+                    handleCheckBox={this.handleCheckBox}
+                    checkDubId={this.checkDubId}
+                    postSignUp={this.postSignUp}
+                    uploadFile={this.uploadFile}
+                    profile={this.state.profile}
+                />
+                {signUpState === 'LOADING' && <Loading />}
+                {signUpState === 'SUCCESS' && <SignUpSuccess />}
+                {signUpState === 'REDIRECT' && <Redirect to='/login' />}
+                {signUpState === 'FAILURE' && <SignUpFailure />}
+            </>
         )
     }
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import { SERVER_URL } from 'common/environment'
 
 const Image = ({ imgSrc, defaultImgSrc, className, onClick, local }) => {
 
@@ -7,7 +6,7 @@ const Image = ({ imgSrc, defaultImgSrc, className, onClick, local }) => {
     if (local) {
         imgUrl = imgSrc
     } else {
-        imgUrl = SERVER_URL + 'static' + imgSrc;
+        imgUrl = process.env.REACT_APP_SERVER_URL + 'static' + imgSrc;
     }
 
     return (

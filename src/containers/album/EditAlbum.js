@@ -1,5 +1,6 @@
 import React from 'react';
 import * as service from 'services';
+import EditAlbumComponent from 'components/Album/EditAlbumComponent';
 import ContentStateEnum from 'common/ContentStateEnum';
 
 const TAG = 'EDITALBUM'
@@ -10,11 +11,10 @@ class EditAlbum extends React.Component {
         console.log(`[${TAG}] constructor`)
         super(props);
 
-        console.log(props)
         this.state = {
             title: props.albumInfo.content.title,
-            contents: props.albumInfo.content.text,
-            // checkedCategory: ''
+            text: props.albumInfo.content.text,
+            checkedCategory: props.albumInfo.content.category_id
         }
     }
 
@@ -56,9 +56,9 @@ class EditAlbum extends React.Component {
         }
         else {
             let albumInfo = {
-                // category_id: this.state.checkedCategory,
+                category_id: this.state.checkedCategory,
                 title: this.state.title,
-                contents: this.state.contents
+                text: this.state.text
             }
             
             await service.updateAlbum(this.props.album_id, albumInfo)
@@ -82,40 +82,20 @@ class EditAlbum extends React.Component {
 
     render() {
         console.log('[%s] render', TAG);
-        const { title, contents } = this.state;
+        const { title, text, checkedCategory } = this.state;
      
         return (
-            <div className="enif-popup">
-                <div className="enif-popup-content crt-alb-wrapper">
-                    <table className="enif-table">
-                        <caption>앨범 수정</caption>
-                        <tbody>
-                            {
-                                this.props.categories &&
-                                <tr>
-                                    <th>카테고리</th>
-                                    <td className="categories-wrapper">{this.makeCategoryList()}</td>
-                                </tr>
-                            }
-                            <tr>
-                                <th>제목</th>
-                                <td className="input-text crt-alb-title">
-                                    <input type="text" name="title" placeholder="앨범 제목" value={title} onChange={this.handleChange}/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>설명</th>
-                                <td className="crt-alb-contents">
-                                    <textarea name="contents" placeholder="앨범 설명" value={contents} onChange={this.handleChange}/>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <button className="enif-btn-common enif-btn-ok" onClick={() => this.updateAlbum()}>OK</button>
-                    <button className="enif-btn-common enif-btn-cancel" onClick={() => this.props.setAlbumState(ContentStateEnum.READY)} >CANCEL</button>
-                </div>
-
-            </div>
+            <EditAlbumComponent
+                caption="앨범 수정"
+                title={title}
+                text={text}
+                checkedCategory={checkedCategory}
+                categories={this.props.categoryInfo}
+                handleCategory={this.handleCategoryChange}
+                handleChange={this.handleChange}
+                confirmAlbum={() => this.updateAlbum()}
+                cancelAlbum={() => this.props.setAlbumState(ContentStateEnum.READY)}
+            />
         ) 
     }
 

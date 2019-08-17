@@ -17,19 +17,19 @@ class PhotoBoard extends React.Component {
         let { board_id, boardInfo, categories } = this.props;
 
         return (
-            <div className="board-wrapper">
+            <div className="board-wrapper photoboard-wrapper">
                 {(() => {
-                    if (board_id === 'brd07') {
+                    if (board_id === 'brd31') {
                         return (
                             <Memory board_id={board_id} boardInfo={boardInfo} categories={categories} />
                         )
                     }
-                    else if (board_id === 'brd08') {
+                    else if (board_id === 'brd32') {
                         return (
                             <AstroPhoto board_id={board_id} boardInfo={boardInfo} categories={categories} />
                         )
                     }
-                    else if (board_id === 'brd09') {
+                    else if (board_id === 'brd33') {
                         return (
                             <div>사진전..</div>
                         )

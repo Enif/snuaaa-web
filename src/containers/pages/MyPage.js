@@ -32,13 +32,13 @@ class MyPage extends React.Component {
         console.log('[%s] render..', TAG);
 
         return (
-            <>
+            <div className="my-page-wrapper">
                 {/* <div className="userinfo-header"> */}
                     {/* <div className="header-item"><Link to="profile">Profile</Link></div>
                     <div className="header-item"><Link to="info">Post &amp; Comments</Link></div> */}
                 {/* </div> */}
                 {this.renderComponent()}
-            </>
+            </div>
         )
     }
 }

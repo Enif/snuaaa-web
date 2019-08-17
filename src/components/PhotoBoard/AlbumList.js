@@ -10,7 +10,7 @@ class AlbumList extends React.Component {
 
     retrieveAlbums = () => {
 
-        let albumCover = this.props.board_id === 'brd08' ? defaultStarAlbumCover : defaultAlbumCover;
+        let albumCover = this.props.board_id === 'brd32' ? defaultStarAlbumCover : defaultAlbumCover;
         let albums = this.props.albums;
 
         let albumList = albums.map(album => {
@@ -25,7 +25,7 @@ class AlbumList extends React.Component {
                 <div className="album-list" key={album.content_id} >
                     <Link to={`/album/${album.content_id}`}>
 
-                        <Image imgSrc={album.file_path} defaultImgSrc={albumCover} />
+                        <Image imgSrc={album.thumbnail_path} defaultImgSrc={albumCover} />
                         <div className="album-cover">
                             <div className="album-category-marker" style={color}>
 

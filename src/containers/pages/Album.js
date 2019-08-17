@@ -18,6 +18,7 @@ class Album extends React.Component {
         super(props);
         this.photos = [];
         this.albumInfo = undefined;
+        this.categoryInfo = undefined;
         this.tagInfo = undefined;
         this.state = {
             album_id: this.props.match.params.aNo,
@@ -37,6 +38,7 @@ class Album extends React.Component {
         ])
         .then((infos) => {
             this.albumInfo = infos[0].data.albumInfo;
+            this.categoryInfo = infos[0].data.categoryInfo;
             this.tagInfo = infos[0].data.tagInfo;
             this.photos = infos[1].data
             this.setState({
@@ -95,11 +97,11 @@ class Album extends React.Component {
                                     <div className="enif-divider"></div>
                                     <PhotoList photos={this.photos} togglePopUp={this.togglePopUp}/>
                                     {
-                                        popUpState && <CreatePhoto album_id={album_id} board_id={this.albumInfo.content.board_id} tags={this.tagInfo} retrievePhotos={this.retrievePhotos} fetch={this.fetch} togglePopUp={this.togglePopUp} />
+                                        popUpState && <CreatePhoto album_id={album_id} board_id={this.albumInfo.content.board_id} tags={this.tagInfo} retrievePhotos={this.retrievePhotos} fetch={this.fetch} togglePopUp={this.togglePopUp} setReadyState={() => this.setAlbumState(ContentStateEnum.READY)} />
                                     }
                                     {
                                         (albumState === ContentStateEnum.EDITTING) &&
-                                        <EditAlbum album_id={album_id} albumInfo={this.albumInfo} fetch={this.fetch} setAlbumState={this.setAlbumState} />
+                                        <EditAlbum album_id={album_id} albumInfo={this.albumInfo} categoryInfo={this.categoryInfo} fetch={this.fetch} setAlbumState={this.setAlbumState} />
                                     }
                                 </div>
                             </div>

@@ -19,7 +19,9 @@ class CreateDocu extends React.Component {
     }
 
     componentDidMount() {
-        let currentGen = 2 * ((new Date()).getFullYear() - 1980)
+        const today = new Date();
+        let currentGen = 2 * (today.getFullYear() - 1980)
+        if (today.getMonth() > 5) currentGen++;
         this.setState({
             generation: currentGen
         })
@@ -68,8 +70,7 @@ class CreateDocu extends React.Component {
             await service.createDocument(this.props.board_id, docuInfo)
                 .then(() => {
                     console.log('[%s] Create Docu Success', TAG);
-                    this.props.togglePopUp();
-                    this.props.retrieveDocuments()
+                    this.props.fetch()
                 })
                 .catch((err) => {
                     console.error(err);
@@ -78,8 +79,9 @@ class CreateDocu extends React.Component {
     }
 
     createGeneration = () => {
-        let currentGen = 2 * ((new Date()).getFullYear() - 1980)
-        if ((new Date()).getMonth() > 5) currentGen++;
+        const today = new Date();
+        let currentGen = 2 * (today.getFullYear() - 1980)
+        if (today.getMonth() > 5) currentGen++;
         let genOptions = [];
         for (let i = currentGen; i > 0; i--) {
             genOptions.push(<option key={i}>{i}</option>)
@@ -125,6 +127,8 @@ class CreateDocu extends React.Component {
     render() {
         console.log('[%s] render', TAG)
 
+        const acceptFileList = ['.jpg', '.jpeg', '.png', '.docx', '.pdf', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'pptx', '.hwp', '.zip'];
+
         return (
             <div className="enif-popup">
                 <div className="enif-popup-content crt-docu-wrapper">
@@ -151,14 +155,14 @@ class CreateDocu extends React.Component {
                         <label htmlFor="crtDocFile">
                             <i className="material-icons pointer">attach_file</i>
                         </label>
-                        <input type="file" multiple id="crtDocFile" className="docu-input-file" onChange={(e) => this.uploadFile(e)} /* value={this.state.uploadPhoto} */ />
+                        <input type="file" multiple accept={acceptFileList} id="crtDocFile" className="docu-input-file" onChange={(e) => this.uploadFile(e)} /* value={this.state.uploadPhoto} */ />
                         <div>
                             {this.state.uploadFiles.length > 0 && this.makeAttachedFileList(this.state.uploadFiles)}
                         </div>
                     </div>
                     <div>
                         <button className="enif-btn-common enif-btn-ok" onClick={() => this.createDocu()}>OK</button>
-                        <button className="enif-btn-common enif-btn-cancel" onClick={() => this.props.togglePopUp()}>CANCEL</button>
+                        <button className="enif-btn-common enif-btn-cancel" onClick={() => this.props.close()}>CANCEL</button>
                     </div>
                 </div>
             </div>

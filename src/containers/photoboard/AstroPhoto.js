@@ -7,6 +7,7 @@ import PhotoList from 'components/Album/PhotoList';
 import Tag from 'components/Common/Tag';
 import Loading from 'components/Common/Loading';
 import Paginator from 'components/Common/Paginator';
+import history from 'common/history';
 
 const TAG = 'ASTROPHOTO';
 const ALBUMROWNUM = 12;
@@ -14,33 +15,64 @@ const ALBUMROWNUM = 12;
 class AstroPhoto extends React.Component {
 
     constructor(props) {
+        console.log(`[${TAG}] constructor`);
         super(props);
         this.albums = [];
         this.photos = [];
         this.tags = [];
         this.count = 0;
 
+        const hisState = history.location.state;
+
         this.state = {
             popUpState: false,
             isReady: false,
-            isViewPhotos: false,
-            pageIdx: 1,
-            selectedTags: []
+            isViewPhotos: (hisState && hisState.vp) ? true : false,
+            pageIdx: (hisState && hisState.page) ? hisState.page : 1,
+            selectedTags: (hisState && hisState.tags && hisState.tags.length > 0) ? hisState.tags : []
         }
-        console.log(`[${TAG}] constructor`);
     }
 
     componentDidMount() {
-        this.fetch();
+        console.log(`[${TAG}] componentDidMount`);
+        const { isViewPhotos, pageIdx, selectedTags } = this.state
+        this.fetch(isViewPhotos, pageIdx, selectedTags);
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        console.log(`[${TAG}] getDerivedStateFromProps`);
+        const hisState = history.location.state;
+        return {
+            isViewPhotos: (hisState && hisState.vp) ? true : false,
+            pageIdx: (hisState && hisState.page) ? hisState.page : 1,
+            selectedTags: (hisState && hisState.tags && hisState.tags.length > 0) ? hisState.tags : []
+        }
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log(`[${TAG}] shouldComponentUpdate`);
+        const { isViewPhotos, pageIdx, selectedTags } = this.state
+
+        if (isViewPhotos !== nextState.isViewPhotos ||
+            pageIdx !== nextState.pageIdx ||
+            selectedTags.length !== nextState.selectedTags.length) {
+            this.fetch(nextState.isViewPhotos, nextState.pageIdx, nextState.selectedTags);
+            return false;
+        }
+        return true
     }
 
 
-    fetch = async () => {
-        const board_id = this.props.board_id;
-        const { isViewPhotos } = this.state;
+    fetch = async (isViewPhotos, pageIdx, selectedTags) => {
+        const { board_id } = this.props;
+        // const { isViewPhotos } = this.state;
+        if(isViewPhotos === undefined) isViewPhotos = this.state.isViewPhotos;
+        if(pageIdx === undefined) pageIdx = this.state.pageIdx;
+        if(selectedTags === undefined) selectedTags = this.state.selectedTags;
+
         this.setIsReady(false);
         if (!isViewPhotos) {
-            await service.retrieveAlbumsInPhotoBoard(board_id, this.state.pageIdx)
+            await service.retrieveAlbumsInPhotoBoard(board_id, pageIdx)
                 .then((res) => {
                     this.albums = res.data.albumInfo;
                     this.count = res.data.albumCount;
@@ -51,11 +83,15 @@ class AstroPhoto extends React.Component {
                 })
         }
         else {
-            if (this.state.selectedTags.length > 0) {
-                service.retrievePhotosInPhotoBoardByTag(this.props.board_id, this.state.selectedTags, this.state.pageIdx)
+            if (selectedTags.length > 0) {
+                await Promise.all([
+                    service.retrieveTagsInBoard(board_id),
+                    service.retrievePhotosInPhotoBoardByTag(board_id, selectedTags, pageIdx)
+                ])
                     .then((res) => {
-                        this.photos = res.data.photoInfo;
-                        this.count = res.data.photoCount;
+                        this.tags = res[0].data;
+                        this.photos = res[1].data.photoInfo;
+                        this.count = res[1].data.photoCount;
                         this.setIsReady(true);
                     })
                     .catch((err) => {
@@ -65,7 +101,7 @@ class AstroPhoto extends React.Component {
             else {
                 await Promise.all([
                     service.retrieveTagsInBoard(board_id),
-                    service.retrievePhotosInPhotoBoard(board_id, this.state.pageIdx)
+                    service.retrievePhotosInPhotoBoard(board_id, pageIdx)
                 ])
                     .then((res) => {
                         this.tags = res[0].data;
@@ -87,35 +123,49 @@ class AstroPhoto extends React.Component {
     }
 
     setIsViewPhotos = (isViewPhotos) => {
-        this.setState({
-            isViewPhotos: isViewPhotos,
-            pageIdx: 1
-        },
-            this.fetch
-        )
+        history.push({
+            state: {
+                vp: isViewPhotos,
+                page: 1
+            }
+        })
     }
 
     clickTag = (e) => {
-        if (this.state.selectedTags.includes(e.target.id)) {
-            let idx = this.state.selectedTags.indexOf(e.target.id);
-            this.state.selectedTags.splice(idx, 1);
+
+        const { isViewPhotos, selectedTags } = this.state;
+        const tagId = e.target.id;
+
+        if (selectedTags.includes(tagId)) {
+            history.push({
+                state: {
+                    vp: isViewPhotos,
+                    page: 1,
+                    tags: selectedTags.filter(tag => tagId !== tag)
+                }
+            })
         }
         else {
-            this.state.selectedTags.push(e.target.id)
+            history.push({
+                state: {
+                    vp: isViewPhotos,
+                    page: 1,
+                    tags: selectedTags.concat(tagId)
+                }
+            })
         }
-        this.setState({
-            pageIdx: 1
-        },
-            this.fetch
-        )
     }
 
     clickAll = () => {
-        this.setState({
-            selectedTags: []
-        },
-            this.fetch
-        )
+        const { isViewPhotos } = this.state;
+
+        history.push({
+            state: {
+                vp: isViewPhotos,
+                page: 1,
+                tags: []
+            }
+        })
     }
 
     togglePopUp = () => {
@@ -125,11 +175,15 @@ class AstroPhoto extends React.Component {
     }
 
     clickPage = (idx) => {
-        this.setState({
-            pageIdx: idx
-        },
-            this.fetch
-        )
+        const { isViewPhotos, selectedTags } = this.state;
+
+        history.push({
+            state: {
+                vp: isViewPhotos,
+                page: idx,
+                tags: selectedTags
+            }
+        })
     }
 
     render() {
@@ -143,43 +197,35 @@ class AstroPhoto extends React.Component {
 
         return (
             <>
-                {(() => {
-                    if (isReady) {
-                        return (
-                            <div className="photoboard-wrapper">
-                                <h2>{boardInfo.board_name}</h2>
-                                <div className="view-type-selector-wrapper">
-                                    <div className={albumSelectorClassName} onClick={() => this.setIsViewPhotos(false)}>앨범</div>
-                                    <div className={photoSelectorClassName} onClick={() => this.setIsViewPhotos(true)}>사진</div>
-                                </div>
-                                <Paginator pageIdx={pageIdx} pageNum={Math.ceil(this.count / ALBUMROWNUM)} clickPage={this.clickPage} />
+                {!isReady && <Loading />}
+                <h2 className="astrophoto-title">{boardInfo.board_name}</h2>
+                <div className="view-type-selector-wrapper">
+                    <div className={albumSelectorClassName} onClick={() => this.setIsViewPhotos(false)}>앨범</div>
+                    <div className={photoSelectorClassName} onClick={() => this.setIsViewPhotos(true)}>사진</div>
+                </div>
+                {
+                    this.state.isViewPhotos ?
+                        (
+                            <>
+                                <Tag tags={this.tags} clickAll={this.clickAll} selectedTags={this.state.selectedTags} clickTag={this.clickTag} />
                                 <div className="enif-divider"></div>
-                                {this.state.isViewPhotos ?
-                                    (
-                                        <>
-                                            <Tag tags={this.tags} clickAll={this.clickAll} selectedTags={this.state.selectedTags} clickTag={this.clickTag} />
-                                            <PhotoList photos={this.photos} togglePopUp={this.togglePopUp} />
-                                            {this.state.popUpState && <CreatePhoto board_id={board_id} tags={this.tags} retrievePhotos={this.fetch} togglePopUp={this.togglePopUp} />}
-                                        </>
-                                    )
-                                    :
-                                    (
-                                        <>
-                                            <AlbumList board_id={board_id} albums={this.albums} togglePopUp={this.togglePopUp} />
-                                            {this.state.popUpState && <CreateAlbum board_id={board_id} fetch={this.fetch} togglePopUp={this.togglePopUp} />}
-                                            <button className="enif-btn-circle enif-pos-sticky" onClick={this.togglePopUp}>
-                                                <i className="material-icons">library_add</i>
-                                            </button>
-                                        </>
-                                    )
-                                }
-                            </div>
+                                <PhotoList photos={this.photos} togglePopUp={this.togglePopUp} />
+                                {this.state.popUpState && <CreatePhoto board_id={board_id} tags={this.tags} retrievePhotos={this.fetch} togglePopUp={this.togglePopUp} setReadyState={() => this.setIsReady(true)}/>}
+                            </>
                         )
-                    }
-                    else {
-                        return <Loading />
-                    }
-                })()}
+                        :
+                        (
+                            <>
+                                <div className="enif-divider"></div>
+                                <AlbumList board_id={board_id} albums={this.albums} togglePopUp={this.togglePopUp} />
+                                {this.state.popUpState && <CreateAlbum board_id={board_id} fetch={this.fetch} togglePopUp={this.togglePopUp} setReadyState={() => this.setIsReady(true)}/>}
+                                <button className="enif-btn-circle enif-pos-sticky" onClick={this.togglePopUp}>
+                                    <i className="material-icons">library_add</i>
+                                </button>
+                            </>
+                        )
+                }
+                {this.count > 0 && <Paginator pageIdx={pageIdx} pageNum={Math.ceil(this.count / ALBUMROWNUM)} clickPage={this.clickPage} />}
             </>
         );
     }
