@@ -89,11 +89,16 @@
             padding: 10px 10px;
             float: left;
         }
-        .actions-wrapper {
-            padding: 5px 0px;
-            width: 60px;
-            flex-shrink: 0;
+        .actions-drawer {
+            position: relative;
+            padding-right: 7px;
+            // right: 0;
         }
+        // .actions-wrapper {
+        //     padding: 5px 0px;
+        //     width: 60px;
+        //     flex-shrink: 0;
+        // }
         .alb-author {
             // text-align: right;
             flex-grow: 1;
@@ -173,9 +178,9 @@
                 font-size: 1.1rem;
                 padding: 10px 5px;
             }
-            .actions-wrapper {
-                padding: 1px 1px;
-            }
+            // .actions-wrapper {
+            //     padding: 1px 1px;
+            // }
             .alb-author {
                 font-size: 1.1rem;
                 float: right;

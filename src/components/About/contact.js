@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 const kakao = window.kakao;
 
 class Contact extends React.Component {
@@ -49,7 +50,9 @@ class Contact extends React.Component {
                         02-874-9374<br />
                     </p>
                     <div className="intro-contact-btn-wrapper">
-                        <button>방명록 남기기</button>
+                        <Link to="/board/brd92">
+                            <button>방명록 남기기</button>
+                        </Link>
                     </div>
 
                 </div>

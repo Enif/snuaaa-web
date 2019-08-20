@@ -6,15 +6,16 @@ import ProfileMini from '../Common/ProfileMini';
 import Download from './Download';
 import { convertFullDate } from 'utils/convertDate';
 import { breakLine } from 'utils/breakLine';
+import ActionDrawer from '../Common/ActionDrawer';
 
-const DocuComponent = ({docData, my_id, setDocState, deleteDoc, likeDoc, isLiked}) => {
+const DocuComponent = ({ docData, my_id, setDocState, deleteDoc, likeDoc, isLiked }) => {
 
     let contentInfo = docData.content;
     let userInfo = docData.content.user;
 
     const makeFileList = () => {
         let fileList = []
-        for(let i = 0; i < docData.file_path.length; i++) {
+        for (let i = 0; i < docData.file_path.length; i++) {
             fileList.push(
                 <div className="file-download-list" key={i}>
                     <Download content_id={contentInfo.content_id} index={i}>
@@ -34,6 +35,12 @@ const DocuComponent = ({docData, my_id, setDocState, deleteDoc, likeDoc, isLiked
                     <i className="material-icons">keyboard_backspace</i>
                 </Link>
                 <h5>{contentInfo.title}</h5>
+                {
+                    (my_id === userInfo.user_id) &&
+                    <ActionDrawer
+                    clickEdit={() => setDocState(ContentStateEnum.EDITTING)}
+                    clickDelete={deleteDoc} />
+                }
             </div>
             <div className="post-info-other">
                 <div className="post-author">
@@ -49,9 +56,22 @@ const DocuComponent = ({docData, my_id, setDocState, deleteDoc, likeDoc, isLiked
             <div className="file-download-wrapper">
                 {makeFileList()}
             </div>
-            <ProfileMini profileImg={userInfo.profile_path} nickname={userInfo.nickname} userDesc={userInfo.introduction}/>
+            <ProfileMini profileImg={userInfo.profile_path} nickname={userInfo.nickname} userDesc={userInfo.introduction} />
             <div className="enif-divider"></div>
-            <div className="actions-wrapper">
+            <div className="nums-wrapper">
+                <div className="like-num-wrapper">
+                    <i className="material-icons pointer" onClick={() => likeDoc()}>
+                        {isLiked ? 'favorite' : 'favorite_border'}
+                    </i>
+                    {contentInfo.like_num}
+                </div>
+                <div className="comment-num-wrapper">
+                    <i className="material-icons">comment</i>
+                    {contentInfo.comment_num}
+                </div>
+            </div>
+
+            {/* <div className="actions-wrapper">
                 {
                     (my_id === userInfo.user_id) &&
                     <div className="edit-delete-wrapper">
@@ -63,20 +83,8 @@ const DocuComponent = ({docData, my_id, setDocState, deleteDoc, likeDoc, isLiked
                         </div>
                     </div>
                 }
-                <div className="like-comment-num-wrapper">
-                    <div className="like-num-wrapper">
-                        <i className="material-icons pointer" onClick={() => likeDoc()}>
-                            { isLiked ? 'favorite' : 'favorite_border'}
-                        </i>
-                        {contentInfo.like_num}
-                    </div>
-                    <div className="comment-num-wrapper">
-                        <i className="material-icons">comment</i>
-                        {contentInfo.comment_num}
-                    </div>
-                </div>
-            </div>
-            <Comment parent_id={contentInfo.content_id}/>
+            </div> */}
+            <Comment parent_id={contentInfo.content_id} />
         </div>
     )
 }

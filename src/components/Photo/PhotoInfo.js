@@ -5,6 +5,7 @@ import ProfileMini from '../Common/ProfileMini';
 import ContentsStateEnum from 'common/ContentStateEnum';
 import { breakLine } from 'utils/breakLine';
 import { convertDate, convertFullDate } from 'utils/convertDate'
+import ActionDrawer from '../Common/ActionDrawer';
 
 const PhotoInfo = ({ photoInfo, likeInfo, moveToPhoto,
     fullscreenRef, toggleFullscreen, my_id, isFullscreen,
@@ -40,6 +41,12 @@ const PhotoInfo = ({ photoInfo, likeInfo, moveToPhoto,
                     <i className="material-icons">keyboard_backspace</i>
                 </Link>
                 <h5>{albumInfo ? albumInfo.title : "기본앨범"}</h5>
+                {
+                    (my_id === userInfo.user_id) &&
+                    <ActionDrawer
+                        clickEdit={() => setPhotoState(ContentsStateEnum.EDITTING)}
+                        clickDelete={deletePhoto} />
+                }
             </div>
             <div className="photo-img-wrapper" ref={fullscreenRef}>
                 <div className="photo-move-action prev" onClick={() => moveToPhoto(-1)}>
@@ -120,7 +127,7 @@ const PhotoInfo = ({ photoInfo, likeInfo, moveToPhoto,
                 <ProfileMini profileImg={userInfo.profile_path} nickname={userInfo.nickname} userDesc={userInfo.introduction} />
                 <div className="enif-divider"></div>
                 <div className="actions-wrapper">
-                    {
+                    {/* {
                         (my_id === userInfo.user_id) &&
                         <div className="edit-delete-wrapper">
                             <div className="edit-wrapper">
@@ -130,8 +137,12 @@ const PhotoInfo = ({ photoInfo, likeInfo, moveToPhoto,
                                 <i className="material-icons pointer" onClick={deletePhoto}>delete</i>
                             </div>
                         </div>
-                    }
-                    <div className="like-comment-num-wrapper">
+                    } */}
+                    <div className="nums-wrapper">
+                        <div className="view-num-wrapper">
+                            <i className="material-icons pointer">visibility</i>
+                            {content.view_num}
+                        </div>
                         <div className="like-num-wrapper">
                             <i className="material-icons pointer" onClick={() => likePhoto()}>
                                 {likeInfo ? 'favorite' : 'favorite_border'}
