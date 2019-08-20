@@ -6,6 +6,7 @@ import Comment from 'containers/Comment';
 import ProfileMini from '../Common/ProfileMini';
 import { convertFullDate } from 'utils/convertDate';
 import DownloadFile from './DownloadFile';
+import ActionDrawer from '../Common/ActionDrawer';
 // import { breakLine } from 'utils/breakLine';
 
 const PostComponent = ({ postData, my_id, likeInfo, fileInfo, likePost, setPostState, deletePost }) => {
@@ -40,6 +41,12 @@ const PostComponent = ({ postData, my_id, likeInfo, fileInfo, likePost, setPostS
                     <i className="material-icons">keyboard_backspace</i>
                 </Link>
                 <h5>{content.title}</h5>
+                {
+                    (my_id === content.author_id) &&
+                    <ActionDrawer
+                        clickEdit={() => setPostState(ContentStateEnum.EDITTING)}
+                        clickDelete={deletePost} />
+                }
             </div>
             <div className="post-info-other">
                 <div className="post-author">
@@ -59,7 +66,7 @@ const PostComponent = ({ postData, my_id, likeInfo, fileInfo, likePost, setPostS
             <ProfileMini profileImg={user.profile_path} nickname={user.nickname} userDesc={user.introduction} />
             <div className="enif-divider"></div>
             <div className="actions-wrapper">
-                {
+                {/* {
                     (my_id === content.author_id) &&
                     <div className="edit-delete-wrapper">
                         <div className="edit-wrapper">
@@ -69,8 +76,13 @@ const PostComponent = ({ postData, my_id, likeInfo, fileInfo, likePost, setPostS
                             <i className="material-icons pointer" onClick={() => deletePost()}>delete</i>
                         </div>
                     </div>
-                }
-                <div className="like-comment-num-wrapper">
+                } */}
+
+                <div className="nums-wrapper">
+                    <div className="view-num-wrapper">
+                        <i className="material-icons pointer">visibility</i>
+                        {content.view_num}
+                    </div>
                     <div className="like-num-wrapper">
                         <i className="material-icons pointer" onClick={() => likePost()}>
                             {likeInfo ? 'favorite' : 'favorite_border'}

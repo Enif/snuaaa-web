@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import ContentStateEnum from 'common/ContentStateEnum';
 import { breakLine } from 'utils/breakLine';
+import ActionDrawer from '../Common/ActionDrawer';
 
 const AlbumInfo = ({ albumInfo, my_id, setAlbumState, deleteAlbum }) => {
     let content = albumInfo.content;
@@ -17,16 +18,10 @@ const AlbumInfo = ({ albumInfo, my_id, setAlbumState, deleteAlbum }) => {
                 <h5 className="alb-title">{content.title}</h5>
                 {
                     (my_id === user.user_id) &&
-                    <div className="actions-wrapper">
-                        <div className="edit-delete-wrapper">
-                            <div className="edit-wrapper">
-                                <i className="material-icons pointer" onClick={() => setAlbumState(ContentStateEnum.EDITTING)}>edit</i>
-                            </div>
-                            <div className="delete-wrapper">
-                                <i className="material-icons pointer" onClick={deleteAlbum}>delete</i>
-                            </div>
-                        </div>
-                    </div>
+                    <ActionDrawer 
+                        clickEdit={() => setAlbumState(ContentStateEnum.EDITTING)}
+                        clickDelete={deleteAlbum}
+                    />
                 }
                 <p className="alb-author">{user.nickname}</p>
             </div>

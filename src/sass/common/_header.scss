@@ -87,11 +87,15 @@
         background-color: #000E2C;
         &:hover {
             .menu-item-1 {
-                border-bottom: 3px solid #fad55f;
+                // border-bottom: 3px solid #fad55f;
+                &::after, &::before {
+                    width: 50%;
+                }
             }
         }
         .menu-item-1 {
             display: block;
+            position: relative;
             height: 35px;
             padding-top: 13px;
             padding-left: 10px;
@@ -100,6 +104,22 @@
             // line-height: 25px;
             color: $color-white;
             cursor: pointer;
+            &::before, &::after {
+                border: 0 solid transparent;
+                transition: all 0.3s ease-in-out;
+                content: '';
+                height: 24px;
+                position: absolute;
+                width: 0px;
+                border-bottom: 3px solid #fad55f;
+                bottom: -2px;
+            }
+            &::before {
+                right: 50%;
+            }
+            &::after {
+                left: 50%;
+            }
         }
         .menu-nav-sub {
             position: absolute;
@@ -108,7 +128,7 @@
             background-color: #fad55f;
             z-index: 10;
             color: $color-white;
-            transition: all 0.2s ease-in;
+            transition: all 0.3s ease-in-out;
             overflow: hidden;
             box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.15);
             a {

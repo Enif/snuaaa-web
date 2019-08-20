@@ -5,6 +5,7 @@
     margin: 0 auto;
     // border-top: 1px solid #c9c9c9;
     .post-title {
+        position: relative;
         font-size: 20px;
         padding-top: 11px;
         padding-bottom: 9px;
@@ -23,6 +24,12 @@
             text-align: center;
             word-break: break-all;
             padding: 0px 30px;
+        }
+        .actions-drawer {
+            position: absolute;
+            padding-right: 7px;
+            right: 0;
+            height: calc(100% - 11px);
         }
     }
     .post-info-other {
@@ -129,6 +136,9 @@
         .post-title {
             padding-top: 0.8rem;
             padding-bottom: 0.8rem;
+            .actions-drawer {
+                height: calc(100% - 0.8rem);
+            }
         }
     }
 }

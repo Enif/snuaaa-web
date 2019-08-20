@@ -63,6 +63,7 @@
         display: flex;
         padding-top: 10px;
         padding-bottom: 8px;
+        position: relative;
         a {
             position: absolute;
             // left: 0;
@@ -76,6 +77,12 @@
             font-weight: bold;
             text-align: center;
             padding: 0px 30px;
+        }
+        .actions-drawer {
+            position: absolute;
+            padding-right: 7px;
+            right: 0;
+            height: calc(100% - 10px);
         }
     }
     .photo-img-wrapper {
@@ -514,9 +521,9 @@
                 }
             }
         }
-        .actions-wrapper {
-            margin: 0rem 0rem;
-        }    
+        // .actions-wrapper {
+        //     margin: 0rem 0rem;
+        // }    
     }
 
 
