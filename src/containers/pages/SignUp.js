@@ -4,9 +4,7 @@ import * as service from 'services';
 import SignUpComponent from 'components/Signup/SignUpComponent';
 import SignUpSuccess from 'components/Signup/SignUpSuccess';
 import SignUpFailure from 'components/Signup/SignUpFailure';
-import PopUp from 'components/Common/PopUp';
 import Loading from 'components/Common/Loading';
-import FullScreenPortal from 'containers/FullScreenPortal';
 
 const TAG = 'SINGUP'
 

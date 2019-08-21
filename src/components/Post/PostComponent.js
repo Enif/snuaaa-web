@@ -16,21 +16,34 @@ const PostComponent = ({ postData, my_id, likeInfo, fileInfo, likePost, setPostS
 
     const makeFileList = () => {
         if (fileInfo && fileInfo.length > 0) {
+            const fileList = fileInfo.map((file) => {
+                let fileTypeClass = '';
+
+                file.file_type === 'IMG' ? fileTypeClass = 'fa-file-image color-img'
+                    : file.file_type === 'DOC' ? fileTypeClass = 'fa-file-word color-doc'
+                        : file.file_type === 'XLS' ? fileTypeClass = 'fa-file-excel color-xls'
+                            : file.file_type === 'PDF' ? fileTypeClass = 'fa-file-pdf color-pdf'
+                                : file.file_type === 'ZIP' ? fileTypeClass = 'fa-file-archive color-zip'
+                                    : fileTypeClass = 'fa-file-alt'
+
+                return (
+                    <div className="file-download-list" key={file.file_id}>
+                        <DownloadFile key={file.file_id} content_id={file.parent_id} file_id={file.file_id}>
+                            <i className={`fas ${fileTypeClass} font-20 file-icon`}>
+                            </i>
+                            <div className="file-download-name">{file.original_name}</div>
+                        </DownloadFile>
+                    </div>
+                )
+            })
             return (
-                <div className="post-filelist-wrapper">
-                    <ul>
-                        {fileInfo.map((file) => {
-                            return (
-                                <li>
-                                    <DownloadFile content_id={content.content_id} file_id={file.file_id}>
-                                        {file.original_name}
-                                    </DownloadFile>
-                                </li>
-                            )
-                        })}
-                    </ul>
+                <div className="file-download-wrapper">
+                    {fileList}
                 </div>
             )
+        }
+        else {
+            return;
         }
     }
 
@@ -60,9 +73,7 @@ const PostComponent = ({ postData, my_id, likeInfo, fileInfo, likePost, setPostS
                 <ReactQuill value={content.text} readOnly={true} theme="bubble" />
                 {/* {breakLine(content.text)} */}
             </div>
-            {
-                makeFileList()
-            }
+            {makeFileList()}
             <ProfileMini profileImg={user.profile_path} nickname={user.nickname} userDesc={user.introduction} />
             <div className="enif-divider"></div>
             <div className="actions-wrapper">

@@ -8,7 +8,7 @@ function ActionDrawer({ clickEdit, clickDelete }) {
 
     return (
         <div className="actions-drawer">
-            <i className="material-icons pointer" onClick={() => setIsOpened(!isOpened)}>more_horiz</i>
+            <i className="material-icons pointer" onClick={() => setIsOpened(!isOpened)}>more_vert</i>
             {
                 // isOpened &&
                 <div className={`actions-wrapper ${isOpened && " opened"}`}>

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import ContentStateEnum from 'common/ContentStateEnum';
 import Comment from 'containers/Comment';
 import ProfileMini from '../Common/ProfileMini';
-import Download from './Download';
+import DownloadFile from '../Post/DownloadFile';
 import { convertFullDate } from 'utils/convertDate';
 import { breakLine } from 'utils/breakLine';
 import ActionDrawer from '../Common/ActionDrawer';
@@ -12,20 +12,51 @@ const DocuComponent = ({ docData, my_id, setDocState, deleteDoc, likeDoc, isLike
 
     let contentInfo = docData.content;
     let userInfo = docData.content.user;
+    let filesInfo = docData.content.AttachedFiles;
 
     const makeFileList = () => {
-        let fileList = []
-        for (let i = 0; i < docData.file_path.length; i++) {
-            fileList.push(
-                <div className="file-download-list" key={i}>
-                    <Download content_id={contentInfo.content_id} index={i}>
-                        <i className="material-icons">insert_drive_file</i>
-                        <p>{docData.file_path[i].substring(20)}</p>
-                    </Download>
-                </div>
-            )
+        if (filesInfo && filesInfo.length > 0) {
+            return filesInfo.map((file) => {
+                let fileTypeClass = '';
+
+                file.file_type === 'IMG' ? fileTypeClass = 'fa-file-image color-img'
+                    : file.file_type === 'DOC' ? fileTypeClass = 'fa-file-word color-doc'
+                        : file.file_type === 'XLS' ? fileTypeClass = 'fa-file-excel color-xls'
+                            : file.file_type === 'PDF' ? fileTypeClass = 'fa-file-pdf color-pdf'
+                                : file.file_type === 'ZIP' ? fileTypeClass = 'fa-file-archive color-zip'
+                                    : fileTypeClass = 'fa-file-alt'
+
+                return (
+                    <div className="file-download-list" key={file.file_id}>
+                        <DownloadFile key={file.file_id} content_id={file.parent_id} file_id={file.file_id}>
+                            <i className={`fas ${fileTypeClass} font-20 file-icon`}>
+                            </i>
+                            <div className="file-download-name">{file.original_name}</div>
+                        </DownloadFile>
+                        {/* <Download content_id={contentInfo.content_id} index={i}>
+                            <i className="material-icons">insert_drive_file</i>
+                            <p>{docData.file_path[i].substring(20)}</p>
+                        </Download> */}
+                    </div>
+                )
+            })
+
+            // let fileList = []
+            // for (let i = 0; i < filesInfo.length; i++) {
+            //     fileList.push(
+            //         <div className="file-download-list" key={i}>
+            //             <Download content_id={contentInfo.content_id} index={i}>
+            //                 <i className="material-icons">insert_drive_file</i>
+            //                 <p>{docData.file_path[i].substring(20)}</p>
+            //             </Download>
+            //         </div>
+            //     )
+            // }
+            // return fileList;
         }
-        return fileList;
+        else {
+            return;
+        }
     }
 
     return (
@@ -38,8 +69,8 @@ const DocuComponent = ({ docData, my_id, setDocState, deleteDoc, likeDoc, isLike
                 {
                     (my_id === userInfo.user_id) &&
                     <ActionDrawer
-                    clickEdit={() => setDocState(ContentStateEnum.EDITTING)}
-                    clickDelete={deleteDoc} />
+                        clickEdit={() => setDocState(ContentStateEnum.EDITTING)}
+                        clickDelete={deleteDoc} />
                 }
             </div>
             <div className="post-info-other">
