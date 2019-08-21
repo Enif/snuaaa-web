@@ -146,12 +146,14 @@
     .docu-generation {
         flex-basis: 40px;
         display: flex;
+        flex-shrink: 0;
         justify-content: center;
         // align-items: center;
     }
     .docu-category {
         flex-basis: 55px;
         display: flex;
+        flex-shrink: 0;
         justify-content: center;
     }
     .docu-memo {
@@ -164,6 +166,7 @@
     .docu-download {
         flex-basis: 80px;
         display: flex;
+        flex-shrink: 0;
         justify-content: center;
         a {
             color: $color_gray2;

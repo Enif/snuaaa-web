@@ -8,10 +8,10 @@ const SideBar = () => {
         <div className="side-right">
             <div className="side-bar-wrapper">
                 <a href="https://stellarium-web.org/" target="_blanck">
-                    <img src={icon_stella} />
+                    <img src={icon_stella} alt="stellarium" />
                 </a>
                 <a href="https://apod.nasa.gov/apod/" target="_blanck">
-                    <img src={icon_apod} />
+                    <img src={icon_apod} alt="apod" />
                 </a>
                 <a href="#aaa-top" className="btn-top-up-link">
                     <div className="btn-top-up">

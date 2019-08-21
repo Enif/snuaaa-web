@@ -49,7 +49,7 @@ class Header extends React.Component {
 
     render() {
 
-        const { loginState, level, profile_path } = this.props;
+        const { level, profile_path } = this.props;
         let { isShowPopupUser, boards } = this.state;
         return (
             <>
