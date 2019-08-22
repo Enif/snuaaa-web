@@ -78,7 +78,7 @@
     position: sticky;
     top: 70px;
     width: 80px;
-    height: 250px;
+    height: 285px;
     border-radius: 20px;
     padding: 20px 0px;
     background-color: $color-white;
@@ -348,6 +348,7 @@
         .home-row-mobile {
             display: flex;
             margin: 0.5rem 0;
+            padding: 0 0.5rem;
         }
         .home-side-left {
             display: none;
@@ -367,8 +368,8 @@
         flex-basis: 50%;
         flex-grow: 1;
         padding: 0 0.3rem;
-        margin: 0 0.5rem;
-        border-radius: 10px;
+        margin: 0 0.2rem;
+        border-radius: 1rem;
         color: $color-white;
         display: flex;
         align-items: center;
@@ -407,7 +408,7 @@
 
     .ext-link-mobile {
         width: 50%;
-        margin: 0 0.5rem;
+        margin: 0 0.2rem;
         display: flex;
         flex-basis: 50%;
         flex-shrink: 1;
@@ -425,7 +426,8 @@
                 height: 100%;
                 width: 100%;
                 object-fit: cover;
-                border-radius: 0.7rem;
+                border-radius: 1rem;
+                vertical-align: bottom;
             }
 
         }
