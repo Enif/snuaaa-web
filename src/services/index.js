@@ -44,7 +44,7 @@ export function deleteUserInfo() {
 
 export function retrieveUserPosts(user_uuid) {
     if(user_uuid) {
-        return axios.get(SERVER_URL + `api/userinfo/posts/${user_uuid}`);
+        return axios.get(SERVER_URL + `api/userinfo/${user_uuid}/posts`);
     }
     else {
         return axios.get(SERVER_URL + 'api/userinfo/posts');
@@ -53,7 +53,7 @@ export function retrieveUserPosts(user_uuid) {
 
 export function retrieveUserPhotos(user_uuid) {
     if(user_uuid) {
-        return axios.get(SERVER_URL + `api/userinfo/photos/${user_uuid}`);
+        return axios.get(SERVER_URL + `api/userinfo/${user_uuid}/photos`);
     }
     else {
         return axios.get(SERVER_URL + 'api/userinfo/photos');
@@ -62,7 +62,7 @@ export function retrieveUserPhotos(user_uuid) {
 
 export function retrieveUserComments(user_uuid) {
     if(user_uuid) {
-        return axios.get(SERVER_URL + `api/userinfo/comments/${user_uuid}`);
+        return axios.get(SERVER_URL + `api/userinfo/${user_uuid}/comments`);
     }
     else {
         return axios.get(SERVER_URL + `api/userinfo/comments`);        
