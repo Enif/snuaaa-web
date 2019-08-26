@@ -8,13 +8,13 @@ const SideBar = () => {
     return (
         <div className="side-right">
             <div className="side-bar-wrapper">
-                <a href="http://www.weather.go.kr/weather/main.jsp" target="_blank">
+                <a href="http://www.weather.go.kr/weather/main.jsp" target="_blank" rel="noopener noreferrer">
                     <img src={icon_weather} alt="weather" />
                 </a>
-                <a href="https://stellarium-web.org/" target="_blank">
+                <a href="https://stellarium-web.org/" target="_blank" rel="noopener noreferrer">
                     <img src={icon_stella} alt="stellarium" />
                 </a>
-                <a href="https://apod.nasa.gov/apod/" target="_blank">
+                <a href="https://apod.nasa.gov/apod/" target="_blank" rel="noopener noreferrer">
                     <img src={icon_apod} alt="apod" />
                 </a>
                 <a href="#aaa-top" className="btn-top-up-link">

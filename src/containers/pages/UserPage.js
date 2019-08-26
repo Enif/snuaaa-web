@@ -8,21 +8,28 @@ import MyCommentList from 'components/MyPage/MyCommentList';
 import MyPageSelector from 'components/MyPage/MyPageSelector';
 import MyPageViewEnum from 'common/MyPageViewEnum';
 
-const TAG = 'MYPOST'
+const TAG = 'USERPAGE'
 
-class MyInfo extends React.Component {
+class UserPage extends React.Component {
 
     constructor(props) {
-        console.log(`[${TAG}] Constructor`)
+        console.log(`[%s] Constructor`, TAG);
         super(props);
 
-        this.profile = null;
+        this.userInfo = null;
         this.postList = [];
         this.photoList = [];
         this.commentList = [];
         this.state = {
             isShow: false,
+            user_uuid: this.props.match.params.uuid,
             myPageView: MyPageViewEnum.POST
+        }
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        return {
+            user_uuid: props.match.params.uuid
         }
     }
 
@@ -31,11 +38,11 @@ class MyInfo extends React.Component {
     }
 
     fetch = async () => {
-        const { myPageView } = this.state
+        const { myPageView, user_uuid } = this.state
         this.setIsShow(false);
 
         if (!this.userInfo) {
-            await Promise.all([service.retrieveUserInfo(), service.retrieveUserPosts()])
+            await Promise.all([service.retrieveUserInfo(user_uuid), service.retrieveUserPosts(user_uuid)])
                 .then((res) => {
                     this.userInfo = res[0].data.userInfo;
                     this.postList = res[1].data.postList;
@@ -44,21 +51,21 @@ class MyInfo extends React.Component {
         }
         else {
             if (myPageView === MyPageViewEnum.POST) {
-                await service.retrieveUserPosts()
+                await service.retrieveUserPosts(user_uuid)
                     .then((res) => {
                         this.postList = res.data.postList;
                         this.setIsShow(true);
                     })
             }
             if (myPageView === MyPageViewEnum.PHOTO) {
-                await service.retrieveUserPhotos()
+                await service.retrieveUserPhotos(user_uuid)
                     .then((res) => {
                         this.photoList = res.data.photoList;
                         this.setIsShow(true);
                     })
             }
             if (myPageView === MyPageViewEnum.COMMENT) {
-                await service.retrieveUserComments()
+                await service.retrieveUserComments(user_uuid)
                     .then((res) => {
                         this.commentList = res.data.commentList;
                         this.setIsShow(true);
@@ -66,28 +73,6 @@ class MyInfo extends React.Component {
             }
         }
     }
-
-    // getUserPost = async () => {
-    //     this.setState({
-    //         isShow: false
-    //     })
-
-    //     await Promise.all([service.retrieveUserInfo(), service.retrieveUserPosts()])
-    //         .then((response) => {
-
-    //             this.userInfo = response[0].data.userInfo;
-    //             this.postList = response[1].data.postList;
-    //             this.photoList = response[1].data.photoList;
-    //             this.commentList = response[1].data.commentList;
-
-    //             this.setState({
-    //                 isShow: true
-    //             })
-    //         })
-    //         .catch((err) => {
-    //             console.error(err);
-    //         })
-    // }
 
     setIsShow = (isShow) => {
         this.setState({
@@ -130,12 +115,16 @@ class MyInfo extends React.Component {
         return (
             <>
                 {!isShow && <Loading />}
-                <div className="my-wrapper">
+                <div className="my-page-wrapper">
                     <div className="my-title-wrapper">
-                        <h3>My Page</h3>
+                        <h3>User Page</h3>
                     </div>
-                    {this.userInfo && <MyProfile userInfo={this.userInfo} isCanEdit={true}/>}
-
+                    {this.userInfo &&
+                        <MyProfile
+                            userInfo={this.userInfo}
+                            isCanEdit={false}
+                        />
+                    }
                     <MyPageSelector
                         selected={myPageView}
                         selectPost={() => setMyPageView(MyPageViewEnum.POST)}
@@ -143,21 +132,10 @@ class MyInfo extends React.Component {
                         selectComment={() => setMyPageView(MyPageViewEnum.COMMENT)}
                     />
                     {makeMyContentsList()}
-                    {/* <div className="my-objects-wrapper">
-                        <div className="my-left">
-                            <MyPostList posts={this.postList} />
-                            <MyCommentList comments={this.commentList} />
-                        </div>
-                        <div className="my-right">
-                            <MyPhotoList photos={this.photoList} />
-                        </div>
-                    </div> */}
                 </div>
             </>
-            // :
-            // <Loading />
         )
     }
 }
 
-export default MyInfo;
+export default UserPage;
