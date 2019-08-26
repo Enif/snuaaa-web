@@ -74,7 +74,7 @@ const PostComponent = ({ postData, my_id, likeInfo, fileInfo, likePost, setPostS
                 {/* {breakLine(content.text)} */}
             </div>
             {makeFileList()}
-            <ProfileMini profileImg={user.profile_path} nickname={user.nickname} userDesc={user.introduction} />
+            <ProfileMini profileImg={user.profile_path} nickname={user.nickname} userDesc={user.introduction} uuid={user.user_uuid} />
             <div className="enif-divider"></div>
             <div className="actions-wrapper">
                 {/* {

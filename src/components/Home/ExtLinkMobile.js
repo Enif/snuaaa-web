@@ -7,13 +7,13 @@ const ExtLinkMobile = () => {
 
     return (
         <div className="ext-link-mobile">
-            <a className="link-img" href="http://www.weather.go.kr/weather/main.jsp" target="_blank">
+            <a className="link-img" href="http://www.weather.go.kr/weather/main.jsp" target="_blank" rel="noopener noreferrer">
                 <img src={icon_weather} alt="weather" />
             </a>
-            <a className="link-img" href="https://stellarium-web.org/" target="_blank">
+            <a className="link-img" href="https://stellarium-web.org/" target="_blank" rel="noopener noreferrer">
                 <img src={icon_stella} alt="stellarium" />
             </a>
-            <a className="link-img" href="https://apod.nasa.gov/apod/" target="_blank">
+            <a className="link-img" href="https://apod.nasa.gov/apod/" target="_blank" rel="noopener noreferrer">
                 <img src={icon_apod} alt="apod" />
             </a>
         </div>

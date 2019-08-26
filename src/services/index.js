@@ -25,8 +25,13 @@ export function guestLogIn() {
     return axios.get(SERVER_URL + 'api/login/guest');
 }
 
-export function retrieveUserInfo() {
-    return axios.get(SERVER_URL + 'api/userinfo');
+export function retrieveUserInfo(user_uuid) {
+    if(user_uuid) {
+        return axios.get(SERVER_URL + `api/userinfo/${user_uuid}`)
+    }
+    else {
+        return axios.get(SERVER_URL + 'api/userinfo');
+    }
 }
 
 export function updateUserInfo(data) {
@@ -37,8 +42,31 @@ export function deleteUserInfo() {
     return axios.delete(SERVER_URL + 'api/userinfo');
 }
 
-export function retrieveUserPosts() {
-    return axios.get(SERVER_URL + 'api/userinfo/posts');
+export function retrieveUserPosts(user_uuid) {
+    if(user_uuid) {
+        return axios.get(SERVER_URL + `api/userinfo/posts/${user_uuid}`);
+    }
+    else {
+        return axios.get(SERVER_URL + 'api/userinfo/posts');
+    }
+}
+
+export function retrieveUserPhotos(user_uuid) {
+    if(user_uuid) {
+        return axios.get(SERVER_URL + `api/userinfo/photos/${user_uuid}`);
+    }
+    else {
+        return axios.get(SERVER_URL + 'api/userinfo/photos');
+    }
+}
+
+export function retrieveUserComments(user_uuid) {
+    if(user_uuid) {
+        return axios.get(SERVER_URL + `api/userinfo/comments/${user_uuid}`);
+    }
+    else {
+        return axios.get(SERVER_URL + `api/userinfo/comments`);        
+    }
 }
 
 export function retrieveBoards() {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import DefaultRoute from 'containers/DefaultRoute';
-import { Home, About, Board, Post, Album, Photo, Docu, SignUp, LogIn, MyPage } from './pages';
+import { Home, About, Board, Post, Album, Photo, Docu, SignUp, LogIn, MyPage, UserPage } from './pages';
 
 class Section extends React.Component {
 
@@ -20,6 +20,7 @@ class Section extends React.Component {
                 <Route path="/signup" component={SignUp} />
                 <Route path="/login" component={LogIn} />
                 <DefaultRoute path="/mypage/:index" component={MyPage} />
+                <DefaultRoute path="/userpage/:index" component={UserPage} />
             </>
         );
     }

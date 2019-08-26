@@ -9,3 +9,4 @@ export { default as Photo } from './Photo';
 export { default as Docu } from './Document';
 export { default as LogIn } from './LogIn';
 export { default as MyPage } from './MyPage';
+export { default as UserPage } from './UserPage';

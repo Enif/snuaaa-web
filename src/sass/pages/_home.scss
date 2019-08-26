@@ -348,7 +348,7 @@
         .home-row-mobile {
             display: flex;
             margin: 0.5rem 0;
-            padding: 0 0.5rem;
+            padding: 0 0.7rem;
         }
         .home-side-left {
             display: none;
@@ -368,7 +368,7 @@
         flex-basis: 50%;
         flex-grow: 1;
         padding: 0 0.3rem;
-        margin: 0 0.2rem;
+        margin-right: 1.5%;
         border-radius: 1rem;
         color: $color-white;
         display: flex;
@@ -408,7 +408,7 @@
 
     .ext-link-mobile {
         width: 50%;
-        margin: 0 0.2rem;
+        // margin: 0 0.2rem;
         display: flex;
         flex-basis: 50%;
         flex-shrink: 1;
@@ -416,7 +416,7 @@
         justify-content: space-between;
         align-items: center;
         .link-img {
-            width: 33%;
+            width: 32%;
             &::before {
                 content: '';
                 padding-top: 100%;
