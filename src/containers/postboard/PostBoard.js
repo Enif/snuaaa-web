@@ -153,4 +153,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, null)(PostBoard);
+export default connect(mapStateToProps, null, null, {pure: false})(PostBoard);
