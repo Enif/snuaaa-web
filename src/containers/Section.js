@@ -20,7 +20,7 @@ class Section extends React.Component {
                 <Route path="/signup" component={SignUp} />
                 <Route path="/login" component={LogIn} />
                 <DefaultRoute path="/mypage/:index" component={MyPage} />
-                <DefaultRoute path="/userpage/:index" component={UserPage} />
+                <DefaultRoute path="/userpage/:uuid" component={UserPage} />
             </>
         );
     }
