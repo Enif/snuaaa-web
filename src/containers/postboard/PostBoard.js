@@ -120,7 +120,7 @@ class PostBoard extends React.Component {
                                                 clickCrtBtn={() => this.setBoardState(BoardStateEnum.WRITING)} />
                                             {this.postCount > 0 && <Paginator pageIdx={pageIdx} pageNum={Math.ceil(this.postCount / POSTROWNUM)} clickPage={this.clickPage} />}
                                             {
-                                                level > boardInfo.lv_write &&
+                                                level >= boardInfo.lv_write &&
                                                 <button className="enif-btn-circle enif-pos-sticky" onClick={() => this.setBoardState(BoardStateEnum.WRITING)}>
                                                     <i className="material-icons">create</i>
                                                 </button>
