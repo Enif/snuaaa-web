@@ -242,3 +242,7 @@ export function retrieveRecentAstroPhoto() {
 export function retrieveRiseSet() {
     return axios.get(SERVER_URL + `api/home/riseset`);
 }
+
+export function createAttachedImage(data) {
+    return axios.post(SERVER_URL + `api/image`, data);
+}
