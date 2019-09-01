@@ -1,23 +1,8 @@
 import React from 'react';
-import ReactQuill from 'react-quill';
 import ContentStateEnum from 'common/ContentStateEnum';
+import Editor from '../../containers/Common/Editor';
 
 function EditPost({ editingPostData, handleEditting, handleEdittingText, setPostState, updatePost }) {
-
-    const modules = {
-        toolbar: [
-            [{ 'header': [1, 2, false] }],
-            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-            [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
-        ],
-    }
-
-    const formats = [
-        'header',
-        'bold', 'italic', 'underline', 'strike', 'blockquote',
-        'list', 'bullet', 'indent',
-    ]
-
     return (
         <div className="writepost-wrapper">
             <div className="writepost-header">
@@ -28,8 +13,7 @@ function EditPost({ editingPostData, handleEditting, handleEdittingText, setPost
                 <input name="title" value={editingPostData.title} onChange={(e) => handleEditting(e)} placeholder="제목" />
             </div>
             <div className="writepost-content">
-                <ReactQuill className="writepost-quill" value={editingPostData.text} onChange={handleEdittingText} modules={modules} formats={formats} />
-                {/* <textarea name="text" value={editingPostData.text} onChange={(e) => handleEditting(e)} placeholder="내용을 입력하세요" /> */}
+                <Editor text={editingPostData.text} editText={handleEdittingText} />
             </div>
             <div className="btn-wrapper">
                 <button className="enif-btn-common enif-btn-cancel" onClick={() => setPostState(ContentStateEnum.READY)}> 취소 </button>
