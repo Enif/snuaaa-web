@@ -8,6 +8,7 @@ import PhotoInfo from 'components/Photo/PhotoInfo';
 import EditPhoto from 'containers/Photo/EditPhoto';
 import Comment from 'containers/Comment';
 import history from 'common/history';
+import BoardName from '../../components/Board/BoardName';
 
 const TAG = 'PHOTO'
 
@@ -192,6 +193,7 @@ class Photo extends React.Component {
                         else if (photoState === ContentStateEnum.READY || photoState === ContentStateEnum.EDITTING) {
                             return (
                                 <div className="photo-section-wrapper">
+                                    {/* <BoardName board_id={this.photoInfo.contentPhoto.board.board_id} board_name={this.photoInfo.contentPhoto.board.board_name} /> */}
                                     <PhotoInfo photoInfo={this.photoInfo} albumInfo={this.albumInfo} likeInfo={likeInfo}
                                         moveToPhoto={this.moveToPhoto} isFullscreen={isFullscreen} fullscreenRef={this.fullscreenRef} toggleFullscreen={this.toggleFullscreen}
                                         my_id={my_id} setPhotoState={this.setPhotoState} deletePhoto={this.deletePhoto} likePhoto={this.likePhoto} />

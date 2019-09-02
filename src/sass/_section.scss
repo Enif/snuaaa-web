@@ -20,6 +20,7 @@
 section {
     position: relative;
     width: 900px;
+    padding-top: 15px;
     padding-left: 150px;
     padding-right: 150px;
     padding-bottom: 50px;
@@ -36,11 +37,6 @@ section {
     }
 }
 
-.section-contents {
-    position: relative;
-    padding-top: 1px;
-}
- 
  
  #calendar-wrapper {
      width: min-content;

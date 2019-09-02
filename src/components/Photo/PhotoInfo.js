@@ -6,6 +6,7 @@ import ContentsStateEnum from 'common/ContentStateEnum';
 import { breakLine } from 'utils/breakLine';
 import { convertDate, convertFullDate } from 'utils/convertDate'
 import ActionDrawer from '../Common/ActionDrawer';
+import history from 'common/history';
 
 const PhotoInfo = ({ photoInfo, likeInfo, moveToPhoto,
     fullscreenRef, toggleFullscreen, my_id, isFullscreen,
@@ -37,10 +38,12 @@ const PhotoInfo = ({ photoInfo, likeInfo, moveToPhoto,
     return (
         <>
             <div className="photo-alb-title-wrp">
-                <Link to={backLink}>
-                    <i className="material-icons">keyboard_backspace</i>
+                {/* <Link className={"photo-alb-title-back"} to={backLink}> */}
+                <i className="photo-alb-title-back material-icons pointer" onClick={() => history.goBack()}>keyboard_backspace</i>
+                {/* </Link> */}
+                <Link className={"photo-alb-title"} to={backLink}>
+                    <h5>{albumInfo ? albumInfo.title : "기본앨범"}</h5>
                 </Link>
-                <h5>{albumInfo ? albumInfo.title : "기본앨범"}</h5>
                 {
                     (my_id === userInfo.user_id) &&
                     <ActionDrawer
@@ -140,7 +143,7 @@ const PhotoInfo = ({ photoInfo, likeInfo, moveToPhoto,
                     } */}
                     <div className="nums-wrapper">
                         <div className="view-num-wrapper">
-                            <i className="material-icons pointer">visibility</i>
+                            <i className="material-icons">visibility</i>
                             {content.view_num}
                         </div>
                         <div className="like-num-wrapper">

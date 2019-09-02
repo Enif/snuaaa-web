@@ -198,7 +198,6 @@ class AstroPhoto extends React.Component {
         return (
             <>
                 {!isReady && <Loading />}
-                <h2 className="astrophoto-title">{boardInfo.board_name}</h2>
                 <div className="view-type-selector-wrapper">
                     <div className={albumSelectorClassName} onClick={() => this.setIsViewPhotos(false)}>앨범</div>
                     <div className={photoSelectorClassName} onClick={() => this.setIsViewPhotos(true)}>사진</div>
