@@ -125,7 +125,6 @@ class Memory extends React.Component {
 
         return (
             <>
-                <h2 className="memory-title">{boardInfo.board_name}</h2>
                 <Category categories={categories} selected={category} clickAll={this.clickAll} clickCategory={this.clickCategory} />
                 {(() => {
                     if (isReady) {

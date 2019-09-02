@@ -7,6 +7,7 @@ import ProfileMini from '../Common/ProfileMini';
 import { convertFullDate } from 'utils/convertDate';
 import DownloadFile from './DownloadFile';
 import ActionDrawer from '../Common/ActionDrawer';
+import history from 'common/history';
 // import { breakLine } from 'utils/breakLine';
 
 const PostComponent = ({ postData, my_id, likeInfo, fileInfo, likePost, setPostState, deletePost }) => {
@@ -50,9 +51,9 @@ const PostComponent = ({ postData, my_id, likeInfo, fileInfo, likePost, setPostS
     return (
         <div className="post-wrapper">
             <div className="post-title">
-                <Link to={`/board/${content.board_id}`}>
-                    <i className="material-icons">keyboard_backspace</i>
-                </Link>
+                {/* <Link to={`/board/${content.board_id}`}> */}
+                    <i className="material-icons pointer post-title-back" onClick={() => history.goBack()}>keyboard_backspace</i>
+                {/* </Link> */}
                 <h5>{content.title}</h5>
                 {
                     (my_id === content.author_id) &&

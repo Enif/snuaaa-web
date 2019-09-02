@@ -1,6 +1,6 @@
 
 .post-wrapper {
-    padding-top: 30px;
+    // padding-top: 30px;
     width: 90%;
     margin: 0 auto;
     // border-top: 1px solid #c9c9c9;
@@ -12,7 +12,7 @@
         background-color: $color_aqua;
         color: #F1F1F1;
         display: flex;
-        a {
+        .post-title-back {
             position: absolute;
             margin-top: -3px;
             margin-left: 5px;

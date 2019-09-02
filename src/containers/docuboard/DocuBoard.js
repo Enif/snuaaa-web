@@ -7,6 +7,7 @@ import DocuList from 'components/Document/DocuList';
 import CreateDocu from 'containers/DocuBoard/CreateDocu';
 import BoardStateEnum from 'common/BoardStateEnum';
 import history from 'common/history';
+import BoardName from '../../components/Board/BoardName';
 
 const TAG = 'DOCUBOARD'
 const DOCROWNUM = 10;
@@ -162,11 +163,7 @@ class DocuBoard extends React.Component {
 
         return (
             <div className="board-wrapper">
-                <div className="postboard-title-wrapper">
-                    <div className="background-star">★</div>
-                    <h2>{boardInfo.board_name}</h2>
-                    <div className="background-star">★★★★★★★★★★★★★★★★★★★★★★</div>
-                </div>
+                <BoardName board_id={boardInfo.board_id} board_name={boardInfo.board_name} />
                 <div className="docboard-top-menu-wrapper">
                     <div className="doc-select-wrapper">
                         <SelectBox selectName="category" optionList={categoryOptions} onSelect={this.handleChange} selectedOption={this.state.category} />

@@ -9,6 +9,7 @@
 }
 
 .my-page-wrapper {
+    margin-top: -15px;
     .my-title-wrapper {
         background-color: $color_blue3;
         margin: 0px -150px;
@@ -424,6 +425,7 @@
     }
 
     .my-page-wrapper {
+        margin-top: 0;
         .my-title-wrapper {
             background-color: $color_yellow3;
             margin: 0px;

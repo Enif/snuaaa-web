@@ -7,6 +7,7 @@ import Paginator from 'components/Common/Paginator';
 import CreatePost from 'containers/PostBoard/CreatePost';
 import BoardStateEnum from 'common/BoardStateEnum';
 import history from 'common/history';
+import BoardName from '../../components/Board/BoardName';
 
 const TAG = 'POSTBOARD'
 const POSTROWNUM = 10;
@@ -106,11 +107,7 @@ class PostBoard extends React.Component {
                         else if (boardState === BoardStateEnum.READY || boardState === BoardStateEnum.WRITING) {
                             return (
                                 <div className="board-wrapper postboard-wrapper">
-                                    <div className="postboard-title-wrapper">
-                                        <div className="background-star">★</div>
-                                        <h2>{boardInfo.board_name}</h2>
-                                        <div className="background-star">★★★★★★★★★★★★★★★★★★★★★★</div>
-                                    </div>
+                                    <BoardName board_id={boardInfo.board_id} board_name={boardInfo.board_name} />
                                     {
                                         boardState === BoardStateEnum.READY &&
                                         <>

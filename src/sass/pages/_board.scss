@@ -1,25 +1,34 @@
 .board-wrapper {
-    padding-top: 15px;
+    // padding-top: 15px;
     display: flex;
     flex-direction: column;
     height: 100%;
-    .postboard-title-wrapper {
-        display: flex;
-        padding: 20px 0px;
-        .background-star {
-            color: #ffd45f;
-            font-size: 17px;
-            letter-spacing: 15px;
-            overflow: hidden;
-            flex-shrink: 1;
-        }
-        h2 {
-            flex-shrink: 0;
-            padding: 0px 17px 0px 10px;
-        }
-    }
     .enif-btn-circle {
         margin-top: auto;
+    }
+}
+
+.postboard-title-wrapper {
+    display: flex;
+    padding: 20px 0px;
+    .background-star {
+        color: #ffd45f;
+        font-size: 17px;
+        letter-spacing: 15px;
+        overflow: hidden;
+        flex-shrink: 1;
+        &.solo {
+            flex-shrink: 0;
+            letter-spacing: 10px;
+            padding-left: 5px;
+        }
+    }
+    a {
+        flex-shrink: 0;
+    }
+    h2 {
+        flex-shrink: 0;
+        padding: 0px 17px 0px 10px;
     }
 }
 
@@ -234,7 +243,7 @@
 @media screen and (max-width: 800px) {
 
     .board-wrapper {
-        padding-top: 1.5rem;
+        // padding-top: 1.5rem;
         .enif-btn-circle {
             margin-top: -1.5rem;
         }
