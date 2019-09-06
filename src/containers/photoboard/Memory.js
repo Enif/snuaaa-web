@@ -60,6 +60,13 @@ class Memory extends React.Component {
     fetch = async (category, pageIdx) => {
 
         const { board_id } = this.props;
+        if (!category) {
+            category = this.state.category;
+        }
+        if (!pageIdx) {
+            pageIdx = this.state.pageIdx;
+        }
+
         this.setIsReady(false);
         if (category) {
             await service.retrieveAlbumsInPhotoBoardByCategory(board_id, category, pageIdx)
