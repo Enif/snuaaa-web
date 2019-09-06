@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import ContentStateEnum from 'common/ContentStateEnum';
 import { breakLine } from 'utils/breakLine';
 import ActionDrawer from '../Common/ActionDrawer';
@@ -19,6 +19,8 @@ const AlbumInfo = ({ albumInfo, my_id, setAlbumState, deleteAlbum }) => {
                     {/* </Link> */}
                 </div>
                 <h5 className="alb-title">{content.title}</h5>
+                <i className="material-icons color-gray1">{albumInfo.is_private ? "person" : "group"}
+                </i>
                 {
                     (my_id === user.user_id) &&
                     <ActionDrawer

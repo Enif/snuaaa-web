@@ -102,6 +102,12 @@ class Album extends React.Component {
                                         <div className="enif-divider"></div>
                                         <PhotoList photos={this.photos} togglePopUp={this.togglePopUp} />
                                         {
+                                            (!this.albumInfo.is_private || my_id === this.albumInfo.content.user.user_id) &&
+                                            <button className="enif-btn-circle enif-pos-sticky" onClick={this.togglePopUp}>
+                                                <i className="material-icons">add_photo_alternate</i>
+                                            </button>
+                                        }
+                                        {
                                             popUpState && <CreatePhoto album_id={album_id} board_id={this.albumInfo.content.board_id} tags={this.tagInfo} retrievePhotos={this.retrievePhotos} fetch={this.fetch} togglePopUp={this.togglePopUp} setReadyState={() => this.setAlbumState(ContentStateEnum.READY)} />
                                         }
                                         {

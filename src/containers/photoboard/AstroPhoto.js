@@ -66,9 +66,9 @@ class AstroPhoto extends React.Component {
     fetch = async (isViewPhotos, pageIdx, selectedTags) => {
         const { board_id } = this.props;
         // const { isViewPhotos } = this.state;
-        if(isViewPhotos === undefined) isViewPhotos = this.state.isViewPhotos;
-        if(pageIdx === undefined) pageIdx = this.state.pageIdx;
-        if(selectedTags === undefined) selectedTags = this.state.selectedTags;
+        if (isViewPhotos === undefined) isViewPhotos = this.state.isViewPhotos;
+        if (pageIdx === undefined) pageIdx = this.state.pageIdx;
+        if (selectedTags === undefined) selectedTags = this.state.selectedTags;
 
         this.setIsReady(false);
         if (!isViewPhotos) {
@@ -209,7 +209,10 @@ class AstroPhoto extends React.Component {
                                 <Tag tags={this.tags} clickAll={this.clickAll} selectedTags={this.state.selectedTags} clickTag={this.clickTag} />
                                 <div className="enif-divider"></div>
                                 <PhotoList photos={this.photos} togglePopUp={this.togglePopUp} />
-                                {this.state.popUpState && <CreatePhoto board_id={board_id} tags={this.tags} retrievePhotos={this.fetch} togglePopUp={this.togglePopUp} setReadyState={() => this.setIsReady(true)}/>}
+                                <button className="enif-btn-circle enif-pos-sticky" onClick={this.togglePopUp}>
+                                    <i className="material-icons">add_photo_alternate</i>
+                                </button>
+                                {this.state.popUpState && <CreatePhoto board_id={board_id} tags={this.tags} retrievePhotos={this.fetch} togglePopUp={this.togglePopUp} setReadyState={() => this.setIsReady(true)} />}
                             </>
                         )
                         :
@@ -217,7 +220,7 @@ class AstroPhoto extends React.Component {
                             <>
                                 <div className="enif-divider"></div>
                                 <AlbumList board_id={board_id} albums={this.albums} togglePopUp={this.togglePopUp} />
-                                {this.state.popUpState && <CreateAlbum board_id={board_id} fetch={this.fetch} togglePopUp={this.togglePopUp} setReadyState={() => this.setIsReady(true)}/>}
+                                {this.state.popUpState && <CreateAlbum board_id={board_id} fetch={this.fetch} togglePopUp={this.togglePopUp} setReadyState={() => this.setIsReady(true)} />}
                                 <button className="enif-btn-circle enif-pos-sticky" onClick={this.togglePopUp}>
                                     <i className="material-icons">library_add</i>
                                 </button>

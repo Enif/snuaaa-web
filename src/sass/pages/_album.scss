@@ -67,6 +67,7 @@
         margin-top: 20px;
         height: 40px;
         display: flex;
+        align-items: center;
         .alb-btn-back {
             button {
                 height: 35px;
@@ -92,8 +93,6 @@
         .actions-drawer {
             position: relative;
             margin-left: auto;
-            padding-top: 7px;
-            padding-right: 7px;
             // right: 0;
         }
         // .actions-wrapper {
@@ -146,6 +145,29 @@
     }
     .crt-alb-title {
         margin-bottom: 10px;
+    }
+
+    .select-private-wrapper {
+        display: flex;
+        width: 100%;
+        margin: 5px 0px;
+        .select-private-unit {
+            border: 1px solid $color-gray1;
+            padding: 8px;
+            margin: 0px 15px;
+            display: flex;
+            width: 50%;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            color: $color-gray1;
+            cursor: pointer;
+            &.selected {
+                border: 1px solid $color-aqua;
+                background-color: $color-aqua;
+                color: #FFFFFF;
+            }
+        }
     }
 }
 
