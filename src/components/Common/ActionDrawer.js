@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 
-function ActionDrawer({ clickEdit, clickDelete }) {
+function ActionDrawer({ clickEdit, clickDelete, isPhoto, clickSetThumbnail }) {
 
     const [isOpened, setIsOpened] = useState(false);
 
@@ -13,6 +13,21 @@ function ActionDrawer({ clickEdit, clickDelete }) {
                 // isOpened &&
                 <div className={`actions-wrapper ${isOpened && " opened"}`}>
                     <div className="edit-delete-wrapper">
+                        {
+                            isPhoto &&
+                            <div className="action-unit-wrapper edit-wrapper"
+                                onClick={() => {
+                                    clickSetThumbnail();
+                                    setIsOpened(false);
+                                }
+                                }>
+                                <div className="action-unit">
+                                    <i className="material-icons">collections</i>
+                                    <p>썸네일로 설정</p>
+                                </div>
+                            </div>
+
+                        }
                         <div className="action-unit-wrapper edit-wrapper" onClick={clickEdit}>
                             <div className="action-unit">
                                 <i className="material-icons">edit</i>&nbsp;수정

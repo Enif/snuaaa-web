@@ -66,7 +66,6 @@ class Photo extends React.Component {
                 this.albumInfo = res.data.photoInfo.album;
                 this.boardTagInfo = res.data.boardTagInfo
                 this.albumPhotosInfo = res.data.albumPhotosInfo;
-                console.log(res.data)
                 this.setState({
                     likeInfo: res.data.likeInfo,
                     photoState: ContentStateEnum.READY
@@ -75,6 +74,29 @@ class Photo extends React.Component {
             .catch((err) => {
                 console.error(err);
             })
+    }
+
+    setAlbumThumbnail = async () => {
+        const { albumInfo } = this;
+        const { photo_id } = this.state;
+        
+        const data = {
+            tn_photo_id: photo_id
+        }
+
+        if(!albumInfo || !albumInfo.content_id) {
+            alert("섬네일로 설정할 수 없습니다.")
+        }
+        else {
+            await service.updateAlbumThumbnail(albumInfo.content_id, data)
+            .then((res) => {
+                console.log('success')
+            })
+            .catch((err) => {
+                console.error(err);
+                alert("섬네일 설정 실패")
+            })
+        }
     }
 
     setPhotoState = (state) => {
@@ -194,9 +216,19 @@ class Photo extends React.Component {
                             return (
                                 <div className="photo-section-wrapper">
                                     {/* <BoardName board_id={this.photoInfo.contentPhoto.board.board_id} board_name={this.photoInfo.contentPhoto.board.board_name} /> */}
-                                    <PhotoInfo photoInfo={this.photoInfo} albumInfo={this.albumInfo} likeInfo={likeInfo}
-                                        moveToPhoto={this.moveToPhoto} isFullscreen={isFullscreen} fullscreenRef={this.fullscreenRef} toggleFullscreen={this.toggleFullscreen}
-                                        my_id={my_id} setPhotoState={this.setPhotoState} deletePhoto={this.deletePhoto} likePhoto={this.likePhoto} />
+                                    <PhotoInfo
+                                        photoInfo={this.photoInfo}
+                                        albumInfo={this.albumInfo}
+                                        likeInfo={likeInfo}
+                                        moveToPhoto={this.moveToPhoto}
+                                        isFullscreen={isFullscreen}
+                                        fullscreenRef={this.fullscreenRef}
+                                        toggleFullscreen={this.toggleFullscreen}
+                                        my_id={my_id}
+                                        setPhotoState={this.setPhotoState}
+                                        setAlbumThumbnail={this.setAlbumThumbnail}
+                                        deletePhoto={this.deletePhoto}
+                                        likePhoto={this.likePhoto} />
                                     <Comment parent_id={this.state.photo_id} />
                                     {
                                         photoState === ContentStateEnum.EDITTING &&

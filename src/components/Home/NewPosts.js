@@ -17,9 +17,10 @@ const NewPosts = ({posts}) => {
                     </div>
                     <div className="new-post-title">
                         <Link to={`/post/${content.content_id}`}>
-                            <h5>{`${content.title} [${content.comment_num}]`}</h5>
+                            <h5>{`${content.title} `}</h5>
                         </Link>
                     </div>
+                    <p>{`[${content.comment_num}]`}</p>
                     <div className="new-post-date">{convertDate(content.createdAt)}</div>
                 </div>
             )

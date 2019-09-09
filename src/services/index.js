@@ -167,6 +167,10 @@ export function updateAlbum(album_id, data) {
     return axios.patch(SERVER_URL + `api/album/${album_id}`, data)
 }
 
+export function updateAlbumThumbnail(album_id, data) {
+    return axios.patch(SERVER_URL + `api/album/${album_id}/thumbnail`, data)
+}
+
 export function deleteAlbum(album_id) {
     return axios.delete(SERVER_URL + `api/album/${album_id}`)
 }
