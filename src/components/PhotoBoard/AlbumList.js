@@ -10,28 +10,41 @@ class AlbumList extends React.Component {
 
     retrieveAlbums = () => {
 
+        // let boardInfo = 
         let albumCover = this.props.board_id === 'brd32' ? defaultStarAlbumCover : defaultAlbumCover;
         let albums = this.props.albums;
 
         let albumList = albums.map(album => {
+            let contentInfo = album.content;
+            let categoryInfo = album.content.category;
+            // let thumbnailInfo = album.thumbnail && album.thumbnail.photo
+            let thumbnailPath = '';
+            if (album.thumbnail && album.thumbnail.photo) {
+                thumbnailPath = album.thumbnail.photo.thumbnail_path;
+            }
+            else if (album.content.albumPhoto && album.content.albumPhoto[0]){
+                thumbnailPath = album.content.albumPhoto[0].thumbnail_path;
+            }
+            else {
+                thumbnailPath = '';
+            }
             let color;
-            if(album.category_color) {
+            if (categoryInfo && categoryInfo.category_color) {
                 color = {
-                    "borderTopColor": album.category_color
+                    "borderTopColor": categoryInfo.category_color
                 }
             }
-            
+
             return (
                 <div className="album-list" key={album.content_id} >
                     <Link to={`/album/${album.content_id}`}>
-
-                        <Image imgSrc={album.thumbnail_path} defaultImgSrc={albumCover} />
+                        <Image imgSrc={thumbnailPath} defaultImgSrc={albumCover} />
                         <div className="album-cover">
                             <div className="album-category-marker" style={color}>
 
                             </div>
                             <h5>
-                                {album.title}
+                                {contentInfo.title}
                             </h5>
                         </div>
                     </Link>
@@ -52,11 +65,9 @@ class AlbumList extends React.Component {
     render() {
         console.log('[%s] render', TAG)
         return (
-            <React.Fragment>
-                <div className="album-list-wrapper">
-                    {this.retrieveAlbums()}
-                </div>
-            </React.Fragment>
+            <div className="album-list-wrapper">
+                {this.retrieveAlbums()}
+            </div>
         )
     }
 }

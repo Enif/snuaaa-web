@@ -10,7 +10,7 @@ import history from 'common/history';
 
 const PhotoInfo = ({ photoInfo, likeInfo, moveToPhoto,
     fullscreenRef, toggleFullscreen, my_id, isFullscreen,
-    setPhotoState, deletePhoto, likePhoto }) => {
+    setPhotoState, setAlbumThumbnail, deletePhoto, likePhoto }) => {
 
     let content = photoInfo.contentPhoto;
     let albumInfo = photoInfo.album;
@@ -48,7 +48,9 @@ const PhotoInfo = ({ photoInfo, likeInfo, moveToPhoto,
                     (my_id === userInfo.user_id) &&
                     <ActionDrawer
                         clickEdit={() => setPhotoState(ContentsStateEnum.EDITTING)}
-                        clickDelete={deletePhoto} />
+                        clickDelete={deletePhoto}
+                        isPhoto={true}
+                        clickSetThumbnail={setAlbumThumbnail} />
                 }
             </div>
             <div className="photo-img-wrapper" ref={fullscreenRef}>
