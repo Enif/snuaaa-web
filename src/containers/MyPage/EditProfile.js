@@ -2,12 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { authLogout } from 'actions';
 import * as service from 'services';
+import UserService from '../../services/UserService';
 import Loading from 'components/Common/Loading';
 import ProfileComponent from 'components/MyPage/ProfileComponent';
 
 const TAG = 'PROFILE'
 
-class EditInfo extends React.Component {
+class EditProfile extends React.Component {
 
     constructor(props) {
         super(props);
@@ -146,7 +147,7 @@ class EditInfo extends React.Component {
         this.setState({
             isShow: false
         });
-        await service.retrieveUserInfo()
+        await UserService.retrieveUserInfo()
         .then((response) => {
             let resInfo = response.data.userInfo
             const { userInfo } = this.state
@@ -215,10 +216,7 @@ class EditInfo extends React.Component {
         await service.updateUserInfo(data)
         .then(() => {
             alert("업데이트 성공");
-            this.setState({
-                isShow: true
-            });
-            this.getUserInfo();
+            window.location.reload();
         })
         .catch((err) => {
             console.error(err);
@@ -273,4 +271,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(EditInfo);
+export default connect(null, mapDispatchToProps)(EditProfile);

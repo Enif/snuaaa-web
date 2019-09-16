@@ -104,7 +104,8 @@
             height: 35px;
             width: 55%;
             border: none;
-            font-family: 'NIXGONM-Vb';
+            // font-family: 'NIXGONM-Vb';
+            
             &:disabled {
                 background-color: #FFF;
                 color: #666666;
@@ -280,6 +281,28 @@
         user-select: none;
         &.selected {
             color: $color-blue3;
+        }
+    }
+}
+
+.my-select-edit-wrapper {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+
+    .my-select-edit-btn {
+        margin: 0px 20px;
+        padding: 10px 20px;
+        color: $color-gray2;
+        border: 1px solid $color-gray2;
+        border-radius: 15px;
+        background-color: $color-white;
+        font-family: NIXGONM-Vb;
+        font-size: 17px;
+        &.selected {
+            background-color: $color-aqua;
+            border-color: $color-aqua;
+            color: $color-white;
         }
     }
 }
