@@ -3,7 +3,7 @@ import InputText from '../Common/InputText'
 import Footer from 'components/Footer'
 import logo from 'assets/img/login_logo.gif'
 
-const LogInComponent = ({ autoLogin, handleChange, userLogIn, guestLogIn, redirectToSignUp, checkAuto }) => {
+const LogInComponent = ({ autoLogin, handleChange, userLogIn, guestLogIn, openFindPopUp, redirectToSignUp, checkAuto }) => {
     return (
         <div className="login-wrapper">
             <div className="logo-wrapper">
@@ -37,7 +37,7 @@ const LogInComponent = ({ autoLogin, handleChange, userLogIn, guestLogIn, redire
                 </div>
                 <div className="menu-txt-wrapper">
                     <p className="menu-txt-signup" onClick={() => redirectToSignUp()}>회원가입</p>
-                    <p className="menu-txt-find">아이디 | 비밀번호 찾기</p>
+                    <p className="menu-txt-find" onClick={openFindPopUp}>아이디 | 비밀번호 찾기</p>
                 </div>
             </div>
             <Footer></Footer>

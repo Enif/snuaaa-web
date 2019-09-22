@@ -1,5 +1,5 @@
 import React from 'react';
-import EditInfo from 'containers/MyPage/EditInfo';
+import EditMyInfo from 'containers/MyPage/EditMyInfo';
 import MyInfo from 'containers/MyPage/MyInfo';
 
 const TAG = 'MYPAGE'
@@ -22,7 +22,7 @@ class MyPage extends React.Component {
     }
 
     renderComponent() {
-        if (this.state.index === 'profile') return (<EditInfo />);
+        if (this.state.index === 'profile') return (<EditMyInfo />);
         else if (this.state.index === 'info') return (<MyInfo/>);
         else return <MyInfo />;
     }
