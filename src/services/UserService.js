@@ -13,6 +13,14 @@ const UserService = {
 
     updatePassword: function(data) {
         return AaaService.patch(`userinfo/password`, data)
+    },
+
+    findId: function(data) {
+        return AaaService.post(`userinfo/find/id`, data)
+    },
+
+    findPw: function(data) {
+        return AaaService.post(`userinfo/find/pw`, data)
     }
 }
 

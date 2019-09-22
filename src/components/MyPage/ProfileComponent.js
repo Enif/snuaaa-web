@@ -55,9 +55,8 @@ const ProfileComponent = ({ profilePath, userInfo, handleChange, uploadProfileIm
                         </div>
                     </label>
                     <input type="file" id="profileImg" accept="image/*" onChange={uploadProfileImg} />
-                    <h5>{nicknameInfo.value}</h5>
                 </div>
-
+                <h5 className="profile-nickname">{nicknameInfo.value}</h5>
                 <InputField label="ID" name="id" value={idInfo.value} disabled={true} valid={idInfo.valid} />
                 <InputField label="이름" name="username" value={usernameInfo.value} required={true} valid={usernameInfo.valid}
                     handleChange={handleChange} invalidMessage="2-10자의 한글 혹은 영문" />

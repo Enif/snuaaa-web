@@ -14,12 +14,12 @@ function EditMyInfo() {
                 <Link to={'/mypage/info'}>
                     <i className="material-icons">keyboard_backspace</i>
                 </Link>
-                <h3>Profile</h3>
+                <h3>프로필 수정</h3>
             </div>
 
             <div className="my-select-edit-wrapper">
-                <button className={`my-select-edit-btn ${isSelectInfo ? "selected" : ""}`} onClick={() => setIsSelectInfo(true)}>개인정보 변경</button>
-                <button className={`my-select-edit-btn ${isSelectInfo ? "" : "selected"}`} onClick={() => setIsSelectInfo(false)}>비밀번호 변경</button>
+                <button className={`my-select-edit-btn ${isSelectInfo ? "selected" : ""}`} onClick={() => setIsSelectInfo(true)}>개인정보</button>
+                <button className={`my-select-edit-btn ${isSelectInfo ? "" : "selected"}`} onClick={() => setIsSelectInfo(false)}>비밀번호</button>
             </div>
             {
                 isSelectInfo ?

@@ -1,7 +1,5 @@
 import React from 'react';
-import * as service from 'services';
 import UserService from 'services/UserService';
-import Loading from 'components/Common/Loading';
 import InputField from 'components/Common/InputField';
 
 class EditPassword extends React.Component {
@@ -28,7 +26,8 @@ class EditPassword extends React.Component {
                     value: '',
                     valid: null
                 }
-            ]
+            ],
+            isCanSubmit: false
         }
     }
 
@@ -76,6 +75,15 @@ class EditPassword extends React.Component {
         });
     }
 
+    checkValid = () => {
+        let valid = true;
+        const { userInfo } = this.state;
+        userInfo.forEach((info) => {
+            valid = valid && info.valid;
+        })
+        return valid;
+    }
+
     submit = async () => {
         const { userInfo } = this.state;
 
@@ -106,7 +114,26 @@ class EditPassword extends React.Component {
             window.location.reload();
         })
         .catch((err) => {
-            alert("비밀번호 변경 실패.")
+            if(err.response && err.response.data) {
+                if(err.response.data.code === 1011) {
+                    alert("현재 비밀번호가 일치하지 않습니다.");
+                }
+                else if (err.response.data.code === 1012) {
+                    alert("새 비밀번호를 입력해주세요.");    
+                }
+                else if (err.response.data.code === 1013) {
+                    alert("비밀번호 확인이 일치하지 않습니다.");    
+                }
+                else if (err.response.data.code === 1014) {
+                    alert("비밀번호 양식이 일치하지 않습니다.");    
+                }
+                else {
+                    alert("비밀번호 변경 실패.") 
+                }
+            }
+            else {
+                alert("비밀번호 변경 실패.") 
+            }
             console.error(err);
         });
     }
@@ -116,6 +143,7 @@ class EditPassword extends React.Component {
 
         const { handleChange } = this;
         const { userInfo } = this.state;
+        const isCanSubmit = this.checkValid();
 
         let pwInfo, nPwInfo, nPwCfInfo;
         userInfo.forEach((info) => {
@@ -163,7 +191,7 @@ class EditPassword extends React.Component {
                     invalidMessage="새 비밀번호와 일치하지 않습니다." />
 
                 <div className="btn-wrapper">
-                    <button className="btn-save" disabled={false} onClick={this.submit}>저장</button>
+                    <button className="btn-save" disabled={!isCanSubmit} onClick={this.submit}>저장</button>
                 </div>
             </div>
 
