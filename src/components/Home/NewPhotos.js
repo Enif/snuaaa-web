@@ -9,7 +9,10 @@ const NewPhotos = ({ title, board_id, photos }) => {
             return photos.map(photo => {
                 return (
                     <div className="new-photo-list" key={photo.contentPhoto.content_id}>
-                        <Link to={`/photo/${photo.contentPhoto.content_id}`}>
+                        <Link to={{
+                            pathname: `/photo/${photo.contentPhoto.content_id}`,
+                            state: { modal: true }
+                        }}>
                             <Image imgSrc={photo.thumbnail_path} />
                         </Link>
                     </div>

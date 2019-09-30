@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import * as service from 'services'
 import Loading from 'components/Common/Loading';
 import ContentStateEnum from 'common/ContentStateEnum';
@@ -8,7 +9,9 @@ import PhotoInfo from 'components/Photo/PhotoInfo';
 import EditPhoto from 'containers/Photo/EditPhoto';
 import Comment from 'containers/Comment';
 import history from 'common/history';
-import BoardName from '../../components/Board/BoardName';
+import FullScreenPortal from 'containers/FullScreenPortal';
+import Image from 'components/Common/Image';
+
 
 const TAG = 'PHOTO'
 
@@ -24,7 +27,8 @@ class Photo extends React.Component {
         this.albumPhotosInfo = undefined;
         this.fullscreenRef = React.createRef();
         this.state = {
-            photo_id: this.props.match.params.pNo,
+            album_id: this.props.match.params.album_id,
+            photo_id: this.props.match.params.photo_id,
             likeInfo: false,
             photoState: ContentStateEnum.LOADING,
             isFullscreen: false
@@ -33,6 +37,11 @@ class Photo extends React.Component {
 
     componentDidMount() {
         this.fetch();
+        // document.addEventListener('keydown', this.keyDownEvent);
+        const { toggleFullScreen } = this;
+        document.onfullscreenchange = function (e) {
+            toggleFullScreen();
+        };
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -45,9 +54,8 @@ class Photo extends React.Component {
     }
 
     static getDerivedStateFromProps(props, state) {
-        console.log('[%s] getDerivedStateFromProps', TAG);
         return {
-            photo_id: props.match.params.pNo,
+            photo_id: props.match.params.photo_id,
             // photoState: ContentStateEnum.LOADING
         }
     }
@@ -57,7 +65,7 @@ class Photo extends React.Component {
             photoState: ContentStateEnum.LOADING
         })
         if (!photo_id) {
-            photo_id = this.props.match.params.pNo
+            photo_id = this.props.match.params.photo_id
         }
         await service.retrievePhoto(photo_id)
             .then((res) => {
@@ -79,23 +87,23 @@ class Photo extends React.Component {
     setAlbumThumbnail = async () => {
         const { albumInfo } = this;
         const { photo_id } = this.state;
-        
+
         const data = {
             tn_photo_id: photo_id
         }
 
-        if(!albumInfo || !albumInfo.content_id) {
+        if (!albumInfo || !albumInfo.content_id) {
             alert("섬네일로 설정할 수 없습니다.")
         }
         else {
             await service.updateAlbumThumbnail(albumInfo.content_id, data)
-            .then((res) => {
-                console.log('success')
-            })
-            .catch((err) => {
-                console.error(err);
-                alert("섬네일 설정 실패")
-            })
+                .then((res) => {
+                    console.log('success')
+                })
+                .catch((err) => {
+                    console.error(err);
+                    alert("섬네일 설정 실패")
+                })
         }
     }
 
@@ -117,27 +125,46 @@ class Photo extends React.Component {
             }
             if (direction === 1) {
                 if (index < albumPhotosInfo.length - 1 && index > -1) {
-                    history.push(`/photo/${albumPhotosInfo[index + 1].content_id}`)
+                    history.replace({
+                        pathname: `/photo/${albumPhotosInfo[index + 1].content_id}`,
+                        state: { modal: true }
+                    })
                 }
             }
             else if (direction === -1) {
                 if (index < albumPhotosInfo.length && index > 0) {
-                    history.push(`/photo/${albumPhotosInfo[index - 1].content_id}`)
+                    history.replace({
+                        pathname: `/photo/${albumPhotosInfo[index - 1].content_id}`,
+                        state: { modal: true }
+                    })
                 }
             }
         }
     }
 
-    toggleFullscreen = () => {
+    closePhoto = () => {
+        if (history.action === 'POP') {
+            history.push(`/`)
+        }
+        else {
+            history.goBack();
+        }
+    }
+
+    toggleFullScreen = () => {
+        const { isFullscreen } = this.state;
+        this.setState({
+            isFullscreen: !isFullscreen
+        })
+    }
+
+    clickFullscreen = () => {
         const elem = this.fullscreenRef.current;
         const { isFullscreen } = this.state;
 
-        if(isFullscreen) {
-            this.setState({
-                isFullscreen: false
-            })
-            if (document.fullscreenElement || 
-                document.webkitFullscreenElement || 
+        if (isFullscreen) {
+            if (document.fullscreenElement ||
+                document.webkitFullscreenElement ||
                 document.mozFullScreenElement) {
                 // can use exitFullscreen
                 if (document.exitFullscreen) {
@@ -152,9 +179,6 @@ class Photo extends React.Component {
             }
         }
         else {
-            this.setState({
-                isFullscreen: true
-            })
             if (elem.requestFullscreen) {
                 elem.requestFullscreen();
             } else if (elem.mozRequestFullScreen) { /* Firefox */
@@ -202,38 +226,80 @@ class Photo extends React.Component {
     }
 
     render() {
-        let { likeInfo, photoState, isFullscreen } = this.state;
+        const { likeInfo, photoState, isFullscreen } = this.state;
         const { my_id } = this.props;
+        const { photoInfo, setPhotoState, likePhoto, deletePhoto, setAlbumThumbnail, closePhoto } = this;
+        let albumInfo = photoInfo && photoInfo.album;
+        let userInfo = photoInfo && photoInfo.contentPhoto.user;
 
+        let backLink;
+        if (!albumInfo) {
+            backLink = `/board/brd32`;
+        }
+        else {
+            backLink = `/album/${albumInfo.content_id}`
+        }
+
+        console.log(this.state.photo_id);
         return (
-            <>
+            <FullScreenPortal>
+                <div className="enif-modal-wrapper photo-popup" onClick={closePhoto}>
+                    {/* <div className="enif-modal-close">
+                        <i className="material-icons pointer">clear</i>
+                    </div> */}
+                    <div className="photo-section-wrapper" onClick={(e) => e.stopPropagation()}>
+                        {/* <BoardName board_id={this.photoInfo.contentPhoto.board.board_id} board_name={this.photoInfo.contentPhoto.board.board_name} /> */}
+                        <div className="photo-alb-title-wrp">
+                            {/* <i className="photo-alb-title-back material-icons pointer" onClick={() => history.goBack()}>keyboard_backspace</i> */}
+                            <Link className="photo-alb-title" to={backLink}>
+                                <i className="material-icons">photo_library</i>
+                                <h5>{albumInfo ? albumInfo.title : "기본앨범"}</h5>
+                            </Link>
+                            <div className="enif-modal-close" onClick={closePhoto}>
+                                <i className="material-icons pointer">clear</i>
+                            </div>
+                        </div>
+                        <div className="photo-section-bottom">
+                            <div className="photo-section-left">
+                                <div className="photo-img-wrapper" ref={this.fullscreenRef} >
+                                    <div className="photo-move-action prev" onClick={() => this.moveToPhoto(-1)}>
+                                        <i className="material-icons pointer">keyboard_arrow_left</i>
+                                    </div>
+                                    <Image imgSrc={this.photoInfo && this.photoInfo.file_path} />
+                                    <div className="photo-move-action next" onClick={() => this.moveToPhoto(1)}>
+                                        <i className="material-icons pointer">keyboard_arrow_right</i>
+                                    </div>
+                                    <div className="photo-action-fullscreen-wrapper">
+                                        <i className="material-icons pointer" onClick={this.clickFullscreen}>{isFullscreen ? 'fullscreen_exit' : 'fullscreen'}</i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="photo-section-right">
+                                <PhotoInfo
+                                    photoInfo={this.photoInfo}
+                                    likeInfo={likeInfo}
+                                    my_id={my_id}
+                                    setPhotoState={setPhotoState}
+                                    likePhoto={likePhoto}
+                                    deletePhoto={deletePhoto}
+                                    setAlbumThumbnail={setAlbumThumbnail} />
+
+                                <Comment parent_id={this.state.photo_id} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 {
+
                     (() => {
                         if (photoState === ContentStateEnum.LOADING) {
                             return <Loading />
                         }
-                        else if (photoState === ContentStateEnum.READY || photoState === ContentStateEnum.EDITTING) {
+                        else if (photoState === ContentStateEnum.EDITTING) {
                             return (
-                                <div className="photo-section-wrapper">
-                                    {/* <BoardName board_id={this.photoInfo.contentPhoto.board.board_id} board_name={this.photoInfo.contentPhoto.board.board_name} /> */}
-                                    <PhotoInfo
-                                        photoInfo={this.photoInfo}
-                                        albumInfo={this.albumInfo}
-                                        likeInfo={likeInfo}
-                                        moveToPhoto={this.moveToPhoto}
-                                        isFullscreen={isFullscreen}
-                                        fullscreenRef={this.fullscreenRef}
-                                        toggleFullscreen={this.toggleFullscreen}
-                                        my_id={my_id}
-                                        setPhotoState={this.setPhotoState}
-                                        setAlbumThumbnail={this.setAlbumThumbnail}
-                                        deletePhoto={this.deletePhoto}
-                                        likePhoto={this.likePhoto} />
-                                    <Comment parent_id={this.state.photo_id} />
-                                    {
-                                        photoState === ContentStateEnum.EDITTING &&
-                                        <EditPhoto photoInfo={this.photoInfo} boardTagInfo={this.boardTagInfo} fetch={this.fetch} setPhotoState={this.setPhotoState} />
-                                    }
+                                <div className="enif-popup photo-popup">
+                                    <EditPhoto photoInfo={this.photoInfo} boardTagInfo={this.boardTagInfo} fetch={this.fetch} setPhotoState={this.setPhotoState} />
                                 </div>
                             )
                         }
@@ -250,11 +316,11 @@ class Photo extends React.Component {
                             )
                         }
                         else return (
-                            <div>ERROR PAGE</div>
+                            <div></div>
                         )
                     })()
                 }
-            </>
+            </FullScreenPortal>
         )
     }
 }

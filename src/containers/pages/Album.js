@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
-import * as service from 'services'
+import * as service from 'services';
 import ContentStateEnum from 'common/ContentStateEnum';
 import Loading from 'components/Common/Loading';
 import PhotoList from 'components/Album/PhotoList';
@@ -22,7 +22,7 @@ class Album extends React.Component {
         this.categoryInfo = undefined;
         this.tagInfo = undefined;
         this.state = {
-            album_id: this.props.match.params.aNo,
+            album_id: this.props.match.params.album_id,
             albumState: ContentStateEnum.LOADING,
             popUpState: false
         }
@@ -34,8 +34,8 @@ class Album extends React.Component {
 
     fetch = async () => {
         await Promise.all([
-            service.retrieveAlbum(this.props.match.params.aNo),
-            service.retrievePhotosInAlbum(this.props.match.params.aNo)
+            service.retrieveAlbum(this.props.match.params.album_id),
+            service.retrievePhotosInAlbum(this.props.match.params.album_id)
         ])
             .then((infos) => {
                 this.albumInfo = infos[0].data.albumInfo;
@@ -55,7 +55,7 @@ class Album extends React.Component {
 
         let goDrop = window.confirm("정말로 삭제하시겠습니까? 삭제한 게시글은 다시 복원할 수 없습니다.");
         if (goDrop) {
-            await service.deleteAlbum(this.props.match.params.aNo)
+            await service.deleteAlbum(this.props.match.params.album_id)
                 .then(() => {
                     alert("게시글이 삭제되었습니다.");
                     this.setAlbumState(ContentStateEnum.DELETED);
@@ -100,7 +100,7 @@ class Album extends React.Component {
                                     <div className="album-wrapper">
                                         <AlbumInfo albumInfo={this.albumInfo} my_id={my_id} setAlbumState={this.setAlbumState} deleteAlbum={this.deleteAlbum} />
                                         <div className="enif-divider"></div>
-                                        <PhotoList photos={this.photos} togglePopUp={this.togglePopUp} />
+                                        <PhotoList album_id={album_id} photos={this.photos} togglePopUp={this.togglePopUp} />
                                         {
                                             (!this.albumInfo.is_private || my_id === this.albumInfo.content.user.user_id) &&
                                             <button className="enif-btn-circle enif-pos-sticky" onClick={this.togglePopUp}>
@@ -115,6 +115,7 @@ class Album extends React.Component {
                                             <EditAlbum album_id={album_id} albumInfo={this.albumInfo} categoryInfo={this.categoryInfo} fetch={this.fetch} setAlbumState={this.setAlbumState} />
                                         }
                                     </div>
+                                    {/* <Route path="/album/:album_id/photo/:photo_id" component={Photo} /> */}
                                 </>
                             )
                         }

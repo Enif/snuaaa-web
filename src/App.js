@@ -86,7 +86,7 @@ class App extends Component {
         let { isReady } = this.state;
         let { loginState } = this.props;
         return (
-            <div className="snuaaa-wrapper">
+            <>
                 {(() => {
                     if (!isReady) {
                         return <Loading />
@@ -100,7 +100,7 @@ class App extends Component {
                         )
                     }
                 })()}
-            </div>
+            </>
         );
     }
 }
