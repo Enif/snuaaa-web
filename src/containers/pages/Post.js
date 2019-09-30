@@ -21,7 +21,7 @@ class Post extends React.Component {
         this.fileInfo = undefined;
 
         this.state = {
-            post_id: this.props.match.params.pNo,
+            post_id: this.props.match.params.post_id,
             likeInfo: false,
             postState: ContentStateEnum.LOADING,
             editingPostData: {
@@ -38,7 +38,7 @@ class Post extends React.Component {
     static getDerivedStateFromProps(props, state) {
         console.log('[%s] getDerivedStateFromProps', TAG);
         return {
-            post_id: props.match.params.pNo
+            post_id: props.match.params.post_id
         }
     }
 

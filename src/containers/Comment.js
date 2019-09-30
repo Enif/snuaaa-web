@@ -22,6 +22,13 @@ class Comment extends React.Component {
     componentDidMount() {
         this.retrieveComments(this.props.parent_id)
     }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        if (this.props.parent_id !== nextProps.parent_id) {
+            this.retrieveComments(nextProps.parent_id);
+        }
+        return true;
+    }
     
     setCommentInEdit = (comment_id, text) => {
         this.setState({
@@ -30,11 +37,14 @@ class Comment extends React.Component {
         })
     }
 
-    retrieveComments = async () => {
+    retrieveComments = async (parent_id) => {
         this.setState({
             isReady: false
         })
-        await service.retrieveComments(this.props.parent_id)
+        if (!parent_id) {
+            parent_id = this.props.parent_id;
+        }
+        await service.retrieveComments(parent_id)
         .then((res) => {
             this.comments = res.data;
             this.setState({

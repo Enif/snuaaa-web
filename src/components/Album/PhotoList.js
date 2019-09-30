@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Image from 'components/Common/Image';
 
-const PhotoList = ({ photos, togglePopUp }) => {
+const PhotoList = ({ photos }) => {
 
     const makePhotoList = () => {
         if (photos.length > 0) {
@@ -10,7 +10,10 @@ const PhotoList = ({ photos, togglePopUp }) => {
                 let contentInfo = photo.contentPhoto;
                 return (
                     <div className="photo-wrapper" key={contentInfo.content_id}>
-                        <Link to={`/photo/${contentInfo.content_id}`}>
+                        <Link to={{
+                            pathname: `/photo/${contentInfo.content_id}`,
+                            state: { modal: true }
+                        }} >
                             <div className="photo-cover">
                                 <i className="material-icons">favorite</i>
                                 <p>{contentInfo.like_num}</p>

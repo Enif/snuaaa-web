@@ -15,7 +15,10 @@ const NewComments = ({ comments }) => {
                 linkTo = `/post/${comment.parent_id}`
             }
             else if (contentInfo.type === "PH") {
-                linkTo = `/photo/${comment.parent_id}`
+                linkTo = {
+                    pathname: `/photo/${comment.parent_id}`,
+                    state: { modal: true }
+                }
             }
             else if (contentInfo.type === "DO") {
                 linkTo = `/document/${comment.parent_id}`

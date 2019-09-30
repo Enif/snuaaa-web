@@ -11,7 +11,10 @@ const MyPhotoList = ({photos}) => {
                 let contentInfo = photo.contentPhoto;
                 return (
                     <div className="photo-wrapper" key={contentInfo.content_id}>
-                        <Link to={`/photo/${contentInfo.content_id}`}>
+                        <Link to={{
+                            pathname: `/photo/${contentInfo.content_id}`,
+                            state: { modal: true }           
+                        }}>
                             <div className="photo-cover">
                                 <i className="material-icons">favorite</i> {contentInfo.like_num}&nbsp;
                                 <i className="material-icons">comment</i> {contentInfo.comment_num}

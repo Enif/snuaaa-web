@@ -1,6 +1,6 @@
 import React from 'react';
-import { Redirect } from 'react-router';
 import * as service from 'services';
+import history from 'common/history';
 import SignUpComponent from 'components/Signup/SignUpComponent';
 import SignUpSuccess from 'components/Signup/SignUpSuccess';
 import SignUpFailure from 'components/Signup/SignUpFailure';
@@ -219,7 +219,7 @@ class SignUp extends React.Component {
             .then(() => {
                 this.setState({ signUpState: 'SUCCESS' })
                 setTimeout(() => {
-                    this.setState({ signUpState: 'REDIRECT' })
+                    history.push('/login')
                 }, 10000)
             })
             .catch((err) => {
@@ -258,7 +258,7 @@ class SignUp extends React.Component {
                 />
                 {signUpState === 'LOADING' && <Loading />}
                 {signUpState === 'SUCCESS' && <SignUpSuccess />}
-                {signUpState === 'REDIRECT' && <Redirect to='/login' />}
+                {/* {signUpState === 'REDIRECT' && <Redirect to='/login' />} */}
                 {signUpState === 'FAILURE' && <SignUpFailure />}
             </>
         )
