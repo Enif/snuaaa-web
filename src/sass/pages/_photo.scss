@@ -533,6 +533,11 @@
             flex-direction: column;
 
         }
+        .photo-section-right {
+            .comment-area-wrapper {
+                overflow-y: initial;
+            }
+        }
     
         .photo-img-wrapper {
             max-height: 300px;

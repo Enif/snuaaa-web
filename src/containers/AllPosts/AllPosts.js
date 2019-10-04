@@ -1,18 +1,17 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import * as service from 'services'
+import HomeService from 'services/HomeService';
 import Loading from 'components/Common/Loading';
-import PostList from 'components/Post/PostList';
+import AllPostList from 'components/Post/AllPostList';
 import Paginator from 'components/Common/Paginator';
-import CreatePost from 'containers/PostBoard/CreatePost';
+import BoardName from '../../components/Board/BoardName';
 import BoardStateEnum from 'common/BoardStateEnum';
 import history from 'common/history';
-import BoardName from '../../components/Board/BoardName';
 
-const TAG = 'POSTBOARD'
+
+const TAG = 'ALLPOST'
 const POSTROWNUM = 10;
 
-class PostBoard extends React.Component {
+class AllPosts extends React.Component {
 
     constructor(props) {
         console.log(`[${TAG}] Constructor`)
@@ -27,12 +26,10 @@ class PostBoard extends React.Component {
     }
 
     componentDidMount() {
-        console.log(`[${TAG}] ComponentDidMount`)
         this.fetch()
     }
 
     static getDerivedStateFromProps(props, state) {
-        console.log(`[${TAG}] getDerivedStateFromProps`);
         const hisState = history.location.state;
         return {
             pageIdx: (hisState && hisState.page) ? hisState.page : 1,
@@ -40,18 +37,11 @@ class PostBoard extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        console.log(`[${TAG}] shouldComponentUpdate`)
         if (this.state.pageIdx !== nextState.pageIdx) {
             this.fetch(nextState.pageIdx);
             return true;
         }
         return true;
-    }
-
-    setBoardState = (state) => {
-        this.setState({
-            boardState: state
-        })
     }
 
     clickPage = (idx) => {
@@ -62,14 +52,19 @@ class PostBoard extends React.Component {
         })
     }
 
+    setBoardState = (state) => {
+        this.setState({
+            boardState: state
+        })
+    }
+
     fetch = async (pageIdx) => {
-        const { board_id } = this.props;
         if (!pageIdx) {
             pageIdx = this.state.pageIdx;
         }
 
         this.setBoardState(BoardStateEnum.LOADING)
-        await service.retrievePostsInBoard(board_id, pageIdx)
+        await HomeService.retrieveAllPosts(pageIdx)
             .then((res) => {
                 this.posts = res.data.postInfo;
                 this.postCount = res.data.postCount;
@@ -79,17 +74,6 @@ class PostBoard extends React.Component {
                 console.error(err);
             })
     }
-
-    makeCategoryList = () => {
-        if (this.props.categories.length > 0) {
-            return (
-                <select>
-                    {this.props.categories.map((cate) => (<option>{cate.category_name}</option>))}
-                </select>
-            )
-        }
-    }
-
 
     render() {
         console.log(`[${TAG}] render.. `)
@@ -107,29 +91,13 @@ class PostBoard extends React.Component {
                         else if (boardState === BoardStateEnum.READY || boardState === BoardStateEnum.WRITING) {
                             return (
                                 <div className="board-wrapper postboard-wrapper">
-                                    <BoardName board_id={boardInfo.board_id} board_name={boardInfo.board_name} />
+                                    <BoardName board_name="전체 게시글" />
                                     {
                                         boardState === BoardStateEnum.READY &&
                                         <>
-                                            {this.makeCategoryList()}
-                                            <PostList
-                                                posts={this.posts}
-                                                clickCrtBtn={() => this.setBoardState(BoardStateEnum.WRITING)} />
+                                            <AllPostList posts={this.posts} />
                                             {this.postCount > 0 && <Paginator pageIdx={pageIdx} pageNum={Math.ceil(this.postCount / POSTROWNUM)} clickPage={this.clickPage} />}
-                                            {
-                                                level >= boardInfo.lv_write &&
-                                                <button className="enif-btn-circle enif-pos-sticky" onClick={() => this.setBoardState(BoardStateEnum.WRITING)}>
-                                                    <i className="material-icons">create</i>
-                                                </button>
-                                            }
                                         </>
-                                    }
-                                    {
-                                        boardState === BoardStateEnum.WRITING &&
-                                        <CreatePost
-                                            board_id={board_id}
-                                            close={() => this.setBoardState(BoardStateEnum.READY)}
-                                            fetch={this.fetch} />
                                     }
                                 </div>
                             )
@@ -144,10 +112,4 @@ class PostBoard extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        level: state.authentication.level,
-    }
-}
-
-export default connect(mapStateToProps, null, null, {pure: false})(PostBoard);
+export default AllPosts;

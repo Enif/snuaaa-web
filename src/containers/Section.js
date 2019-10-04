@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import history from 'common/history';
 import DefaultRoute from 'containers/DefaultRoute';
 import { Home, About, Board, Post, Album, Photo, Docu, SignUp, LogIn, MyPage, UserPage } from './pages';
+import AllPosts from './AllPosts/AllPosts';
 
 const TAG = 'SECTION';
 
@@ -45,7 +46,7 @@ class Section extends React.Component {
         };
 
         return (
-            <div className={isPhotoModal ? "snuaaa-wrapper" : "snuaaa-wrapper"}>
+            <>
                 <Switch location={isPhotoModal ? this.previousLocation : history.location}>
                     <DefaultRoute exact path="/" component={Home} />
                     <DefaultRoute exact path="/about" component={About} />
@@ -60,13 +61,14 @@ class Section extends React.Component {
                     <Route path="/login" component={LogIn} />
                     <DefaultRoute path="/mypage/:index" component={MyPage} />
                     <DefaultRoute path="/userpage/:uuid" component={UserPage} />
+                    <DefaultRoute path="/posts/all" component={AllPosts} />
                     <DefaultRoute component={Home} />
                 </Switch>
                 {
                     isPhotoModal &&
                     <Route path="/photo/:photo_id" component={Photo} />
                 }
-            </div>
+            </>
         );
     }
 }
