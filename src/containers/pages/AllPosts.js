@@ -77,8 +77,6 @@ class AllPosts extends React.Component {
 
     render() {
         console.log(`[${TAG}] render.. `)
-
-        const { board_id, boardInfo, level } = this.props;
         const { pageIdx, boardState } = this.state;
 
         return (

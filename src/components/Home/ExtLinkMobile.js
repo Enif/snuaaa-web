@@ -7,7 +7,7 @@ const ExtLinkMobile = () => {
 
     return (
         <div className="ext-link-mobile">
-            <a className="link-img" href="http://www.weather.go.kr/weather/main.jsp" target="_blank" rel="noopener noreferrer">
+            <a className="link-img" href="https://m.kma.go.kr/m/index.jsp" target="_blank" rel="noopener noreferrer">
                 <img src={icon_weather} alt="weather" />
             </a>
             <a className="link-img" href="https://stellarium-web.org/" target="_blank" rel="noopener noreferrer">

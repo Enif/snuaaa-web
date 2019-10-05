@@ -141,7 +141,9 @@ class CreateDocu extends React.Component {
                     </div>
                     <div className="docu-category-list-wrapper">
                         <label>카테고리</label>
-                        {this.makeCategoryList()}
+                        <div className="docu-category-unit-wrapper">
+                            {this.makeCategoryList()}
+                        </div>
                     </div>
                     <div className="docu-title-wrapper">
                         <label htmlFor="crtDocTitle">제목</label>

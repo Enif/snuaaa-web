@@ -49,7 +49,9 @@ const NewComments = ({ comments }) => {
 
     return (
         <div className="new-comments-wrapper">
-            <h4>New Comments</h4>
+            <Link to={'/comments/all'}>
+                <h4>New Comments</h4>
+            </Link>
             {makeCommentList()}
         </div>
     )

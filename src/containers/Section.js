@@ -2,8 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import history from 'common/history';
 import DefaultRoute from 'containers/DefaultRoute';
-import { Home, About, Board, Post, Album, Photo, Docu, SignUp, LogIn, MyPage, UserPage } from './pages';
-import AllPosts from './AllPosts/AllPosts';
+import { Home, About, Board, Post, Album, Photo, Docu, SignUp, LogIn, MyPage, UserPage, AllPosts, AllComments } from './pages';
 
 const TAG = 'SECTION';
 
@@ -62,6 +61,7 @@ class Section extends React.Component {
                     <DefaultRoute path="/mypage/:index" component={MyPage} />
                     <DefaultRoute path="/userpage/:uuid" component={UserPage} />
                     <DefaultRoute path="/posts/all" component={AllPosts} />
+                    <DefaultRoute path="/comments/all" component={AllComments} />
                     <DefaultRoute component={Home} />
                 </Switch>
                 {

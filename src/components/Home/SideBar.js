@@ -8,7 +8,7 @@ const SideBar = () => {
     return (
         <div className="side-right">
             <div className="side-bar-wrapper">
-                <a href="http://www.weather.go.kr/weather/main.jsp" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.kma.go.kr" target="_blank" rel="noopener noreferrer">
                     <img src={icon_weather} alt="weather" />
                 </a>
                 <a href="https://stellarium-web.org/" target="_blank" rel="noopener noreferrer">

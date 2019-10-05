@@ -18,8 +18,8 @@ const HomeService = {
         return AaaService.get(`home/comments`);
     },
 
-    retrieveAllComments: function () {
-        return AaaService.get(`home/comments/all`);
+    retrieveAllComments: function (pageIdx) {
+        return AaaService.get(`home/comments/all?page=${pageIdx}`);
     },
 
     retrieveRecentMemory: function () {

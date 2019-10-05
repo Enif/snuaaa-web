@@ -149,7 +149,10 @@
         border-bottom-right-radius: 15px;
         display: flex;
         justify-content: center;
-
+        ::-webkit-scrollbar {
+            display: none;
+        }
+    
         &::after {
             content: '';
             position: absolute;
