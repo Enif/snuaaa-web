@@ -3,6 +3,7 @@ import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import * as service from 'services';
 import ContentStateEnum from 'common/ContentStateEnum';
+import Comment from 'containers/Comment';
 import Loading from 'components/Common/Loading';
 import PostComponent from 'components/Post/PostComponent';
 import EditPost from 'components/Post/EditPost';
@@ -148,7 +149,7 @@ class Post extends React.Component {
     render() {
         console.log(`[${TAG}] render..`);
         const { post_id, likeInfo, postState, editingPostData } = this.state;
-        const { my_id } = this.props;
+        const { my_id, my_level } = this.props;
 
         return (
             <>
@@ -173,6 +174,10 @@ class Post extends React.Component {
                                         likePost={this.likePost}
                                         setPostState={this.setPostState}
                                         deletePost={this.deletePost} />
+                                    {
+                                        (my_level > 0) &&
+                                        <Comment parent_id={this.postData.content.content_id} />
+                                    }
                                 </>
 
                             )
@@ -204,7 +209,8 @@ class Post extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        my_id: state.authentication.user_id
+        my_id: state.authentication.user_id,
+        my_level: state.authentication.level
     }
 }
 

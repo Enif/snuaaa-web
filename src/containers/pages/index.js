@@ -10,3 +10,5 @@ export { default as Docu } from './Document';
 export { default as LogIn } from './LogIn';
 export { default as MyPage } from './MyPage';
 export { default as UserPage } from './UserPage';
+export { default as AllComments } from './AllComments';
+export { default as AllPosts } from './AllPosts';

@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import { convertDate } from 'utils/convertDate';
 
-const NewPosts = ({posts}) => {
+const NewPosts = ({ posts }) => {
 
     const makePostList = () => {
         return posts.map(post => {
@@ -27,9 +27,11 @@ const NewPosts = ({posts}) => {
         })
     }
 
-    return(
+    return (
         <div className="new-posts-wrapper">
-            <h4>New Posts</h4>
+            <Link to={'/posts/all'}>
+                <h4>New Posts</h4>
+            </Link>
             {makePostList()}
         </div>
     )

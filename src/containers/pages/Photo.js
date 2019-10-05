@@ -81,6 +81,13 @@ class Photo extends React.Component {
             })
             .catch((err) => {
                 console.error(err);
+                if (err.response && err.response.data && err.response.data.code === 4001) {
+                    alert("권한이 없습니다.")
+                    history.goBack();
+                }
+                else {
+                    this.setPostState(ContentStateEnum.ERROR);
+                }
             })
     }
 

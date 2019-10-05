@@ -41,13 +41,20 @@
         margin-right: 20px;
         margin: 10px 0px;
         display: flex;
+        align-items: center;
     }
     .docu-category-list-wrapper {
         display: flex;
         margin: 15px 0px;
-        // flex-wrap: wrap;s
+        align-items: center;
+        .docu-category-unit-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+        }
         .category-unit {
             flex-shrink: 0;
+            // margin: 10px 0px;
+            padding: 8px 0px;
             input {
                 display: none;
             }

@@ -107,7 +107,6 @@ const PostComponent = ({ postData, my_id, likeInfo, fileInfo, likePost, setPostS
                     </div>
                 </div>
             </div>
-            <Comment parent_id={content.content_id} />
         </div>
     )
 }
