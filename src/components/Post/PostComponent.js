@@ -52,7 +52,7 @@ const PostComponent = ({ postData, my_id, likeInfo, fileInfo, likePost, setPostS
         <div className="post-wrapper">
             <div className="post-title">
                 {/* <Link to={`/board/${content.board_id}`}> */}
-                    <i className="material-icons pointer post-title-back" onClick={() => history.goBack()}>keyboard_backspace</i>
+                <i className="material-icons pointer post-title-back" onClick={() => history.goBack()}>keyboard_backspace</i>
                 {/* </Link> */}
                 <h5>{content.title}</h5>
                 {
@@ -66,8 +66,14 @@ const PostComponent = ({ postData, my_id, likeInfo, fileInfo, likePost, setPostS
                 <div className="post-author">
                     {user.nickname}
                 </div>
-                <div className="post-date">
+                <div className="post-date-created">
                     {convertFullDate(content.createdAt)}
+                    {
+                        content.updatedAt &&
+                        <div className="post-date-updated">
+                            {convertFullDate(content.updatedAt)} Updated
+                        </div>
+                    }
                 </div>
             </div>
             <div className="post-content">
