@@ -40,6 +40,25 @@
         justify-content: space-between;
         padding: 10px 23px;
     }
+    .post-date-created {
+        position: relative;
+        .post-date-updated {
+            display: none;
+        }
+        &:hover {
+            .post-date-updated {
+                position: absolute;
+                right: -160px;
+                top: -10px;
+                display: block;
+                width: 150px;
+                padding: 5px 10px;
+                border-radius: 5px;
+                background-color: $color_gray4;
+
+            }
+        }
+    }
     .post-content {
         padding: 0.5rem;
         border: 2px solid #E8E8E8;

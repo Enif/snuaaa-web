@@ -108,6 +108,9 @@ class PostBoard extends React.Component {
                             return (
                                 <div className="board-wrapper postboard-wrapper">
                                     <BoardName board_id={boardInfo.board_id} board_name={boardInfo.board_name} />
+                                    <div className="board-desc">
+                                        {boardInfo.board_desc}
+                                    </div>
                                     {
                                         boardState === BoardStateEnum.READY &&
                                         <>

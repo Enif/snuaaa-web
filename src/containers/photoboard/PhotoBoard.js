@@ -19,7 +19,10 @@ class PhotoBoard extends React.Component {
 
         return (
             <div className="board-wrapper photoboard-wrapper">
-                <BoardName board_id={board_id} board_name={boardInfo.board_name}/>
+                <BoardName board_id={board_id} board_name={boardInfo.board_name} />
+                <div className="board-desc">
+                    {boardInfo.board_desc}
+                </div>
                 {(() => {
                     if (board_id === 'brd31') {
                         return (
