@@ -21,6 +21,12 @@ const UserService = {
 
     findPw: function(data) {
         return AaaService.post(`userinfo/find/pw`, data)
+    },
+
+    searchMini: function(name) {
+        if(name) {
+            return AaaService.get(`userinfo/search/mini?name=${name}`)
+        }
     }
 }
 

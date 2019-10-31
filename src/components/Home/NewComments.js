@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import { convertDate } from 'utils/convertDate';
+import history from 'common/history';
 
 const NewComments = ({ comments }) => {
 
@@ -17,7 +18,10 @@ const NewComments = ({ comments }) => {
             else if (contentInfo.type === "PH") {
                 linkTo = {
                     pathname: `/photo/${comment.parent_id}`,
-                    state: { modal: true }
+                    state: {
+                        modal: true,
+                        backgroundLocation: history.location
+                    }
                 }
             }
             else if (contentInfo.type === "DO") {

@@ -1,26 +1,28 @@
 import React from 'react';
-import CreatePhotoInfo from 'components/Photo/CreatePhotoInfo';
+import CreateExhibitPhotoInfo from 'components/ExhibitBoard/CreateExhibitPhotoInfo';
 import ThumbnailList from 'components/Album/ThumbnailList';
 import PreviewImage from 'components/Album/PreviewImage';
 
-const CreatePhotoComponent = ({ handleChange, handleDate, uploadFile, clickTag, imgUrls, setImgIdx, removeImg, checkForm,
-    tags, togglePopUp,
-    imgIdx, selectedTags, title, text, date, location, camera, lens, focal_length, f_stop, exposure_time, iso, btnDisabled }) => {
+const CreateExhibitPhotoComponent = ({ handleChange, handleDate, handlePhotographer, selectPhotographer, removePhotographer,
+    uploadFile, clickTag, imgUrls, setImgIdx, removeImg, checkForm,
+    tags, togglePopUp, imgIdx, selectedTags,
+    title, text, order, photographer, date, location, camera, lens, focal_length, f_stop, exposure_time, iso,
+    searchUsers, btnDisabled }) => {
 
 
     const makeTagList = () => {
-            const tagList = tags.map((tag) => {
-                let labelClassName = (tag.tag_type === 'M') ? 'tag-label-1' : 'tag-label-2';
-                return (
-                    <div className="tag-unit" key={tag.tag_id} >
-                        <input type="checkbox" id={"crt_" + tag.tag_id} checked={selectedTags.includes(tag.tag_id)}
-                            onChange={clickTag} />
-                        <label className={labelClassName} htmlFor={"crt_" + tag.tag_id}># {tag.tag_name}</label>
-                    </div>
-                )
-            })
-            return tagList;
-        }
+        const tagList = tags.map((tag) => {
+            let labelClassName = (tag.tag_type === 'M') ? 'tag-label-1' : 'tag-label-2';
+            return (
+                <div className="tag-unit" key={tag.tag_id} >
+                    <input type="checkbox" id={"crt_" + tag.tag_id} checked={selectedTags.includes(tag.tag_id)}
+                        onChange={clickTag} />
+                    <label className={labelClassName} htmlFor={"crt_" + tag.tag_id}># {tag.tag_name}</label>
+                </div>
+            )
+        })
+        return tagList;
+    }
 
     return (
         <div className="crt-photo-popup">
@@ -56,9 +58,21 @@ const CreatePhotoComponent = ({ handleChange, handleDate, uploadFile, clickTag, 
                                                     {makeTagList()}
                                                 </div>}
 
-                                            <CreatePhotoInfo title={title} text={text} date={date} location={location}
-                                                camera={camera} lens={lens} focal_length={focal_length} f_stop={f_stop}
-                                                exposure_time={exposure_time} iso={iso} handleChange={handleChange} handleDate={handleDate} />
+                                            <CreateExhibitPhotoInfo
+                                                title={title}
+                                                text={text}
+                                                order={order}
+                                                photographer={photographer}
+                                                date={date} location={location}
+                                                camera={camera} lens={lens}
+                                                focal_length={focal_length} f_stop={f_stop}
+                                                exposure_time={exposure_time} iso={iso}
+                                                searchUsers={searchUsers}
+                                                handleChange={handleChange}
+                                                handleDate={handleDate}
+                                                handlePhotographer={handlePhotographer}
+                                                selectPhotographer={selectPhotographer}
+                                                removePhotographer={removePhotographer} />
                                         </>
                                     )
                                 }
@@ -80,4 +94,4 @@ const CreatePhotoComponent = ({ handleChange, handleDate, uploadFile, clickTag, 
     )
 }
 
-export default CreatePhotoComponent;
+export default CreateExhibitPhotoComponent;

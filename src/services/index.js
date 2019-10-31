@@ -5,7 +5,6 @@ const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 axios.defaults.headers.common['Authorization'] = 'Bearer ' + getToken();
 
-
 export const AaaService = {
     
     get: function(url) {

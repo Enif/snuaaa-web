@@ -2,33 +2,31 @@ import React from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import * as service from 'services'
+import ExhibitPhotoService from 'services/ExhibitPhotoService';
+import ContentService from 'services/ContentService';
 import Loading from 'components/Common/Loading';
 import ContentStateEnum from 'common/ContentStateEnum';
-import PhotoInfo from 'components/Photo/PhotoInfo';
-import EditPhoto from 'containers/Photo/EditPhoto';
 import Comment from 'containers/Comment';
 import history from 'common/history';
 import FullScreenPortal from 'containers/FullScreenPortal';
 import Image from 'components/Common/Image';
+import ExhibitPhotoComponent from '../../components/ExhibitBoard/ExhibitPhotoComponent';
+import EditExhibitPhoto from '../ExhibitBoard/EditExhibitPhoto';
 
 
-const TAG = 'PHOTO'
+const TAG = 'EXHIBITPHOTO'
 
-class Photo extends React.Component {
+class ExhibitPhoto extends React.Component {
 
     constructor(props) {
         console.log(`[${TAG}] constructor`);
 
         super(props);
-        this.photoInfo = undefined;
-        this.boardTagInfo = undefined;
-        this.albumInfo = undefined;
-        this.albumPhotosInfo = undefined;
+        this.contentInfo = undefined;
+        this.exhibitPhotosInfo = undefined;
         this.fullscreenRef = React.createRef();
         this.state = {
-            album_id: this.props.match.params.album_id,
-            photo_id: this.props.match.params.photo_id,
+            exhibitPhoto_id: this.props.match.params.exhibitPhoto_id,
             likeInfo: false,
             photoState: ContentStateEnum.LOADING,
             isFullscreen: false
@@ -46,8 +44,8 @@ class Photo extends React.Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         console.log(`[${TAG}] shouldComponentUpdate`)
-        if (this.state.photo_id !== nextState.photo_id) {
-            this.fetch(nextState.photo_id);
+        if (this.state.exhibitPhoto_id !== nextState.exhibitPhoto_id) {
+            this.fetch(nextState.exhibitPhoto_id);
             return false;
         }
         return true;
@@ -55,25 +53,22 @@ class Photo extends React.Component {
 
     static getDerivedStateFromProps(props, state) {
         return {
-            photo_id: props.match.params.photo_id,
+            exhibitPhoto_id: props.match.params.exhibitPhoto_id,
             // photoState: ContentStateEnum.LOADING
         }
     }
 
-    fetch = async (photo_id) => {
+    fetch = async (exhibitPhoto_id) => {
         this.setPhotoState({
             photoState: ContentStateEnum.LOADING
         })
-        if (!photo_id) {
-            photo_id = this.props.match.params.photo_id
+        if (!exhibitPhoto_id) {
+            exhibitPhoto_id = this.props.match.params.exhibitPhoto_id
         }
-        await service.retrievePhoto(photo_id)
+        await ExhibitPhotoService.retrieveExhibitPhoto(exhibitPhoto_id)
             .then((res) => {
-                this.photoInfo = res.data.photoInfo;
-                // this.tagInfo = res.data.tagInfo;
-                this.albumInfo = res.data.photoInfo.album;
-                this.boardTagInfo = res.data.boardTagInfo
-                this.albumPhotosInfo = res.data.albumPhotosInfo;
+                this.contentInfo = res.data.exhibitPhotoInfo;
+                this.exhibitPhotosInfo = res.data.exhibitPhotosInfo;
                 this.setState({
                     likeInfo: res.data.likeInfo,
                     photoState: ContentStateEnum.READY
@@ -91,29 +86,6 @@ class Photo extends React.Component {
             })
     }
 
-    setAlbumThumbnail = async () => {
-        const { albumInfo } = this;
-        const { photo_id } = this.state;
-
-        const data = {
-            tn_photo_id: photo_id
-        }
-
-        if (!albumInfo || !albumInfo.content_id) {
-            alert("섬네일로 설정할 수 없습니다.")
-        }
-        else {
-            await service.updateAlbumThumbnail(albumInfo.content_id, data)
-                .then((res) => {
-                    console.log('success')
-                })
-                .catch((err) => {
-                    console.error(err);
-                    alert("섬네일 설정 실패")
-                })
-        }
-    }
-
     setPhotoState = (state) => {
         this.setState({
             photoState: state
@@ -121,32 +93,32 @@ class Photo extends React.Component {
     }
 
     moveToPhoto = (direction) => {
-        const { photoInfo, albumPhotosInfo } = this;
-        if (albumPhotosInfo && albumPhotosInfo.length > 0) {
+        const { contentInfo, exhibitPhotosInfo } = this;
+        if (exhibitPhotosInfo && exhibitPhotosInfo.length > 0) {
             let index = -1;
-            for (let i = 0; i < albumPhotosInfo.length; i++) {
-                if (albumPhotosInfo[i].content_id === photoInfo.content_id) {
+            for (let i = 0; i < exhibitPhotosInfo.length; i++) {
+                if (exhibitPhotosInfo[i].content_id === contentInfo.content_id) {
                     index = i;
                     break;
                 }
             }
             if (direction === 1) {
-                if (index < albumPhotosInfo.length - 1 && index > -1) {
+                if (index < exhibitPhotosInfo.length - 1 && index > -1) {
                     history.replace({
-                        pathname: `/photo/${albumPhotosInfo[index + 1].content_id}`,
+                        pathname: `/exhibitPhoto/${exhibitPhotosInfo[index + 1].content_id}`,
                         state: {
-                            modal: true,
+                            exhibitPhotoModal: true,
                             backgroundLocation: history.location.state.backgroundLocation
                         }
                     })
                 }
             }
             else if (direction === -1) {
-                if (index < albumPhotosInfo.length && index > 0) {
+                if (index < exhibitPhotosInfo.length && index > 0) {
                     history.replace({
-                        pathname: `/photo/${albumPhotosInfo[index - 1].content_id}`,
+                        pathname: `/exhibitPhoto/${exhibitPhotosInfo[index - 1].content_id}`,
                         state: {
-                            modal: true,
+                            exhibitPhotoModal: true,
                             backgroundLocation: history.location.state.backgroundLocation
                         }
                     })
@@ -205,13 +177,13 @@ class Photo extends React.Component {
     }
 
     likePhoto = async () => {
-        await service.likeObject(this.state.photo_id)
+        await ContentService.likeContent(this.state.exhibitPhoto_id)
             .then(() => {
                 if (this.state.likeInfo) {
-                    this.photoInfo.contentPhoto.like_num--;
+                    this.contentInfo.like_num--;
                 }
                 else {
-                    this.photoInfo.contentPhoto.like_num++;
+                    this.contentInfo.like_num++;
                 }
                 this.setState({
                     likeInfo: !this.state.likeInfo
@@ -224,9 +196,10 @@ class Photo extends React.Component {
 
     deletePhoto = async () => {
 
+        const { exhibitPhoto_id } = this.state;
         let goDrop = window.confirm("정말로 삭제하시겠습니까? 삭제한 게시글은 다시 복원할 수 없습니다.");
         if (goDrop) {
-            await service.deletePhoto(this.state.photo_id)
+            await ExhibitPhotoService.deleteExhibitPhoto(exhibitPhoto_id)
                 .then(() => {
                     alert("게시글이 삭제되었습니다.");
                     this.setPhotoState(ContentStateEnum.DELETED);
@@ -241,33 +214,24 @@ class Photo extends React.Component {
     render() {
         const { likeInfo, photoState, isFullscreen } = this.state;
         const { my_id } = this.props;
-        const { photoInfo, setPhotoState, likePhoto, deletePhoto, setAlbumThumbnail, closePhoto } = this;
-        let albumInfo = photoInfo && photoInfo.album;
-        let userInfo = photoInfo && photoInfo.contentPhoto.user;
+        const { contentInfo, setPhotoState, likePhoto, deletePhoto, closePhoto } = this;
 
-        let backLink;
-        if (!albumInfo) {
-            backLink = `/board/brd32`;
-        }
-        else {
-            backLink = `/album/${albumInfo.content_id}`
-        }
+        let exhibitPhotoInfo = contentInfo && contentInfo.exhibitPhoto;
+        let exhibitionInfo = contentInfo
+            && contentInfo.exhibitPhoto
+            && contentInfo.exhibitPhoto.exhibitionContent
+            && contentInfo.exhibitPhoto.exhibitionContent.exhibition;
 
-        console.log(this.state.photo_id);
         return (
             <FullScreenPortal>
                 <div className="enif-modal-wrapper photo-popup" onClick={closePhoto}>
-                    {/* <div className="enif-modal-close">
-                        <i className="material-icons pointer">clear</i>
-                    </div> */}
                     <div className="photo-section-wrapper" onClick={(e) => e.stopPropagation()}>
-                        {/* <BoardName board_id={this.photoInfo.contentPhoto.board.board_id} board_name={this.photoInfo.contentPhoto.board.board_name} /> */}
                         <div className="photo-alb-title-wrp">
-                            {/* <i className="photo-alb-title-back material-icons pointer" onClick={() => history.goBack()}>keyboard_backspace</i> */}
-                            <Link className="photo-alb-title" to={backLink}>
-                                <i className="material-icons">photo_library</i>
-                                <h5>{albumInfo ? albumInfo.title : "기본앨범"}</h5>
-                            </Link>
+                            <div className="photo-alb-title">
+                                <h5>{exhibitionInfo ? exhibitionInfo.slogan : "slogan"}</h5>&nbsp;
+                                <i className="material-icons">image</i>
+                                {exhibitPhotoInfo && exhibitPhotoInfo.order}
+                            </div>
                             <div className="enif-modal-close" onClick={closePhoto}>
                                 <i className="material-icons pointer">clear</i>
                             </div>
@@ -278,7 +242,7 @@ class Photo extends React.Component {
                                     <div className="photo-move-action prev" onClick={() => this.moveToPhoto(-1)}>
                                         <i className="material-icons pointer">keyboard_arrow_left</i>
                                     </div>
-                                    <Image imgSrc={this.photoInfo && this.photoInfo.file_path} />
+                                    <Image imgSrc={exhibitPhotoInfo && exhibitPhotoInfo.file_path} />
                                     <div className="photo-move-action next" onClick={() => this.moveToPhoto(1)}>
                                         <i className="material-icons pointer">keyboard_arrow_right</i>
                                     </div>
@@ -288,23 +252,22 @@ class Photo extends React.Component {
                                 </div>
                             </div>
                             <div className="photo-section-right">
-                                <PhotoInfo
-                                    photoInfo={this.photoInfo}
+                                <ExhibitPhotoComponent
+                                    contentInfo={contentInfo}
                                     likeInfo={likeInfo}
                                     my_id={my_id}
                                     setPhotoState={setPhotoState}
+                                    editPhoto={() => setPhotoState(ContentStateEnum.EDITTING)}
                                     likePhoto={likePhoto}
-                                    deletePhoto={deletePhoto}
-                                    setAlbumThumbnail={setAlbumThumbnail} />
+                                    deletePhoto={deletePhoto} />
 
-                                <Comment parent_id={this.state.photo_id} />
+                                <Comment parent_id={this.state.exhibitPhoto_id} />
                             </div>
                         </div>
                     </div>
                 </div>
 
                 {
-
                     (() => {
                         if (photoState === ContentStateEnum.LOADING) {
                             return <Loading />
@@ -312,17 +275,20 @@ class Photo extends React.Component {
                         else if (photoState === ContentStateEnum.EDITTING) {
                             return (
                                 <div className="enif-popup photo-popup">
-                                    <EditPhoto photoInfo={this.photoInfo} boardTagInfo={this.boardTagInfo} fetch={this.fetch} setPhotoState={this.setPhotoState} />
+                                    <EditExhibitPhoto
+                                        contentInfo={contentInfo}
+                                        fetch={this.fetch}
+                                        setPhotoState={this.setPhotoState} />
                                 </div>
                             )
                         }
                         else if (photoState === ContentStateEnum.DELETED) {
                             let backLink;
-                            if (!this.albumInfo) {
-                                backLink = `/board/brd32`;
+                            if (!exhibitionInfo) {
+                                backLink = `/board/brd41`;
                             }
                             else {
-                                backLink = `/album/${this.albumInfo.content_id}`
+                                backLink = `/exhibition/${exhibitionInfo.content_id}`
                             }
                             return (
                                 <Redirect to={backLink} />
@@ -344,4 +310,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, null)(Photo);
+export default connect(mapStateToProps, null)(ExhibitPhoto);

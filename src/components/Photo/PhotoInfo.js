@@ -11,16 +11,17 @@ const PhotoInfo = ({ photoInfo, likeInfo, my_id,
 
     let content = photoInfo && photoInfo.contentPhoto;
     let userInfo = photoInfo && photoInfo.contentPhoto.user;
-    let tagInfo = photoInfo && photoInfo.contentPhoto.tags;
+    let tagInfo = photoInfo && photoInfo.contentPhoto.contentTags;
 
     const makeTagList = () => {
-        let tagList = tagInfo.map((tag) => {
-            let tagClassName = (tag.tag_type === 'M') ? 'tag-type-1' : 'tag-type-2';
-            return (
-                <div key={tag.tag_id} className={`tag-unit ${tagClassName}`}># {tag.tag_name}</div>
-            )
-        })
-        return tagList;
+        if (tagInfo) {
+            return tagInfo.map((tag) => {
+                let tagClassName = (tag.tag_type === 'M') ? 'tag-type-1' : 'tag-type-2';
+                return (
+                    <div key={tag.tag_id} className={`tag-unit ${tagClassName}`}># {tag.tag_name}</div>
+                )
+            })
+        }
     }
 
     return (

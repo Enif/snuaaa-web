@@ -14,7 +14,9 @@ const AllPostList = ({ posts }) => {
                 return (
                     <div className="post-list" key={contentInfo.content_id}>
                         <div className="post-list-unit post-list-unit-4">
-                            {boardInfo.board_name}
+                            <Link to={`/board/${boardInfo.board_id}`}>
+                                {boardInfo.board_name}
+                            </Link>
                         </div>
                         <div className="post-list-unit-left with-boardname">
                             <div className="post-list-unit-title">

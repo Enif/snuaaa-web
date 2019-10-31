@@ -14,21 +14,23 @@
     }
 }
 
+.background-star {
+    color: #ffd45f;
+    font-size: 17px;
+    letter-spacing: 15px;
+    overflow: hidden;
+    flex-shrink: 1;
+    &.solo {
+        flex-shrink: 0;
+        letter-spacing: 10px;
+        padding-left: 5px;
+    }
+}
+
+
 .postboard-title-wrapper {
     display: flex;
     padding: 20px 0px;
-    .background-star {
-        color: #ffd45f;
-        font-size: 17px;
-        letter-spacing: 15px;
-        overflow: hidden;
-        flex-shrink: 1;
-        &.solo {
-            flex-shrink: 0;
-            letter-spacing: 10px;
-            padding-left: 5px;
-        }
-    }
     a {
         flex-shrink: 0;
     }
@@ -133,7 +135,9 @@
     }
     .post-list-unit-4 {
         flex-basis: 90px;
-        color: #7f7f7f;
+        a {
+            color: #7f7f7f;
+        }
     }
 
     .post-list-unit-right {
