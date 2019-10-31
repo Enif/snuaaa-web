@@ -48,8 +48,12 @@ class App extends Component {
 
         if (!accessToken) {
             //토큰이 없으면 logout
-            console.log(window.location.pathname);
-            history.push(window.location.pathname);
+            console.log(history.location.pathname);
+            history.replace({
+                pathname: '/login',
+                state: { accessPath: history.location.pathname}
+            })
+            // history.push(window.location.pathname);
             this.props.onLogout();
             this.setState({
                 isReady: true

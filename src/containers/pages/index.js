@@ -7,6 +7,9 @@ export { default as Post } from './Post';
 export { default as Album } from './Album';
 export { default as Photo } from './Photo';
 export { default as Docu } from './Document';
+export { default as Exhibition } from './Exhibition';
+export { default as ExhibitPhoto } from './ExhibitPhoto';
+
 export { default as LogIn } from './LogIn';
 export { default as MyPage } from './MyPage';
 export { default as UserPage } from './UserPage';

@@ -96,7 +96,13 @@ class LogIn extends React.Component {
                 })
                 const { token, user_id, nickname, level, profile_path, autoLogin } = res.data;
                 this.props.onLogin(user_id, nickname, level, profile_path, token, autoLogin);
-                history.push('/');
+
+                if(history.location.state && history.location.state.accessPath) {
+                    history.push(history.location.state.accessPath)
+                }
+                else {
+                    history.push('/');
+                }
             })
             .catch((err) => {
                 console.error(err);
