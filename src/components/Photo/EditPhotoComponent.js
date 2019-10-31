@@ -1,5 +1,5 @@
 import React from 'react';
-import CreatePhotoInfo from 'components/Album/CreatePhotoInfo';
+import CreatePhotoInfo from 'components/Photo/CreatePhotoInfo';
 import Image from 'components/Common/Image';
 import ContentsStateEnum from 'common/ContentStateEnum';
 

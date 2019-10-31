@@ -1,5 +1,4 @@
 import React from 'react';
-import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 
 import * as service from 'services';
@@ -9,6 +8,7 @@ import Loading from 'components/Common/Loading';
 import PopUp from 'components/Common/PopUp';
 import FullScreenPortal from 'containers/FullScreenPortal';
 import history from 'common/history';
+import FindIdPw from '../Login/FindIdPw';
 
 const TAG = 'LOGIN'
 
@@ -26,7 +26,7 @@ class LogIn extends React.Component {
             isLoading: false,
             popUp: false,
             errPopUp: false,
-            toSignUp: false,
+            findPopUp: false,
             autoLogin: false,
         }
         this.popupTitle = undefined;
@@ -58,11 +58,9 @@ class LogIn extends React.Component {
         })
     }
 
-    redirectToSignUp = () => {
-        console.log('[%s] redirectToSignUp', TAG);
-        this.props.history.push('/login');
+    setFindPopUp = (state) => {
         this.setState({
-            toSignUp: true
+            findPopUp: state
         })
     }
 
@@ -98,7 +96,13 @@ class LogIn extends React.Component {
                 })
                 const { token, user_id, nickname, level, profile_path, autoLogin } = res.data;
                 this.props.onLogin(user_id, nickname, level, profile_path, token, autoLogin);
-                history.goBack();
+
+                if(history.location.state && history.location.state.accessPath) {
+                    history.push(history.location.state.accessPath)
+                }
+                else {
+                    history.push('/');
+                }
             })
             .catch((err) => {
                 console.error(err);
@@ -124,6 +128,7 @@ class LogIn extends React.Component {
                 const { token, user_id, nickname, level, profile_path, autoLogin } = res.data;
 
                 this.props.onLogin(user_id, nickname, level, profile_path, token, autoLogin);
+                history.push('/');
             })
             .catch((err) => {
                 console.error(err);
@@ -135,9 +140,8 @@ class LogIn extends React.Component {
     }
 
     render() {
-
         const { loginState } = this.props
-        const { isLoading, toSignUp, popUp, errPopUp, autoLogin } = this.state
+        const { isLoading, popUp, errPopUp, findPopUp, autoLogin } = this.state
         const popUpTitle = '자동 로그인 기능을 사용하시겠습니까?';
         const popUpText = `자동 로그인 사용시 다음 접속부터는 로그인을 하실 필요가 없습니다.\n
             단, 게임방, 학교 등 공공장소에서 이용 시 개인정보가 유출될 수 있으니 주의해주세요.`;
@@ -146,13 +150,19 @@ class LogIn extends React.Component {
 
         return (
             <>
-                {loginState && <Redirect to='/' />}
-                {toSignUp && <Redirect to='/signup' />}
+                {/* {loginState && <Redirect to='/' />} */}
                 {isLoading && <Loading />}
-                {errPopUp &&
+                {
+                    findPopUp
+                    && <FindIdPw
+                        cancel={() => this.setFindPopUp(false)}
+                    />
+                }
+                {
+                    errPopUp &&
                     <PopUp
                         contents={errText}
-                    />}
+                    />
                 }
                 {popUp &&
                     <PopUp
@@ -172,7 +182,7 @@ class LogIn extends React.Component {
                         handleChange={this.handleChange}
                         userLogIn={this.userLogIn}
                         guestLogIn={this.guestLogIn}
-                        redirectToSignUp={this.redirectToSignUp}
+                        openFindPopUp={() => this.setFindPopUp(true)}
                         checkAuto={this.checkAuto} />
                 </FullScreenPortal>
             </>

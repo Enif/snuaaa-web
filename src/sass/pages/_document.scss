@@ -41,13 +41,20 @@
         margin-right: 20px;
         margin: 10px 0px;
         display: flex;
+        align-items: center;
     }
     .docu-category-list-wrapper {
         display: flex;
         margin: 15px 0px;
-        // flex-wrap: wrap;s
+        align-items: center;
+        .docu-category-unit-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+        }
         .category-unit {
             flex-shrink: 0;
+            // margin: 10px 0px;
+            padding: 8px 0px;
             input {
                 display: none;
             }
@@ -146,12 +153,14 @@
     .docu-generation {
         flex-basis: 40px;
         display: flex;
+        flex-shrink: 0;
         justify-content: center;
         // align-items: center;
     }
     .docu-category {
         flex-basis: 55px;
         display: flex;
+        flex-shrink: 0;
         justify-content: center;
     }
     .docu-memo {
@@ -164,6 +173,7 @@
     .docu-download {
         flex-basis: 80px;
         display: flex;
+        flex-shrink: 0;
         justify-content: center;
         a {
             color: $color_gray2;

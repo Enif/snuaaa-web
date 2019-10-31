@@ -1,11 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import * as service from 'services'
 import Loading from 'components/Common/Loading';
-import PostList from 'components/Board/PostList';
+import PostList from 'components/Post/PostList';
 import Paginator from 'components/Common/Paginator';
 import CreatePost from 'containers/PostBoard/CreatePost';
 import BoardStateEnum from 'common/BoardStateEnum';
 import history from 'common/history';
+import BoardName from '../../components/Board/BoardName';
 
 const TAG = 'POSTBOARD'
 const POSTROWNUM = 10;
@@ -92,7 +94,7 @@ class PostBoard extends React.Component {
     render() {
         console.log(`[${TAG}] render.. `)
 
-        const { board_id, boardInfo } = this.props;
+        const { board_id, boardInfo, level } = this.props;
         const { pageIdx, boardState } = this.state;
 
         return (
@@ -105,23 +107,24 @@ class PostBoard extends React.Component {
                         else if (boardState === BoardStateEnum.READY || boardState === BoardStateEnum.WRITING) {
                             return (
                                 <div className="board-wrapper postboard-wrapper">
-                                    <div className="postboard-title-wrapper">
-                                        <div className="background-star">★</div>
-                                        <h2>{boardInfo.board_name}</h2>
-                                        <div className="background-star">★★★★★★★★★★★★★★★★★★★★★★</div>
+                                    <BoardName board_id={boardInfo.board_id} board_name={boardInfo.board_name} />
+                                    <div className="board-desc">
+                                        {boardInfo.board_desc}
                                     </div>
                                     {
                                         boardState === BoardStateEnum.READY &&
                                         <>
-
                                             {this.makeCategoryList()}
                                             <PostList
                                                 posts={this.posts}
                                                 clickCrtBtn={() => this.setBoardState(BoardStateEnum.WRITING)} />
                                             {this.postCount > 0 && <Paginator pageIdx={pageIdx} pageNum={Math.ceil(this.postCount / POSTROWNUM)} clickPage={this.clickPage} />}
-                                            <button className="enif-btn-circle enif-pos-sticky" onClick={() => this.setBoardState(BoardStateEnum.WRITING)}>
-                                                <i className="material-icons">create</i>
-                                            </button>
+                                            {
+                                                level >= boardInfo.lv_write &&
+                                                <button className="enif-btn-circle enif-pos-sticky" onClick={() => this.setBoardState(BoardStateEnum.WRITING)}>
+                                                    <i className="material-icons">create</i>
+                                                </button>
+                                            }
                                         </>
                                     }
                                     {
@@ -144,4 +147,10 @@ class PostBoard extends React.Component {
     }
 }
 
-export default PostBoard
+const mapStateToProps = (state) => {
+    return {
+        level: state.authentication.level,
+    }
+}
+
+export default connect(mapStateToProps, null, null, {pure: false})(PostBoard);

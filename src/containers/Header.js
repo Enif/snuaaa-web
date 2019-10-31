@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import history from 'common/history';
 
 import { authLogout } from '../actions';
 import logo from '../assets/img/logo_white.png'
@@ -35,6 +36,15 @@ class Header extends React.Component {
         this.fetch();
     }
 
+    clickLogo = () => {
+        if (history.location.pathname === '/') {
+            window.location.reload();
+        }
+        else {
+            history.push('/');
+        }
+    }
+
     fetch = async () => {
         await service.retrieveBoards()
             .then((res) => {
@@ -49,17 +59,18 @@ class Header extends React.Component {
 
     render() {
 
-        const { loginState, level, profile_path } = this.props;
-        let { isShowPopupUser, boards } = this.state;
+        const { clickLogo } = this;
+        const { level, profile_path } = this.props;
+        const { isShowPopupUser, boards } = this.state;
         return (
             <>
                 <div id="aaa-top" className="main-header-wrapper">
                     <div className="main-header">
-                        <Link to="/">
-                            <div className="header-logo">
-                                <img src={logo} alt="logo" /><p>서울대학교 아마추어 천문회</p>
-                            </div>
-                        </Link>
+                        {/* <Link to="/"> */}
+                        <div className="header-logo" onClick={clickLogo}>
+                            <img src={logo} alt="logo" /><p>서울대학교 아마추어 천문회</p>
+                        </div>
+                        {/* </Link> */}
                         {
                             level > 0 &&
                             <div className="profile-img-wrapper">

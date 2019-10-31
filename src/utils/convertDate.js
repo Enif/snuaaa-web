@@ -48,5 +48,11 @@ export function convertTime(time) {
     if(time < 1000) {
         time = '0' + time;
     }
+    if(time < 100) {
+        time = '0' + time;
+    }
+    if(time < 10) {
+        time = '0' + time;
+    }
     return `${time.toString().substring(0, 2)}:${time.toString().substring(2)}`
 }

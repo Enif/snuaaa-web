@@ -14,7 +14,8 @@ class EditAlbum extends React.Component {
         this.state = {
             title: props.albumInfo.content.title,
             text: props.albumInfo.content.text,
-            checkedCategory: props.albumInfo.content.category_id
+            checkedCategory: props.albumInfo.content.category_id,
+            isPrivate: props.albumInfo.is_private
         }
     }
 
@@ -24,41 +25,28 @@ class EditAlbum extends React.Component {
         });
     }
 
-    // makeCategoryList = () => {
-    //     let CategoryList = this.props.categories.map((category) => {
-    //         let style = {
-    //             "border": `1px solid ${category.category_color}`,
-    //         }            
-    //         let style_selected = {
-    //             "border": `1px solid ${category.category_color}`,
-    //             "backgroundColor": category.category_color,
-    //             "color": "#eeeeee"
-    //         }
-    //         return (
-    //             <>
-    //                 <input type="radio" id={category.category_id} name="category" value={category.category_id}
-    //                 checked={this.state.checkedCategory === category.category_id} onChange={this.handleCategoryChange}/>
-    //                 <label htmlFor={category.category_id}
-    //                     style={this.state.checkedCategory === category.category_id ? style_selected : style}>{category.category_name}</label>
-    //             </>
-    //         )
-    //     })
-    //     return CategoryList;
-    // }
+    setIsPrivate = (isPrivate) => {
+        this.setState({
+            isPrivate: isPrivate
+        })
+    }
 
     updateAlbum = async () => {
 
-        if(!this.state.title) {
+        const { title, text, checkedCategory, isPrivate } = this.state;
+
+        if(!title) {
             alert("제목을 입력해 주세요")
         }
-        else if(this.props.categories && !this.state.checkedCategory) {
+        else if(this.props.categories && !checkedCategory) {
             alert("카테고리를 선택해 주세요")
         }
         else {
             let albumInfo = {
-                category_id: this.state.checkedCategory,
-                title: this.state.title,
-                text: this.state.text
+                category_id: checkedCategory,
+                title: title,
+                text: text,
+                is_private: isPrivate
             }
             
             await service.updateAlbum(this.props.album_id, albumInfo)
@@ -82,13 +70,15 @@ class EditAlbum extends React.Component {
 
     render() {
         console.log('[%s] render', TAG);
-        const { title, text, checkedCategory } = this.state;
+        const { title, text, checkedCategory, isPrivate } = this.state;
      
         return (
             <EditAlbumComponent
                 caption="앨범 수정"
                 title={title}
                 text={text}
+                isPrivate={isPrivate}
+                setIsPrivate={this.setIsPrivate}
                 checkedCategory={checkedCategory}
                 categories={this.props.categoryInfo}
                 handleCategory={this.handleCategoryChange}

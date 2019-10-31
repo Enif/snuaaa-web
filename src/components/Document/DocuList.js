@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Download from './Download'
 import DownloadFile from '../Post/DownloadFile';
 
 const DocuList = ({ documents }) => {
@@ -43,55 +42,20 @@ const DocuList = ({ documents }) => {
                 <>
                     {
                         files.map((file) => {
+
+                            let fileTypeClass = '';
+                            file.file_type === 'IMG' ? fileTypeClass = 'fa-file-image color-img'
+                                : file.file_type === 'DOC' ? fileTypeClass = 'fa-file-word color-doc'
+                                    : file.file_type === 'XLS' ? fileTypeClass = 'fa-file-excel color-xls'
+                                        : file.file_type === 'PDF' ? fileTypeClass = 'fa-file-pdf color-pdf'
+                                            : file.file_type === 'ZIP' ? fileTypeClass = 'fa-file-archive color-zip'
+                                                : fileTypeClass = 'fa-file-alt';
+
                             return (
                                 <DownloadFile key={file.file_id} content_id={file.parent_id} file_id={file.file_id}>
-                                    {/* <i className="material-icons">insert_drive_file</i> */}
-                                    {(() => {
-                                        if (file.file_type === 'IMG') {
-                                            return (
-                                                <i className="fas fa-file-image font-20 file-icon color-img">
-                                                    <div className="file-name">{file.original_name}</div>
-                                                </i>
-                                            )
-                                        }
-                                        else if (file.file_type === 'DOC') {
-                                            return (
-                                                <i className="fas fa-file-word font-20 file-icon color-doc">
-                                                    <div className="file-name">{file.original_name}</div>
-                                                </i>
-                                            )
-                                        }
-                                        else if (file.file_type === 'XLS') {
-                                            return (
-                                                <i className="fas fa-file-excel font-20 file-icon color-xls">
-                                                    <div className="file-name">{file.original_name}</div>
-                                                </i>
-                                            )
-                                        }
-                                        else if (file.file_type === 'PDF') {
-                                            return (
-                                                <i className="fas fa-file-pdf font-20 file-icon color-pdf">
-                                                    <div className="file-name">{file.original_name}</div>
-                                                </i>
-                                            )
-                                        }
-                                        else if (file.file_type === 'ZIP') {
-                                            return (
-                                                <i className="fas fa-file-archive font-20 file-icon color-zip">
-                                                    <div className="file-name">{file.original_name}</div>
-                                                </i>
-                                            )
-                                        }
-                                        else {
-                                            return (
-                                                <i className="fas fa-file-alt font-20 file-icon">
-                                                    <div className="file-name">{file.original_name}</div>
-                                                </i>
-                                            )
-                                        }
-                                    })()}
-
-                                    {/* {file.original_name} */}
+                                    <i className={`fas ${fileTypeClass} font-20 file-icon`}>
+                                        <div className="file-name">{file.original_name}</div>
+                                    </i>
                                 </DownloadFile>
                             )
                         })

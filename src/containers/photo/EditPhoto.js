@@ -23,8 +23,8 @@ class EditPhoto extends React.Component {
             f_stop: props.photoInfo.f_stop,
             exposure_time: props.photoInfo.exposure_time,
             iso: props.photoInfo.iso,
-            selectedTags: props.photoInfo.contentPhoto.tags &&
-                (props.photoInfo.contentPhoto.tags.map(tag => tag.tag_id)),
+            selectedTags: props.photoInfo.contentPhoto.contentTags &&
+                (props.photoInfo.contentPhoto.contentTags.map(tag => tag.tag_id)),
             photo_id: props.photoInfo.content_id,
             file_path: props.photoInfo.file_path,
             // uploadPhotos: [],

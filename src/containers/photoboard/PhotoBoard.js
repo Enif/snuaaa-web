@@ -2,6 +2,7 @@ import React from 'react';
 import Memory from './Memory';
 import AstroPhoto from './AstroPhoto';
 import Loading from 'components/Common/Loading';
+import BoardName from '../../components/Board/BoardName';
 
 const TAG = 'PHOTOBOARD'
 
@@ -18,6 +19,10 @@ class PhotoBoard extends React.Component {
 
         return (
             <div className="board-wrapper photoboard-wrapper">
+                <BoardName board_id={board_id} board_name={boardInfo.board_name} />
+                <div className="board-desc">
+                    {boardInfo.board_desc}
+                </div>
                 {(() => {
                     if (board_id === 'brd31') {
                         return (

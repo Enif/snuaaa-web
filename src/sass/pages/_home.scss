@@ -7,6 +7,10 @@
         display: flex;
         margin-top: 7px;
     }
+
+    .home-row-mobile {
+        display: none;
+    }
 }
 .side-left {
     position: absolute;
@@ -54,9 +58,14 @@
             box-shadow: inset -8px 0px 3px 0px $color-white ;
             background-color: #ffda0a;
         }
+        .moon-container {
+            height: 64px;
+            width: 64px;
+            position: relative;
+        }
     }
     h5 {
-        margin: 20px 0px 25px 0px;
+        margin: 20px 0px 5px 0px;
         font-size: 15px;
     }
     p {
@@ -69,7 +78,7 @@
     position: sticky;
     top: 70px;
     width: 80px;
-    height: 250px;
+    height: 285px;
     border-radius: 20px;
     padding: 20px 0px;
     background-color: $color-white;
@@ -140,7 +149,10 @@
         border-bottom-right-radius: 15px;
         display: flex;
         justify-content: center;
-
+        ::-webkit-scrollbar {
+            display: none;
+        }
+    
         &::after {
             content: '';
             position: absolute;
@@ -191,20 +203,23 @@
         padding: 12.5px 12px;
         border-top: 1px solid #E8E8E8;
         display: flex;
+        max-width: 100%;
         &:last-child {
             border-bottom: 1px solid #E8E8E8;
         }
         .new-post-boardname {
-            display: inline-block;
+            // display: inline-block;
             width: 25%;
+            flex-shrink: 0;
             a {
                 color: #A3A3A3;
             }
         }
         .new-post-title {
-            display: inline-block;
-            width: 55%;
-            flex-grow: 1;
+            // display: inline-block;
+            max-width: 45%;
+            // flex-basis: 25%;
+            flex-grow: 0;
             a {
                 color: #000000;
             }
@@ -216,8 +231,9 @@
             }
         }
         .new-post-date {
-            display: inline-block;
+            // display: inline-block;
             // width: 20%;
+            margin-left: auto;
             color: #A3A3A3;
         }
     }
@@ -336,6 +352,11 @@
             flex-direction: column;
             margin-top: 0;
         }
+        .home-row-mobile {
+            display: flex;
+            margin: 0.5rem 0;
+            padding: 0 0.7rem;
+        }
         .home-side-left {
             display: none;
             position: initial;
@@ -346,6 +367,77 @@
 
     .side-right {
         display: none;
+    }
+
+    .rise-set-mobile-wrapper {
+        background: #7193C4;
+        // width: 50%;
+        flex-basis: 50%;
+        flex-grow: 1;
+        padding: 0 0.3rem;
+        margin-right: 1.5%;
+        border-radius: 1rem;
+        color: $color-white;
+        display: flex;
+        align-items: center;
+        // height: 3.5rem;
+        // text-align: center;
+        .moon-phase-wrapper {
+            height: 3rem;
+            width: 3rem;
+            border-radius: 50%;
+            // margin: auto;
+            background-color: $color-white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .moon-phase {
+                height: 2.5rem;
+                width: 2.5rem;
+                border-radius: 50%;
+                box-shadow: inset -8px 0px 3px 0px $color-white ;
+                background-color: #ffda0a;
+            }
+            .moon-container {
+                height: 2.7rem;
+                width: 2.7rem;
+                position: relative;
+            }
+        }
+        .rise-set-desc {
+            padding: 0 0.5rem;
+            h5 {
+                font-weight: bold;
+                margin: 0.3rem 0;
+            }
+        }
+    }
+
+    .ext-link-mobile {
+        width: 50%;
+        // margin: 0 0.2rem;
+        display: flex;
+        flex-basis: 50%;
+        flex-shrink: 1;
+        // flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        .link-img {
+            width: 32%;
+            &::before {
+                content: '';
+                padding-top: 100%;
+                float: left;
+            }
+            img {
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+                border-radius: 1rem;
+                vertical-align: bottom;
+            }
+
+        }
     }
 
     .soundbox-wrapper {

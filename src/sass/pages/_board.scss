@@ -1,25 +1,42 @@
 .board-wrapper {
-    padding-top: 15px;
+    // padding-top: 15px;
     display: flex;
     flex-direction: column;
     height: 100%;
-    .postboard-title-wrapper {
-        display: flex;
-        padding: 20px 0px;
-        .background-star {
-            color: #ffd45f;
-            font-size: 17px;
-            letter-spacing: 15px;
-            overflow: hidden;
-            flex-shrink: 1;
-        }
-        h2 {
-            flex-shrink: 0;
-            padding: 0px 17px 0px 10px;
-        }
-    }
     .enif-btn-circle {
         margin-top: auto;
+    }
+    .board-desc {
+        padding: 0px 10px;
+        font-size: 14px;
+        color: $color-gray2;
+        text-align: center;
+    }
+}
+
+.background-star {
+    color: #ffd45f;
+    font-size: 17px;
+    letter-spacing: 15px;
+    overflow: hidden;
+    flex-shrink: 1;
+    &.solo {
+        flex-shrink: 0;
+        letter-spacing: 10px;
+        padding-left: 5px;
+    }
+}
+
+
+.postboard-title-wrapper {
+    display: flex;
+    padding: 20px 0px;
+    a {
+        flex-shrink: 0;
+    }
+    h2 {
+        flex-shrink: 0;
+        padding: 0px 17px 0px 10px;
     }
 }
 
@@ -37,15 +54,21 @@
         padding: 13px 0px;
         display: flex;
         justify-content: center;
+        flex-grow: 0;
+        flex-shrink: 0;
     }
     .post-list-header-1 {
-        flex-basis: 50%;
+        // flex-basis: 50%;
+        flex-grow: 1;
     }
     .post-list-header-2 {
-        flex-basis: 15%;
+        flex-basis: 85px;
     }
     .post-list-header-3 {
-        flex-basis: 8%;
+        flex-basis: 45px;
+    }
+    .post-list-header-4 {
+        flex-basis: 90px;
     }
 }
 
@@ -67,40 +90,53 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-grow: 0;
+        flex-shrink: 0;
     }
     .post-list-unit-left {
         display: flex;
-        width: 80%;
-        flex-grow: 0;
-        flex-shrink: 0;
+        // width: 80%;
+        flex-grow: 1;
+        flex-shrink: 1;
 
         .post-list-unit-left-bot {
             display: flex;
-            width: 37.5%;
+            width: 170px;
+            flex-shrink: 0;
         }
     }
     .post-list-unit-title {
-        width: 62.5%;
+        // width: 62.5%;
         // flex-basis: 50%;
-        padding-left: 25px;
+        padding-left: 20px;
         word-break: break-all;
-        flex-grow: 0;
-        flex-shrink: 0;
+        flex-grow: 1;
+        flex-shrink: 1;
+        position: relative;
+        h5 {
+            width: 100%;
+        }
     }
     .post-list-unit-2 {
-        flex-basis: 50%;
+        flex-basis: 85px;
         flex-grow: 0;
         flex-shrink: 0;
         color: #7f7f7f;
     }
     .post-list-unit-3 {
-        flex-basis: 8%;
+        flex-basis: 45px;
         flex-grow: 0;
         flex-shrink: 0;
         // padding: 0rem 0.2rem;
         .icon-wrapper {
             display: flex;
             align-items: center;
+        }
+    }
+    .post-list-unit-4 {
+        flex-basis: 90px;
+        a {
+            color: #7f7f7f;
         }
     }
 
@@ -234,7 +270,7 @@
 @media screen and (max-width: 800px) {
 
     .board-wrapper {
-        padding-top: 1.5rem;
+        // padding-top: 1.5rem;
         .enif-btn-circle {
             margin-top: -1.5rem;
         }
@@ -259,7 +295,6 @@
         padding: 0.8rem 0.5rem;
         // padding: 0px 10px;
         .post-list-unit-left {
-            width: 80%;
             flex-direction: column;
             .post-list-unit-left-bot {
                 width: 100%;
@@ -277,6 +312,10 @@
             flex-basis: 4rem;
             justify-content: flex-start;
         }
-    
+        .post-list-unit-4 {
+            flex-basis: 4rem;
+            font-size: 0.8rem;
+            color: #7f7f7f;
+        }    
     }
 }

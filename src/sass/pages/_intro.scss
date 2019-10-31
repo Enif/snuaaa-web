@@ -7,7 +7,7 @@
     }
     
 .intro-div-wrapper {
-    padding: 30px 23px 10px 23px;
+    padding: 15px 23px 10px 23px;
     line-height: 1.3em;
     h3 {
         color: #75a3e6;
@@ -271,6 +271,12 @@
 
     .intro-div-wrapper {
         padding: 1.3rem 1.5rem 1rem 1.5rem;
+        .intro-content {
+            .img-logo {
+                width: 8rem;
+                margin: 0.5rem;
+            }
+        }
     }
 
     .intro-contact-wrapper {

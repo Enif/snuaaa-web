@@ -6,7 +6,7 @@ const MyPostList = ({ posts }) => {
 
     const makePostList = () => {
 
-        if (posts.length > 0) {
+        if (posts && posts.length > 0) {
             return posts.map(post => {
                 let contentInfo = post.content;
                 let boardInfo = post.content.board;
@@ -29,7 +29,7 @@ const MyPostList = ({ posts }) => {
 
     return (
         <div className="my-list-wrapper">
-            <h4>등록한 게시글</h4>
+            {/* <h4>등록한 게시글</h4> */}
             {makePostList()}
         </div>
     )

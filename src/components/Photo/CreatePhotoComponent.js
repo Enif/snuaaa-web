@@ -1,5 +1,5 @@
 import React from 'react';
-import CreatePhotoInfo from 'components/Album/CreatePhotoInfo';
+import CreatePhotoInfo from 'components/Photo/CreatePhotoInfo';
 import ThumbnailList from 'components/Album/ThumbnailList';
 import PreviewImage from 'components/Album/PreviewImage';
 

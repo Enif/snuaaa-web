@@ -45,12 +45,6 @@ const ProfileComponent = ({ profilePath, userInfo, handleChange, uploadProfileIm
 
     return (
         <>
-            <div className="my-title-wrapper">
-                <Link to={'/mypage/info'}>
-                    <i className="material-icons">keyboard_backspace</i>
-                </Link>
-                <h3>Profile</h3>
-            </div>
 
             <div className="profile-wrapper">
                 <div className="profile-img-wrapper">
@@ -61,9 +55,8 @@ const ProfileComponent = ({ profilePath, userInfo, handleChange, uploadProfileIm
                         </div>
                     </label>
                     <input type="file" id="profileImg" accept="image/*" onChange={uploadProfileImg} />
-                    <h5>{nicknameInfo.value}</h5>
                 </div>
-
+                <h5 className="profile-nickname">{nicknameInfo.value}</h5>
                 <InputField label="ID" name="id" value={idInfo.value} disabled={true} valid={idInfo.valid} />
                 <InputField label="이름" name="username" value={usernameInfo.value} required={true} valid={usernameInfo.valid}
                     handleChange={handleChange} invalidMessage="2-10자의 한글 혹은 영문" />

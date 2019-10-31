@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Image = ({ imgSrc, defaultImgSrc, className, onClick, local }) => {
+const Image = ({ imgSrc, defaultImgSrc, className, onClick, local, ...rest }) => {
 
     let imgUrl;
     if (local) {
@@ -10,7 +10,7 @@ const Image = ({ imgSrc, defaultImgSrc, className, onClick, local }) => {
     }
 
     return (
-        <img src={imgSrc ? imgUrl : defaultImgSrc} className={className} alt="Img" onClick={onClick} />
+        <img src={imgSrc ? imgUrl : defaultImgSrc} className={className} alt="Img" onClick={onClick} {...rest} />
     )
 }
 

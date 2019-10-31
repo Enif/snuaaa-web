@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import Image from '../Common/Image';
+import history from 'common/history';
 
 const NewPhotos = ({ title, board_id, photos }) => {
 
@@ -8,9 +9,15 @@ const NewPhotos = ({ title, board_id, photos }) => {
         if (photos) {
             return photos.map(photo => {
                 return (
-                    <div className="new-photo-list" key={photo.contentPhoto.content_id}>
-                        <Link to={`/photo/${photo.contentPhoto.content_id}`}>
-                            <Image imgSrc={photo.thumbnail_path} />
+                    <div className="new-photo-list" key={photo.content_id}>
+                        <Link to={{
+                            pathname: `/photo/${photo.content_id}`,
+                            state: {
+                                modal: true,
+                                backgroundLocation: history.location
+                            }
+                        }}>
+                            <Image imgSrc={photo.photo.thumbnail_path} />
                         </Link>
                     </div>
                 )

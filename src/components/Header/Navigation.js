@@ -15,6 +15,8 @@ function Navigation({ boards }) {
     let subBoardClass = 'menu-nav-sub' + (isShowBoard ? '' : ' menu-nav-hidden')
     let subPhotoBoardClass = 'menu-nav-sub' + (isShowPhotoBoard ? '' : ' menu-nav-hidden')
     let subOfficialClass = 'menu-nav-sub' + (isShowOfficial ? '' : ' menu-nav-hidden')
+    let subOpen = isShowAbout || isShowNotice || isShowBoard || isShowPhotoBoard || isShowOfficial;
+    let navClass = 'main-menu-nav-wrapper pos-relative' + (subOpen ? ' nav-open' : '')
 
     const activeStyle = {
         fontWeight: 'bold',
@@ -59,7 +61,7 @@ function Navigation({ boards }) {
     }
 
     return (
-        <div className="main-menu-nav-wrapper pos-relative">
+        <div className={navClass}>
             <nav>
                 {/* <input className="nav-toggle" id="nav-toggle" type="checkbox"/> 
                     <label className="navicon" htmlFor="nav-toggle"><span className="navicon-bar"></span></label> */}

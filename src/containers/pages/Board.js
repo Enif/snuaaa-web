@@ -3,6 +3,7 @@ import * as service from 'services';
 import PostBoard from 'containers/PostBoard/PostBoard';
 import PhotoBoard from 'containers/PhotoBoard/PhotoBoard';
 import DocuBoard from 'containers/DocuBoard/DocuBoard';
+import ExhibitBoard from 'containers/ExhibitBoard/ExhibitBoard';
 import Loading from 'components/Common/Loading';
 import history from 'common/history';
 
@@ -95,6 +96,11 @@ class Board extends React.Component {
                         else if (boardInfo.board_type === 'D') {
                             return (
                                 <DocuBoard boardInfo={boardInfo} board_id={this.state.board_id} categories={this.categories} />
+                            )
+                        }
+                        else if (boardInfo.board_type === 'E') {
+                            return (
+                                <ExhibitBoard boardInfo={boardInfo} board_id={this.state.board_id} />
                             )
                         }
                     }

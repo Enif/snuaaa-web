@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { convertDate } from 'utils/convertDate'
 
-const PostList = ({ posts, clickCrtBtn }) => {
+const PostList = ({ posts }) => {
 
     const makePostList = () => {
 
@@ -20,7 +20,7 @@ const PostList = ({ posts, clickCrtBtn }) => {
                         </div>
                         <div className="post-list-unit-left-bot">
                             <div className="post-list-unit post-list-unit-2">
-                                {user.nickname}
+                                {user && user.nickname}
                             </div>
                             <div className="post-list-unit post-list-unit-2">
                                 {convertDate(content.createdAt)}

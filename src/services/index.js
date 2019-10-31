@@ -5,6 +5,26 @@ const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 axios.defaults.headers.common['Authorization'] = 'Bearer ' + getToken();
 
+export const AaaService = {
+    
+    get: function(url) {
+        return axios.get(`${SERVER_URL}api/${url}`)
+    },
+    
+    post: function(url, data) {
+        return axios.post(`${SERVER_URL}api/${url}`, data)
+    },
+
+    patch: function(url, data) {
+        return axios.patch(`${SERVER_URL}api/${url}`, data)
+    },
+    
+    delete: function(url) {
+        return axios.delete(`${SERVER_URL}api/${url}`)
+    }
+}
+
+
 export function updateToken() {
     return axios.get(SERVER_URL + 'api/check')
 }
@@ -25,8 +45,13 @@ export function guestLogIn() {
     return axios.get(SERVER_URL + 'api/login/guest');
 }
 
-export function retrieveUserInfo() {
-    return axios.get(SERVER_URL + 'api/userinfo');
+export function retrieveUserInfo(user_uuid) {
+    if(user_uuid) {
+        return axios.get(SERVER_URL + `api/userinfo/${user_uuid}`)
+    }
+    else {
+        return axios.get(SERVER_URL + 'api/userinfo');
+    }
 }
 
 export function updateUserInfo(data) {
@@ -37,8 +62,31 @@ export function deleteUserInfo() {
     return axios.delete(SERVER_URL + 'api/userinfo');
 }
 
-export function retrieveUserPosts() {
-    return axios.get(SERVER_URL + 'api/userinfo/posts');
+export function retrieveUserPosts(user_uuid) {
+    if(user_uuid) {
+        return axios.get(SERVER_URL + `api/userinfo/${user_uuid}/posts`);
+    }
+    else {
+        return axios.get(SERVER_URL + 'api/userinfo/posts');
+    }
+}
+
+export function retrieveUserPhotos(user_uuid) {
+    if(user_uuid) {
+        return axios.get(SERVER_URL + `api/userinfo/${user_uuid}/photos`);
+    }
+    else {
+        return axios.get(SERVER_URL + 'api/userinfo/photos');
+    }
+}
+
+export function retrieveUserComments(user_uuid) {
+    if(user_uuid) {
+        return axios.get(SERVER_URL + `api/userinfo/${user_uuid}/comments`);
+    }
+    else {
+        return axios.get(SERVER_URL + `api/userinfo/comments`);        
+    }
 }
 
 export function retrieveBoards() {
@@ -139,6 +187,10 @@ export function updateAlbum(album_id, data) {
     return axios.patch(SERVER_URL + `api/album/${album_id}`, data)
 }
 
+export function updateAlbumThumbnail(album_id, data) {
+    return axios.patch(SERVER_URL + `api/album/${album_id}/thumbnail`, data)
+}
+
 export function deleteAlbum(album_id) {
     return axios.delete(SERVER_URL + `api/album/${album_id}`)
 }
@@ -213,4 +265,8 @@ export function retrieveRecentAstroPhoto() {
 
 export function retrieveRiseSet() {
     return axios.get(SERVER_URL + `api/home/riseset`);
+}
+
+export function createAttachedImage(data) {
+    return axios.post(SERVER_URL + `api/image`, data);
 }

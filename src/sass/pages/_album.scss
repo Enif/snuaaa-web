@@ -67,6 +67,7 @@
         margin-top: 20px;
         height: 40px;
         display: flex;
+        align-items: center;
         .alb-btn-back {
             button {
                 height: 35px;
@@ -89,14 +90,19 @@
             padding: 10px 10px;
             float: left;
         }
-        .actions-wrapper {
-            padding: 5px 0px;
-            width: 60px;
-            flex-shrink: 0;
+        .actions-drawer {
+            position: relative;
+            margin-left: auto;
+            // right: 0;
         }
+        // .actions-wrapper {
+        //     padding: 5px 0px;
+        //     width: 60px;
+        //     flex-shrink: 0;
+        // }
         .alb-author {
             // text-align: right;
-            flex-grow: 1;
+            // flex-grow: 1;
             flex-shrink: 0;
             text-align: right;
             padding: 10px 5px;
@@ -140,6 +146,29 @@
     .crt-alb-title {
         margin-bottom: 10px;
     }
+
+    .select-private-wrapper {
+        display: flex;
+        width: 100%;
+        margin: 5px 0px;
+        .select-private-unit {
+            border: 1px solid $color-gray1;
+            padding: 8px;
+            margin: 0px 15px;
+            display: flex;
+            width: 50%;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            color: $color-gray1;
+            cursor: pointer;
+            &.selected {
+                border: 1px solid $color-aqua;
+                background-color: $color-aqua;
+                color: #FFFFFF;
+            }
+        }
+    }
 }
 
 @media screen and (max-width: 800px) {
@@ -173,9 +202,9 @@
                 font-size: 1.1rem;
                 padding: 10px 5px;
             }
-            .actions-wrapper {
-                padding: 1px 1px;
-            }
+            // .actions-wrapper {
+            //     padding: 1px 1px;
+            // }
             .alb-author {
                 font-size: 1.1rem;
                 float: right;

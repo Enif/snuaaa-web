@@ -1,9 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import InputText from '../Common/InputText'
 import Footer from 'components/Footer'
 import logo from 'assets/img/login_logo.gif'
 
-const LogInComponent = ({ autoLogin, handleChange, userLogIn, guestLogIn, redirectToSignUp, checkAuto }) => {
+const LogInComponent = ({ autoLogin, handleChange, userLogIn, guestLogIn, openFindPopUp, checkAuto }) => {
     return (
         <div className="login-wrapper">
             <div className="logo-wrapper">
@@ -27,7 +28,7 @@ const LogInComponent = ({ autoLogin, handleChange, userLogIn, guestLogIn, redire
                         <input type="password" className="login-input" placeholder=" PASSWORD"
                             name="password"
                             onChange={handleChange}
-                            onKeyDown={(e) => {if(e.keyCode === 13) userLogIn()}}
+                            onKeyDown={(e) => { if (e.keyCode === 13) userLogIn() }}
                             required />
                     </div>
                     <button className="login-btn" onClick={userLogIn}>로그인</button>
@@ -36,8 +37,10 @@ const LogInComponent = ({ autoLogin, handleChange, userLogIn, guestLogIn, redire
                     <button className="btn-guest" onClick={guestLogIn}>Guest</button>
                 </div>
                 <div className="menu-txt-wrapper">
-                    <p className="menu-txt-signup" onClick={() => redirectToSignUp()}>회원가입</p>
-                    <p className="menu-txt-find">아이디 | 비밀번호 찾기</p>
+                    <Link to="/signup">
+                        <p className="menu-txt-signup">회원가입</p>
+                    </Link>
+                    <p className="menu-txt-find" onClick={openFindPopUp}>아이디 | 비밀번호 찾기</p>
                 </div>
             </div>
             <Footer></Footer>

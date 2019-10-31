@@ -1,7 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import ContentStateEnum from 'common/ContentStateEnum';
 import { breakLine } from 'utils/breakLine';
+import ActionDrawer from '../Common/ActionDrawer';
+import history from 'common/history';
 
 const AlbumInfo = ({ albumInfo, my_id, setAlbumState, deleteAlbum }) => {
     let content = albumInfo.content;
@@ -10,23 +12,21 @@ const AlbumInfo = ({ albumInfo, my_id, setAlbumState, deleteAlbum }) => {
         <div className="album-info">
             <div className="alb-header-wrapper">
                 <div className="alb-btn-back">
-                    <Link to={`/board/${content.board_id}`}><button>
+                    {/* <Link to={`/board/${content.board_id}`}> */}
+                    <button onClick={() => history.goBack()}>
                         <i className="material-icons">keyboard_backspace</i>
-                    </button></Link>
+                    </button>
+                    {/* </Link> */}
                 </div>
                 <h5 className="alb-title">{content.title}</h5>
+                <i className="material-icons color-gray1">{albumInfo.is_private ? "person" : "group"}
+                </i>
                 {
                     (my_id === user.user_id) &&
-                    <div className="actions-wrapper">
-                        <div className="edit-delete-wrapper">
-                            <div className="edit-wrapper">
-                                <i className="material-icons pointer" onClick={() => setAlbumState(ContentStateEnum.EDITTING)}>edit</i>
-                            </div>
-                            <div className="delete-wrapper">
-                                <i className="material-icons pointer" onClick={deleteAlbum}>delete</i>
-                            </div>
-                        </div>
-                    </div>
+                    <ActionDrawer
+                        clickEdit={() => setAlbumState(ContentStateEnum.EDITTING)}
+                        clickDelete={deleteAlbum}
+                    />
                 }
                 <p className="alb-author">{user.nickname}</p>
             </div>

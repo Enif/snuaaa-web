@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import { convertDate } from 'utils/convertDate';
+import history from 'common/history';
 
 const NewComments = ({ comments }) => {
 
@@ -15,7 +16,13 @@ const NewComments = ({ comments }) => {
                 linkTo = `/post/${comment.parent_id}`
             }
             else if (contentInfo.type === "PH") {
-                linkTo = `/photo/${comment.parent_id}`
+                linkTo = {
+                    pathname: `/photo/${comment.parent_id}`,
+                    state: {
+                        modal: true,
+                        backgroundLocation: history.location
+                    }
+                }
             }
             else if (contentInfo.type === "DO") {
                 linkTo = `/document/${comment.parent_id}`
@@ -46,7 +53,9 @@ const NewComments = ({ comments }) => {
 
     return (
         <div className="new-comments-wrapper">
-            <h4>New Comments</h4>
+            <Link to={'/comments/all'}>
+                <h4>New Comments</h4>
+            </Link>
             {makeCommentList()}
         </div>
     )
