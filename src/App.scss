@@ -24,8 +24,13 @@
     font-weight: normal;
     font-style: normal;
 }
-
-
+@font-face {
+    font-family: 'D2Coding';
+    src: url('/src/assets/fonts/D2Coding.woff2') format('woff2'),
+        url('/src/assets/fonts/D2Coding.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 
 
 @import 'sass/reset';
