@@ -1,5 +1,6 @@
 import React from 'react';
 import ContentsStateEnum from 'common/ContentStateEnum';
+import UserService from 'services/UserService';
 import ExhibitPhotoService from 'services/ExhibitPhotoService';
 import EditExhibitPhotoComponent from 'components/ExhibitBoard/EditExhibitPhotoComponent';
 
@@ -17,6 +18,12 @@ class EditExhibitPhoto extends React.Component {
         this.state = {
             title: contentInfo.title,
             text: contentInfo.text,
+            order: exhibitPhotoInfo.order,
+            photographer: {
+                uuid: exhibitPhotoInfo.photographer && exhibitPhotoInfo.photographer.user_uuid,
+                nickname: exhibitPhotoInfo.photographer && exhibitPhotoInfo.photographer.nickname
+            },
+            photographer_alt: exhibitPhotoInfo.photographer_alt,
             date: exhibitPhotoInfo.date && new Date(exhibitPhotoInfo.date),
             location: exhibitPhotoInfo.location,
             camera: exhibitPhotoInfo.camera,
@@ -26,8 +33,8 @@ class EditExhibitPhoto extends React.Component {
             exposure_time: exhibitPhotoInfo.exposure_time,
             iso: exhibitPhotoInfo.iso,
             file_path: exhibitPhotoInfo.file_path,
-            imgDatas: [],
-            imgIdx: -1
+            imgIdx: -1,
+            searchUsers: [],
         }
     }
 
@@ -43,16 +50,61 @@ class EditExhibitPhoto extends React.Component {
         })
     }
 
+    handlePhotographer = (e) => {
+        this.setState({
+            photographer_alt: e.target.value
+        })
+        if(e.target.value) {
+            this.fetchUsers(e.target.value);
+        }
+    }
+
+    fetchUsers = async (name) => {
+        UserService.searchMini(name)
+        .then((res) => {
+            this.setState({
+                searchUsers: res.data.userList
+            })
+        })
+        .catch((err) => {
+            console.error(err);
+        })
+    }
+
+    selectPhotographer = (index) => {
+        const { searchUsers } = this.state;
+        this.setState({
+            photographer_alt: '',
+            photographer: {
+                uuid: searchUsers[index].user_uuid,
+                nickname: searchUsers[index].nickname
+            },
+            searchUsers: []
+        })
+    }
+
+    removePhotographer = () => {
+        this.setState({
+            photographer: {
+                uuid: null,
+                nickname: null
+            }
+        })
+    }
+
     submit = async () => {
 
         this.props.setPhotoState(ContentsStateEnum.LOADING);
 
-        const { title, text, date, location, camera, lens,
-            focal_length, f_stop, exposure_time, iso } = this.state;
+        const { title, text, order, date, location, camera, lens,
+            focal_length, f_stop, exposure_time, iso, photographer, photographer_alt } = this.state;
         const { contentInfo, fetch } = this.props;
         const photoInfo = {
             title: title,
             text: text,
+            order: order,
+            photographer: photographer.uuid,
+            photographer_alt: photographer_alt,
             date: date,
             location: location,
             camera: camera,
@@ -76,13 +128,16 @@ class EditExhibitPhoto extends React.Component {
     render() {
         console.log('[%s] render', TAG)
 
-        const { handleChange, handleDate, submit } = this;
-        const { title, text, date, location, camera, lens, focal_length
-            , f_stop, exposure_time, iso, file_path } = this.state
+        const { handleChange, handleDate, handlePhotographer, selectPhotographer, removePhotographer, submit } = this;
+        const { setPhotoState } = this.props;
+        const { title, text, order, photographer, photographer_alt, date, location, camera, lens, focal_length
+            , f_stop, exposure_time, iso, file_path, searchUsers } = this.state
 
         const photoInfo = {
             title: title,
             text: text,
+            order: order,
+            photographer_alt: photographer_alt,
             date: date,
             location: location,
             camera: camera,
@@ -97,9 +152,14 @@ class EditExhibitPhoto extends React.Component {
         return (
             <EditExhibitPhotoComponent
                 photoInfo={photoInfo}
+                photographer={photographer}
                 handleChange={handleChange}
                 handleDate={handleDate}
-                setPhotoState={this.props.setPhotoState}
+                handlePhotographer={handlePhotographer}
+                selectPhotographer={selectPhotographer}
+                removePhotographer={removePhotographer}
+                searchUsers={searchUsers}
+                setPhotoState={setPhotoState}
                 updatePhoto={submit}
             />
         )

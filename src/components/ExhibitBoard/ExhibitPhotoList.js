@@ -18,13 +18,6 @@ const ExhibitPhotoList = ({ exhibitPhotos }) => {
                                 backgroundLocation: history.location
                             }
                         }} >
-                            <div className="photo-cover">
-                                <i className="material-icons">favorite</i>
-                                <p>{content.like_num}</p>
-                                &nbsp;
-                                <i className="material-icons">comment</i>
-                                <p>{content.comment_num}</p>
-                            </div>
                             <Image imgSrc={exhibitPhoto.thumbnail_path} />
                         </Link>
                     </div>

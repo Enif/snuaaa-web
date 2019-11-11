@@ -1,9 +1,10 @@
 import React from 'react';
-import CreatePhotoInfo from 'components/Photo/CreatePhotoInfo';
 import Image from 'components/Common/Image';
 import ContentsStateEnum from 'common/ContentStateEnum';
+import CreateExhibitPhotoInfo from './CreateExhibitPhotoInfo';
 
-const EditExhibitPhotoComponent = ({ photoInfo, handleChange, handleDate, setPhotoState, updatePhoto }) => {
+const EditExhibitPhotoComponent = ({ photoInfo, photographer, handleChange, handleDate,
+    handlePhotographer, selectPhotographer, removePhotographer, setPhotoState, updatePhoto, searchUsers }) => {
 
     return (
         <div className="crt-photo-popup">
@@ -16,9 +17,26 @@ const EditExhibitPhotoComponent = ({ photoInfo, handleChange, handleDate, setPho
                         <Image imgSrc={photoInfo.file_path} />
                     </div>
                     <div className="crt-photo-right">
-                        <CreatePhotoInfo title={photoInfo.title} text={photoInfo.text} date={photoInfo.date} location={photoInfo.location}
-                            camera={photoInfo.camera} lens={photoInfo.lens} focal_length={photoInfo.focal_length} f_stop={photoInfo.f_stop}
-                            exposure_time={photoInfo.exposure_time} iso={photoInfo.iso} handleChange={handleChange} handleDate={handleDate} />
+                        <CreateExhibitPhotoInfo
+                            title={photoInfo.title}
+                            text={photoInfo.text}
+                            order={photoInfo.order}
+                            photographer={photographer}
+                            photographer_alt={photoInfo.photographer_alt}
+                            date={photoInfo.date}
+                            location={photoInfo.location}
+                            camera={photoInfo.camera}
+                            lens={photoInfo.lens}
+                            focal_length={photoInfo.focal_length}
+                            f_stop={photoInfo.f_stop}
+                            exposure_time={photoInfo.exposure_time}
+                            iso={photoInfo.iso}
+                            searchUsers={searchUsers}
+                            handleChange={handleChange}
+                            handleDate={handleDate}
+                            handlePhotographer={handlePhotographer}
+                            selectPhotographer={selectPhotographer}
+                            removePhotographer={removePhotographer} />
 
                         <div className="btn-wrapper">
                             <button className="btn-cancel" onClick={() => setPhotoState(ContentsStateEnum.READY)}>취소</button>

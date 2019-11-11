@@ -49,7 +49,8 @@ const DocuList = ({ documents }) => {
                                     : file.file_type === 'XLS' ? fileTypeClass = 'fa-file-excel color-xls'
                                         : file.file_type === 'PDF' ? fileTypeClass = 'fa-file-pdf color-pdf'
                                             : file.file_type === 'ZIP' ? fileTypeClass = 'fa-file-archive color-zip'
-                                                : fileTypeClass = 'fa-file-alt';
+                                                : file.file_type === 'HWP' ? fileTypeClass = 'custom-hwp'
+                                                    : fileTypeClass = 'fa-file-alt';
 
                             return (
                                 <DownloadFile key={file.file_id} content_id={file.parent_id} file_id={file.file_id}>
