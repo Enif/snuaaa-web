@@ -251,18 +251,14 @@ class ExhibitPhoto extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="photo-section-right">
-                                <ExhibitPhotoComponent
-                                    contentInfo={contentInfo}
-                                    likeInfo={likeInfo}
-                                    my_id={my_id}
-                                    setPhotoState={setPhotoState}
-                                    editPhoto={() => setPhotoState(ContentStateEnum.EDITTING)}
-                                    likePhoto={likePhoto}
-                                    deletePhoto={deletePhoto} />
-
-                                <Comment parent_id={this.state.exhibitPhoto_id} />
-                            </div>
+                            <ExhibitPhotoComponent
+                                contentInfo={contentInfo}
+                                likeInfo={likeInfo}
+                                my_id={my_id}
+                                setPhotoState={setPhotoState}
+                                editPhoto={() => setPhotoState(ContentStateEnum.EDITTING)}
+                                likePhoto={likePhoto}
+                                deletePhoto={deletePhoto} />
                         </div>
                     </div>
                 </div>

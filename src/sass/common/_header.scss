@@ -67,6 +67,7 @@
     text-align: center;
     // padding-top: 12px;
     background-color: #05070e;
+    box-shadow: 0px 2px 2px 0px rgba(5, 5, 112, 0.55);
     width: 100%;
     z-index: 10;
     position: sticky;
@@ -308,6 +309,7 @@
             .nav-items {
                 display: flex;
                 background-color: #7092c4;
+                box-shadow: 0px 2px 2px 0px rgba(112, 146, 196, 0.55);
                 width: 100%;
                 position: absolute;
                 justify-content: space-around;

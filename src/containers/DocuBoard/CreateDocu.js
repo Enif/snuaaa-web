@@ -135,9 +135,10 @@ class CreateDocu extends React.Component {
                     <h3>파일 업로드</h3>
                     <div className="docu-option-generation">
                         <label>회기</label>
-                        <select name="generation" onChange={(e) => this.handleChange(e)} value={this.state.generation}>
+                        <input type="number" name="generation" onChange={(e) => this.handleChange(e)} value={this.state.generation} />
+                        {/* <select >
                             {this.createGeneration()}
-                        </select>
+                        </select> */}
                     </div>
                     <div className="docu-category-list-wrapper">
                         <label>카테고리</label>

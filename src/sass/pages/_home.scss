@@ -344,6 +344,57 @@
     }
 }
 
+.new-exhibitions-wrapper {
+    width: 100%;
+    padding: 5px;
+    h4 {
+        font-size: 20px;
+        font-weight: bold;
+        color: #7193C4;
+        padding: 10px 5px;
+    }
+    .new-exhibition-flex {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        position: relative;
+    }
+    .new-exhibition-list-wrapper {
+        display: flex;
+        width: 100%;
+        justify-content: flex-start;
+        align-content: flex-start;
+        overflow: hidden;
+    }
+    .new-exhibition-list {
+        height: 170px;
+        width: 130px;
+        position: relative;
+        margin: 0px 10px;
+        flex-shrink: 0;
+        img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+        }
+    }
+    .new-exhibitions-arrow {
+        position: absolute;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &.left {
+            left: -25px;
+        }
+        &.right {
+            right: -25px;
+        }
+    }
+
+}
+
 
 @media screen and (max-width: 800px) {
 
@@ -476,5 +527,11 @@
         width: 100%;
         padding: 0rem 0.5rem;
         margin-top: 0.7rem;
+    }
+
+    .new-exhibitions-wrapper {
+        .new-exhibitions-arrow {
+            display: none;
+        }
     }
 }

@@ -4,7 +4,7 @@ import "react-datepicker/dist/react-datepicker.css"
 import Image from '../Common/Image';
 import imgDefaultProfile from 'assets/img/profile.png';
 
-const CreateExhibitPhotoInfo = ({ title, text, order, photographer, date, location, camera, lens, focal_length, f_stop,
+const CreateExhibitPhotoInfo = ({ title, text, order, photographer, photographer_alt, date, location, camera, lens, focal_length, f_stop,
     exposure_time, iso, searchUsers, selectPhotographer, removePhotographer, handleChange, handleDate, handlePhotographer }) => {
 
     const makeUserList = function (users) {
@@ -38,7 +38,7 @@ const CreateExhibitPhotoInfo = ({ title, text, order, photographer, date, locati
                                 <i className="material-icons pointer" onClick={removePhotographer}>remove_circle_outline</i>
                             </div>
                             :
-                            <input type="text" name="photographer" onChange={handlePhotographer} />
+                            <input type="text" name="photographer" onChange={handlePhotographer} autoComplete="off" value={photographer_alt}/>
                     }
                     {
                         searchUsers && searchUsers.length > 0 &&

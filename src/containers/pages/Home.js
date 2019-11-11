@@ -5,8 +5,10 @@ import Loading from 'components/Common/Loading';
 import NewPosts from 'components/Home/NewPosts';
 import NewComments from 'components/Home/NewComments';
 import NewPhotos from 'components/Home/NewPhotos';
+import NewExhibitions from 'components/Home/NewExhibitions';
 import RiseSetMobile from '../../components/Home/RiseSetMobile';
 import ExtLinkMobile from '../../components/Home/ExtLinkMobile';
+import BoardService from 'services/BoardService';
 
 const TAG = 'HOME'
 
@@ -22,6 +24,7 @@ class Home extends React.Component {
         this.recentComments = undefined;
         this.recentMemory = undefined;
         this.recentAstrophoto = undefined;
+        this.recentExhibitions = undefined;
         this.riseSetInfo = undefined;
         this.state = {
             isReady: false
@@ -42,6 +45,7 @@ class Home extends React.Component {
             service.retrieveRecentComments(),
             service.retrieveRecentMemory(),
             service.retrieveRecentAstroPhoto(),
+            BoardService.retrieveExhibitionsInBoard(),
             service.retrieveRiseSet()
         ])
             .then((res) => {
@@ -50,7 +54,8 @@ class Home extends React.Component {
                 this.recentComments = res[2].data;
                 this.recentMemory = res[3].data;
                 this.recentAstrophoto = res[4].data;
-                this.riseSetInfo = res[5].data;
+                this.recentExhibitions = res[5].data;
+                this.riseSetInfo = res[6].data;
                 this.setState({
                     isReady: true
                 })
@@ -79,6 +84,9 @@ class Home extends React.Component {
                     <div className="home-row">
                         <NewPhotos title="New 별사진" board_id="brd32" photos={this.recentAstrophoto} />
                         <NewPhotos title="New 추억만들기" board_id="brd31" photos={this.recentMemory} />
+                    </div>
+                    <div className="home-row">
+                        <NewExhibitions board_id="brd41" exhibitions={this.recentExhibitions} />
                     </div>
                 </div>
                 :

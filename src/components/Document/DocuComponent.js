@@ -24,7 +24,8 @@ const DocuComponent = ({ docData, my_id, setDocState, deleteDoc, likeDoc, isLike
                         : file.file_type === 'XLS' ? fileTypeClass = 'fa-file-excel color-xls'
                             : file.file_type === 'PDF' ? fileTypeClass = 'fa-file-pdf color-pdf'
                                 : file.file_type === 'ZIP' ? fileTypeClass = 'fa-file-archive color-zip'
-                                    : fileTypeClass = 'fa-file-alt'
+                                    : file.file_type === 'HWP' ? fileTypeClass = 'custom-hwp'
+                                        : fileTypeClass = 'fa-file-alt'
 
                 return (
                     <div className="file-download-list" key={file.file_id}>
@@ -32,6 +33,9 @@ const DocuComponent = ({ docData, my_id, setDocState, deleteDoc, likeDoc, isLike
                             <i className={`fas ${fileTypeClass} font-20 file-icon`}>
                             </i>
                             <div className="file-download-name">{file.original_name}</div>
+                            &nbsp;
+                            <i className="material-icons">save_alt</i>
+                            {file.download_count}
                         </DownloadFile>
                     </div>
                 )
