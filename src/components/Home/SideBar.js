@@ -19,7 +19,7 @@ const SideBar = () => {
                 </a>
                 <a href="#aaa-top" className="btn-top-up-link">
                     <div className="btn-top-up">
-                        <i className="material-icons pointer">keyboard_arrow_up</i>
+                        <i className="ri-arrow-up-s-line enif-pointer"></i>
                         TOP
                     </div>
                 </a>

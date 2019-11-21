@@ -8,7 +8,7 @@ const PopupUser = ({profile_path, togglePopup, logout}) => {
     return (
         <div className="popup-user-wrapper">
             <div className="btn-toggle" onClick={togglePopup}>
-                <i className="material-icons">close</i>
+                <i className="ri-icons ri-close-fill"></i>
             </div>
             <div className="popup-profile-wrapper">
                 <Image imgSrc={profile_path} defaultImgSrc={imgProfile} className="popup-profile" />

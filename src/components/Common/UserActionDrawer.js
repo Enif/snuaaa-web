@@ -1,34 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
-function UserActionDrawer({ children, clickUserInfo }) {
+function UserActionDrawer({ children, user_uuid }) {
 
     const [isOpened, setIsOpened] = useState(false);
-    const clickChildren = function () {
+
+    useEffect(() => {
+        if (isOpened) {
+            window.addEventListener('click', closeDrawer, true)
+        }
+        else {
+            window.removeEventListener('click', closeDrawer, true)
+        }
+    }, [isOpened])
+
+    const closeDrawer = function () {
+        setIsOpened(false);
+        window.removeEventListener('click', closeDrawer, true)
+    }
+
+    const clickChildren = function (e) {
         setIsOpened(!isOpened);
     }
 
     return (
         <>
-            {
-                React.cloneElement(
-                    children,
-                    {
-                        onClick: clickChildren
-                    },
-                    
-                )
-            }
+            <span className="enif-pointer" onClick={clickChildren}>
+                {children}
+            </span>
             <div className="actions-drawer">
                 {
-                    <div className={`actions-wrapper ${isOpened && " opened"}`}>
-                        <div className="edit-delete-wrapper">
-                            <div className="action-unit-wrapper edit-wrapper" onClick={clickUserInfo}>
-                                <div className="action-unit">
-                                    <i className="material-icons">account_circle</i>&nbsp;유저정보
-                            </div>
+                    isOpened &&
+                    <Link to={`/userpage/${user_uuid}`}>
+                        <div className={`user-actions-wrapper ${isOpened && " opened"}`}>
+                            <div className="edit-delete-wrapper">
+                                <div className="action-unit-wrapper edit-wrapper" >
+                                    <div className="action-unit">
+                                        <i className="ri-account-box-line enif-f-1p2x"></i>&nbsp;유저정보
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </Link>
                 }
             </div>
         </>

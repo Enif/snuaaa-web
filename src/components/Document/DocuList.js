@@ -17,18 +17,6 @@ const DocuList = ({ documents }) => {
                         <Link to={`/document/${contentInfo.content_id}`}>{contentInfo.title}</Link>
                     </div>
                     <div className="docu-download">{makeFileList(attachedFileInfo)}</div>
-                    {/* <div className="docu-comments">
-                        <div className="post-comment-num">
-                            <span className="color-pink">
-                                <i className="material-icons md-18">favorite</i>
-                                {contentInfo.like_num}
-                            </span>
-                            <span className="color-gray1">
-                                <i className="material-icons md-18 md-dark">comment</i>
-                                {contentInfo.comment_num}
-                            </span>
-                        </div>
-                    </div> */}
                 </div>
             )
         })
@@ -42,19 +30,36 @@ const DocuList = ({ documents }) => {
                 <>
                     {
                         files.map((file) => {
-
                             let fileTypeClass = '';
-                            file.file_type === 'IMG' ? fileTypeClass = 'fa-file-image color-img'
-                                : file.file_type === 'DOC' ? fileTypeClass = 'fa-file-word color-doc'
-                                    : file.file_type === 'XLS' ? fileTypeClass = 'fa-file-excel color-xls'
-                                        : file.file_type === 'PDF' ? fileTypeClass = 'fa-file-pdf color-pdf'
-                                            : file.file_type === 'ZIP' ? fileTypeClass = 'fa-file-archive color-zip'
-                                                : file.file_type === 'HWP' ? fileTypeClass = 'custom-hwp'
-                                                    : fileTypeClass = 'fa-file-alt';
+
+                            switch (file.file_type) {
+                                case 'IMG':
+                                    fileTypeClass = 'ri-image-line color-img';
+                                    break;
+                                case 'DOC':
+                                    fileTypeClass = 'ri-file-word-line color-doc';
+                                    break;
+                                case 'XLS':
+                                    fileTypeClass = 'ri-file-excel-line color-xls';
+                                    break;
+                                case 'PDF':
+                                    fileTypeClass = 'ri-file-pdf-line color-pdf';
+                                    break;
+                                case 'ZIP':
+                                    fileTypeClass = 'ri-file-zip-fill color-zip';
+                                    break;
+                                case 'HWP':
+                                    fileTypeClass = 'custom-hwp'
+                                    break;
+                                default:
+                                    fileTypeClass = 'ri-file-3-line'
+                                    break;
+                            }
 
                             return (
                                 <DownloadFile key={file.file_id} content_id={file.parent_id} file_id={file.file_id}>
-                                    <i className={`fas ${fileTypeClass} font-20 file-icon`}>
+                                    {/* <FileIcon fileInfo={file} /> */}
+                                    <i className={`${fileTypeClass} font-20 file-icon`}>
                                         <div className="file-name">{file.original_name}</div>
                                     </i>
                                 </DownloadFile>
@@ -64,16 +69,6 @@ const DocuList = ({ documents }) => {
                 </>
             )
         }
-
-        // let fileList = []
-        // let contentInfo = document.content;
-        // for (let i = 0; i < document.file_path.length; i++) {
-        //     fileList.push(
-        //         <Download content_id={contentInfo.content_id} index={i} key={contentInfo.content_id + '_' + i}>
-        //             <i className="material-icons">insert_drive_file</i>
-        //         </Download>)
-        // }
-        // return fileList;
     }
 
     return (

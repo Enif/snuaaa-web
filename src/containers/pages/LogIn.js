@@ -140,7 +140,7 @@ class LogIn extends React.Component {
     }
 
     render() {
-        const { loginState } = this.props
+        // const { loginState } = this.props
         const { isLoading, popUp, errPopUp, findPopUp, autoLogin } = this.state
         const popUpTitle = '자동 로그인 기능을 사용하시겠습니까?';
         const popUpText = `자동 로그인 사용시 다음 접속부터는 로그인을 하실 필요가 없습니다.\n

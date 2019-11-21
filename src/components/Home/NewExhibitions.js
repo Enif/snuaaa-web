@@ -27,13 +27,13 @@ const NewExhibitions = ({ board_id, exhibitions }) => {
             </Link>
             <div className="new-exhibition-flex">
                 <div className="new-exhibitions-arrow left">
-                    <i className="material-icons">keyboard_arrow_left</i>
+                    <i className="ri-arrow-left-s-line enif-f-1p2x enif-pointer"></i>
                 </div>
                 <div className="new-exhibition-list-wrapper">
                     {makeExhibitionList()}
                 </div>
                 <div className="new-exhibitions-arrow right">
-                    <i className="material-icons">keyboard_arrow_right</i>
+                    <i className="ri-arrow-right-s-line enif-f-1p2x enif-pointer"></i>
                 </div>
             </div>
         </div>

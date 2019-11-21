@@ -61,6 +61,37 @@
     align-items: center;
 }
 
+.enif-flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.enif-pointer {
+    cursor: pointer;
+}
+
+.enif-f-1x {
+    font-size: 1rem;
+}
+.enif-f-1p2x {
+    font-size: 1.2rem;
+}
+.enif-f-1p5x {
+    font-size: 1.5rem;
+}
+.enif-f-2x {
+    font-size: 2rem;
+}
+
+.enif-visible {
+    opacity: 1;
+}
+
+.enif-unvisible {
+    opacity: 0;
+}
+
 .enif-popup {
     position: fixed;
     display: flex;
@@ -170,14 +201,11 @@
     box-shadow: 1px 1px 3px 0px #949494;
     border: none;
     border-radius: 50%;
-    color: #fff;
+    color: #FFFFFF;
     transition: all 0.3s;
     cursor: pointer;
     &:hover {
-        background-color: darken(#49A0AE, 10%);
-    }
-    .material-icons {
-        color: #FFFFFF;
+        background-color: darken($color_aqua, 10%);
     }
 }
 
@@ -268,7 +296,7 @@
 }
 
 .enif-hide-desktop {
-    visibility: hidden;
+    display: none;
 }
 
 // .enif-input-field input:invalid {
@@ -304,7 +332,7 @@
     }
 
     .enif-hide-desktop {
-        visibility: visible;
+        display: initial;
     }
 
     .enif-hide-mobile {

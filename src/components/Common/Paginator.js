@@ -30,11 +30,11 @@ function Paginator({ pageIdx, pageNum, clickPage }) {
 
     return (
         <div className="paginator-wrapper">
-            <i className="material-icons pointer" onClick={clickBefore}>navigate_before</i>
+            <i className="ri-arrow-left-s-line enif-f-1p5x enif-pointer" onClick={clickBefore}></i>
             <ul>
                 {makePaginator()}
             </ul>
-            <i className="material-icons pointer" onClick={clickNext} >navigate_next</i>
+            <i className="ri-arrow-right-s-line enif-f-1p5x enif-pointer" onClick={clickNext} ></i>
         </div>
     )
 }

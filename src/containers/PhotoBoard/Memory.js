@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import * as service from 'services';
 import CreateAlbum from 'containers/Album/CreateAlbum';
 import AlbumList from 'components/PhotoBoard/AlbumList';
@@ -31,7 +32,7 @@ class Memory extends React.Component {
         const { category, pageIdx } = this.state;
         this.fetch(category, pageIdx);
     }
-    
+
     static getDerivedStateFromProps(props, state) {
         console.log(`[${TAG}] getDerivedStateFromProps`);
         const hisState = history.location.state;
@@ -127,12 +128,27 @@ class Memory extends React.Component {
     }
 
     render() {
-        let { isReady, pageIdx, category } = this.state;
-        let { board_id, boardInfo, categories } = this.props;
+        const { board_id, boardInfo, categories, level } = this.props;
+        const { isReady, pageIdx, category } = this.state;
 
         return (
             <>
                 <Category categories={categories} selected={category} clickAll={this.clickAll} clickCategory={this.clickCategory} />
+                <div className="board-search-wrapper">
+                    <div className="board-search-input">
+                        <i className="ri-search-line enif-f-1x"></i>
+                        <input type="text" />
+                    </div>
+                    <div>
+                        {
+                            level >= boardInfo.lv_write &&
+                            <button className="board-btn-write" onClick={() => this.togglePopUp()}>
+                                <i className="ri-gallery-line enif-f-1p2x"></i>앨범 생성
+                            </button>
+                        }
+                    </div>
+                </div>
+
                 {(() => {
                     if (isReady) {
                         return (
@@ -144,21 +160,22 @@ class Memory extends React.Component {
                                 }
                                 {
                                     this.albumCount > 0 && <Paginator pageIdx={pageIdx} pageNum={Math.ceil(this.albumCount / ALBUMROWNUM)} clickPage={this.clickPage} />
-                                }                                
+                                }
                             </>)
                     }
                     else {
                         return <Loading />
                     }
                 })()}
-                {/* <div className="enif-fixed-btm"> */}
-                <button className="enif-btn-circle enif-pos-sticky" onClick={() => this.togglePopUp()}>
-                    <i className="material-icons">library_add</i>
-                </button>
-                {/* </div> */}
             </>
         );
     }
 }
 
-export default Memory
+const mapStateToProps = (state) => {
+    return {
+        level: state.authentication.level,
+    }
+}
+
+export default connect(mapStateToProps, null, null, { pure: false })(Memory);

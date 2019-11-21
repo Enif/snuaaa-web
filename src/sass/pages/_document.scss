@@ -29,7 +29,7 @@
 }
 
 .crt-docu-wrapper {
-    label {
+    .input-label {
         font-size: 15px;
         font-weight: bold;
         margin: 0px 10px;
@@ -109,7 +109,7 @@
         .file-list {
             display: flex;
             align-items: center;
-            height: 25px;
+            // height: 25px;
             p {
                 font-size: 15px;
             }
@@ -124,7 +124,7 @@
     display: flex;
     padding: 0px 10px;
     .select-wrapper {
-        margin: 10px;
+        margin: 0rem 0.5rem;
         select {
             padding: 5px;
             background-color: #FFFFFF;

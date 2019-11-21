@@ -12,7 +12,7 @@ function EditMyInfo() {
         <div>
             <div className="my-title-wrapper">
                 <Link to={'/mypage/info'}>
-                    <i className="material-icons">keyboard_backspace</i>
+                    <i className="ri-arrow-left-line enif-f-1p5x"></i>
                 </Link>
                 <h3>프로필 수정</h3>
             </div>

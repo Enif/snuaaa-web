@@ -36,11 +36,6 @@ class Officers extends React.Component {
                 <div className="intro-content officers-wrapper">
                     {this.generateOfficerList()}
                 </div>
-                <a href="#intro-top">
-                    <button className="enif-btn-circle enif-pos-sticky">
-                        <i className="material-icons pointer">keyboard_arrow_up</i>
-                    </button>
-                </a>
             </div>
         )
     }

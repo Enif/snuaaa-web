@@ -36,13 +36,13 @@ const AllPostList = ({ posts }) => {
 
                         <div className="post-list-unit post-list-unit-3">
                             <span className="color-pink icon-wrapper">
-                                <i className="material-icons md-18">favorite</i>
+                                <i className="ri-heart-fill"></i>
                                 {contentInfo.like_num}
                             </span>
                         </div>
                         <div className="post-list-unit post-list-unit-3">
                             <span className="color-gray1 icon-wrapper">
-                                <i className="material-icons md-18 md-dark">comment</i>
+                                <i className="ri-message-fill"></i>
                                 {contentInfo.comment_num}
                             </span>
                         </div>

@@ -5,10 +5,10 @@ function ActionDrawer({ clickEdit, clickDelete, isPhoto, clickSetThumbnail }) {
 
     const [isOpened, setIsOpened] = useState(false);
 
-
     return (
         <div className="actions-drawer">
-            <i className="material-icons pointer" onClick={() => setIsOpened(!isOpened)}>more_vert</i>
+            <i className="ri-more-2-fill enif-pointer"
+                onClick={() => setIsOpened(!isOpened)}></i>
             {
                 // isOpened &&
                 <div className={`actions-wrapper ${isOpened && " opened"}`}>
@@ -19,23 +19,30 @@ function ActionDrawer({ clickEdit, clickDelete, isPhoto, clickSetThumbnail }) {
                                 onClick={() => {
                                     clickSetThumbnail();
                                     setIsOpened(false);
-                                }
-                                }>
+                                }}>
                                 <div className="action-unit">
-                                    <i className="material-icons">collections</i>
+                                    <i className="ri-gallery-line enif-f-1p2x"></i>
                                     <p>썸네일로 설정</p>
                                 </div>
                             </div>
 
                         }
-                        <div className="action-unit-wrapper edit-wrapper" onClick={clickEdit}>
+                        <div className="action-unit-wrapper edit-wrapper"
+                            onClick={() => {
+                                clickEdit();
+                                setIsOpened(false);
+                            }}>
                             <div className="action-unit">
-                                <i className="material-icons">edit</i>&nbsp;수정
+                                <i className="ri-edit-line enif-f-1p2x"></i>&nbsp;수정
                             </div>
                         </div>
-                        <div className="action-unit-wrapper delete-wrapper" onClick={clickDelete}>
+                        <div className="action-unit-wrapper delete-wrapper"
+                            onClick={() => {
+                                clickDelete();
+                                setIsOpened(false);
+                            }}>
                             <div className="action-unit">
-                                <i className="material-icons">delete</i>&nbsp;삭제
+                                <i className="ri-delete-bin-line enif-f-1p2x"></i>&nbsp;삭제
                             </div>
                         </div>
                     </div>

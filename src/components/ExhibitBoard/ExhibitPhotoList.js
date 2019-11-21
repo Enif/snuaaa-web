@@ -31,7 +31,6 @@ const ExhibitPhotoList = ({ exhibitPhotos }) => {
             <div className="photo-list-wrapper">
                 {makePhotoList()}
             </div>
-
         </>
     )
 }

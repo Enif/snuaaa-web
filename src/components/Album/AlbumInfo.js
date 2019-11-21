@@ -14,12 +14,12 @@ const AlbumInfo = ({ albumInfo, my_id, setAlbumState, deleteAlbum }) => {
                 <div className="alb-btn-back">
                     {/* <Link to={`/board/${content.board_id}`}> */}
                     <button onClick={() => history.goBack()}>
-                        <i className="material-icons">keyboard_backspace</i>
+                        <i className="ri-arrow-left-line"></i>
                     </button>
                     {/* </Link> */}
                 </div>
                 <h5 className="alb-title">{content.title}</h5>
-                <i className="material-icons color-gray1">{albumInfo.is_private ? "person" : "group"}
+                <i className={`${albumInfo.is_private ? "ri-user-fill" : "ri-group-fill"} color-gray1 enif-f-1x` }>
                 </i>
                 {
                     (my_id === user.user_id) &&

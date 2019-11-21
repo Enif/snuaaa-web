@@ -4,6 +4,7 @@ import Header from 'containers/Header';
 import Footer from 'components/Footer';
 import SideBar from 'components/Home/SideBar';
 import RiseSet from 'components/Home/RiseSet';
+import TopUpButton from 'components/Common/TopUpButton';
 
 function DefaultRoute({ component: Component, ...rest }) {
     return (
@@ -19,6 +20,7 @@ function DefaultRoute({ component: Component, ...rest }) {
                         <Component {...routeProps} />
                     </section>
                 </div>
+                <TopUpButton />
                 <Footer />
             </>
         )}

@@ -30,15 +30,15 @@ const CreatePhotoComponent = ({ handleChange, handleDate, uploadFile, clickTag, 
                 </div>
                 <div className="crt-photo-body">
                     <div className="crt-photo-left">
+                        <ThumbnailList imgUrls={imgUrls} imgIdx={imgIdx} setImgIdx={setImgIdx} removeImg={removeImg} />
                         <div className="block-constant">
                             <label htmlFor="photos">
                                 <div className="add-photo">
-                                    <i className="material-icons md-36">add</i>
+                                    <i className="ri-add-fill enif-f-2x"></i>
                                 </div>
                             </label>
                             <input type="file" id="photos" multiple accept="image/*" onChange={uploadFile} />
                         </div>
-                        <ThumbnailList imgUrls={imgUrls} imgIdx={imgIdx} setImgIdx={setImgIdx} removeImg={removeImg} />
                     </div>
 
                     <div className="crt-photo-center">

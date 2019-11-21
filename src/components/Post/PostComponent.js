@@ -1,14 +1,12 @@
 import React from 'react';
 import ReactQuill from 'react-quill';
-import { Link } from 'react-router-dom';
 import ContentStateEnum from 'common/ContentStateEnum';
-import Comment from 'containers/Comment';
 import ProfileMini from '../Common/ProfileMini';
 import { convertFullDate } from 'utils/convertDate';
 import DownloadFile from './DownloadFile';
 import ActionDrawer from '../Common/ActionDrawer';
 import history from 'common/history';
-// import { breakLine } from 'utils/breakLine';
+import FileIcon from 'components/Common/FileIcon';
 
 const PostComponent = ({ postData, my_id, likeInfo, fileInfo, likePost, setPostState, deletePost }) => {
 
@@ -18,25 +16,11 @@ const PostComponent = ({ postData, my_id, likeInfo, fileInfo, likePost, setPostS
     const makeFileList = () => {
         if (fileInfo && fileInfo.length > 0) {
             const fileList = fileInfo.map((file) => {
-                let fileTypeClass = '';
-
-                file.file_type === 'IMG' ? fileTypeClass = 'fa-file-image color-img'
-                    : file.file_type === 'DOC' ? fileTypeClass = 'fa-file-word color-doc'
-                        : file.file_type === 'XLS' ? fileTypeClass = 'fa-file-excel color-xls'
-                            : file.file_type === 'PDF' ? fileTypeClass = 'fa-file-pdf color-pdf'
-                                : file.file_type === 'ZIP' ? fileTypeClass = 'fa-file-archive color-zip'
-                                    : file.file_type === 'HWP' ? fileTypeClass = 'custom-hwp'
-                                        : fileTypeClass = 'fa-file-alt'
 
                 return (
                     <div className="file-download-list" key={file.file_id}>
                         <DownloadFile key={file.file_id} content_id={file.parent_id} file_id={file.file_id}>
-                            <i className={`fas ${fileTypeClass} font-20 file-icon`}>
-                            </i>
-                            <div className="file-download-name">{file.original_name}</div>
-                            &nbsp;
-                            <i className="material-icons">save_alt</i>
-                            {file.download_count}
+                            <FileIcon fileInfo={file} isFull={true} />
                         </DownloadFile>
                     </div>
                 )
@@ -55,9 +39,7 @@ const PostComponent = ({ postData, my_id, likeInfo, fileInfo, likePost, setPostS
     return (
         <div className="post-wrapper">
             <div className="post-title">
-                {/* <Link to={`/board/${content.board_id}`}> */}
-                <i className="material-icons pointer post-title-back" onClick={() => history.goBack()}>keyboard_backspace</i>
-                {/* </Link> */}
+                <i className="ri-arrow-left-line enif-pointer post-title-back" onClick={() => history.goBack()}></i>
                 <h5>{content.title}</h5>
                 {
                     (my_id === content.author_id) &&
@@ -70,7 +52,8 @@ const PostComponent = ({ postData, my_id, likeInfo, fileInfo, likePost, setPostS
                 <div className="post-author">
                     {user.nickname}
                 </div>
-                <div className="post-date-created">
+                <div className="post-date-created enif-flex-center">
+                    <i className="ri-time-line"></i>
                     {convertFullDate(content.createdAt)}
                     {
                         content.updatedAt &&
@@ -82,37 +65,23 @@ const PostComponent = ({ postData, my_id, likeInfo, fileInfo, likePost, setPostS
             </div>
             <div className="post-content">
                 <ReactQuill value={content.text} readOnly={true} theme="bubble" />
-                {/* {breakLine(content.text)} */}
             </div>
             {makeFileList()}
-            <ProfileMini profileImg={user.profile_path} nickname={user.nickname} userDesc={user.introduction} uuid={user.user_uuid} />
+            <ProfileMini userInfo={user} />
             <div className="enif-divider"></div>
             <div className="actions-wrapper">
-                {/* {
-                    (my_id === content.author_id) &&
-                    <div className="edit-delete-wrapper">
-                        <div className="edit-wrapper">
-                            <i className="material-icons pointer" onClick={() => setPostState(ContentStateEnum.EDITTING)}>edit</i>
-                        </div>
-                        <div className="delete-wrapper">
-                            <i className="material-icons pointer" onClick={() => deletePost()}>delete</i>
-                        </div>
-                    </div>
-                } */}
-
                 <div className="nums-wrapper">
                     <div className="view-num-wrapper">
-                        <i className="material-icons pointer">visibility</i>
+                        <i className="ri-eye-fill"></i>
                         {content.view_num}
                     </div>
                     <div className="like-num-wrapper">
-                        <i className="material-icons pointer" onClick={() => likePost()}>
-                            {likeInfo ? 'favorite' : 'favorite_border'}
+                        <i className={`${likeInfo ? 'ri-heart-fill':'ri-heart-line'} enif-f-1p5x enif-pointer`} onClick={() => likePost()}>
                         </i>
                         {content.like_num}
                     </div>
                     <div className="comment-num-wrapper">
-                        <i className="material-icons">comment</i>
+                        <i className="ri-message-2-fill enif-f-1p5x"></i>
                         {content.comment_num}
                     </div>
                 </div>

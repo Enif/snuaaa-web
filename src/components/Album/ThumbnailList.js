@@ -9,7 +9,7 @@ const ThumbnailList = ({ imgUrls, imgIdx, setImgIdx, removeImg }) => {
             return (
                 <div key={index} className="block-constant">
                     <div className="remove-icon-wrapper" onClick={() => removeImg(index)}>
-                        <i className="material-icons pointer">remove_circle_outline</i>
+                        <i className="ri-close-circle-line enif-pointer enif-f-1p5x"></i>
                     </div>
                     <img
                         className={imgClass}

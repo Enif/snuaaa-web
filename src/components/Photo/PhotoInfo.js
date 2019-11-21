@@ -99,22 +99,21 @@ const PhotoInfo = ({ photoInfo, likeInfo, my_id,
                             </div>
                         </div>
                         <div className="enif-divider"></div>
-                        <ProfileMini profileImg={userInfo.profile_path} nickname={userInfo.nickname} userDesc={userInfo.introduction} />
+                        <ProfileMini userInfo={userInfo} />
                         <div className="enif-divider"></div>
                         <div className="actions-wrapper">
                             <div className="nums-wrapper">
                                 <div className="view-num-wrapper">
-                                    <i className="material-icons">visibility</i>
+                                    <i className="ri-eye-fill"></i>
                                     {content.view_num}
                                 </div>
                                 <div className="like-num-wrapper">
-                                    <i className="material-icons pointer" onClick={() => likePhoto()}>
-                                        {likeInfo ? 'favorite' : 'favorite_border'}
+                                    <i className={`${likeInfo ? 'ri-heart-fill':'ri-heart-line'} enif-f-1p5x enif-pointer`} onClick={() => likePhoto()}>
                                     </i>
                                     {content.like_num}
                                 </div>
                                 <div className="comment-num-wrapper">
-                                    <i className="material-icons">comment</i>
+                                    <i className="ri-message-2-fill enif-f-1p5x"></i>
                                     {content.comment_num}
                                 </div>
                             </div>

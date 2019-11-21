@@ -1,6 +1,4 @@
 import React from 'react';
-import ProfileMini from '../Common/ProfileMini';
-import ContentStateEnum from 'common/ContentStateEnum';
 
 import { breakLine } from 'utils/breakLine';
 import { convertDate, convertFullDate } from 'utils/convertDate'
@@ -35,18 +33,18 @@ const ExhibitPhotoComponent = ({ contentInfo, likeInfo, my_id,
                                 </div>
                                 <div className="info-basic enif-flex-horizontal">
                                     <div className="enif-flex-horizontal">
-                                        <i className="material-icons">visibility</i>
+                                        <i className="ri-icons ri-eye-fill"></i>
                                         <p className="">{content.view_num}</p>
                                         {
                                             userInfo &&
                                             <>
-                                                <i className="material-icons">create</i>
+                                                <i className="ri-icons ri-pencil-fill"></i>
                                                 <p className="">{userInfo.nickname}</p>
                                             </>
                                         }
                                     </div>
                                     <div className="enif-flex-horizontal">
-                                        <i className="material-icons">schedule</i>
+                                        <i className="ri-icons ri-time-line"></i>
                                         <p className="">{convertFullDate(content.createdAt)}</p>
                                     </div>
                                 </div>

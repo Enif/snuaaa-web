@@ -244,7 +244,7 @@ class Photo extends React.Component {
         const { photoInfo, setPhotoState, likePhoto, deletePhoto, setAlbumThumbnail, closePhoto } = this;
         let albumInfo = photoInfo && photoInfo.album;
         let userInfo = photoInfo && photoInfo.contentPhoto.user;
-
+        let fullscreenClass = isFullscreen ? 'ri-fullscreen-exit-fill' : 'ri-fullscreen-fill'; 
         let backLink;
         if (!albumInfo) {
             backLink = `/board/brd32`;
@@ -253,37 +253,32 @@ class Photo extends React.Component {
             backLink = `/album/${albumInfo.content_id}`
         }
 
-        console.log(this.state.photo_id);
         return (
             <FullScreenPortal>
                 <div className="enif-modal-wrapper photo-popup" onClick={closePhoto}>
-                    {/* <div className="enif-modal-close">
-                        <i className="material-icons pointer">clear</i>
-                    </div> */}
                     <div className="photo-section-wrapper" onClick={(e) => e.stopPropagation()}>
                         {/* <BoardName board_id={this.photoInfo.contentPhoto.board.board_id} board_name={this.photoInfo.contentPhoto.board.board_name} /> */}
                         <div className="photo-alb-title-wrp">
-                            {/* <i className="photo-alb-title-back material-icons pointer" onClick={() => history.goBack()}>keyboard_backspace</i> */}
                             <Link className="photo-alb-title" to={backLink}>
-                                <i className="material-icons">photo_library</i>
+                                <i className="ri-gallery-line"></i>
                                 <h5>{albumInfo ? albumInfo.title : "기본앨범"}</h5>
                             </Link>
                             <div className="enif-modal-close" onClick={closePhoto}>
-                                <i className="material-icons pointer">clear</i>
+                                <i className="ri-close-fill enif-f-1p5x enif-pointer"></i>
                             </div>
                         </div>
                         <div className="photo-section-bottom">
                             <div className="photo-section-left">
                                 <div className="photo-img-wrapper" ref={this.fullscreenRef} >
                                     <div className="photo-move-action prev" onClick={() => this.moveToPhoto(-1)}>
-                                        <i className="material-icons pointer">keyboard_arrow_left</i>
+                                        <i className="ri-arrow-left-s-line ri-icons enif-pointer"></i>
                                     </div>
                                     <Image imgSrc={this.photoInfo && this.photoInfo.file_path} />
                                     <div className="photo-move-action next" onClick={() => this.moveToPhoto(1)}>
-                                        <i className="material-icons pointer">keyboard_arrow_right</i>
+                                        <i className="ri-arrow-right-s-line ri-icons enif-pointer"></i>
                                     </div>
                                     <div className="photo-action-fullscreen-wrapper">
-                                        <i className="material-icons pointer" onClick={this.clickFullscreen}>{isFullscreen ? 'fullscreen_exit' : 'fullscreen'}</i>
+                                        <i className={`${fullscreenClass} enif-pointer enif-f-1p2x`} onClick={this.clickFullscreen}></i>
                                     </div>
                                 </div>
                             </div>

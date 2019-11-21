@@ -35,7 +35,7 @@ const CreateExhibitPhotoComponent = ({ handleChange, handleDate, handlePhotograp
                         <div className="block-constant">
                             <label htmlFor="photos">
                                 <div className="add-photo">
-                                    <i className="material-icons md-36">add</i>
+                                    <i className="ri-add-line enif-f-2x"></i>
                                 </div>
                             </label>
                             <input type="file" id="photos" multiple accept="image/*" onChange={uploadFile} />

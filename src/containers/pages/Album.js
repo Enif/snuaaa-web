@@ -99,14 +99,15 @@ class Album extends React.Component {
                                     />
                                     <div className="album-wrapper">
                                         <AlbumInfo albumInfo={this.albumInfo} my_id={my_id} setAlbumState={this.setAlbumState} deleteAlbum={this.deleteAlbum} />
-                                        <div className="enif-divider"></div>
-                                        <PhotoList album_id={album_id} photos={this.photos} togglePopUp={this.togglePopUp} />
                                         {
                                             (!this.albumInfo.is_private || my_id === this.albumInfo.content.user.user_id) &&
-                                            <button className="enif-btn-circle enif-pos-sticky" onClick={this.togglePopUp}>
-                                                <i className="material-icons">add_photo_alternate</i>
-                                            </button>
+                                            <button className="board-btn-write" onClick={this.togglePopUp}>
+                                                <i className="ri-image-line enif-f-1p2x"></i>사진 업로드
+                                        </button>
+
                                         }
+                                        <div className="enif-divider"></div>
+                                        <PhotoList album_id={album_id} photos={this.photos} togglePopUp={this.togglePopUp} />
                                         {
                                             popUpState && <CreatePhoto album_id={album_id} board_id={this.albumInfo.content.board_id} tags={this.tagInfo} retrievePhotos={this.retrievePhotos} fetch={this.fetch} togglePopUp={this.togglePopUp} setReadyState={() => this.setAlbumState(ContentStateEnum.READY)} />
                                         }

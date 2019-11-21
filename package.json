@@ -12,6 +12,7 @@
     "Sooyeon Ahn"
   ],
   "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^5.11.2",
     "axios": "^0.18.1",
     "history": "^4.9.0",
     "node-sass": "^4.12.0",
@@ -26,6 +27,7 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.1",
     "redux": "^4.0.1",
+    "remixicon": "^2.1.0",
     "symlink": "^2.1.0",
     "universal-cookie": "^4.0.2"
   },
@@ -40,5 +42,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.11.2"
+  }
 }

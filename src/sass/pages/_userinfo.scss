@@ -57,13 +57,12 @@
                 justify-content: center;
                 align-items: center;
                 background-color: $color_gray2;
+                color: $color-white;
+                font-size: 1.4rem;
                 cursor: pointer;
                 transition: all 0.2s;
                 &:hover {
                     background-color: $color-gray1;
-                }
-                .material-icons {
-                    color: #FFFFFF;
                 }
             }
         }
@@ -211,8 +210,9 @@
     }
     .icon-expand {
         position: absolute;
-        right: 0px;
-        bottom: 0px;
+        right: -1rem;
+        bottom: -1rem;
+        font-size: 1.2rem;
     }
 
     .btn-edit-info {
@@ -460,7 +460,7 @@
         }
         .icon-expand {
             right: 0.5rem;
-            bottom: 0.5rem;
+            bottom: -0.5rem;
         }
     }
 

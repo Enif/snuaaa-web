@@ -69,7 +69,7 @@ class ExhibitBoard extends React.Component {
                                     <p className="desc-small">{exhibition.place}</p>
                                 </div>
                             </div>
-                        </div>                    
+                        </div>
                     </Link>
                 )
             })
@@ -97,18 +97,21 @@ class ExhibitBoard extends React.Component {
                                     <div className="board-desc">
                                         {boardInfo.board_desc}
                                     </div>
+                                    <div className="board-search-wrapper">
+                                        {
+                                            level >= boardInfo.lv_write &&
+                                            <button className="board-btn-write" onClick={() => this.setBoardState(BoardStateEnum.WRITING)}>
+                                                <i className="ri-gallery-line enif-f-1p2x"></i>
+                                                <>사진전 생성</>
+                                            </button>
+                                        }
+                                    </div>
                                     {
                                         (boardState === BoardStateEnum.READY || boardState === BoardStateEnum.WRITING) &&
                                         <>
                                             <div className="exhibition-list-wrapper">
                                                 {makeExhibitionList()}
                                             </div>
-                                            {
-                                                level >= boardInfo.lv_write &&
-                                                <button className="enif-btn-circle enif-pos-sticky" onClick={() => this.setBoardState(BoardStateEnum.WRITING)}>
-                                                    <i className="material-icons">library_add</i>
-                                                </button>
-                                            }
                                         </>
                                     }
                                     {
@@ -120,7 +123,6 @@ class ExhibitBoard extends React.Component {
                                             close={() => this.setBoardState(BoardStateEnum.READY)}
                                             fetch={this.fetch} />
                                     }
-
                                 </div>
                             )
                         }

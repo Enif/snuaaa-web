@@ -12,6 +12,7 @@
 }
 
 .actions-drawer {
+    position: relative;
     user-select: none;
     z-index: 1;
     .actions-wrapper {
@@ -124,13 +125,14 @@
     top: 50%;
     // right: 0;
     height: auto;
-    // width: 90px;
+    width: 8rem;
     // user-select: none;
     margin: 0px 0px 0px 0px;
     max-height: 0px;
     overflow: hidden;
     transition: max-height 0.2s;
     font-size: 17px;
+    box-shadow: 1px 1px 1px 2px $color-gray4;
     .action-unit-wrapper {
         display: flex;
         justify-content: center;
@@ -194,9 +196,6 @@
         align-items: center;
         color: #a3a3a3;
     }
-    .material-icons {
-        font-size: 24px;
-    }
 }
 
 .tag-wrapper {
@@ -252,7 +251,7 @@
     padding: 20px 0px;
     // margin-top: auto;
     justify-content: center;
-    .material-icons {
+    i {
         color: $color-gray4;
         &:hover {
             color: $color-gray2;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import * as service from 'services';
 import CreatePhoto from 'containers/Photo/CreatePhoto';
 import CreateAlbum from 'containers/Album/CreateAlbum';
@@ -190,10 +191,11 @@ class AstroPhoto extends React.Component {
 
         console.log(`[${TAG}] render..`)
 
-        let { isReady, pageIdx } = this.state;
-        let { board_id, boardInfo } = this.props;
-        let albumSelectorClassName = "view-type-selector" + (this.state.isViewPhotos ? "" : " selected")
-        let photoSelectorClassName = "view-type-selector" + (this.state.isViewPhotos ? " selected" : "")
+        const { board_id, boardInfo, level } = this.props;
+        const { isReady, pageIdx, isViewPhotos, selectedTags, popUpState } = this.state;
+
+        let albumSelectorClassName = "view-type-selector" + (isViewPhotos ? "" : " selected")
+        let photoSelectorClassName = "view-type-selector" + (isViewPhotos ? " selected" : "")
 
         return (
             <>
@@ -203,27 +205,55 @@ class AstroPhoto extends React.Component {
                     <div className={photoSelectorClassName} onClick={() => this.setIsViewPhotos(true)}>사진</div>
                 </div>
                 {
-                    this.state.isViewPhotos ?
+                    isViewPhotos ?
                         (
                             <>
-                                <Tag tags={this.tags} clickAll={this.clickAll} selectedTags={this.state.selectedTags} clickTag={this.clickTag} />
+                                <div className="board-search-wrapper">
+                                    <div className="board-search-input">
+                                        <i className="ri-search-line enif-f-1x"></i>
+                                        <input type="text" />
+                                    </div>
+                                    <div>
+                                        {
+                                            level >= boardInfo.lv_write &&
+                                            <button className="board-btn-write" onClick={() => this.togglePopUp()}>
+                                                <i className="ri-image-line enif-f-1p2x"></i>사진 업로드
+                                            </button>
+                                        }
+                                    </div>
+                                </div>
+                                <Tag
+                                    tags={this.tags}
+                                    clickAll={this.clickAll}
+                                    selectedTags={selectedTags}
+                                    clickTag={this.clickTag} />
                                 <div className="enif-divider"></div>
-                                <PhotoList photos={this.photos} togglePopUp={this.togglePopUp} />
-                                <button className="enif-btn-circle enif-pos-sticky" onClick={this.togglePopUp}>
-                                    <i className="material-icons">add_photo_alternate</i>
-                                </button>
-                                {this.state.popUpState && <CreatePhoto board_id={board_id} tags={this.tags} retrievePhotos={this.fetch} togglePopUp={this.togglePopUp} setReadyState={() => this.setIsReady(true)} />}
+                                <PhotoList
+                                    photos={this.photos}
+                                    togglePopUp={this.togglePopUp} />
+                                {popUpState && <CreatePhoto board_id={board_id} tags={this.tags} retrievePhotos={this.fetch} togglePopUp={this.togglePopUp} setReadyState={() => this.setIsReady(true)} />}
                             </>
                         )
                         :
                         (
                             <>
+                                <div className="board-search-wrapper">
+                                    <div className="board-search-input">
+                                        <i className="ri-search-line enif-f-1x"></i>
+                                        <input type="text" />
+                                    </div>
+                                    <div>
+                                        {
+                                            level >= boardInfo.lv_write &&
+                                            <button className="board-btn-write" onClick={() => this.togglePopUp()}>
+                                                <i className="ri-gallery-line enif-f-1p2x"></i>앨범 생성
+                                            </button>
+                                        }
+                                    </div>
+                                </div>
                                 <div className="enif-divider"></div>
                                 <AlbumList board_id={board_id} albums={this.albums} togglePopUp={this.togglePopUp} />
-                                {this.state.popUpState && <CreateAlbum board_id={board_id} fetch={this.fetch} togglePopUp={this.togglePopUp} setReadyState={() => this.setIsReady(true)} />}
-                                <button className="enif-btn-circle enif-pos-sticky" onClick={this.togglePopUp}>
-                                    <i className="material-icons">library_add</i>
-                                </button>
+                                {popUpState && <CreateAlbum board_id={board_id} fetch={this.fetch} togglePopUp={this.togglePopUp} setReadyState={() => this.setIsReady(true)} />}
                             </>
                         )
                 }
@@ -233,4 +263,10 @@ class AstroPhoto extends React.Component {
     }
 }
 
-export default AstroPhoto
+const mapStateToProps = (state) => {
+    return {
+        level: state.authentication.level,
+    }
+}
+
+export default connect(mapStateToProps, null, null, { pure: false })(AstroPhoto);

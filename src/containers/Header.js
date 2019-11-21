@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import history from 'common/history';
 
 import { authLogout } from '../actions';
@@ -66,11 +65,9 @@ class Header extends React.Component {
             <>
                 <div id="aaa-top" className="main-header-wrapper">
                     <div className="main-header">
-                        {/* <Link to="/"> */}
                         <div className="header-logo" onClick={clickLogo}>
                             <img src={logo} alt="logo" /><p>서울대학교 아마추어 천문회</p>
                         </div>
-                        {/* </Link> */}
                         {
                             level > 0 &&
                             <div className="profile-img-wrapper">

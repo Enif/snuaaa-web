@@ -48,13 +48,13 @@
         &:hover {
             .post-date-updated {
                 position: absolute;
-                right: -160px;
-                top: -10px;
+                left: 0px;
+                top: 100%;
                 display: block;
                 width: 150px;
                 padding: 5px 10px;
                 border-radius: 5px;
-                background-color: $color_gray4;
+                background-color: $color_gray5;
 
             }
         }
@@ -106,6 +106,8 @@
 .attach-file-wrapper {
     display: flex;
     margin: 20px 10px;
+    height: 100%;
+    width: 100%;
     .file-list {
         flex-grow: 1;
         padding: 10px;
@@ -115,6 +117,15 @@
         li {
             display: flex;
             align-items: center;
+            font-size: 1rem;
+        }
+        .ri-icons {
+            margin: 0px 0.5rem;
+            color: $color_gray3;
+            font-size: 1.2rem;
+            &:hover {
+                color: rgb(255, 79, 79);
+            }
         }
     }
 
@@ -130,15 +141,11 @@
         justify-content: center;
         align-items: center;
         font-size: 14px;
-        color: #FFF;
+        color: #FFFFFF;
         cursor: pointer;
         transition: all 0.3s;
         &:hover {
             background-color: #646464;
-        }
-        .material-icons {
-            font-size: 15px;
-            color: #FFFFFF;
         }
     }
     input {

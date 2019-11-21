@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import * as service from 'services';
 import Loading from 'components/Common/Loading';
 import SelectBox from 'components/Common/SelectBox';
@@ -139,7 +141,7 @@ class DocuBoard extends React.Component {
 
     render() {
         console.log('[%s] render', TAG);
-        const { board_id, boardInfo, categories } = this.props;
+        const { board_id, boardInfo, categories, level } = this.props;
         const { pageIdx, boardState } = this.state;
 
         const categoryOptions = categories.map((category) => {
@@ -164,12 +166,20 @@ class DocuBoard extends React.Component {
         return (
             <div className="board-wrapper">
                 <BoardName board_id={boardInfo.board_id} board_name={boardInfo.board_name} />
-                <div className="docboard-top-menu-wrapper">
+                {/* <div className="docboard-top-menu-wrapper"> */}
+                <div className="board-search-wrapper">
                     <div className="doc-select-wrapper">
                         <SelectBox selectName="category" optionList={categoryOptions} onSelect={this.handleChange} selectedOption={this.state.category} />
                         <SelectBox selectName="generation" optionList={generationOptions} onSelect={this.handleChange} selectedOption={this.state.generation} />
                     </div>
+                    {
+                        level >= boardInfo.lv_write &&
+                        <button className="board-btn-write" onClick={() => this.setBoardState(BoardStateEnum.WRITING)}>
+                            <i className="ri-file-add-line enif-f-1p2x"></i>문서생성
+                            </button>
+                    }
                 </div>
+                {/* </div> */}
                 {(() => {
                     if (boardState === BoardStateEnum.LOADING) {
                         return <Loading />
@@ -179,9 +189,6 @@ class DocuBoard extends React.Component {
                             <>
                                 <DocuList documents={this.documents} />
                                 {this.docCount > 0 && <Paginator pageIdx={pageIdx} pageNum={Math.ceil(this.docCount / DOCROWNUM)} clickPage={this.clickPage} />}
-                                <button className="enif-btn-circle enif-pos-sticky" onClick={() => this.setBoardState(BoardStateEnum.WRITING)}>
-                                    <i className="material-icons">note_add</i>
-                                </button>
                                 {
                                     boardState === BoardStateEnum.WRITING &&
                                     <CreateDocu board_id={board_id} fetch={this.fetch} categories={categories} close={() => this.setBoardState(BoardStateEnum.READY)} />
@@ -200,4 +207,10 @@ class DocuBoard extends React.Component {
     }
 }
 
-export default DocuBoard;
+const mapStateToProps = (state) => {
+    return {
+        level: state.authentication.level,
+    }
+}
+
+export default connect(mapStateToProps, null)(DocuBoard);

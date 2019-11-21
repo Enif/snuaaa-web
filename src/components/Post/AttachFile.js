@@ -8,13 +8,23 @@ function AttachFile({ files, attachFile, removeFile }) {
                 return (
                     <li key={index}>
                         <p>{file.name}</p>
-                        <i className="material-icons pointer" onClick={() => removeFile(index)}>remove_circle_outline</i>
+                        <i className="ri-close-circle-line ri-icons enif-pointer" onClick={() => removeFile(index)}></i>
                     </li>)
             })
         }
     }
 
-    const acceptFileList = ['.jpg', '.jpeg', '.png', '.docx', 'xlsx', 'pptx', '.hwp', '.zip']
+    const acceptFileList = [
+        '.jpg', '.jpeg', '.png',
+        '.docx', '.doc',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        '.xlsx', '.xls',
+        '.pptx', '.ppt',
+        '.pdf',
+        '.hwp',
+        '.zip', '.txt'
+    ];
+
 
     return (
         <div className="attach-file-wrapper">
@@ -25,7 +35,7 @@ function AttachFile({ files, attachFile, removeFile }) {
             </div>
             <label htmlFor="attach_file" >
                 <div className="attach-btn-wrapper">
-                    <i className="material-icons pointer">attach_file</i>
+                    <i className="ri-upload-2-fill enif-pointer"></i>&nbsp;
                     파일첨부
                 </div>
             </label>

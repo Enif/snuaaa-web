@@ -8,12 +8,12 @@ const EditAlbumComponent = ({ caption, title, text, isPrivate, setIsPrivate, che
                 <div
                     className={`select-private-unit ${isPrivate ? 'selected' : ''}`}
                     onClick={() => setIsPrivate(true)}>
-                    <i className="material-icons">person</i>개인앨범
+                    <i className="ri-user-fill enif-f-1p2x"></i>개인앨범
                 </div>
                 <div
                     className={`select-private-unit ${isPrivate ? '' : 'selected'}`}
                     onClick={() => setIsPrivate(false)}>
-                    <i className="material-icons">group</i>그룹앨범
+                    <i className="ri-group-fill enif-f-1p2x"></i>그룹앨범
                 </div>
             </div>
         )

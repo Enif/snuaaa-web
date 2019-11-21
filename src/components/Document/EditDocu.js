@@ -6,7 +6,7 @@ function EditDocu({ editingDocData, handleEditting, setDocState, updateDoc }) {
     return (
         <div className="writepost-wrapper">
             <div className="writepost-header">
-                <i className="material-icons pointer" onClick={() => setDocState(ContentStateEnum.READY)}>keyboard_backspace</i>
+                <i className="ri-arrow-left-line enif-pointer" onClick={() => setDocState(ContentStateEnum.READY)}></i>
                 <h5>글수정</h5>
             </div>
             <div className="writepost-title">

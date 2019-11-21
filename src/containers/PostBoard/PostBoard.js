@@ -8,6 +8,8 @@ import CreatePost from 'containers/PostBoard/CreatePost';
 import BoardStateEnum from 'common/BoardStateEnum';
 import history from 'common/history';
 import BoardName from '../../components/Board/BoardName';
+import SearchTypeEnum from 'common/SearchTypeEnum';
+import BoardService from 'services/BoardService';
 
 const TAG = 'POSTBOARD'
 const POSTROWNUM = 10;
@@ -23,6 +25,10 @@ class PostBoard extends React.Component {
         this.state = {
             boardState: BoardStateEnum.LOADING,
             pageIdx: (hisState && hisState.page) ? hisState.page : 1,
+            searchInfo: {
+                type: SearchTypeEnum.All,
+                keyword: ''
+            }
         }
     }
 
@@ -73,11 +79,37 @@ class PostBoard extends React.Component {
             .then((res) => {
                 this.posts = res.data.postInfo;
                 this.postCount = res.data.postCount;
-                this.setBoardState(BoardStateEnum.READY)
+                this.setBoardState(BoardStateEnum.READY);
             })
             .catch((err) => {
                 console.error(err);
             })
+    }
+
+    search = async () => {
+        const { board_id } = this.props;
+        const { searchInfo } = this.state;
+
+        try {
+            const res = await BoardService.searchPostsInBoard(board_id, searchInfo.type, searchInfo.keyword, 0)
+
+            this.posts = res.data.postInfo;
+            this.postCount = res.data.postCount;
+            this.setBoardState(BoardStateEnum.READY)
+        }
+        catch (err) {
+            console.error(err);
+        }
+    }
+
+    handleSearchKeyword = (e) => {
+        const { searchInfo } = this.state;
+        this.setState({
+            searchInfo: {
+                ...searchInfo,
+                keyword: e.target.value
+            }
+        })
     }
 
     makeCategoryList = () => {
@@ -94,6 +126,7 @@ class PostBoard extends React.Component {
     render() {
         console.log(`[${TAG}] render.. `)
 
+        const { handleSearchKeyword } = this
         const { board_id, boardInfo, level } = this.props;
         const { pageIdx, boardState } = this.state;
 
@@ -115,16 +148,26 @@ class PostBoard extends React.Component {
                                         boardState === BoardStateEnum.READY &&
                                         <>
                                             {this.makeCategoryList()}
+                                            <div className="board-search-wrapper">
+                                                <div className="board-search-input">
+                                                    <i className="ri-search-line enif-f-1x" onClick={this.search}></i>
+                                                    <input type="text" onChange={handleSearchKeyword} />
+                                                </div>
+                                                <div>
+                                                    {
+                                                        level >= boardInfo.lv_write &&
+                                                        <button className="board-btn-write" onClick={() => this.setBoardState(BoardStateEnum.WRITING)}>
+                                                            <i className="ri-pencil-line enif-f-1p2x"></i>글쓰기
+                                                        </button>
+                                                    }
+                                                </div>
+                                            </div>
+
                                             <PostList
                                                 posts={this.posts}
                                                 clickCrtBtn={() => this.setBoardState(BoardStateEnum.WRITING)} />
                                             {this.postCount > 0 && <Paginator pageIdx={pageIdx} pageNum={Math.ceil(this.postCount / POSTROWNUM)} clickPage={this.clickPage} />}
-                                            {
-                                                level >= boardInfo.lv_write &&
-                                                <button className="enif-btn-circle enif-pos-sticky" onClick={() => this.setBoardState(BoardStateEnum.WRITING)}>
-                                                    <i className="material-icons">create</i>
-                                                </button>
-                                            }
+
                                         </>
                                     }
                                     {
@@ -153,4 +196,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, null, null, {pure: false})(PostBoard);
+export default connect(mapStateToProps, null, null, { pure: false })(PostBoard);

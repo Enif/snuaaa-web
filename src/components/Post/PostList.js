@@ -30,38 +30,16 @@ const PostList = ({ posts }) => {
 
                     <div className="post-list-unit post-list-unit-3">
                         <span className="color-pink icon-wrapper">
-                            <i className="material-icons md-18">favorite</i>
+                            <i class="ri-heart-fill"></i>
                             {content.like_num}
                         </span>
                     </div>
                     <div className="post-list-unit post-list-unit-3">
                         <span className="color-gray1 icon-wrapper">
-                            <i className="material-icons md-18 md-dark">comment</i>
+                            <i class="ri-message-fill"></i>
                             {content.comment_num}
                         </span>
                     </div>
-                    {/* <div className="post-list-unit-left">
-                        <div className="post-title">
-
-                        </div>
-                        <div className="post-author">
-
-                        </div>
-                        <div className="post-created">
-                        </div>
-                    </div>
-                    <div className="post-list-unit-right">
-                        <div className="post-comment-num">
-                            <span className="color-pink">
-                                <i className="material-icons md-18">favorite</i>
-                                {content.like_num}
-                            </span>
-                            <span className="color-gray1">
-                                <i className="material-icons md-18 md-dark">comment</i>
-                                {content.comment_num}
-                            </span>
-                        </div>
-                    </div> */}
                 </div>
             )
         });

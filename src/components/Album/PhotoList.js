@@ -20,10 +20,10 @@ const PhotoList = ({ photos }) => {
                             }
                         }} >
                             <div className="photo-cover">
-                                <i className="material-icons">favorite</i>
+                                <i className="ri-heart-fill"></i>
                                 <p>{contentInfo.like_num}</p>
                                 &nbsp;
-                                <i className="material-icons">comment</i>
+                                <i className="ri-message-fill"></i>
                                 <p>{contentInfo.comment_num}</p>
                             </div>
                             <Image imgSrc={photo.thumbnail_path} />

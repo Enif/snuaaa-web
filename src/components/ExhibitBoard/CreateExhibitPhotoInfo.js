@@ -33,9 +33,9 @@ const CreateExhibitPhotoInfo = ({ title, text, order, photographer, photographer
                     <div className="label-wrapper"><label>Photographer</label></div>
                     {
                         photographer.uuid ?
-                            <div className="mini-user-selected">
+                            <div className="mini-user-selected enif-f-1x">
                                 <div>{photographer.nickname}</div>
-                                <i className="material-icons pointer" onClick={removePhotographer}>remove_circle_outline</i>
+                                <i className="ri-close-circle-line enif-pointer" onClick={removePhotographer}></i>
                             </div>
                             :
                             <input type="text" name="photographer" onChange={handlePhotographer} autoComplete="off" value={photographer_alt}/>

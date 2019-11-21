@@ -8,10 +8,11 @@ const TAG = 'COMMENT'
 class Comment extends React.Component {
 
     constructor(props) {
-        console.log('[%s] constructor', TAG);
         super(props);
-        this.comments = [];
+        console.log('[%s] constructor', TAG);
+
         this.state = {
+            comments: [],
             text: '',
             isReady: false,
             commentInEdit: '',
@@ -46,8 +47,9 @@ class Comment extends React.Component {
         }
         await service.retrieveComments(parent_id)
         .then((res) => {
-            this.comments = res.data;
+            // this.comments = res.data;
             this.setState({
+                comments: res.data,
                 isReady: true
             })
         })
@@ -145,10 +147,12 @@ class Comment extends React.Component {
     render() {
         console.log(`[${TAG}] render..`);
         const { my_id } = this.props;
+        const { comments } = this.state;
+        console.log(comments)
 
         return (
             <div className="comment-area-wrapper">
-                <CommentList my_id={my_id} comments={this.comments} deleteComment={this.deleteComment} 
+                <CommentList my_id={my_id} comments={comments} deleteComment={this.deleteComment} 
                     updateComment={this.updateComment} commentInEdit={this.state.commentInEdit} 
                     setCommentInEdit={this.setCommentInEdit} editingContents={this.state.editingContents}
                     editingContentsChange={this.editingContentsChange}/>
