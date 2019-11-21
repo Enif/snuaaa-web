@@ -148,7 +148,6 @@ class Comment extends React.Component {
         console.log(`[${TAG}] render..`);
         const { my_id } = this.props;
         const { comments } = this.state;
-        console.log(comments)
 
         return (
             <div className="comment-area-wrapper">

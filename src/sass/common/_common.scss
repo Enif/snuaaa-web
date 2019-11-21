@@ -11,8 +11,15 @@
     word-break: break-word;
 }
 
-.actions-drawer {
+.actions-drawer-target {
     position: relative;
+}
+
+.actions-drawer {
+    // position: relative;
+    position: absolute;
+    right: 0;
+    top: 0;
     user-select: none;
     z-index: 1;
     .actions-wrapper {

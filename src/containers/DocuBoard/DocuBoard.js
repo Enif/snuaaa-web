@@ -49,6 +49,8 @@ class DocuBoard extends React.Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         console.log(`[${TAG}] shouldComponentUpdate`);
+        console.log(this.state);
+        console.log(nextState);
         if (this.state.category !== nextState.category ||
             this.state.generation !== nextState.generation ||
             this.state.pageIdx !== nextState.pageIdx) {
@@ -106,7 +108,6 @@ class DocuBoard extends React.Component {
     }
 
     handleChange = (e) => {
-        console.log(e.target.name)
         const { category, generation } = this.state;
         if (e.target.name === 'category') {
             history.push({
@@ -213,4 +214,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, null)(DocuBoard);
+export default connect(mapStateToProps, null, null, { pure: false })(DocuBoard);

@@ -13,10 +13,10 @@ const CommentList = ({ my_id, comments, commentInEdit, editingContents, editingC
                 let user = comment.user;
                 return (
                     <div key={comment.comment_id} className="comment-wrapper">
-                        <UserActionDrawer user_uuid={user.user_uuid}>
-                            <div className="profile">
+                        <UserActionDrawer user_uuid={user.user_uuid} className="profile">
+                            {/* <div className="profile"> */}
                                 <Image imgSrc={user.profile_path} defaultImgSrc={defaultProfile} />
-                            </div>
+                            {/* </div> */}
                         </UserActionDrawer>
                         <div className="com-cont-wrp">
                             <div className="com-cont-top">
