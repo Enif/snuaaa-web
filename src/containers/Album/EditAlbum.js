@@ -1,7 +1,8 @@
 import React from 'react';
-import * as service from 'services';
+
 import EditAlbumComponent from 'components/Album/EditAlbumComponent';
 import ContentStateEnum from 'common/ContentStateEnum';
+import AlbumService from 'services/AlbumService';
 
 const TAG = 'EDITALBUM'
 
@@ -49,7 +50,7 @@ class EditAlbum extends React.Component {
                 is_private: isPrivate
             }
             
-            await service.updateAlbum(this.props.album_id, albumInfo)
+            await AlbumService.updateAlbum(this.props.album_id, albumInfo)
             .then(() => {
                 console.log('[%s] Update Album Success', TAG);
                 this.props.setAlbumState(ContentStateEnum.READY);

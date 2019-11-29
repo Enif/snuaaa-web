@@ -1,5 +1,4 @@
 import React from 'react';
-import * as service from 'services';
 import Loading from 'components/Common/Loading';
 import MyProfile from 'components/MyPage/MyProfile';
 import MyPostList from 'components/MyPage/MyPostList';
@@ -7,6 +6,7 @@ import MyPhotoList from 'components/MyPage/MyPhotoList';
 import MyCommentList from 'components/MyPage/MyCommentList';
 import MyPageSelector from 'components/MyPage/MyPageSelector';
 import MyPageViewEnum from 'common/MyPageViewEnum';
+import UserService from 'services/UserService';
 
 const TAG = 'USERPAGE'
 
@@ -42,7 +42,7 @@ class UserPage extends React.Component {
         this.setIsShow(false);
 
         if (!this.userInfo) {
-            await Promise.all([service.retrieveUserInfo(user_uuid), service.retrieveUserPosts(user_uuid)])
+            await Promise.all([UserService.retrieveUserInfo(user_uuid), UserService.retrieveUserPosts(user_uuid)])
                 .then((res) => {
                     this.userInfo = res[0].data.userInfo;
                     this.postList = res[1].data.postList;
@@ -51,21 +51,21 @@ class UserPage extends React.Component {
         }
         else {
             if (myPageView === MyPageViewEnum.POST) {
-                await service.retrieveUserPosts(user_uuid)
+                await UserService.retrieveUserPosts(user_uuid)
                     .then((res) => {
                         this.postList = res.data.postList;
                         this.setIsShow(true);
                     })
             }
             if (myPageView === MyPageViewEnum.PHOTO) {
-                await service.retrieveUserPhotos(user_uuid)
+                await UserService.retrieveUserPhotos(user_uuid)
                     .then((res) => {
                         this.photoList = res.data.photoList;
                         this.setIsShow(true);
                     })
             }
             if (myPageView === MyPageViewEnum.COMMENT) {
-                await service.retrieveUserComments(user_uuid)
+                await UserService.retrieveUserComments(user_uuid)
                     .then((res) => {
                         this.commentList = res.data.commentList;
                         this.setIsShow(true);

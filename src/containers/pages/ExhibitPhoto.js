@@ -201,7 +201,6 @@ class ExhibitPhoto extends React.Component {
         if (goDrop) {
             await ExhibitPhotoService.deleteExhibitPhoto(exhibitPhoto_id)
                 .then(() => {
-                    alert("게시글이 삭제되었습니다.");
                     this.setPhotoState(ContentStateEnum.DELETED);
                 })
                 .catch((err) => {

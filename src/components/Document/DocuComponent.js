@@ -35,7 +35,9 @@ const DocuComponent = ({ docData, my_id, setDocState, deleteDoc, likeDoc, isLike
     return (
         <div className="post-wrapper">
             <div className="post-title">
-                <i className="ri-arrow-left-line enif-pointer post-title-back" onClick={() => history.goBack()} ></i>
+                <div className="post-title-back" onClick={() => history.goBack()}>
+                    <i className="ri-arrow-left-line enif-pointer" ></i>
+                </div>
                 <h5>{contentInfo.title}</h5>
                 {
                     (my_id === userInfo.user_id) &&
@@ -62,7 +64,7 @@ const DocuComponent = ({ docData, my_id, setDocState, deleteDoc, likeDoc, isLike
             <div className="enif-divider"></div>
             <div className="nums-wrapper">
                 <div className="like-num-wrapper">
-                    <i className={`${isLiked ? 'ri-heart-fill':'ri-heart-line'} enif-f-1p5x enif-pointer`} onClick={() => likeDoc()}>
+                    <i className={`${isLiked ? 'ri-heart-fill' : 'ri-heart-line'} enif-f-1p5x enif-pointer`} onClick={() => likeDoc()}>
                     </i>
                     {contentInfo.like_num}
                 </div>

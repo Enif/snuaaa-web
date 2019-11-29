@@ -14,7 +14,12 @@
         display: flex;
         .post-title-back {
             position: absolute;
-            margin-top: -3px;
+            display: flex;
+            align-items: center;
+            height: 100%;
+            left: 0;
+            top: 0;
+            // margin-top: -3px;
             margin-left: 5px;
             color: #FFFFFF;
         }
@@ -27,9 +32,11 @@
         }
         .actions-drawer {
             position: absolute;
+            display: flex;
+            align-items: center;
             padding-right: 7px;
             right: 0;
-            height: calc(100% - 11px);
+            height: 100%;
         }
     }
     .post-info-other {

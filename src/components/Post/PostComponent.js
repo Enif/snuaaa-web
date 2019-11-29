@@ -10,8 +10,8 @@ import FileIcon from 'components/Common/FileIcon';
 
 const PostComponent = ({ postData, my_id, likeInfo, fileInfo, likePost, setPostState, deletePost }) => {
 
-    let content = postData.content;
-    let user = postData.content.user;
+    let content = postData;
+    let user = postData.user;
 
     const makeFileList = () => {
         if (fileInfo && fileInfo.length > 0) {
@@ -39,7 +39,9 @@ const PostComponent = ({ postData, my_id, likeInfo, fileInfo, likePost, setPostS
     return (
         <div className="post-wrapper">
             <div className="post-title">
-                <i className="ri-arrow-left-line enif-pointer post-title-back" onClick={() => history.goBack()}></i>
+                <div className="post-title-back" onClick={() => history.goBack()}>
+                    <i className="ri-arrow-left-line enif-pointer" ></i>
+                </div>
                 <h5>{content.title}</h5>
                 {
                     (my_id === content.author_id) &&
@@ -56,7 +58,7 @@ const PostComponent = ({ postData, my_id, likeInfo, fileInfo, likePost, setPostS
                     <i className="ri-time-line"></i>
                     {convertFullDate(content.createdAt)}
                     {
-                        content.updatedAt &&
+                        (content.createdAt !== content.updatedAt) &&
                         <div className="post-date-updated">
                             {convertFullDate(content.updatedAt)} Updated
                         </div>
@@ -76,7 +78,7 @@ const PostComponent = ({ postData, my_id, likeInfo, fileInfo, likePost, setPostS
                         {content.view_num}
                     </div>
                     <div className="like-num-wrapper">
-                        <i className={`${likeInfo ? 'ri-heart-fill':'ri-heart-line'} enif-f-1p5x enif-pointer`} onClick={() => likePost()}>
+                        <i className={`${likeInfo ? 'ri-heart-fill' : 'ri-heart-line'} enif-f-1p5x enif-pointer`} onClick={() => likePost()}>
                         </i>
                         {content.like_num}
                     </div>

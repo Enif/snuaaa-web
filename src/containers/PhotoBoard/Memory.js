@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import * as service from 'services';
 import CreateAlbum from 'containers/Album/CreateAlbum';
 import AlbumList from 'components/PhotoBoard/AlbumList';
 import Category from 'components/Common/Category';
 import Loading from 'components/Common/Loading';
 import Paginator from 'components/Common/Paginator';
 import history from 'common/history'
+import PhotoBoardService from 'services/PhotoBoardService';
 
 const TAG = 'MEMORY'
 const ALBUMROWNUM = 12;
@@ -69,28 +69,15 @@ class Memory extends React.Component {
         }
 
         this.setIsReady(false);
-        if (category) {
-            await service.retrieveAlbumsInPhotoBoardByCategory(board_id, category, pageIdx)
-                .then((res) => {
-                    this.albums = res.data.albumInfo;
-                    this.albumCount = res.data.albumCount;
-                    this.setIsReady(true);
-                })
-                .catch((err) => {
-                    console.error(`[${TAG}] Retrieve Photos Fail >> ${err}`)
-                })
-        }
-        else {
-            await service.retrieveAlbumsInPhotoBoard(board_id, pageIdx)
-                .then((res) => {
-                    this.albums = res.data.albumInfo;
-                    this.albumCount = res.data.albumCount;
-                    this.setIsReady(true);
-                })
-                .catch((err) => {
-                    console.error(`[${TAG}] Retrieve Photos Fail >> ${err}`)
-                })
-        }
+        await PhotoBoardService.retrieveAlbumsInPhotoBoard(board_id, pageIdx, category)
+            .then((res) => {
+                this.albums = res.data.albumInfo;
+                this.albumCount = res.data.albumCount;
+                this.setIsReady(true);
+            })
+            .catch((err) => {
+                console.error(`[${TAG}] Retrieve Photos Fail >> ${err}`)
+            })
     }
 
     clickCategory = (ctg_id) => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
-import * as service from 'services';
+
 import ContentStateEnum from 'common/ContentStateEnum';
 import Comment from 'containers/Comment';
 import Loading from 'components/Common/Loading';
@@ -9,6 +9,8 @@ import PostComponent from 'components/Post/PostComponent';
 import EditPost from 'components/Post/EditPost';
 import history from 'common/history';
 import BoardName from '../../components/Board/BoardName';
+import PostService from 'services/PostService';
+import ContentService from 'services/ContentService';
 
 const TAG = 'POST'
 
@@ -73,9 +75,8 @@ class Post extends React.Component {
 
     fetch = async () => {
 
-        await service.retrievePost(this.state.post_id)
+        await PostService.retrievePost(this.state.post_id)
             .then((res) => {
-                console.log(`[${TAG}] Retrieve Post Success`);
                 this.postData = res.data.postInfo;
                 this.fileInfo = res.data.fileInfo;
 
@@ -83,8 +84,8 @@ class Post extends React.Component {
                     likeInfo: res.data.likeInfo,
                     postState: ContentStateEnum.READY,
                     editingPostData: {
-                        title: res.data.postInfo.content.title,
-                        text: res.data.postInfo.content.text
+                        title: res.data.postInfo.title,
+                        text: res.data.postInfo.text
                     }
                 })
             })
@@ -102,7 +103,7 @@ class Post extends React.Component {
 
     updatePost = async () => {
 
-        await service.updatePost(this.state.post_id, this.state.editingPostData)
+        await PostService.updatePost(this.state.post_id, this.state.editingPostData)
             .then((res) => {
                 this.fetch();
             })
@@ -116,9 +117,8 @@ class Post extends React.Component {
 
         let goDrop = window.confirm("정말로 삭제하시겠습니까? 삭제한 게시글은 다시 복원할 수 없습니다.");
         if (goDrop) {
-            await service.deletePost(this.state.post_id)
+            await PostService.deletePost(this.state.post_id)
                 .then(() => {
-                    alert("게시글이 삭제되었습니다.");
                     this.setPostState(ContentStateEnum.DELETED);
                 })
                 .catch((err) => {
@@ -129,13 +129,13 @@ class Post extends React.Component {
     }
 
     likePost = async () => {
-        await service.likeObject(this.state.post_id)
+        await ContentService.likeContent(this.state.post_id)
             .then(() => {
                 if (this.state.likeInfo) {
-                    this.postData.content.like_num--;
+                    this.postData.like_num--;
                 }
                 else {
-                    this.postData.content.like_num++;
+                    this.postData.like_num++;
                 }
                 this.setState({
                     likeInfo: !this.state.likeInfo
@@ -147,9 +147,10 @@ class Post extends React.Component {
     }
 
     render() {
-        console.log(`[${TAG}] render..`);
         const { post_id, likeInfo, postState, editingPostData } = this.state;
         const { my_id, my_level } = this.props;
+
+        let boardData = this.postData && this.postData.board;
 
         return (
             <>
@@ -162,8 +163,8 @@ class Post extends React.Component {
                             return (
                                 <>
                                     <BoardName
-                                        board_id={this.postData.content.board.board_id}
-                                        board_name={this.postData.content.board.board_name}
+                                        board_id={boardData.board_id}
+                                        board_name={boardData.board_name}
                                     />
                                     <PostComponent
                                         postData={this.postData}
@@ -176,7 +177,7 @@ class Post extends React.Component {
                                         deletePost={this.deletePost} />
                                     {
                                         (my_level > 0) &&
-                                        <Comment parent_id={this.postData.content.content_id} />
+                                        <Comment parent_id={this.postData.content_id} />
                                     }
                                 </>
 
@@ -193,7 +194,7 @@ class Post extends React.Component {
                             )
                         else if (postState === ContentStateEnum.DELETED)
                             return (
-                                <Redirect to={`/board/${this.postData.content.board_id}`} />
+                                <Redirect to={`/board/${this.postData.board_id}`} />
                             )
                         else {
                             return (

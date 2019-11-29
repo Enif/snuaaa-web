@@ -19,8 +19,8 @@ class AlbumList extends React.Component {
             let categoryInfo = album.content.category;
             // let thumbnailInfo = album.thumbnail && album.thumbnail.photo
             let thumbnailPath = '';
-            if (album.thumbnail && album.thumbnail.photo) {
-                thumbnailPath = album.thumbnail.photo.thumbnail_path;
+            if (album.thumbnail) {
+                thumbnailPath = album.thumbnail.thumbnail_path;
             }
             else if (album.content.albumPhoto && album.content.albumPhoto[0]){
                 thumbnailPath = album.content.albumPhoto[0].thumbnail_path;

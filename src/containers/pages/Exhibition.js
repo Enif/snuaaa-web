@@ -52,7 +52,6 @@ class Exhibition extends React.Component {
         if (goDrop) {
             await ExhibitionService.deleteExhibition(this.props.match.params.exhibition_id)
                 .then(() => {
-                    alert("게시글이 삭제되었습니다.");
                     this.setAlbumState(ContentStateEnum.DELETED);
                 })
                 .catch((err) => {

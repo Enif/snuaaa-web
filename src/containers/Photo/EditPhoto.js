@@ -1,7 +1,8 @@
 import React from 'react';
-import * as service from 'services';
+
 import EditPhotoComponent from 'components/Photo/EditPhotoComponent';
 import ContentsStateEnum from 'common/ContentStateEnum';
+import PhotoService from 'services/PhotoService';
 
 const TAG = 'EDITPHOTO'
 
@@ -108,7 +109,7 @@ class EditPhoto extends React.Component {
         // photosForm.append('iso', iso);
         // photosForm.append('tags', selectedTags);
         // photosForm.append('uploadPhotos', this.state.uploadPhotos[i]);
-        await service.updatePhoto(photo_id, photoInfo)
+        await PhotoService.updatePhoto(photo_id, photoInfo)
             .then(() => {
                 this.props.fetch();
             })

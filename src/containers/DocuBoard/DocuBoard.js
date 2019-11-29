@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import * as service from 'services';
 import Loading from 'components/Common/Loading';
 import SelectBox from 'components/Common/SelectBox';
 import Paginator from 'components/Common/Paginator';
@@ -10,6 +9,7 @@ import CreateDocu from 'containers/DocuBoard/CreateDocu';
 import BoardStateEnum from 'common/BoardStateEnum';
 import history from 'common/history';
 import BoardName from '../../components/Board/BoardName';
+import DocuService from 'services/DocuService';
 
 const TAG = 'DOCUBOARD'
 const DOCROWNUM = 10;
@@ -72,7 +72,7 @@ class DocuBoard extends React.Component {
         if (!pageIdx) pageIdx = this.state.pageIdx;
 
         this.setBoardState(BoardStateEnum.LOADING);
-        await service.retrieveDocuments(pageIdx, category, generation)
+        await DocuService.retrieveDocuments(pageIdx, category, generation)
             .then((res) => {
                 this.docCount = res.data.docCount;
                 this.documents = res.data.docInfo;

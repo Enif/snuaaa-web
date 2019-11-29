@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import * as service from '../services';
+
 import CommentList from '../components/Comment/CommentList';
+import CommentService from 'services/CommentService';
 
 const TAG = 'COMMENT'
 
@@ -45,7 +46,7 @@ class Comment extends React.Component {
         if (!parent_id) {
             parent_id = this.props.parent_id;
         }
-        await service.retrieveComments(parent_id)
+        await CommentService.retrieveComments(parent_id)
         .then((res) => {
             // this.comments = res.data;
             this.setState({
@@ -67,7 +68,7 @@ class Comment extends React.Component {
             let commentInfo = {
                 text: this.state.text
             }
-            await service.createComment(this.props.parent_id, commentInfo)
+            await CommentService.createComment(this.props.parent_id, commentInfo)
             .then((res) => {
                 console.log('[%s] Create Comment Success', TAG);
                 this.setState({
@@ -95,7 +96,7 @@ class Comment extends React.Component {
                 text: this.state.editingContents
             }
     
-            await service.updateComment(comment_id, commentInfo)
+            await CommentService.updateComment(comment_id, commentInfo)
             .then((res) => {
                 console.log('[%s] Update Comment Success', TAG);
                 this.setState({
@@ -116,10 +117,9 @@ class Comment extends React.Component {
         let goDrop = window.confirm("정말로 삭제하시겠습니까?");
         if(goDrop) {
 
-            await service.deleteComment(comment_id)
+            await CommentService.deleteComment(comment_id)
             .then(() => {
                 console.log('[%s] Delete Comment Success', TAG);
-                alert("삭제 성공");
                 this.retrieveComments();
             })
             .catch((err) => {

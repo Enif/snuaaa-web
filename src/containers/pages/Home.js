@@ -1,6 +1,5 @@
 import React from 'react';
 import SoundBox from 'components/Home/SoundBox';
-import * as service from 'services';
 import Loading from 'components/Common/Loading';
 import NewPosts from 'components/Home/NewPosts';
 import NewComments from 'components/Home/NewComments';
@@ -9,6 +8,7 @@ import NewExhibitions from 'components/Home/NewExhibitions';
 import RiseSetMobile from '../../components/Home/RiseSetMobile';
 import ExtLinkMobile from '../../components/Home/ExtLinkMobile';
 import BoardService from 'services/BoardService';
+import HomeService from 'services/HomeService';
 
 const TAG = 'HOME'
 
@@ -40,13 +40,13 @@ class Home extends React.Component {
             isReady: false
         })
         await Promise.all([
-            service.retrieveSoundBox(),
-            service.retrieveRecentPosts(),
-            service.retrieveRecentComments(),
-            service.retrieveRecentMemory(),
-            service.retrieveRecentAstroPhoto(),
+            HomeService.retrieveSoundBox(),
+            HomeService.retrieveRecentPosts(),
+            HomeService.retrieveRecentComments(),
+            HomeService.retrieveRecentMemory(),
+            HomeService.retrieveRecentAstroPhoto(),
             BoardService.retrieveExhibitionsInBoard(),
-            service.retrieveRiseSet()
+            HomeService.retrieveRiseSet()
         ])
             .then((res) => {
                 this.soundBoxData = res[0].data;

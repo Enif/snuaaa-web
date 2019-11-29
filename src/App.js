@@ -10,7 +10,7 @@ import 'react-quill/dist/quill.core.css';
 import Section from './containers/Section';
 import Loading from './components/Common/Loading';
 import { getToken } from 'utils/tokenManager';
-import { updateToken } from './services';
+import AuthService from 'services/AuthService';
 import { authLogin, authLogout } from './actions';
 import history from 'common/history';
 // import UserContext from './UserContext';
@@ -61,7 +61,7 @@ class App extends Component {
         }
         else {
             // 서버에 토큰 확인 , invalid => logout, valid => 로그인 유지(연장)
-            await updateToken()
+            await AuthService.checkToken()
                 .then((res) => {
                     console.log(`[${TAG}] Token is valid`)
 

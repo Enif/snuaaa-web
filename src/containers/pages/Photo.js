@@ -2,7 +2,6 @@ import React from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import * as service from 'services'
 import Loading from 'components/Common/Loading';
 import ContentStateEnum from 'common/ContentStateEnum';
 import PhotoInfo from 'components/Photo/PhotoInfo';
@@ -11,6 +10,9 @@ import Comment from 'containers/Comment';
 import history from 'common/history';
 import FullScreenPortal from 'containers/FullScreenPortal';
 import Image from 'components/Common/Image';
+import ContentService from 'services/ContentService';
+import AlbumService from 'services/AlbumService';
+import PhotoService from 'services/PhotoService';
 
 
 const TAG = 'PHOTO'
@@ -67,7 +69,7 @@ class Photo extends React.Component {
         if (!photo_id) {
             photo_id = this.props.match.params.photo_id
         }
-        await service.retrievePhoto(photo_id)
+        await PhotoService.retrievePhoto(photo_id)
             .then((res) => {
                 this.photoInfo = res.data.photoInfo;
                 // this.tagInfo = res.data.tagInfo;
@@ -103,7 +105,7 @@ class Photo extends React.Component {
             alert("섬네일로 설정할 수 없습니다.")
         }
         else {
-            await service.updateAlbumThumbnail(albumInfo.content_id, data)
+            await AlbumService.updateAlbumThumbnail(albumInfo.content_id, data)
                 .then((res) => {
                     console.log('success')
                 })
@@ -205,7 +207,7 @@ class Photo extends React.Component {
     }
 
     likePhoto = async () => {
-        await service.likeObject(this.state.photo_id)
+        await ContentService.likeContent(this.state.photo_id)
             .then(() => {
                 if (this.state.likeInfo) {
                     this.photoInfo.contentPhoto.like_num--;
@@ -226,9 +228,8 @@ class Photo extends React.Component {
 
         let goDrop = window.confirm("정말로 삭제하시겠습니까? 삭제한 게시글은 다시 복원할 수 없습니다.");
         if (goDrop) {
-            await service.deletePhoto(this.state.photo_id)
+            await PhotoService.deletePhoto(this.state.photo_id)
                 .then(() => {
-                    alert("게시글이 삭제되었습니다.");
                     this.setPhotoState(ContentStateEnum.DELETED);
                 })
                 .catch((err) => {

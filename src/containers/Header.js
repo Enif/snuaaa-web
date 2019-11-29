@@ -8,7 +8,7 @@ import imgProfile from '../assets/img/profile.png';
 import Navigation from '../components/Header/Navigation'
 import PopupUser from '../components/Header/PopupUser'
 import Image from '../components/Common/Image';
-import * as service from 'services';
+import BoardService from 'services/BoardService';
 
 
 const TAG = 'HEADER';
@@ -45,7 +45,7 @@ class Header extends React.Component {
     }
 
     fetch = async () => {
-        await service.retrieveBoards()
+        await BoardService.retrieveBoards()
             .then((res) => {
                 this.setState({
                     boards: res.data

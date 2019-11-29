@@ -1,6 +1,6 @@
 import React from 'react';
-import * as service from 'services';
 import AttachFile from 'components/Post/AttachFile';
+import DocuService from 'services/DocuService';
 
 const TAG = 'CREATEDOCU'
 
@@ -67,7 +67,7 @@ class CreateDocu extends React.Component {
                 docuInfo.append('uploadFiles', this.state.uploadFiles[i]);
             }
 
-            await service.createDocument(this.props.board_id, docuInfo)
+            await DocuService.createDocument(this.props.board_id, docuInfo)
                 .then(() => {
                     console.log('[%s] Create Docu Success', TAG);
                     this.props.fetch()

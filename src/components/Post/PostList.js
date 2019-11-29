@@ -30,13 +30,13 @@ const PostList = ({ posts }) => {
 
                     <div className="post-list-unit post-list-unit-3">
                         <span className="color-pink icon-wrapper">
-                            <i class="ri-heart-fill"></i>
+                            <i className="ri-heart-fill"></i>
                             {content.like_num}
                         </span>
                     </div>
                     <div className="post-list-unit post-list-unit-3">
                         <span className="color-gray1 icon-wrapper">
-                            <i class="ri-message-fill"></i>
+                            <i className="ri-message-fill"></i>
                             {content.comment_num}
                         </span>
                     </div>

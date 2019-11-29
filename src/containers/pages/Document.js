@@ -1,11 +1,12 @@
 import React from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
-import * as service from 'services';
 import ContentStateEnum from 'common/ContentStateEnum';
 import Loading from 'components/Common/Loading';
 import DocuComponent from 'components/Document/DocuComponent';
 import EditDocu from 'components/Document/EditDocu';
+import ContentService from 'services/ContentService';
+import DocuService from 'services/DocuService';
 
 const TAG = 'DOCU'
 
@@ -33,7 +34,7 @@ class Docu extends React.Component {
     }
 
     fetch = async () => {
-        await service.retrieveDocument(this.state.doc_id)
+        await DocuService.retrieveDocument(this.state.doc_id)
             .then((res) => {
                 this.docData = res.data.docuInfo;
                 this.setState({
@@ -68,7 +69,7 @@ class Docu extends React.Component {
     }
 
     updateDoc = async () => {
-        await service.updateDocument(this.state.doc_id, this.state.editingDocData)
+        await DocuService.updateDocument(this.state.doc_id, this.state.editingDocData)
             .then((res) => {
                 this.fetch();
             })
@@ -82,9 +83,8 @@ class Docu extends React.Component {
 
         let goDrop = window.confirm("정말로 삭제하시겠습니까? 삭제한 게시글은 다시 복원할 수 없습니다.");
         if (goDrop) {
-            await service.deleteDocument(this.state.doc_id)
+            await DocuService.deleteDocument(this.state.doc_id)
                 .then(() => {
-                    alert("게시글이 삭제되었습니다.");
                     this.setDocState(ContentStateEnum.DELETED);
                 })
                 .catch((err) => {
@@ -95,7 +95,7 @@ class Docu extends React.Component {
     }
 
     likeDoc = async () => {
-        await service.likeObject(this.state.doc_id)
+        await ContentService.likeContent(this.state.doc_id)
             .then(() => {
                 if (this.state.isLiked) {
                     this.docData.content.like_num--;

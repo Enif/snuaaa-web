@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import * as service from 'services';
 import { authLogin } from 'actions';
 import LogInComponent from 'components/Login/LogInComponent';
 import Loading from 'components/Common/Loading';
@@ -9,6 +8,7 @@ import PopUp from 'components/Common/PopUp';
 import FullScreenPortal from 'containers/FullScreenPortal';
 import history from 'common/history';
 import FindIdPw from '../Login/FindIdPw';
+import AuthService from 'services/AuthService';
 
 const TAG = 'LOGIN'
 
@@ -88,7 +88,7 @@ class LogIn extends React.Component {
             autoLogin: autoLogin
         }
 
-        await service.userLogIn(logInInfo)
+        await AuthService.logIn(logInInfo)
             .then((res) => {
                 console.log('[%s] Log In Success', TAG)
                 this.setState({
@@ -119,7 +119,7 @@ class LogIn extends React.Component {
             isLoading: true
         })
 
-        await service.guestLogIn()
+        await AuthService.guestLogIn()
             .then((res) => {
                 console.log('[%s] Log In Success', TAG)
                 this.setState({

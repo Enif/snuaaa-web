@@ -11,6 +11,41 @@ const UserService = {
         }
     },
 
+    updateUserInfo: function(data) {
+        return AaaService.patch('userinfo', data);
+    },
+    
+    deleteUserInfo: function() {
+        return AaaService.delete('userinfo');
+    },
+
+    retrieveUserPosts: function(user_uuid) {
+        if(user_uuid) {
+            return AaaService.get(`userinfo/${user_uuid}/posts`);
+        }
+        else {
+            return AaaService.get('userinfo/posts');
+        }
+    },
+    
+    retrieveUserPhotos: function(user_uuid) {
+        if(user_uuid) {
+            return AaaService.get(`userinfo/${user_uuid}/photos`);
+        }
+        else {
+            return AaaService.get('userinfo/photos');
+        }
+    },
+    
+    retrieveUserComments: function(user_uuid) {
+        if(user_uuid) {
+            return AaaService.get(`userinfo/${user_uuid}/comments`);
+        }
+        else {
+            return AaaService.get(`userinfo/comments`);        
+        }
+    },
+    
     updatePassword: function(data) {
         return AaaService.patch(`userinfo/password`, data)
     },

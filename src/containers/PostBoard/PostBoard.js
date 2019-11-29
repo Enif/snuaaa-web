@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import * as service from 'services'
 import Loading from 'components/Common/Loading';
 import PostList from 'components/Post/PostList';
 import Paginator from 'components/Common/Paginator';
@@ -75,7 +74,7 @@ class PostBoard extends React.Component {
         }
 
         this.setBoardState(BoardStateEnum.LOADING)
-        await service.retrievePostsInBoard(board_id, pageIdx)
+        await BoardService.retrievePostsInBoard(board_id, pageIdx)
             .then((res) => {
                 this.posts = res.data.postInfo;
                 this.postCount = res.data.postCount;

@@ -1,5 +1,4 @@
 import React from 'react';
-import * as service from 'services';
 import Loading from 'components/Common/Loading';
 import MyProfile from 'components/MyPage/MyProfile';
 import MyPostList from 'components/MyPage/MyPostList';
@@ -7,6 +6,7 @@ import MyPhotoList from 'components/MyPage/MyPhotoList';
 import MyCommentList from 'components/MyPage/MyCommentList';
 import MyPageSelector from 'components/MyPage/MyPageSelector';
 import MyPageViewEnum from 'common/MyPageViewEnum';
+import UserService from 'services/UserService';
 
 const TAG = 'MYPOST'
 
@@ -35,7 +35,7 @@ class MyInfo extends React.Component {
         this.setIsShow(false);
 
         if (!this.userInfo) {
-            await Promise.all([service.retrieveUserInfo(), service.retrieveUserPosts()])
+            await Promise.all([UserService.retrieveUserInfo(), UserService.retrieveUserPosts()])
                 .then((res) => {
                     this.userInfo = res[0].data.userInfo;
                     this.postList = res[1].data.postList;
@@ -44,21 +44,21 @@ class MyInfo extends React.Component {
         }
         else {
             if (myPageView === MyPageViewEnum.POST) {
-                await service.retrieveUserPosts()
+                await UserService.retrieveUserPosts()
                     .then((res) => {
                         this.postList = res.data.postList;
                         this.setIsShow(true);
                     })
             }
             if (myPageView === MyPageViewEnum.PHOTO) {
-                await service.retrieveUserPhotos()
+                await UserService.retrieveUserPhotos()
                     .then((res) => {
                         this.photoList = res.data.photoList;
                         this.setIsShow(true);
                     })
             }
             if (myPageView === MyPageViewEnum.COMMENT) {
-                await service.retrieveUserComments()
+                await UserService.retrieveUserComments()
                     .then((res) => {
                         this.commentList = res.data.commentList;
                         this.setIsShow(true);
@@ -66,28 +66,6 @@ class MyInfo extends React.Component {
             }
         }
     }
-
-    // getUserPost = async () => {
-    //     this.setState({
-    //         isShow: false
-    //     })
-
-    //     await Promise.all([service.retrieveUserInfo(), service.retrieveUserPosts()])
-    //         .then((response) => {
-
-    //             this.userInfo = response[0].data.userInfo;
-    //             this.postList = response[1].data.postList;
-    //             this.photoList = response[1].data.photoList;
-    //             this.commentList = response[1].data.commentList;
-
-    //             this.setState({
-    //                 isShow: true
-    //             })
-    //         })
-    //         .catch((err) => {
-    //             console.error(err);
-    //         })
-    // }
 
     setIsShow = (isShow) => {
         this.setState({
@@ -143,19 +121,8 @@ class MyInfo extends React.Component {
                         selectComment={() => setMyPageView(MyPageViewEnum.COMMENT)}
                     />
                     {makeMyContentsList()}
-                    {/* <div className="my-objects-wrapper">
-                        <div className="my-left">
-                            <MyPostList posts={this.postList} />
-                            <MyCommentList comments={this.commentList} />
-                        </div>
-                        <div className="my-right">
-                            <MyPhotoList photos={this.photoList} />
-                        </div>
-                    </div> */}
                 </div>
             </>
-            // :
-            // <Loading />
         )
     }
 }

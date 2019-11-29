@@ -1,6 +1,7 @@
 import React from 'react';
-import * as service from 'services';
 import CreatePhotoComponent from 'components/Photo/CreatePhotoComponent';
+import PhotoBoardService from 'services/PhotoBoardService';
+import AlbumService from 'services/AlbumService';
 
 const TAG = 'CREATEPHOTO';
 const MAX_SIZE = 100 * 1024 * 1024;
@@ -221,7 +222,7 @@ class CreatePhoto extends React.Component {
 
         if (this.props.album_id) {
 
-            await service.createPhotosInAlbum(this.props.album_id, photosForm)
+            await AlbumService.createPhotosInAlbum(this.props.album_id, photosForm)
                 .then(() => {
                     this.props.togglePopUp();
                     this.props.fetch();
@@ -236,7 +237,7 @@ class CreatePhoto extends React.Component {
         }
         else if (this.props.board_id) {
 
-            await service.createPhotosInPhotoBoard(this.props.board_id, photosForm)
+            await PhotoBoardService.createPhotosInPhotoBoard(this.props.board_id, photosForm)
                 .then(() => {
                     this.props.togglePopUp();
                     this.props.retrievePhotos(this.props.board_id);

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
-import * as service from 'services';
 import ContentStateEnum from 'common/ContentStateEnum';
 import Loading from 'components/Common/Loading';
 import PhotoList from 'components/Album/PhotoList';
@@ -9,6 +8,7 @@ import AlbumInfo from 'components/Album/AlbumInfo';
 import EditAlbum from 'containers/Album/EditAlbum';
 import CreatePhoto from 'containers/Photo/CreatePhoto';
 import BoardName from '../../components/Board/BoardName';
+import AlbumService from 'services/AlbumService';
 
 const TAG = 'ALBUM'
 
@@ -34,8 +34,8 @@ class Album extends React.Component {
 
     fetch = async () => {
         await Promise.all([
-            service.retrieveAlbum(this.props.match.params.album_id),
-            service.retrievePhotosInAlbum(this.props.match.params.album_id)
+            AlbumService.retrieveAlbum(this.props.match.params.album_id),
+            AlbumService.retrievePhotosInAlbum(this.props.match.params.album_id)
         ])
             .then((infos) => {
                 this.albumInfo = infos[0].data.albumInfo;
@@ -55,9 +55,8 @@ class Album extends React.Component {
 
         let goDrop = window.confirm("정말로 삭제하시겠습니까? 삭제한 게시글은 다시 복원할 수 없습니다.");
         if (goDrop) {
-            await service.deleteAlbum(this.props.match.params.album_id)
+            await AlbumService.deleteAlbum(this.props.match.params.album_id)
                 .then(() => {
-                    alert("게시글이 삭제되었습니다.");
                     this.setAlbumState(ContentStateEnum.DELETED);
                 })
                 .catch((err) => {

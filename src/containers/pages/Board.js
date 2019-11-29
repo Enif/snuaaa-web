@@ -1,11 +1,11 @@
 import React from 'react';
-import * as service from 'services';
 import PostBoard from 'containers/PostBoard/PostBoard';
 import PhotoBoard from 'containers/PhotoBoard/PhotoBoard';
 import DocuBoard from 'containers/DocuBoard/DocuBoard';
 import ExhibitBoard from 'containers/ExhibitBoard/ExhibitBoard';
 import Loading from 'components/Common/Loading';
 import history from 'common/history';
+import BoardService from 'services/BoardService';
 
 const TAG = 'BOARD'
 
@@ -56,7 +56,7 @@ class Board extends React.Component {
             isReady: false,
             boardInfo: null
         })
-        await service.retrieveBoardInfo(board_id)
+        await BoardService.retrieveBoardInfo(board_id)
             .then((res) => {
                 // this.boardInfo = res.data.resBoardInfo;
                 this.categories = res.data.resCategoryInfo;

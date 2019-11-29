@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import * as service from 'services';
 import CreatePhoto from 'containers/Photo/CreatePhoto';
 import CreateAlbum from 'containers/Album/CreateAlbum';
 import AlbumList from 'components/PhotoBoard/AlbumList';
@@ -9,6 +8,8 @@ import Tag from 'components/Common/Tag';
 import Loading from 'components/Common/Loading';
 import Paginator from 'components/Common/Paginator';
 import history from 'common/history';
+import BoardService from 'services/BoardService';
+import PhotoBoardService from 'services/PhotoBoardService';
 
 const TAG = 'ASTROPHOTO';
 const ALBUMROWNUM = 12;
@@ -73,7 +74,7 @@ class AstroPhoto extends React.Component {
 
         this.setIsReady(false);
         if (!isViewPhotos) {
-            await service.retrieveAlbumsInPhotoBoard(board_id, pageIdx)
+            await PhotoBoardService.retrieveAlbumsInPhotoBoard(board_id, pageIdx)
                 .then((res) => {
                     this.albums = res.data.albumInfo;
                     this.count = res.data.albumCount;
@@ -86,8 +87,8 @@ class AstroPhoto extends React.Component {
         else {
             if (selectedTags.length > 0) {
                 await Promise.all([
-                    service.retrieveTagsInBoard(board_id),
-                    service.retrievePhotosInPhotoBoardByTag(board_id, selectedTags, pageIdx)
+                    BoardService.retrieveTagsInBoard(board_id),
+                    PhotoBoardService.retrievePhotosInPhotoBoardByTag(board_id, selectedTags, pageIdx)
                 ])
                     .then((res) => {
                         this.tags = res[0].data;
@@ -101,8 +102,8 @@ class AstroPhoto extends React.Component {
             }
             else {
                 await Promise.all([
-                    service.retrieveTagsInBoard(board_id),
-                    service.retrievePhotosInPhotoBoard(board_id, pageIdx)
+                    BoardService.retrieveTagsInBoard(board_id),
+                    PhotoBoardService.retrievePhotosInPhotoBoard(board_id, pageIdx)
                 ])
                     .then((res) => {
                         this.tags = res[0].data;

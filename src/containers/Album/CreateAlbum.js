@@ -1,6 +1,6 @@
 import React from 'react';
-import * as service from 'services';
 import EditAlbumComponent from '../../components/Album/EditAlbumComponent';
+import PhotoBoardService from 'services/PhotoBoardService';
 
 const TAG = 'CREATEALBUM'
 
@@ -54,7 +54,7 @@ class CreateAlbum extends React.Component {
                 is_private: isPrivate
             }
 
-            await service.createAlbum(this.props.board_id, albumInfo)
+            await PhotoBoardService.createAlbum(this.props.board_id, albumInfo)
                 .then(() => {
                     console.log('[%s] Create Album Success', TAG);
                     this.props.togglePopUp();
