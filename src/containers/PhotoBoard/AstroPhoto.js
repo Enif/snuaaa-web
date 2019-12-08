@@ -232,7 +232,15 @@ class AstroPhoto extends React.Component {
                                 <PhotoList
                                     photos={this.photos}
                                     togglePopUp={this.togglePopUp} />
-                                {popUpState && <CreatePhoto board_id={board_id} tags={this.tags} retrievePhotos={this.fetch} togglePopUp={this.togglePopUp} setReadyState={() => this.setIsReady(true)} />}
+                                {
+                                    popUpState &&
+                                    <CreatePhoto
+                                        board_id={board_id}
+                                        tags={this.tags}
+                                        fetch={this.fetch}
+                                        togglePopUp={this.togglePopUp}
+                                        setReadyState={() => this.setIsReady(true)} />
+                                }
                             </>
                         )
                         :

@@ -1,12 +1,12 @@
 import React from 'react';
 import Loading from 'components/Common/Loading';
 import MyProfile from 'components/MyPage/MyProfile';
-import MyPostList from 'components/MyPage/MyPostList';
-import MyPhotoList from 'components/MyPage/MyPhotoList';
+import MyPostList from 'components/MyPage/MyPostList.tsx';
+import MyPhotoList from 'components/MyPage/MyPhotoList.tsx';
 import MyCommentList from 'components/MyPage/MyCommentList';
 import MyPageSelector from 'components/MyPage/MyPageSelector';
 import MyPageViewEnum from 'common/MyPageViewEnum';
-import UserService from 'services/UserService';
+import UserService from 'services/UserService.ts';
 
 const TAG = 'USERPAGE'
 

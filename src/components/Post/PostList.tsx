@@ -1,14 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { convertDate } from 'utils/convertDate'
+import { convertDate } from '../../utils/convertDate';
+import ContentType from '../../types/ContentType';
 
-const PostList = ({ posts }) => {
+function PostList({ posts }: { posts: ContentType[] }) {
 
     const makePostList = () => {
 
         let postList = posts.map(post => {
-            let content = post.content;
-            let user = post.content.user;
+            let content = post;
+            let user = post.user;
 
             return (
                 <div className="post-list" key={content.content_id}>

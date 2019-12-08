@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from '../Common/Image';
+import Image from '../Common/AaaImage.tsx';
 import InputField from '../Common/InputField';
 import imgDefaultProfile from 'assets/img/profile.png';
 

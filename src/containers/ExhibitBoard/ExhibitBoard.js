@@ -7,7 +7,7 @@ import history from 'common/history';
 import { convertDateWithDay } from 'utils/convertDate'
 import BoardService from 'services/BoardService';
 import BoardName from '../../components/Board/BoardName';
-import Image from 'components/Common/Image';
+import Image from 'components/Common/AaaImage.tsx';
 import CreateExhibition from 'containers/ExhibitBoard/CreateExhibition';
 
 const TAG = 'EXHIBITBOARD'

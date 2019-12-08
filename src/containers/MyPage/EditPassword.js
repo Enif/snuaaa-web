@@ -1,5 +1,5 @@
 import React from 'react';
-import UserService from 'services/UserService';
+import UserService from 'services/UserService.ts';
 import InputField from 'components/Common/InputField';
 
 class EditPassword extends React.Component {

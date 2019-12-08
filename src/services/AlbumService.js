@@ -1,4 +1,4 @@
-import { AaaService } from './index'
+import { AaaService } from './index.ts';
 
 const AlbumService = {
 

@@ -10,7 +10,7 @@ export { default as Docu } from './Document';
 export { default as Exhibition } from './Exhibition';
 export { default as ExhibitPhoto } from './ExhibitPhoto';
 
-export { default as LogIn } from './LogIn';
+export { default as LogIn } from './LogIn.tsx';
 export { default as MyPage } from './MyPage';
 export { default as UserPage } from './UserPage';
 export { default as AllComments } from './AllComments';

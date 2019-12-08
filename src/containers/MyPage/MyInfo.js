@@ -1,8 +1,8 @@
 import React from 'react';
 import Loading from 'components/Common/Loading';
 import MyProfile from 'components/MyPage/MyProfile';
-import MyPostList from 'components/MyPage/MyPostList';
-import MyPhotoList from 'components/MyPage/MyPhotoList';
+import MyPostList from 'components/MyPage/MyPostList.tsx';
+import MyPhotoList from 'components/MyPage/MyPhotoList.tsx';
 import MyCommentList from 'components/MyPage/MyCommentList';
 import MyPageSelector from 'components/MyPage/MyPageSelector';
 import MyPageViewEnum from 'common/MyPageViewEnum';
@@ -34,10 +34,12 @@ class MyInfo extends React.Component {
         const { myPageView } = this.state
         this.setIsShow(false);
 
+
         if (!this.userInfo) {
             await Promise.all([UserService.retrieveUserInfo(), UserService.retrieveUserPosts()])
                 .then((res) => {
-                    this.userInfo = res[0].data.userInfo;
+                    console.log(res[0].data)
+                    this.userInfo = res[0].data;
                     this.postList = res[1].data.postList;
                     this.setIsShow(true);
                 })

@@ -1,6 +1,6 @@
 import React from 'react';
 import ExhibitionService from 'services/ExhibitionService';
-import UserService from 'services/UserService';
+import UserService from '../../services/UserService.ts';
 import CreateExhibitPhotoComponent from 'components/ExhibitBoard/CreateExhibitPhotoComponent';
 
 const TAG = 'CREATEPHOTO';

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactQuill from 'react-quill';
-import * as service from 'services';
+import * as service from '../../services/index';
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 

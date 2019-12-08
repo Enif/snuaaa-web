@@ -7,7 +7,7 @@ import logo from '../assets/img/logo_white.png'
 import imgProfile from '../assets/img/profile.png';
 import Navigation from '../components/Header/Navigation'
 import PopupUser from '../components/Header/PopupUser'
-import Image from '../components/Common/Image';
+import Image from '../components/Common/AaaImage.tsx';
 import BoardService from 'services/BoardService';
 
 

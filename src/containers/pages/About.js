@@ -5,6 +5,7 @@ import Equipment from 'components/About/equipment';
 import Observation from 'components/About/observation';
 import History from 'components/About/history';
 import Officers from 'components/About/officers';
+import Regulation from '../../components/About/regulation';
 
 class About extends React.Component {
 
@@ -29,6 +30,7 @@ class About extends React.Component {
         else if (this.state.aboutIndex === 'observation') return (<Observation/>);
         else if (this.state.aboutIndex === 'history') return (<History/>);
         else if (this.state.aboutIndex === 'officers') return (<Officers/>);
+        else if (this.state.aboutIndex === 'regulation') return (<Regulation/>);
         else return (<AboutAAA/>);
     }
     

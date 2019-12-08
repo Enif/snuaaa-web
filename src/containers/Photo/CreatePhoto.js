@@ -178,9 +178,9 @@ class CreatePhoto extends React.Component {
 
     createPhotos = async () => {
 
-        const { setReadyState } = this.props;
+        const { board_id, album_id, setReadyState } = this.props;
         const { imgIdx, title, text, date, location, camera, lens,
-            focal_length, f_stop, exposure_time, iso, selectedTags } = this.state;
+            focal_length, f_stop, exposure_time, iso, selectedTags, uploadPhotos } = this.state;
         const photosForm = new FormData();
 
         setReadyState();
@@ -204,7 +204,7 @@ class CreatePhoto extends React.Component {
             }
         }
 
-        for (let i = 0, max = this.state.uploadPhotos.length; i < max; i++) {
+        for (let i = 0, max = uploadPhotos.length; i < max; i++) {
             photosForm.append('board_id', this.props.board_id);
             photosForm.append('title', this.photoInfos[i].title);
             photosForm.append('text', this.photoInfos[i].text);
@@ -220,9 +220,9 @@ class CreatePhoto extends React.Component {
             photosForm.append('uploadPhotos', this.state.uploadPhotos[i]);
         }
 
-        if (this.props.album_id) {
+        if (album_id) {
 
-            await AlbumService.createPhotosInAlbum(this.props.album_id, photosForm)
+            await AlbumService.createPhotosInAlbum(album_id, photosForm)
                 .then(() => {
                     this.props.togglePopUp();
                     this.props.fetch();
@@ -235,12 +235,12 @@ class CreatePhoto extends React.Component {
                     })
                 })
         }
-        else if (this.props.board_id) {
+        else if (board_id) {
 
-            await PhotoBoardService.createPhotosInPhotoBoard(this.props.board_id, photosForm)
+            await PhotoBoardService.createPhotosInPhotoBoard(board_id, photosForm)
                 .then(() => {
                     this.props.togglePopUp();
-                    this.props.retrievePhotos(this.props.board_id);
+                    this.props.fetch(board_id);
                 })
                 .catch((err) => {
                     console.error(`[${TAG}] ${err}`);

@@ -1,6 +1,6 @@
 import React from 'react';
 import ContentsStateEnum from 'common/ContentStateEnum';
-import UserService from 'services/UserService';
+import UserService from 'services/UserService.ts';
 import ExhibitPhotoService from 'services/ExhibitPhotoService';
 import EditExhibitPhotoComponent from 'components/ExhibitBoard/EditExhibitPhotoComponent';
 

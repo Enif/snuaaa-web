@@ -67,7 +67,7 @@ class Board extends React.Component {
             })
             .catch((err) => {
                 console.error(err);
-                if(err.response && err.response.data && err.response.data.code === 4001) {
+                if (err.response && err.response.data && err.response.data.code === 4001) {
                     alert("권한이 없습니다.")
                     history.goBack();
                 }
@@ -85,7 +85,11 @@ class Board extends React.Component {
                     if (boardInfo) {
                         if (boardInfo.board_type === 'N') {
                             return (
-                                <PostBoard boardInfo={boardInfo} board_id={this.state.board_id} categories={this.categories} />
+                                <PostBoard
+                                    boardInfo={boardInfo}
+                                    board_id={this.state.board_id}
+                                    categories={this.categories}
+                                    location={history.location} />
                             )
                         }
                         else if (boardInfo.board_type === 'P') {

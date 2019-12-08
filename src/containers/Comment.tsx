@@ -1,14 +1,27 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { connect } from 'react-redux';
 
 import CommentList from '../components/Comment/CommentList';
-import CommentService from 'services/CommentService';
+import CommentService from '../services/CommentService';
 
 const TAG = 'COMMENT'
 
-class Comment extends React.Component {
+type CommentProps = {
+    my_id?: number;
+    parent_id: number;
+}
 
-    constructor(props) {
+type CommentState = {
+    comments: any;
+    text: string;
+    isReady: boolean;
+    commentInEdit: number;
+    editingContents: string;
+}
+
+class Comment extends React.Component<CommentProps, CommentState> {
+
+    constructor(props: CommentProps) {
         super(props);
         console.log('[%s] constructor', TAG);
 
@@ -16,7 +29,7 @@ class Comment extends React.Component {
             comments: [],
             text: '',
             isReady: false,
-            commentInEdit: '',
+            commentInEdit: -1,
             editingContents: ''
         }
     }
@@ -25,21 +38,21 @@ class Comment extends React.Component {
         this.retrieveComments(this.props.parent_id)
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
+    shouldComponentUpdate(nextProps: CommentProps, nextState: CommentState) {
         if (this.props.parent_id !== nextProps.parent_id) {
             this.retrieveComments(nextProps.parent_id);
         }
         return true;
     }
     
-    setCommentInEdit = (comment_id, text) => {
+    setCommentInEdit = (comment_id: number, text: string) => {
         this.setState({
             commentInEdit: comment_id,
             editingContents: text
         })
     }
 
-    retrieveComments = async (parent_id) => {
+    retrieveComments = async (parent_id?: number) => {
         this.setState({
             isReady: false
         })
@@ -47,14 +60,14 @@ class Comment extends React.Component {
             parent_id = this.props.parent_id;
         }
         await CommentService.retrieveComments(parent_id)
-        .then((res) => {
+        .then((res: any) => {
             // this.comments = res.data;
             this.setState({
                 comments: res.data,
                 isReady: true
             })
         })
-        .catch((err) => {
+        .catch((err: Error) => {
             console.error(err)
         })
     }
@@ -69,21 +82,21 @@ class Comment extends React.Component {
                 text: this.state.text
             }
             await CommentService.createComment(this.props.parent_id, commentInfo)
-            .then((res) => {
+            .then((res: any) => {
                 console.log('[%s] Create Comment Success', TAG);
                 this.setState({
                     text: ''
                 })
                 this.retrieveComments();
             })
-            .catch((err) => {
+            .catch((err: Error) => {
                 console.error(err);
                 alert("댓글 작성 실패");
             })
         }
     }
 
-    updateComment = async (comment_id) => {
+    updateComment = async (comment_id: number) => {
         console.log(`[${TAG}] Update Comment`);
         this.setState({
             isReady: false
@@ -97,22 +110,22 @@ class Comment extends React.Component {
             }
     
             await CommentService.updateComment(comment_id, commentInfo)
-            .then((res) => {
+            .then((res: any) => {
                 console.log('[%s] Update Comment Success', TAG);
                 this.setState({
-                    commentInEdit:'',
+                    commentInEdit: 0,
                     editingContents:''
                 })
                 this.retrieveComments();
             })
-            .catch((err) => {
+            .catch((err: Error) => {
                 console.error(err);
                 alert("댓글 업데이트 실패");
             })
         }
     }
 
-    deleteComment = async (comment_id) => {
+    deleteComment = async (comment_id: number) => {
         console.log(`[${TAG}] Delete Comment`);
         let goDrop = window.confirm("정말로 삭제하시겠습니까?");
         if(goDrop) {
@@ -122,7 +135,7 @@ class Comment extends React.Component {
                 console.log('[%s] Delete Comment Success', TAG);
                 this.retrieveComments();
             })
-            .catch((err) => {
+            .catch((err: Error) => {
                 console.error(err);
                 alert("댓글 삭제 실패");
             })
@@ -131,13 +144,13 @@ class Comment extends React.Component {
 
 
 
-    handleChange = (e) => {
+    handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         this.setState({
             text: e.target.value
         });
     }
     
-    editingContentsChange = (e) => {
+    editingContentsChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         this.setState({
             editingContents: e.target.value
         });
@@ -156,7 +169,7 @@ class Comment extends React.Component {
                     setCommentInEdit={this.setCommentInEdit} editingContents={this.state.editingContents}
                     editingContentsChange={this.editingContentsChange}/>
                 <div className="comment-write">
-                    <textarea placeholder="댓글을 입력하세요" name="text" onChange={(e) => this.handleChange(e)} value={this.state.text}></textarea>
+                    <textarea placeholder="댓글을 입력하세요" name="text" onChange={this.handleChange} value={this.state.text}></textarea>
                     <button onClick={this.createComment}>ENTER</button>
                 </div>
             </div>            
@@ -164,7 +177,7 @@ class Comment extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: any) => {
     return {
         my_id: state.authentication.user_id
     }

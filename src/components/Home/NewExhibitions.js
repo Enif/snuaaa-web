@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import Image from '../Common/Image';
+import Image from '../Common/AaaImage.tsx';
 
 const NUM_UNIT_DESKTOP = 4;
 const NUM_UNIT_MOBILE = 2;

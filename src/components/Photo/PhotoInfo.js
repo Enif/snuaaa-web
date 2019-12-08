@@ -9,9 +9,10 @@ import ActionDrawer from '../Common/ActionDrawer';
 const PhotoInfo = ({ photoInfo, likeInfo, my_id,
     setPhotoState, deletePhoto, likePhoto, setAlbumThumbnail }) => {
 
-    let content = photoInfo && photoInfo.contentPhoto;
-    let userInfo = photoInfo && photoInfo.contentPhoto.user;
-    let tagInfo = photoInfo && photoInfo.contentPhoto.contentTags;
+    let content = photoInfo;
+    let photo = photoInfo && photoInfo.photo;
+    let userInfo = photoInfo && photoInfo.user;
+    let tagInfo = photoInfo && photoInfo.contentTags;
 
     const makeTagList = () => {
         if (tagInfo) {
@@ -55,43 +56,43 @@ const PhotoInfo = ({ photoInfo, likeInfo, my_id,
                                 <div className="enif-divider enif-hide-desktop"></div>
                                 <table className="info-infos-wrapper">
                                     <tbody>
-                                        {photoInfo.date && (
+                                        {photo.date && (
                                             <tr>
                                                 <td>Date</td>
-                                                <td>{convertDate(photoInfo.date)}</td>
+                                                <td>{convertDate(photo.date)}</td>
                                             </tr>)}
 
-                                        {photoInfo.location && (
+                                        {photo.location && (
                                             <tr>
                                                 <td>Location</td>
-                                                <td>{photoInfo.location}</td>
+                                                <td>{photo.location}</td>
                                             </tr>)}
 
-                                        {photoInfo.camera && (
+                                        {photo.camera && (
                                             <tr>
                                                 <td>Camera</td>
-                                                <td>{photoInfo.camera}</td>
+                                                <td>{photo.camera}</td>
                                             </tr>)}
 
-                                        {photoInfo.lens && (
+                                        {photo.lens && (
                                             <tr>
                                                 <td>Lens</td>
-                                                <td>{photoInfo.lens}</td>
+                                                <td>{photo.lens}</td>
                                             </tr>)}
 
-                                        {photoInfo.focal_length && (
+                                        {photo.focal_length && (
                                             <tr>
                                                 <td>@</td>
-                                                <td>{photoInfo.focal_length}</td>
+                                                <td>{photo.focal_length}</td>
                                             </tr>)}
 
-                                        {(photoInfo.f_stop || photoInfo.exposure_time || photoInfo.iso) && (
+                                        {(photo.f_stop || photo.exposure_time || photo.iso) && (
                                             <tr>
                                                 <td>Setting</td>
                                                 <td>
-                                                    {photoInfo.f_stop && <>F/{photoInfo.f_stop}</>}
-                                                    {photoInfo.exposure_time && <> {photoInfo.exposure_time}</>}
-                                                    {photoInfo.iso && <> ISO{photoInfo.iso}</>}
+                                                    {photo.f_stop && <>F/{photo.f_stop}</>}
+                                                    {photo.exposure_time && <> {photo.exposure_time}</>}
+                                                    {photo.iso && <> ISO{photo.iso}</>}
                                                 </td>
                                             </tr>)}
                                     </tbody>

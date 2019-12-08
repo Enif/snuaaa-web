@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { authLogout } from 'actions';
 
-import UserService from 'services/UserService';
+import UserService from 'services/UserService.ts';
 import Loading from 'components/Common/Loading';
 import ProfileComponent from 'components/MyPage/ProfileComponent';
 

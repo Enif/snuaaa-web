@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Props } from 'react';
 import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router';
 
@@ -9,30 +9,43 @@ import 'react-quill/dist/quill.core.css';
 
 import Section from './containers/Section';
 import Loading from './components/Common/Loading';
-import { getToken } from 'utils/tokenManager';
-import AuthService from 'services/AuthService';
+import { getToken } from './utils/tokenManager';
+import AuthService from './services/AuthService';
 import { authLogin, authLogout } from './actions';
-import history from 'common/history';
+import history from './common/history';
 // import UserContext from './UserContext';
 
 const TAG = 'App'
 
+type AppProps = {
+    onAuthLogin: (user_id: number, nickname: string, level: number,
+        profile_path: string, token: string, autoLogin: boolean) => void;
+    onLogout: () => void;
+    loginState: boolean;
+}
 
-class App extends Component {
+type AppState = {
+    isReady: boolean;
+}
 
-    constructor(props) {
-        console.log(`[%s] constructor`, TAG)
+class App extends React.Component<AppProps, AppState> {
+
+    constructor(props: AppProps) {
         super(props);
+        console.log(`[%s] constructor`, TAG)
         this.state = {
             isReady: false
         }
+        // this.authService = new AuthService();
     }
+    
+    // authService: AuthService;
 
     componentDidMount() {
         this.checkToken();
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
+    shouldComponentUpdate(nextProps: AppProps, nextState: AppState) {
         if (nextState.isReady === false) {
             return false;
         }
@@ -62,7 +75,7 @@ class App extends Component {
         else {
             // 서버에 토큰 확인 , invalid => logout, valid => 로그인 유지(연장)
             await AuthService.checkToken()
-                .then((res) => {
+                .then((res: any) => {
                     console.log(`[${TAG}] Token is valid`)
 
                     const { token, user_id, nickname, level, profile_path, autoLogin } = res.data;
@@ -72,10 +85,10 @@ class App extends Component {
                         isReady: true
                     })
                 })
-                .catch((res) => {
+                .catch((err: any) => {
                     console.log(`[${TAG}] Token is not valid`)
                     alert("토큰이 만료되어 로그아웃 됩니다.")
-                    console.log(window.location.pathname);
+                    console.error(err);
                     history.push(window.location.pathname);
                     this.props.onLogout();
                     this.setState({
@@ -109,15 +122,16 @@ class App extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: any) => {
     return {
         loginState: state.authentication.isLoggedIn
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch: any) => {
     return {
-        onAuthLogin: (user_id, nickname, level, profile_path, token, autoLogin) => dispatch(authLogin(user_id, nickname, level, profile_path, token, autoLogin)),
+        onAuthLogin: (user_id: number, nickname: string, level: number,
+            profile_path: string, token: string, autoLogin: boolean) => dispatch(authLogin(user_id, nickname, level, profile_path, token, autoLogin)),
         onLogout: () => dispatch(authLogout())
     }
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Image from '../Common/Image';
+import Image from '../Common/AaaImage.tsx';
 import imgDefaultProfile from 'assets/img/profile.png';
 import { breakLine } from 'utils/breakLine';
 

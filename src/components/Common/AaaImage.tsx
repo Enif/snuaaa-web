@@ -1,6 +1,15 @@
 import React from 'react';
 
-const Image = ({ imgSrc, defaultImgSrc, className, onClick, local, ...rest }) => {
+type ImageProps = {
+    imgSrc: string;
+    defaultImgSrc?: string;
+    className?: string;
+    onClick?: () => void;
+    local?: boolean;
+}
+
+
+const AaaImage = ({ imgSrc, defaultImgSrc, className, onClick, local, ...rest }: ImageProps) => {
 
     let imgUrl;
     if (local) {
@@ -14,4 +23,4 @@ const Image = ({ imgSrc, defaultImgSrc, className, onClick, local, ...rest }) =>
     )
 }
 
-export default Image;
+export default AaaImage;

@@ -1,23 +1,35 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { connect } from 'react-redux';
 
-import { authLogin } from 'actions';
-import LogInComponent from 'components/Login/LogInComponent';
-import Loading from 'components/Common/Loading';
-import PopUp from 'components/Common/PopUp';
-import FullScreenPortal from 'containers/FullScreenPortal';
-import history from 'common/history';
+import { authLogin } from '../../actions';
+import LogInComponent from '../../components/Login/LogInComponent';
+import Loading from '../../components/Common/Loading';
+import PopUp from '../../components/Common/PopUp';
+import FullScreenPortal from '../../containers/FullScreenPortal';
+import history from '../../common/history';
 import FindIdPw from '../Login/FindIdPw';
-import AuthService from 'services/AuthService';
+import AuthService from '../../services/AuthService';
 
 const TAG = 'LOGIN'
 
-class LogIn extends React.Component {
-    // static propTypes = {
-    //     cookies: instanceOf(Cookies).isRequired
-    //   };
+type LoginProps = {
+    onAuthLogin: (user_id: number, nickname: string, level: number,
+        profile_path: string, token: string, autoLogin: boolean) => void;
+}
 
-    constructor(props) {
+type LoginState = {
+    id: string,
+    password: string,
+    isLoading: boolean,
+    popUp: boolean,
+    errPopUp: boolean,
+    findPopUp: boolean,
+    autoLogin: boolean,
+}
+
+class LogIn extends React.Component<LoginProps, LoginState> {
+ 
+    constructor(props: LoginProps) {
         super(props);
 
         this.state = {
@@ -29,36 +41,47 @@ class LogIn extends React.Component {
             findPopUp: false,
             autoLogin: false,
         }
-        this.popupTitle = undefined;
-        this.popupContents = undefined;
+        this.popupTitle = '';
+        this.popupContents = '';
     }
 
-    handleChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
-        });
+    // authServie;
+    popupTitle: string;
+    popupContents: string;
+
+    handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if(e.target.name === 'id') {
+            this.setState({
+                id: e.target.value
+            })            
+        }
+        else {
+            this.setState({
+                password: e.target.value
+            })            
+        }
     }
 
-    checkAuto = (e) => {
+    checkAuto = (e: ChangeEvent<HTMLInputElement>) => {
         this.setState({
             autoLogin: e.target.checked,
             popUp: e.target.checked
         })
     }
 
-    setAutoLoginState = (state) => {
+    setAutoLoginState = (state: boolean) => {
         this.setState({
             autoLogin: state
         })
     }
 
-    setPopUpState = (state) => {
+    setPopUpState = (state: boolean) => {
         this.setState({
             popUp: state
         })
     }
 
-    setFindPopUp = (state) => {
+    setFindPopUp = (state: boolean) => {
         this.setState({
             findPopUp: state
         })
@@ -78,6 +101,7 @@ class LogIn extends React.Component {
     userLogIn = async () => {
 
         const { id, password, autoLogin } = this.state;
+        const { onAuthLogin } = this.props;
 
         this.setState({
             isLoading: true
@@ -89,13 +113,13 @@ class LogIn extends React.Component {
         }
 
         await AuthService.logIn(logInInfo)
-            .then((res) => {
+            .then((res: any) => {
                 console.log('[%s] Log In Success', TAG)
                 this.setState({
                     isLoading: false
                 })
                 const { token, user_id, nickname, level, profile_path, autoLogin } = res.data;
-                this.props.onLogin(user_id, nickname, level, profile_path, token, autoLogin);
+                onAuthLogin(user_id, nickname, level, profile_path, token, autoLogin);
 
                 if(history.location.state && history.location.state.accessPath) {
                     history.push(history.location.state.accessPath)
@@ -104,7 +128,7 @@ class LogIn extends React.Component {
                     history.push('/');
                 }
             })
-            .catch((err) => {
+            .catch((err: ErrorEvent) => {
                 console.error(err);
                 this.setState({
                     isLoading: false
@@ -114,23 +138,24 @@ class LogIn extends React.Component {
     }
 
     guestLogIn = async () => {
+        const { onAuthLogin } = this.props;
 
         this.setState({
             isLoading: true
         })
 
         await AuthService.guestLogIn()
-            .then((res) => {
+            .then((res: any) => {
                 console.log('[%s] Log In Success', TAG)
                 this.setState({
                     isLoading: false
                 })
                 const { token, user_id, nickname, level, profile_path, autoLogin } = res.data;
 
-                this.props.onLogin(user_id, nickname, level, profile_path, token, autoLogin);
+                onAuthLogin(user_id, nickname, level, profile_path, token, autoLogin);
                 history.push('/');
             })
-            .catch((err) => {
+            .catch((err: ErrorEvent) => {
                 console.error(err);
                 this.setState({
                     isLoading: false
@@ -161,7 +186,11 @@ class LogIn extends React.Component {
                 {
                     errPopUp &&
                     <PopUp
+                        title={''}
                         contents={errText}
+                        isAction={false}
+                        cancel={false}
+                        confirm={false}
                     />
                 }
                 {popUp &&
@@ -190,15 +219,16 @@ class LogIn extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: any) => {
     return {
         loginState: state.authentication.isLoggedIn
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch: any) => {
     return {
-        onLogin: (user_id, nickname, level, profile_path, token, autoLogin) => dispatch(authLogin(user_id, nickname, level, profile_path, token, autoLogin))
+        onAuthLogin: (user_id: number, nickname: string, level: number,
+            profile_path: string, token: string, autoLogin: boolean) => dispatch(authLogin(user_id, nickname, level, profile_path, token, autoLogin)),
     }
 }
 

@@ -6,10 +6,10 @@ import ExhibitPhotoService from 'services/ExhibitPhotoService';
 import ContentService from 'services/ContentService';
 import Loading from 'components/Common/Loading';
 import ContentStateEnum from 'common/ContentStateEnum';
-import Comment from 'containers/Comment';
+import Comment from 'containers/Comment.tsx';
 import history from 'common/history';
 import FullScreenPortal from 'containers/FullScreenPortal';
-import Image from 'components/Common/Image';
+import Image from 'components/Common/AaaImage.tsx';
 import ExhibitPhotoComponent from '../../components/ExhibitBoard/ExhibitPhotoComponent';
 import EditExhibitPhoto from '../ExhibitBoard/EditExhibitPhoto';
 

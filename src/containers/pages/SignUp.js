@@ -4,7 +4,7 @@ import SignUpComponent from 'components/Signup/SignUpComponent';
 import SignUpSuccess from 'components/Signup/SignUpSuccess';
 import SignUpFailure from 'components/Signup/SignUpFailure';
 import Loading from 'components/Common/Loading';
-import AuthService from 'services/AuthService';
+import AuthService from '../../services/AuthService';
 
 const TAG = 'SINGUP'
 

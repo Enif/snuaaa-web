@@ -1,7 +1,7 @@
 import React from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css"
-import Image from '../Common/Image';
+import Image from '../Common/AaaImage.tsx';
 import imgDefaultProfile from 'assets/img/profile.png';
 
 const CreateExhibitPhotoInfo = ({ title, text, order, photographer, photographer_alt, date, location, camera, lens, focal_length, f_stop,

@@ -1,15 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Image from '../Common/Image'
-import history from 'common/history';
+import Image from '../Common/AaaImage';
+import history from '../../common/history';
+import ContentType from '../../types/ContentType';
+import defaultPhotoCover from 'assets/img/default_photo_img.png'
 
-const MyPhotoList = ({ photos }) => {
+const MyPhotoList = ({ photos }: { photos: ContentType[] }) => {
 
     const makePhotoList = () => {
 
         if (photos && photos.length > 0) {
             return photos.map(photo => {
-                let contentInfo = photo.contentPhoto;
+                let contentInfo = photo;
+                let photoInfo = photo.photo;
                 return (
                     <div className="photo-wrapper" key={contentInfo.content_id}>
                         <Link to={{
@@ -23,7 +26,13 @@ const MyPhotoList = ({ photos }) => {
                                 <i className="ri-heart-fill"></i> {contentInfo.like_num}&nbsp;
                                 <i className="ri-message-fill"></i> {contentInfo.comment_num}
                             </div>
-                            <Image imgSrc={photo.thumbnail_path} />
+                            {
+                                photoInfo &&
+                                <Image
+                                    imgSrc={photoInfo.thumbnail_path}
+                                    defaultImgSrc={defaultPhotoCover}
+                                    local={false} />
+                            }
                         </Link>
                     </div>
                 )

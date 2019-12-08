@@ -3,7 +3,7 @@ import React from 'react';
 import { breakLine } from 'utils/breakLine';
 import { convertDate, convertFullDate } from 'utils/convertDate'
 import ActionDrawer from '../Common/ActionDrawer';
-import Image from '../Common/Image';
+import Image from '../Common/AaaImage.tsx';
 import defaultProfile from 'assets/img/profile.png';
 
 const ExhibitPhotoComponent = ({ contentInfo, likeInfo, my_id,

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Image from './Image';
+import Image from './AaaImage.tsx';
 import defaultProfile from 'assets/img/profile.png';
 import { breakLine } from 'utils/breakLine';
 import UserActionDrawer from './UserActionDrawer';

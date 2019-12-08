@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Image from 'components/Common/Image';
+import Image from 'components/Common/AaaImage.tsx';
 import imgProfile from 'assets/img/profile.png';
 
 const PopupUser = ({profile_path, togglePopup, logout}) => {

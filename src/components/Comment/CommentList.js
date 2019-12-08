@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from '../Common/Image';
+import Image from '../Common/AaaImage.tsx';
 import { breakLine } from 'utils/breakLine';
 import { convertFullDate } from 'utils/convertDate';
 import defaultProfile from 'assets/img/profile.png';

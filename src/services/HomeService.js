@@ -1,36 +1,36 @@
-import { AaaService } from './index'
+import { AaaService } from './index.ts';
 
 const HomeService = {
 
-    retrieveSoundBox: function () {
+    retrieveSoundBox: function() {
         return AaaService.get(`home/soundbox`);
     },
 
-    retrieveRecentPosts: function () {
+    retrieveRecentPosts: function() {
         return AaaService.get(`home/posts`);
     },
 
-    retrieveAllPosts: function (pageIdx) {
+    retrieveAllPosts: function(pageIdx) {
         return AaaService.get(`home/posts/all?page=${pageIdx}`);
     },
 
-    retrieveRecentComments: function () {
+    retrieveRecentComments: function() {
         return AaaService.get(`home/comments`);
     },
 
-    retrieveAllComments: function (pageIdx) {
+    retrieveAllComments: function(pageIdx) {
         return AaaService.get(`home/comments/all?page=${pageIdx}`);
     },
 
-    retrieveRecentMemory: function () {
+    retrieveRecentMemory: function() {
         return AaaService.get(`home/memory`);
     },
 
-    retrieveRecentAstroPhoto: function () {
+    retrieveRecentAstroPhoto: function() {
         return AaaService.get(`home/astrophoto`);
     },
 
-    retrieveRiseSet: function () {
+    retrieveRiseSet() {
         return AaaService.get(`home/riseset`);
     }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from 'components/Common/Image';
+import Image from 'components/Common/AaaImage.tsx';
 import ContentsStateEnum from 'common/ContentStateEnum';
 import CreateExhibitPhotoInfo from './CreateExhibitPhotoInfo';
 

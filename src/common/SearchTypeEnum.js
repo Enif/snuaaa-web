@@ -1,5 +1,5 @@
 const SearchTypeEnum = Object.freeze({
-    All: 'A',
+    ALL: 'A',
     TITLE: 'T',
     TEXT: 'X',
     USER: 'U'

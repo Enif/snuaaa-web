@@ -1,7 +1,6 @@
 import React from 'react';
 import HomeService from 'services/HomeService';
 import Loading from 'components/Common/Loading';
-import AllPostList from 'components/Post/AllPostList';
 import MyCommentList from 'components/MyPage/MyCommentList';
 import Paginator from 'components/Common/Paginator';
 import BoardName from '../../components/Board/BoardName';

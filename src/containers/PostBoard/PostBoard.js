@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Loading from 'components/Common/Loading';
-import PostList from 'components/Post/PostList';
+import PostList from 'components/Post/PostList.tsx';
 import Paginator from 'components/Common/Paginator';
 import CreatePost from 'containers/PostBoard/CreatePost';
 import BoardStateEnum from 'common/BoardStateEnum';
@@ -9,9 +9,23 @@ import history from 'common/history';
 import BoardName from '../../components/Board/BoardName';
 import SearchTypeEnum from 'common/SearchTypeEnum';
 import BoardService from 'services/BoardService';
+import SelectBox from '../../components/Common/SelectBox';
 
 const TAG = 'POSTBOARD'
 const POSTROWNUM = 10;
+const searchOptions = [{
+    id: SearchTypeEnum.ALL,
+    name: '제목+내용'
+}, {
+    id: SearchTypeEnum.TITLE,
+    name: '제목'
+}, {
+    id: SearchTypeEnum.TEXT,
+    name: '내용'
+}, {
+    id: SearchTypeEnum.USER,
+    name: '글쓴이'
+}]
 
 class PostBoard extends React.Component {
 
@@ -20,37 +34,26 @@ class PostBoard extends React.Component {
         super(props);
         this.posts = [];
         this.postCount = 0;
-        const hisState = history.location.state;
+        const hisState = props.location.state;
         this.state = {
             boardState: BoardStateEnum.LOADING,
-            pageIdx: (hisState && hisState.page) ? hisState.page : 1,
-            searchInfo: {
-                type: SearchTypeEnum.All,
-                keyword: ''
-            }
+            searchInfo: (hisState && hisState.searchInfo) ?
+                hisState.searchInfo :
+                {
+                    type: SearchTypeEnum.ALL,
+                    keyword: ''
+                }
         }
     }
 
     componentDidMount() {
-        console.log(`[${TAG}] ComponentDidMount`)
         this.fetch()
     }
 
-    static getDerivedStateFromProps(props, state) {
-        console.log(`[${TAG}] getDerivedStateFromProps`);
-        const hisState = history.location.state;
-        return {
-            pageIdx: (hisState && hisState.page) ? hisState.page : 1,
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.location !== this.props.location) {
+            this.fetch();
         }
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        console.log(`[${TAG}] shouldComponentUpdate`)
-        if (this.state.pageIdx !== nextState.pageIdx) {
-            this.fetch(nextState.pageIdx);
-            return true;
-        }
-        return true;
     }
 
     setBoardState = (state) => {
@@ -62,42 +65,67 @@ class PostBoard extends React.Component {
     clickPage = (idx) => {
         history.push({
             state: {
+                ...history.location.state,
                 page: idx
             }
         })
     }
 
-    fetch = async (pageIdx) => {
-        const { board_id } = this.props;
+    fetch = async () => {
+        const { board_id, location } = this.props;
+        let searchInfo = location.state && location.state.searchInfo;
+        let pageIdx = location.state && location.state.page;
+
         if (!pageIdx) {
-            pageIdx = this.state.pageIdx;
+            pageIdx = 1;
         }
-
-        this.setBoardState(BoardStateEnum.LOADING)
-        await BoardService.retrievePostsInBoard(board_id, pageIdx)
-            .then((res) => {
-                this.posts = res.data.postInfo;
-                this.postCount = res.data.postCount;
-                this.setBoardState(BoardStateEnum.READY);
-            })
-            .catch((err) => {
-                console.error(err);
-            })
-    }
-
-    search = async () => {
-        const { board_id } = this.props;
-        const { searchInfo } = this.state;
-
         try {
-            const res = await BoardService.searchPostsInBoard(board_id, searchInfo.type, searchInfo.keyword, 0)
-
+            this.setBoardState(BoardStateEnum.LOADING)
+            let res;
+            if (searchInfo && searchInfo.keyword) {
+                res = await BoardService.searchPostsInBoard(board_id, searchInfo.type, searchInfo.keyword, 0)
+            }
+            else {
+                res = await BoardService.retrievePostsInBoard(board_id, pageIdx)
+            }
             this.posts = res.data.postInfo;
             this.postCount = res.data.postCount;
-            this.setBoardState(BoardStateEnum.READY)
+            this.setBoardState(BoardStateEnum.READY);
         }
         catch (err) {
             console.error(err);
+        }
+    }
+
+    handleSearchOption = (e) => {
+        const { searchInfo } = this.state;
+        this.setState({
+            searchInfo: {
+                ...searchInfo,
+                type: e.target.value
+            }
+        })
+    }
+
+    search = async () => {
+        const { searchInfo } = this.state;
+        if (!searchInfo || !searchInfo.keyword || searchInfo.keyword.length < 2) {
+            alert("2글자 이상 입력해주세요.")
+        }
+        else {
+            history.push({
+                state: {
+                    ...history.location.state,
+                    page: 1,
+                    searchInfo: searchInfo
+                }
+            })
+        }
+    }
+
+    handleSearchKeyDown = (e) => {
+        if (e.keyCode === 13) {
+            this.search();
         }
     }
 
@@ -121,13 +149,13 @@ class PostBoard extends React.Component {
         }
     }
 
-
     render() {
         console.log(`[${TAG}] render.. `)
 
-        const { handleSearchKeyword } = this
+        const { handleSearchKeyword, handleSearchOption, handleSearchKeyDown } = this
         const { board_id, boardInfo, level } = this.props;
-        const { pageIdx, boardState } = this.state;
+        const { boardState, searchInfo } = this.state;
+        let pageIdx = history.location.state && history.location.state.page ? history.location.state.page : 1;
 
         return (
             <>
@@ -149,8 +177,13 @@ class PostBoard extends React.Component {
                                             {this.makeCategoryList()}
                                             <div className="board-search-wrapper">
                                                 <div className="board-search-input">
+                                                    <SelectBox
+                                                        selectName={"searchOption"}
+                                                        optionList={searchOptions}
+                                                        onSelect={handleSearchOption}
+                                                        selectedOption={searchInfo.type} />
                                                     <i className="ri-search-line enif-f-1x" onClick={this.search}></i>
-                                                    <input type="text" onChange={handleSearchKeyword} />
+                                                    <input type="text" onChange={handleSearchKeyword} value={searchInfo.keyword} onKeyDown={handleSearchKeyDown} />
                                                 </div>
                                                 <div>
                                                     {

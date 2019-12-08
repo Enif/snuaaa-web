@@ -3,9 +3,9 @@ import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 
 import ContentStateEnum from 'common/ContentStateEnum';
-import Comment from 'containers/Comment';
+import Comment from 'containers/Comment.tsx';
 import Loading from 'components/Common/Loading';
-import PostComponent from 'components/Post/PostComponent';
+import PostComponent from 'components/Post/PostComponent.tsx';
 import EditPost from 'components/Post/EditPost';
 import history from 'common/history';
 import BoardName from '../../components/Board/BoardName';
@@ -167,13 +167,12 @@ class Post extends React.Component {
                                         board_name={boardData.board_name}
                                     />
                                     <PostComponent
-                                        postData={this.postData}
-                                        post_id={post_id}
+                                        content={this.postData}
                                         my_id={my_id}
-                                        likeInfo={likeInfo}
-                                        fileInfo={this.fileInfo}
+                                        isLiked={likeInfo}
+                                        files={this.fileInfo}
                                         likePost={this.likePost}
-                                        setPostState={this.setPostState}
+                                        editPost={() => this.setPostState(ContentStateEnum.EDITTING)}
                                         deletePost={this.deletePost} />
                                     {
                                         (my_level > 0) &&

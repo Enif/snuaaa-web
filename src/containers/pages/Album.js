@@ -108,7 +108,14 @@ class Album extends React.Component {
                                         <div className="enif-divider"></div>
                                         <PhotoList album_id={album_id} photos={this.photos} togglePopUp={this.togglePopUp} />
                                         {
-                                            popUpState && <CreatePhoto album_id={album_id} board_id={this.albumInfo.content.board_id} tags={this.tagInfo} retrievePhotos={this.retrievePhotos} fetch={this.fetch} togglePopUp={this.togglePopUp} setReadyState={() => this.setAlbumState(ContentStateEnum.READY)} />
+                                            popUpState &&
+                                            <CreatePhoto
+                                                album_id={album_id}
+                                                board_id={this.albumInfo.content.board_id}
+                                                tags={this.tagInfo}
+                                                fetch={this.fetch}
+                                                togglePopUp={this.togglePopUp}
+                                                setReadyState={() => this.setAlbumState(ContentStateEnum.READY)} />
                                         }
                                         {
                                             (albumState === ContentStateEnum.EDITTING) &&

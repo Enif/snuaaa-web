@@ -1,19 +1,23 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import { convertDate } from 'utils/convertDate';
+import { convertDate } from '../../utils/convertDate';
+import ContentType from '../../types/ContentType';
 
-const NewPosts = ({ posts }) => {
+const NewPosts = ({ posts }: { posts: ContentType[] }) => {
 
     const makePostList = () => {
         return posts.map(post => {
-            let content = post.content;
-            let boardInfo = post.content.board;
+            let content = post;
+            let boardInfo = post.board;
             return (
                 <div className="new-post-list" key={content.content_id}>
                     <div className="new-post-boardname">
-                        <Link to={`/board/${boardInfo.board_id}`}>
-                            {boardInfo.board_name}
-                        </Link>
+                        {
+                            boardInfo &&
+                            <Link to={`/board/${boardInfo.board_id}`}>
+                                {boardInfo.board_name}
+                            </Link>
+                        }
                     </div>
                     <div className="new-post-title">
                         <Link to={`/post/${content.content_id}`}>
