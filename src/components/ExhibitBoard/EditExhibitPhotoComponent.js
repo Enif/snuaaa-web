@@ -38,7 +38,7 @@ const EditExhibitPhotoComponent = ({ photoInfo, photographer, handleChange, hand
                             selectPhotographer={selectPhotographer}
                             removePhotographer={removePhotographer} />
 
-                        <div className="btn-wrapper">
+                        <div className="crt-photo-btn-wrapper">
                             <button className="btn-cancel" onClick={() => setPhotoState(ContentsStateEnum.READY)}>취소</button>
                             <button className="btn-ok" onClick={updatePhoto}>완료</button>
                         </div>

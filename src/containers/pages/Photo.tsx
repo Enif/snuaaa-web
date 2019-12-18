@@ -1,38 +1,47 @@
-import React, { RefObject } from 'react';
+import React, { RefObject, ChangeEvent } from 'react';
 import { Redirect, match } from 'react-router';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Loading from '../../components/Common/Loading';
+import { RecordOf, Record } from 'immutable';
+import { Location } from 'history';
+
 import ContentStateEnum from '../../common/ContentStateEnum';
-import PhotoInfo from '../../components/Photo/PhotoInfo';
-import EditPhoto from '../../containers/Photo/EditPhoto';
-import Comment from '../../containers/Comment';
 import history from '../../common/history';
+
+import Comment from '../../containers/Comment';
 import FullScreenPortal from '../../containers/FullScreenPortal';
+
+import Loading from '../../components/Common/Loading';
+import PhotoInfo from '../../components/Photo/PhotoInfo';
 import Image from '../../components/Common/AaaImage';
+import EditPhotoInfo from '../../components/Photo/EditPhotoInfo';
+
+import ContentType from '../../types/ContentType';
+import TagType from '../../types/TagType';
+
 import ContentService from '../../services/ContentService';
 import AlbumService from '../../services/AlbumService';
 import PhotoService from '../../services/PhotoService';
-import ContentType from '../../types/ContentType';
 
 const TAG = 'PHOTO'
 
 type PhotoProps = {
     match: match<{ photo_id: string }>
-    my_id: string;
+    my_id: number;
+    location: Location;
 }
 
 type PhotoState = {
-    photo_id: number;
     likeInfo: boolean;
     photoState: number;
     isFullscreen: boolean;
+    contentInfo?: RecordOf<ContentType>;
+    editContentInfo?: RecordOf<ContentType>;
 }
 
 class Photo extends React.Component<PhotoProps, PhotoState> {
 
-    contentInfo?: ContentType;
-    boardTagInfo: any;
+    boardTagInfo: TagType[];
     albumInfo: any;
     albumPhotosInfo: any;
     fullscreenRef: RefObject<HTMLDivElement>;
@@ -40,16 +49,16 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
     constructor(props: PhotoProps) {
         super(props);
 
-        this.contentInfo = undefined;
-        this.boardTagInfo = undefined;
+        this.boardTagInfo = [];
         this.albumInfo = undefined;
         this.albumPhotosInfo = undefined;
         this.fullscreenRef = React.createRef();
         this.state = {
-            photo_id: Number(this.props.match.params.photo_id),
             likeInfo: false,
             photoState: ContentStateEnum.LOADING,
-            isFullscreen: false
+            isFullscreen: false,
+            contentInfo: undefined,
+            editContentInfo: undefined
         }
     }
 
@@ -60,60 +69,52 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
         document.onfullscreenchange = function (e) {
             toggleFullScreen();
         };
+        document.body.classList.add('enif-overflow-hidden');
     }
 
-    shouldComponentUpdate(nextProps: PhotoProps, nextState: PhotoState) {
-        console.log(`[${TAG}] shouldComponentUpdate`)
-        if (this.state.photo_id !== nextState.photo_id) {
-            this.fetch(nextState.photo_id);
-            return false;
-        }
-        return true;
-    }
-
-    static getDerivedStateFromProps(props: PhotoProps, state: PhotoState) {
-        return {
-            photo_id: props.match.params.photo_id,
-            // photoState: ContentStateEnum.LOADING
+    componentDidUpdate(prevProps: PhotoProps) {
+        if (prevProps.location !== this.props.location) {
+            this.fetch();
         }
     }
 
-    fetch = async (photo_id: number = 0) => {
+    componentWillUnmount() {
+        document.body.classList.remove('enif-overflow-hidden')
+    }
+
+    fetch = async () => {
+
+        let photo_id = Number(this.props.match.params.photo_id);
         this.setPhotoState(ContentStateEnum.LOADING)
-        if (!photo_id) {
-            photo_id = Number(this.props.match.params.photo_id)
-        }
-        await PhotoService.retrievePhoto(photo_id)
-            .then((res) => {
-                this.contentInfo = res.data.photoInfo;
-                if (this.contentInfo.photo && this.contentInfo.photo.date) {
-                    this.contentInfo.photo.date = new Date(this.contentInfo.photo.date)
-                }
-                // this.tagInfo = res.data.tagInfo;
-                // this.albumInfo = res.data.photoInfo.album;
-                this.boardTagInfo = res.data.boardTagInfo
-                this.albumPhotosInfo = res.data.albumPhotosInfo;
-                this.setState({
-                    likeInfo: res.data.likeInfo,
-                    photoState: ContentStateEnum.READY
+
+        if (photo_id) {
+            await PhotoService.retrievePhoto(photo_id)
+                .then((res) => {
+                    this.boardTagInfo = res.data.boardTagInfo
+                    this.albumPhotosInfo = res.data.albumPhotosInfo;
+                    this.setState({
+                        contentInfo: Record(res.data.photoInfo)(),
+                        editContentInfo: Record(res.data.photoInfo)(),
+                        likeInfo: res.data.likeInfo,
+                        photoState: ContentStateEnum.READY
+                    })
                 })
-            })
-            .catch((err) => {
-                console.error(err);
-                if (err.response && err.response.data && err.response.data.code === 4001) {
-                    alert("권한이 없습니다.")
-                    history.goBack();
-                }
-                else {
-                    this.setPhotoState(ContentStateEnum.ERROR);
-                }
-            })
+                .catch((err) => {
+                    console.error(err);
+                    if (err.response && err.response.data && err.response.data.code === 4001) {
+                        alert("권한이 없습니다.")
+                        history.goBack();
+                    }
+                    else {
+                        this.setPhotoState(ContentStateEnum.ERROR);
+                    }
+                })
+        }
     }
 
     setAlbumThumbnail = async () => {
         const { albumInfo } = this;
-        const { photo_id } = this.state;
-
+        let photo_id = Number(this.props.match.params.photo_id);
         const data = {
             tn_photo_id: photo_id
         }
@@ -140,7 +141,8 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
     }
 
     moveToPhoto = (direction: number) => {
-        const { contentInfo, albumPhotosInfo } = this;
+        const { contentInfo } = this.state;
+        const { albumPhotosInfo } = this;
         if (contentInfo && albumPhotosInfo && albumPhotosInfo.length > 0) {
             let index = -1;
             for (let i = 0; i < albumPhotosInfo.length; i++) {
@@ -209,31 +211,112 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
         }
     }
 
+    handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { editContentInfo } = this.state;
+        const name: string = e.target.name;
+
+        if (editContentInfo) {
+            if (name === 'title' || name === 'text') {
+                this.setState({
+                    editContentInfo: editContentInfo.set(name, e.target.value)
+                });
+            }
+            else {
+                this.setState({
+                    editContentInfo: editContentInfo.setIn(["photo", name], e.target.value)
+                });
+            }
+        }
+    }
+
+    handleDate = (date: Date) => {
+        const { editContentInfo } = this.state;
+
+        if (editContentInfo) {
+            this.setState({
+                editContentInfo: editContentInfo.setIn(["photo", "date"], date)
+            })
+        }
+    }
+
+    handleTag = (e: ChangeEvent<HTMLInputElement>) => {
+        let tagId: string = e.target.id.replace('crt_', '');
+        const { editContentInfo } = this.state;
+        console.log(e.target.value)
+        if (editContentInfo && editContentInfo.tags) {
+
+            let isSelected = false;
+
+            for (let tag of editContentInfo.tags) {
+                if (tagId === tag.tag_id) {
+                    isSelected = true;
+                    break;
+                }
+            }
+
+            if (isSelected) {
+                this.setState({
+                    editContentInfo: editContentInfo.set("tags", editContentInfo.tags.filter(tag => tagId !== tag.tag_id))
+                })
+            }
+            else {
+                this.setState({
+                    editContentInfo: editContentInfo.set("tags", editContentInfo.tags.concat(this.boardTagInfo.filter(tag => tagId === tag.tag_id)))
+                })
+            }
+
+        }
+    }
+
+
     likePhoto = async () => {
-        await ContentService.likeContent(this.state.photo_id)
+        const { contentInfo, likeInfo } = this.state;
+        let photo_id = Number(this.props.match.params.photo_id);
+
+        await ContentService.likeContent(photo_id)
             .then(() => {
-                if (this.contentInfo) {
+                if (contentInfo) {
                     if (this.state.likeInfo) {
-                        this.contentInfo.like_num--;
+                        this.setState({
+                            contentInfo: contentInfo.set("like_num", contentInfo.like_num - 1),
+                            likeInfo: !likeInfo
+                        })
                     }
                     else {
-                        this.contentInfo.like_num++;
+                        this.setState({
+                            contentInfo: contentInfo.set("like_num", contentInfo.like_num + 1),
+                            likeInfo: !likeInfo
+                        })
                     }
                 }
-                this.setState({
-                    likeInfo: !this.state.likeInfo
-                })
             })
             .catch((err: Error) => {
                 console.error(err)
             })
     }
 
+    updatePhoto = async () => {
+        const { editContentInfo } = this.state;
+        let photo_id = Number(this.props.match.params.photo_id);
+
+        if (editContentInfo) {
+            await PhotoService.updatePhoto(photo_id, editContentInfo.toJSON())
+                .then(() => {
+                    this.fetch();
+                })
+                .catch((err: ErrorEvent) => {
+                    console.error(err);
+                    alert("업데이트 실패");
+                })
+        }
+    }
+
     deletePhoto = async () => {
+        let photo_id = Number(this.props.match.params.photo_id);
 
         let goDrop = window.confirm("정말로 삭제하시겠습니까? 삭제한 게시글은 다시 복원할 수 없습니다.");
         if (goDrop) {
-            await PhotoService.deletePhoto(this.state.photo_id)
+            await PhotoService.deletePhoto(photo_id)
                 .then(() => {
                     this.setPhotoState(ContentStateEnum.DELETED);
                 })
@@ -245,10 +328,12 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
     }
 
     render() {
-        const { likeInfo, photoState, isFullscreen } = this.state;
+        const { contentInfo, editContentInfo, likeInfo, photoState, isFullscreen } = this.state;
         const { my_id } = this.props;
-        const { contentInfo, setPhotoState, likePhoto, deletePhoto, setAlbumThumbnail, closePhoto } = this;
+        const { setPhotoState, likePhoto, deletePhoto, updatePhoto, setAlbumThumbnail,
+            handleChange, handleDate, handleTag, closePhoto, boardTagInfo } = this;
 
+        let photo_id = Number(this.props.match.params.photo_id);
         let fullscreenClass = isFullscreen ? 'ri-fullscreen-exit-fill' : 'ri-fullscreen-fill';
         let backLink;
         let photoInfo = contentInfo && contentInfo.photo
@@ -262,7 +347,7 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
         return (
             <FullScreenPortal>
                 {
-                    contentInfo &&
+                    contentInfo && editContentInfo &&
                     <>
                         <div className="enif-modal-wrapper photo-popup" onClick={closePhoto}>
                             <div className="photo-section-wrapper" onClick={(e) => e.stopPropagation()}>
@@ -291,16 +376,29 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
                                         </div>
                                     </div>
                                     <div className="photo-section-right">
-                                        <PhotoInfo
-                                            photoInfo={this.contentInfo}
-                                            likeInfo={likeInfo}
-                                            my_id={my_id}
-                                            setPhotoState={setPhotoState}
-                                            likePhoto={likePhoto}
-                                            deletePhoto={deletePhoto}
-                                            setAlbumThumbnail={setAlbumThumbnail} />
-
-                                        <Comment parent_id={this.state.photo_id} />
+                                        {
+                                            photoState === ContentStateEnum.EDITTING ?
+                                                <EditPhotoInfo
+                                                    photoInfo={editContentInfo}
+                                                    boardTagInfo={boardTagInfo}
+                                                    setPhotoState={setPhotoState}
+                                                    updatePhoto={updatePhoto}
+                                                    handleChange={handleChange}
+                                                    handleDate={handleDate}
+                                                    handleTag={handleTag} />
+                                                :
+                                                <>
+                                                    <PhotoInfo
+                                                        photoInfo={contentInfo}
+                                                        likeInfo={likeInfo}
+                                                        my_id={my_id}
+                                                        setPhotoState={setPhotoState}
+                                                        likePhoto={likePhoto}
+                                                        deletePhoto={deletePhoto}
+                                                        setAlbumThumbnail={setAlbumThumbnail} />
+                                                    <Comment parent_id={photo_id} />
+                                                </>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -311,17 +409,6 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
                             (() => {
                                 if (photoState === ContentStateEnum.LOADING) {
                                     return <Loading />
-                                }
-                                else if (photoState === ContentStateEnum.EDITTING) {
-                                    return (
-                                        <div className="enif-popup photo-popup">
-                                            <EditPhoto
-                                                photoInfo={contentInfo}
-                                                boardTagInfo={this.boardTagInfo}
-                                                fetch={this.fetch}
-                                                setPhotoState={this.setPhotoState} />
-                                        </div>
-                                    )
                                 }
                                 else if (photoState === ContentStateEnum.DELETED) {
                                     let backLink;

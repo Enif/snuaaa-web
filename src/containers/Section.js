@@ -2,13 +2,24 @@ import React, { lazy, Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import history from 'common/history';
 import DefaultRoute from 'containers/DefaultRoute';
-import {
-    Board, Post, Album, Photo, Docu, Exhibition, ExhibitPhoto,
-    SignUp, LogIn, MyPage, UserPage, AllPosts, AllComments
-} from './pages';
+
+import Photo from './pages/Photo'; // Don't load lazy. scroll is reset when initial loading.
 
 const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
+const Board = lazy(() => import('./pages/Board'));
+const Post = lazy(() => import('./pages/Post'));
+const Album = lazy(() => import('./pages/Album'));
+// const Photo = lazy(() => import('./pages/Photo'));
+const Docu = lazy(() => import('./pages/Document'));
+const Exhibition = lazy(() => import('./pages/Exhibition'));
+const ExhibitPhoto = lazy(() => import('./pages/ExhibitPhoto'));
+const SignUp = lazy(() => import('./pages/SignUp'));
+const LogIn = lazy(() => import('./pages/LogIn'));
+const MyPage = lazy(() => import('./pages/MyPage'));
+const UserPage = lazy(() => import('./pages/UserPage'));
+const AllPosts = lazy(() => import('./pages/AllPosts'));
+const AllComments = lazy(() => import('./pages/AllComments'));
 
 const TAG = 'SECTION';
 

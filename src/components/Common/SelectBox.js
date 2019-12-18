@@ -2,8 +2,6 @@ import React from 'react';
 
 const SelectBox = ({ selectName, optionList, onSelect, selectedOption }) => {
 
-    console.log(selectedOption)
-
     const makeSelectList = () => {
         if (optionList) {
             return optionList.map((option, i) => {

@@ -1,7 +1,7 @@
 import React from 'react';
 
 type ImageProps = {
-    imgSrc: string;
+    imgSrc?: string;
     defaultImgSrc?: string;
     className?: string;
     onClick?: () => void;

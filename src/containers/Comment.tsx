@@ -38,6 +38,10 @@ class Comment extends React.Component<CommentProps, CommentState> {
         this.retrieveComments(this.props.parent_id)
     }
 
+    componentDidUpdate(prevProps: CommentProps) {
+        console.log(prevProps)
+    }
+
     shouldComponentUpdate(nextProps: CommentProps, nextState: CommentState) {
         if (this.props.parent_id !== nextProps.parent_id) {
             this.retrieveComments(nextProps.parent_id);
