@@ -83,7 +83,7 @@ const CreateExhibitPhotoComponent = ({ handleChange, handleDate, handlePhotograp
                                 }
                             })()}
                         </div>
-                        <div className="btn-wrapper">
+                        <div className="crt-photo-btn-wrapper">
                             <button className="btn-cancel" onClick={togglePopUp}>취소</button>
                             <button className="btn-ok" disabled={btnDisabled} onClick={checkForm}>완료</button>
                         </div>

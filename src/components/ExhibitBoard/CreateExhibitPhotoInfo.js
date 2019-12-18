@@ -21,7 +21,7 @@ const CreateExhibitPhotoInfo = ({ title, text, order, photographer, photographer
     }
 
     return (
-        <div className="photo-infos-wrapper">
+        <div className="photo-input-area-wrapper">
             <input className="input-title" type="text" name="title" placeholder="제목" onChange={handleChange} value={title} />
             <textarea className="input-desc" placeholder="설명" name="text" onChange={handleChange} value={text} />
             <div className="photo-infos">
