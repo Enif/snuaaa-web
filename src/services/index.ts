@@ -21,6 +21,12 @@ export const AaaService: any = {
         return axios.post(`${SERVER_URL}api/${url}`, data)
     },
 
+    postWithProgress: function(url: string, data: object, cb: (pg: ProgressEvent)=> void) {
+        return axios.post(`${SERVER_URL}api/${url}`, data, {
+            onUploadProgress: cb
+        })
+    },
+
     patch: function(url: string, data: object): AxiosPromise {
         return axios.patch(`${SERVER_URL}api/${url}`, data)
     },

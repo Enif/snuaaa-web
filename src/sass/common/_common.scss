@@ -315,6 +315,18 @@
     color: #fbc327;
 }
 
+.progress-wrapper {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    z-index: 50;
+    justify-content: center;
+    align-items: center;
+}
+
+#svgPathStar {
+    transition: all 0.2s;
+}
 @media screen and (max-width: 800px) {
     .actions-wrapper {
         margin: 0rem 1.5rem;

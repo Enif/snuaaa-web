@@ -5,6 +5,7 @@ import AlbumService from '../../services/AlbumService';
 import immutable, { Map, RecordOf, Record, List, setIn } from 'immutable';
 import CrtPhotoType from '../../types/CrtPhotoType';
 import TagType from '../../types/TagType';
+import ProgressBar from '../../components/Common/ProgressBar';
 
 const TAG = 'CREATEPHOTO';
 const MAX_SIZE = 100 * 1024 * 1024;
@@ -23,7 +24,9 @@ type CreatePhotoState = {
     uploadPhotos: File[];
     imgDatas: string[],
     imgIdx: number,
-    btnDisabled: boolean
+    progress: number,
+    uploadIdx: number,
+    isUploading: boolean,
 }
 
 const recordPhotoInfo: Record.Factory<CrtPhotoType> = Record<CrtPhotoType>({
@@ -50,11 +53,13 @@ class CreatePhoto extends React.Component<CreatePhotoProps, CreatePhotoState> {
         this.currentSize = 0;
         this.imgUrls = [];
         this.state = {
-            photoInfo: List(),
+            photoInfo: List<CrtPhotoType>(),
             uploadPhotos: [],
             imgDatas: [],
             imgIdx: -1,
-            btnDisabled: false
+            progress: 0,
+            uploadIdx: 0,
+            isUploading: false
         }
     }
 
@@ -190,14 +195,26 @@ class CreatePhoto extends React.Component<CreatePhotoProps, CreatePhotoState> {
         }
     }
 
+    uploadProgress = (e: ProgressEvent) => {
+        const totalLength = e.lengthComputable && e.total;
+        console.log("onUploadProgress", totalLength);
+        if (totalLength) {
+            // this.updateProgressBarValue(Math.round( (progressEvent.loaded * 100) / totalLength ));
+            this.setState({
+                progress: Math.round(e.loaded / totalLength * 100)
+            })
+        }
+    }
+
     createPhotos = async () => {
 
-        const { board_id, album_id, setReadyState } = this.props;
-        const { imgIdx, photoInfo, uploadPhotos } = this.state;
+        const { fetch, togglePopUp, board_id, album_id, setReadyState } = this.props;
+        const { photoInfo, uploadPhotos } = this.state;
+        const { uploadProgress } = this;
 
         setReadyState();
         this.setState({
-            btnDisabled: true
+            isUploading: true
         })
 
         try {
@@ -206,20 +223,23 @@ class CreatePhoto extends React.Component<CreatePhotoProps, CreatePhotoState> {
                 photosForm.append('photoInfo', JSON.stringify(photoInfo.get(i)));
                 photosForm.append('uploadPhoto', uploadPhotos[i]);
                 if (album_id) {
-                    await AlbumService.createPhotosInAlbum(album_id, photosForm)
+                    await AlbumService.createPhotosInAlbum(album_id, photosForm, uploadProgress)
                 }
                 else {
                     await PhotoBoardService.createPhotosInPhotoBoard(board_id, photosForm)
                 }
+                this.setState({
+                    uploadIdx: this.state.uploadIdx + 1
+                })
             }
-            this.props.togglePopUp();
-            this.props.fetch();
+            togglePopUp();
+            fetch();
         }
         catch (err) {
             console.error(`[${TAG}] ${err}`);
             alert('사진 생성 실패');
             this.setState({
-                btnDisabled: false
+                isUploading: false
             })
         }
     }
@@ -228,24 +248,33 @@ class CreatePhoto extends React.Component<CreatePhotoProps, CreatePhotoState> {
         console.log('[%s] render', TAG)
         const { handleChange, handleDate, uploadFile, clickTag, imgUrls, setImgIdx, removeImg, checkForm } = this;
         const { tags, togglePopUp } = this.props;
-        const { imgIdx, photoInfo, btnDisabled } = this.state
+        const { imgIdx, progress, photoInfo, isUploading, uploadIdx } = this.state
 
         return (
-            <CreatePhotoComponent
-                handleChange={handleChange}
-                handleDate={handleDate}
-                uploadFile={uploadFile}
-                clickTag={clickTag}
-                imgUrls={imgUrls}
-                setImgIdx={setImgIdx}
-                removeImg={removeImg}
-                checkForm={checkForm}
-                tags={tags}
-                togglePopUp={togglePopUp}
-                imgIdx={imgIdx}
-                photoInfo={photoInfo.get(imgIdx)}
-                btnDisabled={btnDisabled}
-            />
+            <>
+                <CreatePhotoComponent
+                    handleChange={handleChange}
+                    handleDate={handleDate}
+                    uploadFile={uploadFile}
+                    clickTag={clickTag}
+                    imgUrls={imgUrls}
+                    setImgIdx={setImgIdx}
+                    removeImg={removeImg}
+                    checkForm={checkForm}
+                    tags={tags}
+                    togglePopUp={togglePopUp}
+                    imgIdx={imgIdx}
+                    photoInfo={photoInfo.get(imgIdx)}
+                    isUploading={isUploading}
+                />
+                {
+                    isUploading &&
+                    <ProgressBar
+                    loadedPercentage={progress}
+                    currentIdx={uploadIdx}
+                    totalIdx={photoInfo.size}/>
+                }
+            </>
         )
     }
 }

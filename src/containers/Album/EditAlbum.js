@@ -2,7 +2,7 @@ import React from 'react';
 
 import EditAlbumComponent from 'components/Album/EditAlbumComponent';
 import ContentStateEnum from 'common/ContentStateEnum';
-import AlbumService from 'services/AlbumService';
+import AlbumService from 'services/AlbumService.ts';
 
 const TAG = 'EDITALBUM'
 
