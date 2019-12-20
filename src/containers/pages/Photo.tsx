@@ -42,7 +42,6 @@ type PhotoState = {
 class Photo extends React.Component<PhotoProps, PhotoState> {
 
     boardTagInfo: TagType[];
-    albumInfo: any;
     albumPhotosInfo: any;
     fullscreenRef: RefObject<HTMLDivElement>;
 
@@ -50,7 +49,6 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
         super(props);
 
         this.boardTagInfo = [];
-        this.albumInfo = undefined;
         this.albumPhotosInfo = undefined;
         this.fullscreenRef = React.createRef();
         this.state = {
@@ -113,8 +111,10 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
     }
 
     setAlbumThumbnail = async () => {
-        const { albumInfo } = this;
+        const { contentInfo } = this.state;
         let photo_id = Number(this.props.match.params.photo_id);
+        let albumInfo = contentInfo && contentInfo.photo && contentInfo.photo.album;
+
         const data = {
             tn_photo_id: photo_id
         }
@@ -242,7 +242,6 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
     handleTag = (e: ChangeEvent<HTMLInputElement>) => {
         let tagId: string = e.target.id.replace('crt_', '');
         const { editContentInfo } = this.state;
-        console.log(e.target.value)
         if (editContentInfo && editContentInfo.tags) {
 
             let isSelected = false;
@@ -347,14 +346,14 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
         return (
             <FullScreenPortal>
                 {
-                    contentInfo && editContentInfo &&
+                    contentInfo && editContentInfo && photoInfo &&
                     <>
                         <div className="enif-modal-wrapper photo-popup" onClick={closePhoto}>
                             <div className="photo-section-wrapper" onClick={(e) => e.stopPropagation()}>
                                 <div className="photo-alb-title-wrp">
                                     <Link className="photo-alb-title" to={backLink}>
                                         <i className="ri-gallery-line"></i>
-                                        <h5>{photoInfo && photoInfo.album ? photoInfo.album.title : "기본앨범"}</h5>
+                                        <h5>{photoInfo.album ? photoInfo.album.title : "기본앨범"}</h5>
                                     </Link>
                                     <div className="enif-modal-close" onClick={closePhoto}>
                                         <i className="ri-close-fill enif-f-1p5x enif-pointer"></i>
@@ -366,7 +365,7 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
                                             <div className="photo-move-action prev" onClick={() => this.moveToPhoto(-1)}>
                                                 <i className="ri-arrow-left-s-line ri-icons enif-pointer"></i>
                                             </div>
-                                            <Image imgSrc={contentInfo && contentInfo.photo ? contentInfo.photo.file_path : ''} />
+                                            <Image imgSrc={photoInfo.file_path} />
                                             <div className="photo-move-action next" onClick={() => this.moveToPhoto(1)}>
                                                 <i className="ri-arrow-right-s-line ri-icons enif-pointer"></i>
                                             </div>
@@ -412,11 +411,11 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
                                 }
                                 else if (photoState === ContentStateEnum.DELETED) {
                                     let backLink;
-                                    if (!this.albumInfo) {
-                                        backLink = `/board/brd32`;
+                                    if (!photoInfo.album) {
+                                        backLink = `/board/${contentInfo.board_id}`;
                                     }
                                     else {
-                                        backLink = `/album/${this.albumInfo.content_id}`
+                                        backLink = `/album/${photoInfo.album_id}`
                                     }
                                     return (
                                         <Redirect to={backLink} />

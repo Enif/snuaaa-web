@@ -8,7 +8,7 @@ import AlbumInfo from 'components/Album/AlbumInfo';
 import EditAlbum from 'containers/Album/EditAlbum';
 import CreatePhoto from 'containers/Photo/CreatePhoto';
 import BoardName from '../../components/Board/BoardName';
-import AlbumService from 'services/AlbumService';
+import AlbumService from 'services/AlbumService.ts';
 
 const TAG = 'ALBUM'
 
