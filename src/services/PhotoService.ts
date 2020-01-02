@@ -14,7 +14,7 @@ const PhotoService = {
         return AaaService.get(`photo/${photo_id}`)
     },
 
-    updatePhoto: function (photo_id: number, data: any) {
+    updatePhoto: function (photo_id: number, data: ContentType) {
         return AaaService.patch(`photo/${photo_id}`, data)
     },
 

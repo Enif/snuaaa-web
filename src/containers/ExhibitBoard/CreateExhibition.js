@@ -1,5 +1,5 @@
 import React from 'react';
-import BoardService from 'services/BoardService';
+import BoardService from 'services/BoardService.ts';
 import DatePicker from 'react-datepicker';
 
 const TAG = 'CREATE_EXHIBITION'

@@ -1,6 +1,6 @@
 import React from 'react';
 import AttachFile from 'components/Post/AttachFile';
-import DocuService from 'services/DocuService';
+import DocuService from 'services/DocuService.ts';
 
 const TAG = 'CREATEDOCU'
 

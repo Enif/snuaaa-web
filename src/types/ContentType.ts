@@ -3,6 +3,8 @@ import AlbumType from './AlbumType';
 import PhotoType from './PhotoType';
 import BoardType from './BoardType';
 import TagType from './TagType';
+import ExhibitionType from './ExhibitionType';
+import CategoryType from './CategoryType';
 
 interface ContentType {
     content_id: number;
@@ -18,11 +20,13 @@ interface ContentType {
     like_num: number;
     createdAt: string;
     updatedAt: string;
-    user?: UserType;
+    board: BoardType;
+    user: UserType;
     album?: AlbumType;
     photo?: PhotoType;
-    board?: BoardType;
+    exhibition?: ExhibitionType;
     tags?: TagType[];
+    categories?: CategoryType[];
 }
 
 export default ContentType;

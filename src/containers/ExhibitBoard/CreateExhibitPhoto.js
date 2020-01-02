@@ -1,5 +1,5 @@
 import React from 'react';
-import ExhibitionService from 'services/ExhibitionService';
+import ExhibitionService from 'services/ExhibitionService.ts';
 import UserService from '../../services/UserService.ts';
 import CreateExhibitPhotoComponent from 'components/ExhibitBoard/CreateExhibitPhotoComponent';
 

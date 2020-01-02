@@ -149,7 +149,7 @@ class EditProfile extends React.Component {
         });
         await UserService.retrieveUserInfo()
         .then((response) => {
-            let resInfo = response.data.userInfo
+            let resInfo = response.data
             const { userInfo } = this.state
             this.setState({
                 userInfo: userInfo.map((info) => {

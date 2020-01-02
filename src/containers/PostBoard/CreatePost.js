@@ -1,6 +1,6 @@
 import React from 'react';
 import CreatePostComponent from '../../components/Post/CreatePostComponent';
-import PostService from 'services/PostService';
+import PostService from 'services/PostService.ts';
 
 const TAG = 'CREATEPOST'
 const MAX_SIZE = 20 * 1024 * 1024;
