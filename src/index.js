@@ -5,7 +5,7 @@ import { Router } from 'react-router-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux'
 import history from 'common/history'
-import '@fortawesome/fontawesome-free/css/all.css';
+// import '@fortawesome/fontawesome-free/css/all.css';
 // import '@fortawesome/free-solid-svg-icons';
 // import '@fortawesome/fontawesome-common-types/all.css';
 // import '@fortawesome/free-solid-svg-icons'

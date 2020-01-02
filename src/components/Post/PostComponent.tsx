@@ -38,7 +38,8 @@ function PostComponent(
                                     <FileIcon fileInfo={file} isFull={true} />
                                 </DownloadFile>
                             </div>
-                        )}
+                        )
+                    }
                     )}
                 </div>
             )
@@ -57,8 +58,7 @@ function PostComponent(
                     <ActionDrawer
                         clickEdit={editPost}
                         clickDelete={deletePost}
-                        isPhoto={false}
-                        clickSetThumbnail={false} />
+                    />
                 }
             </div>
             <div className="post-info-other" >

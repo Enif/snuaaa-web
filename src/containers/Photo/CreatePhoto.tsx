@@ -11,8 +11,8 @@ const TAG = 'CREATEPHOTO';
 const MAX_SIZE = 100 * 1024 * 1024;
 
 type CreatePhotoProps = {
-    board_id: string,
-    tags: TagType[];
+    board_id: string;
+    tags?: TagType[];
     album_id?: number;
     setReadyState: () => void;
     togglePopUp: () => void;

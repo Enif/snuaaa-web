@@ -1,6 +1,6 @@
 import React from 'react';
-import EditAlbumComponent from '../../components/Album/EditAlbumComponent';
-import PhotoBoardService from 'services/PhotoBoardService';
+import EditAlbumComponent from '../../components/Album/EditAlbumComponent.tsx';
+import PhotoBoardService from 'services/PhotoBoardService.ts';
 
 const TAG = 'CREATEALBUM'
 

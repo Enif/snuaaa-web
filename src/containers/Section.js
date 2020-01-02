@@ -59,7 +59,7 @@ class Section extends React.Component {
                         <DefaultRoute exact path="/" component={Home} />
                         <DefaultRoute exact path="/about" component={About} />
                         <DefaultRoute path="/about/:aaa" component={About} />
-                        <DefaultRoute path="/board/:bNo" component={Board} />
+                        <DefaultRoute path="/board/:board_id" component={Board} />
                         <DefaultRoute path="/post/:post_id" component={Post} />
                         {/* <Route path="/photoboard/:pbNo" component={PhotoBoard}/> */}
                         <DefaultRoute path="/album/:album_id" component={Album} />

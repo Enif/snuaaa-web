@@ -29,7 +29,7 @@ function ProgressBar({ loadedPercentage, currentIdx, totalIdx }: ProgressBarProp
             <div className="progress-wrapper">
                 <svg id="svg" height="400" width="450">
                     <path ref={svgPath} id="svgPathStar" d="M 90 350 l 130 -300 l 150 300 l -300 -170 l 280 -50 Z" stroke="white"
-                        stroke-width="6" fill="none" />
+                        strokeWidth="6" fill="none" />
                     {
                         totalIdx &&
                         <text x="200" y="400" fill="white">{currentIdx} / {totalIdx}</text>
