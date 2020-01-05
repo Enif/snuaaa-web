@@ -1,5 +1,6 @@
 import React from 'react';
-import * as service from 'services';
+import AttachFile from 'components/Post/AttachFile';
+import DocuService from 'services/DocuService.ts';
 
 const TAG = 'CREATEDOCU'
 
@@ -47,7 +48,6 @@ class CreateDocu extends React.Component {
     }
 
     createDocu = async () => {
-        console.log('[%s] createDocuments', TAG);
         if (!this.state.title) {
             alert("제목을 입력해주세요");
         }
@@ -67,7 +67,7 @@ class CreateDocu extends React.Component {
                 docuInfo.append('uploadFiles', this.state.uploadFiles[i]);
             }
 
-            await service.createDocument(this.props.board_id, docuInfo)
+            await DocuService.createDocument(this.props.board_id, docuInfo)
                 .then(() => {
                     console.log('[%s] Create Docu Success', TAG);
                     this.props.fetch()
@@ -94,7 +94,7 @@ class CreateDocu extends React.Component {
             return (
                 <div className="file-list" key={index}>
                     <p>{file.name}</p>
-                    <i className="material-icons pointer" onClick={() => this.removeAttachedFile(index)}>remove_circle_outline</i>
+                    <i className="ri-close-circle-line ri-icons enif-pointer" onClick={() => this.removeAttachedFile(index)}></i>
                 </div>
             )
         });
@@ -125,42 +125,38 @@ class CreateDocu extends React.Component {
     }
 
     render() {
-        console.log('[%s] render', TAG)
-
-        const acceptFileList = ['.jpg', '.jpeg', '.png', '.docx', '.pdf', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'pptx', '.hwp', '.zip'];
+        const { uploadFiles } = this.state;
 
         return (
             <div className="enif-popup">
                 <div className="enif-popup-content crt-docu-wrapper">
                     <h3>파일 업로드</h3>
                     <div className="docu-option-generation">
-                        <label>회기</label>
-                        <select name="generation" onChange={(e) => this.handleChange(e)} value={this.state.generation}>
+                        <label className="input-label">회기</label>
+                        <input type="number" name="generation" onChange={(e) => this.handleChange(e)} value={this.state.generation} />
+                        {/* <select >
                             {this.createGeneration()}
-                        </select>
+                        </select> */}
                     </div>
                     <div className="docu-category-list-wrapper">
-                        <label>카테고리</label>
+                        <label className="input-label">카테고리</label>
                         <div className="docu-category-unit-wrapper">
                             {this.makeCategoryList()}
                         </div>
                     </div>
                     <div className="docu-title-wrapper">
-                        <label htmlFor="crtDocTitle">제목</label>
+                        <label className="input-label" htmlFor="crtDocTitle">제목</label>
                         <input type="text" className="docu-title" id="crtDocTitle" name="title" placeholder="제목" onChange={(e) => this.handleChange(e)} />
                     </div>
                     <div className="docu-desc-wrapper">
-                        <label htmlFor="crtDocDesc">본문</label>
+                        <label className="input-label" htmlFor="crtDocDesc">본문</label>
                         <textarea className="docu-desc" id="crtDocDesc" name="text" placeholder="본문" onChange={(e) => this.handleChange(e)} />
                     </div>
                     <div className="docu-files-wrapper">
-                        <label htmlFor="crtDocFile">
-                            <i className="material-icons pointer">attach_file</i>
+                        <label className="input-label">
+                            <i className="ri-attachment-line enif-f-1p2x"></i>
                         </label>
-                        <input type="file" multiple accept={acceptFileList} id="crtDocFile" className="docu-input-file" onChange={(e) => this.uploadFile(e)} /* value={this.state.uploadPhoto} */ />
-                        <div>
-                            {this.state.uploadFiles.length > 0 && this.makeAttachedFileList(this.state.uploadFiles)}
-                        </div>
+                        <AttachFile files={uploadFiles} attachFile={this.uploadFile} removeFile={this.removeAttachedFile} />
                     </div>
                     <div>
                         <button className="enif-btn-common enif-btn-ok" onClick={() => this.createDocu()}>OK</button>

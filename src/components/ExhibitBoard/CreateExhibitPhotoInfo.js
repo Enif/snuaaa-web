@@ -1,10 +1,10 @@
 import React from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css"
-import Image from '../Common/Image';
+import Image from '../Common/AaaImage.tsx';
 import imgDefaultProfile from 'assets/img/profile.png';
 
-const CreateExhibitPhotoInfo = ({ title, text, order, photographer, date, location, camera, lens, focal_length, f_stop,
+const CreateExhibitPhotoInfo = ({ title, text, order, photographer, photographer_alt, date, location, camera, lens, focal_length, f_stop,
     exposure_time, iso, searchUsers, selectPhotographer, removePhotographer, handleChange, handleDate, handlePhotographer }) => {
 
     const makeUserList = function (users) {
@@ -21,7 +21,7 @@ const CreateExhibitPhotoInfo = ({ title, text, order, photographer, date, locati
     }
 
     return (
-        <div className="photo-infos-wrapper">
+        <div className="photo-input-area-wrapper">
             <input className="input-title" type="text" name="title" placeholder="제목" onChange={handleChange} value={title} />
             <textarea className="input-desc" placeholder="설명" name="text" onChange={handleChange} value={text} />
             <div className="photo-infos">
@@ -33,12 +33,12 @@ const CreateExhibitPhotoInfo = ({ title, text, order, photographer, date, locati
                     <div className="label-wrapper"><label>Photographer</label></div>
                     {
                         photographer.uuid ?
-                            <div className="mini-user-selected">
+                            <div className="mini-user-selected enif-f-1x">
                                 <div>{photographer.nickname}</div>
-                                <i className="material-icons pointer" onClick={removePhotographer}>remove_circle_outline</i>
+                                <i className="ri-close-circle-line enif-pointer" onClick={removePhotographer}></i>
                             </div>
                             :
-                            <input type="text" name="photographer" onChange={handlePhotographer} />
+                            <input type="text" name="photographer" onChange={handlePhotographer} autoComplete="off" value={photographer_alt}/>
                     }
                     {
                         searchUsers && searchUsers.length > 0 &&

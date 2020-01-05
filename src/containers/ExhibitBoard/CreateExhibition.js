@@ -1,8 +1,5 @@
 import React from 'react';
-// import * as service from 'services';
-import ExhibitionService from 'services/ExhibitionService';
-import BoardService from 'services/BoardService';
-import EditAlbumComponent from '../../components/Album/EditAlbumComponent';
+import BoardService from 'services/BoardService.ts';
 import DatePicker from 'react-datepicker';
 
 const TAG = 'CREATE_EXHIBITION'

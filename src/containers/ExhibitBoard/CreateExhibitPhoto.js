@@ -1,6 +1,6 @@
 import React from 'react';
-import ExhibitionService from 'services/ExhibitionService';
-import UserService from 'services/UserService';
+import ExhibitionService from 'services/ExhibitionService.ts';
+import UserService from '../../services/UserService.ts';
 import CreateExhibitPhotoComponent from 'components/ExhibitBoard/CreateExhibitPhotoComponent';
 
 const TAG = 'CREATEPHOTO';
@@ -23,6 +23,7 @@ class CreateExhibitPhoto extends React.Component {
                 uuid: null,
                 nickname: null
             },
+            photographer_alt: '',
             date: '',
             location: '',
             camera: '',
@@ -31,7 +32,6 @@ class CreateExhibitPhoto extends React.Component {
             f_stop: '',
             exposure_time: '',
             iso: '',
-            selectedTags: [],
             uploadPhotos: [],
             imgDatas: [],
             searchUsers: [],
@@ -53,6 +53,9 @@ class CreateExhibitPhoto extends React.Component {
     }
 
     handlePhotographer = (e) => {
+        this.setState({
+            photographer_alt: e.target.value
+        })
         if(e.target.value) {
             this.fetchUsers(e.target.value);
         }
@@ -73,6 +76,7 @@ class CreateExhibitPhoto extends React.Component {
     selectPhotographer = (index) => {
         const { searchUsers } = this.state;
         this.setState({
+            photographer_alt: '',
             photographer: {
                 uuid: searchUsers[index].user_uuid,
                 nickname: searchUsers[index].nickname
@@ -118,7 +122,8 @@ class CreateExhibitPhoto extends React.Component {
                         photographer: {
                             uuid: '',
                             nickname: ''
-                        },        
+                        },
+                        photographer_alt: '',
                         date: '',
                         location: '',
                         camera: '',
@@ -136,7 +141,7 @@ class CreateExhibitPhoto extends React.Component {
 
     setImgIdx = (index) => {
 
-        const { imgIdx, title, text, order, photographer, date, location, camera, lens,
+        const { imgIdx, title, text, order, photographer, photographer_alt, date, location, camera, lens,
             focal_length, f_stop, exposure_time, iso, selectedTags } = this.state;
 
         if (imgIdx >= 0) {
@@ -145,6 +150,7 @@ class CreateExhibitPhoto extends React.Component {
                 text: text,
                 order: order,
                 photographer: photographer,
+                photographer_alt: photographer_alt,
                 date: date,
                 location: location,
                 camera: camera,
@@ -163,6 +169,7 @@ class CreateExhibitPhoto extends React.Component {
             text: this.photoInfos[index].text,
             order: this.photoInfos[index].order,
             photographer: this.photoInfos[index].photographer,
+            photographer_alt: this.photoInfos[index].photographer_alt,
             date: this.photoInfos[index].date,
             location: this.photoInfos[index].location,
             camera: this.photoInfos[index].camera,
@@ -218,7 +225,7 @@ class CreateExhibitPhoto extends React.Component {
 
     setPhotoInfo = () => {
         const { imgIdx, title, text, order, date, location, camera, lens,
-            focal_length, f_stop, exposure_time, iso, photographer, selectedTags } = this.state;
+            focal_length, f_stop, exposure_time, iso, photographer, photographer_alt } = this.state;
 
         if (imgIdx >= 0) {
             this.photoInfos[imgIdx] = {
@@ -226,6 +233,7 @@ class CreateExhibitPhoto extends React.Component {
                 text: text,
                 order: order,
                 photographer: photographer,
+                photographer_alt: photographer_alt,
                 date: date,
                 location: location,
                 camera: camera,
@@ -260,7 +268,12 @@ class CreateExhibitPhoto extends React.Component {
                     photosForm.append('title', this.photoInfos[i].title);
                     photosForm.append('text', this.photoInfos[i].text);
                     photosForm.append('order', this.photoInfos[i].order)
-                    photosForm.append('photographer', this.photoInfos[i].photographer.uuid)
+                    if(this.photoInfos[i].photographer.uuid) {
+                        photosForm.append('photographer', this.photoInfos[i].photographer.uuid)
+                    }
+                    else {
+                        photosForm.append('photographer_alt', this.photoInfos[i].photographer_alt);
+                    }
                     photosForm.append('exhibition_no', exhibition_no);
                     photosForm.append('date', this.photoInfos[i].date);
                     photosForm.append('location', this.photoInfos[i].location);

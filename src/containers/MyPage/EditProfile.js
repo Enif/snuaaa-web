@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { authLogout } from 'actions';
-import * as service from 'services';
-import UserService from '../../services/UserService';
+
+import UserService from 'services/UserService.ts';
 import Loading from 'components/Common/Loading';
 import ProfileComponent from 'components/MyPage/ProfileComponent';
 
@@ -149,7 +149,7 @@ class EditProfile extends React.Component {
         });
         await UserService.retrieveUserInfo()
         .then((response) => {
-            let resInfo = response.data.userInfo
+            let resInfo = response.data
             const { userInfo } = this.state
             this.setState({
                 userInfo: userInfo.map((info) => {
@@ -213,7 +213,7 @@ class EditProfile extends React.Component {
             data.append('profileImg', this.state.profileImg)
         }
 
-        await service.updateUserInfo(data)
+        await UserService.updateUserInfo(data)
         .then(() => {
             alert("업데이트 성공");
             window.location.reload();
@@ -227,7 +227,7 @@ class EditProfile extends React.Component {
     deleteUser = async () => {
         let goDrop = window.confirm("정말로 탈퇴하시겠습니까?");
         if(goDrop) {
-            await service.deleteUserInfo()
+            await UserService.deleteUserInfo()
             .then(() => {
                 alert("탈퇴 요청이 정상적으로 처리되었습니다.");
                 this.props.onLogout();

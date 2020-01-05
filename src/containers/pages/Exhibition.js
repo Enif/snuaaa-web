@@ -52,7 +52,6 @@ class Exhibition extends React.Component {
         if (goDrop) {
             await ExhibitionService.deleteExhibition(this.props.match.params.exhibition_id)
                 .then(() => {
-                    alert("게시글이 삭제되었습니다.");
                     this.setAlbumState(ContentStateEnum.DELETED);
                 })
                 .catch((err) => {
@@ -75,9 +74,8 @@ class Exhibition extends React.Component {
     }
 
     render() {
-        const { exhibitionInfo } = this;
+        const { exhibitionInfo, exhibitPhotos } = this;
         const { exhibition_id, exhibitionState, popUpState } = this.state
-        const { my_id } = this.props;
 
         return (
             <>
@@ -90,13 +88,13 @@ class Exhibition extends React.Component {
                             return (
                                 <>
                                     <ExhibitionInfo exhibition_no={exhibitionInfo.exhibition.exhibition_no} slogan={exhibitionInfo.exhibition.slogan} />
+                                    {
+                                        <button className="board-btn-write" onClick={this.togglePopUp}>
+                                            <i className="ri-image-line enif-f-1p2x"></i>사진 업로드
+                                        </button>
+                                    }
                                     <div className="exhibition-wrapper">
-                                        <ExhibitPhotoList exhibitPhotos={this.exhibitPhotos} />
-                                        {
-                                            <button className="enif-btn-circle enif-pos-sticky" onClick={this.togglePopUp}>
-                                                <i className="material-icons">add_photo_alternate</i>
-                                            </button>
-                                        }
+                                        <ExhibitPhotoList exhibitPhotos={exhibitPhotos} />
                                         {
                                             popUpState &&
                                             <CreateExhibitPhoto

@@ -1,12 +1,13 @@
 import React from 'react';
 import ContentStateEnum from 'common/ContentStateEnum';
-import Comment from 'containers/Comment';
+import Comment from 'containers/Comment.tsx';
 import ProfileMini from '../Common/ProfileMini';
 import DownloadFile from '../Post/DownloadFile';
 import { convertFullDate } from 'utils/convertDate';
 import { breakLine } from 'utils/breakLine';
 import ActionDrawer from '../Common/ActionDrawer';
 import history from 'common/history';
+import FileIcon from 'components/Common/FileIcon';
 
 const DocuComponent = ({ docData, my_id, setDocState, deleteDoc, likeDoc, isLiked }) => {
 
@@ -17,21 +18,10 @@ const DocuComponent = ({ docData, my_id, setDocState, deleteDoc, likeDoc, isLike
     const makeFileList = () => {
         if (filesInfo && filesInfo.length > 0) {
             return filesInfo.map((file) => {
-                let fileTypeClass = '';
-
-                file.file_type === 'IMG' ? fileTypeClass = 'fa-file-image color-img'
-                    : file.file_type === 'DOC' ? fileTypeClass = 'fa-file-word color-doc'
-                        : file.file_type === 'XLS' ? fileTypeClass = 'fa-file-excel color-xls'
-                            : file.file_type === 'PDF' ? fileTypeClass = 'fa-file-pdf color-pdf'
-                                : file.file_type === 'ZIP' ? fileTypeClass = 'fa-file-archive color-zip'
-                                    : fileTypeClass = 'fa-file-alt'
-
                 return (
                     <div className="file-download-list" key={file.file_id}>
                         <DownloadFile key={file.file_id} content_id={file.parent_id} file_id={file.file_id}>
-                            <i className={`fas ${fileTypeClass} font-20 file-icon`}>
-                            </i>
-                            <div className="file-download-name">{file.original_name}</div>
+                            <FileIcon fileInfo={file} isFull={true} />
                         </DownloadFile>
                     </div>
                 )
@@ -45,7 +35,9 @@ const DocuComponent = ({ docData, my_id, setDocState, deleteDoc, likeDoc, isLike
     return (
         <div className="post-wrapper">
             <div className="post-title">
-                <i className="material-icons pointer post-title-back" onClick={() => history.goBack()} > keyboard_backspace</i>
+                <div className="post-title-back" onClick={() => history.goBack()}>
+                    <i className="ri-arrow-left-line enif-pointer" ></i>
+                </div>
                 <h5>{contentInfo.title}</h5>
                 {
                     (my_id === userInfo.user_id) &&
@@ -68,17 +60,16 @@ const DocuComponent = ({ docData, my_id, setDocState, deleteDoc, likeDoc, isLike
             <div className="file-download-wrapper">
                 {makeFileList()}
             </div>
-            <ProfileMini profileImg={userInfo.profile_path} nickname={userInfo.nickname} userDesc={userInfo.introduction} />
+            <ProfileMini userInfo={userInfo} />
             <div className="enif-divider"></div>
             <div className="nums-wrapper">
                 <div className="like-num-wrapper">
-                    <i className="material-icons pointer" onClick={() => likeDoc()}>
-                        {isLiked ? 'favorite' : 'favorite_border'}
+                    <i className={`${isLiked ? 'ri-heart-fill' : 'ri-heart-line'} enif-f-1p5x enif-pointer`} onClick={() => likeDoc()}>
                     </i>
                     {contentInfo.like_num}
                 </div>
                 <div className="comment-num-wrapper">
-                    <i className="material-icons">comment</i>
+                    <i className="ri-message-2-fill enif-f-1p5x"></i>
                     {contentInfo.comment_num}
                 </div>
             </div>

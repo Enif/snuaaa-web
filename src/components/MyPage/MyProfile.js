@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Image from '../Common/Image';
+import Image from '../Common/AaaImage.tsx';
 import imgDefaultProfile from 'assets/img/profile.png';
 import { breakLine } from 'utils/breakLine';
 
@@ -9,7 +9,7 @@ function MyProfile({ userInfo, isCanEdit }) {
     const [isExpand, setIsExpand] = useState(false);
 
     let descClass = isExpand ? "userdesc expanded" : "userdesc";
-    let icon = isExpand ? "expand_less" : "expand_more"
+    let iconClass = isExpand ? "ri-arrow-up-s-line" : "ri-arrow-down-s-line";
 
     return (
         <div className="my-profile-wrapper">
@@ -32,7 +32,7 @@ function MyProfile({ userInfo, isCanEdit }) {
             <div className="my-right">
                 <div className={descClass}>{breakLine(userInfo.introduction)}</div>
                 <div className="icon-expand">
-                    <i className="material-icons pointer" onClick={() => setIsExpand(!isExpand)}>{icon}</i>
+                    <i className={`${iconClass} enif-pointer`} onClick={() => setIsExpand(!isExpand)}></i>
                 </div>
             </div>
         </div>

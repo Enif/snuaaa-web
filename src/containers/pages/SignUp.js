@@ -1,10 +1,10 @@
 import React from 'react';
-import * as service from 'services';
 import history from 'common/history';
 import SignUpComponent from 'components/Signup/SignUpComponent';
 import SignUpSuccess from 'components/Signup/SignUpSuccess';
 import SignUpFailure from 'components/Signup/SignUpFailure';
 import Loading from 'components/Common/Loading';
+import AuthService from '../../services/AuthService';
 
 const TAG = 'SINGUP'
 
@@ -169,7 +169,7 @@ class SignUp extends React.Component {
     checkDubId = () => {
 
         const { userInfo } = this.state
-        service.duplicateCheck({ check_id: this.findInfo('id').value })
+        AuthService.duplicateCheck({ check_id: this.findInfo('id').value })
             .then((res) => {
                 // Available ID
                 this.setState({
@@ -215,7 +215,7 @@ class SignUp extends React.Component {
             data.append('profile', this.state.profile);
         }
 
-        await service.postSignUp(data)
+        await AuthService.signUp(data)
             .then(() => {
                 this.setState({ signUpState: 'SUCCESS' })
                 setTimeout(() => {

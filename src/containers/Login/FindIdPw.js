@@ -1,5 +1,5 @@
 import React from 'react';
-import UserService from 'services/UserService';
+import UserService from 'services/UserService.ts';
 import { FindStateEnum } from 'common/Enum';
 
 class FindIdPw extends React.Component {

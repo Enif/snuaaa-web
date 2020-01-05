@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import Image from '../Common/Image';
+import Image from '../Common/AaaImage.tsx';
 import history from 'common/history';
 
 const NewPhotos = ({ title, board_id, photos }) => {

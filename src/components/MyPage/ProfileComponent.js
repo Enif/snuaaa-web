@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import Image from '../Common/Image';
+import Image from '../Common/AaaImage.tsx';
 import InputField from '../Common/InputField';
 import imgDefaultProfile from 'assets/img/profile.png';
 
@@ -51,7 +50,7 @@ const ProfileComponent = ({ profilePath, userInfo, handleChange, uploadProfileIm
                     <Image imgSrc={profilePath} defaultImgSrc={imgDefaultProfile} local={isProfileImgChanged} />
                     <label htmlFor="profileImg">
                         <div className="edit-profile-img">
-                            <i className="material-icons">photo_camera</i>
+                            <i className="ri-camera-line"></i>
                         </div>
                     </label>
                     <input type="file" id="profileImg" accept="image/*" onChange={uploadProfileImg} />

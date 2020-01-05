@@ -1,6 +1,6 @@
 import React from 'react'
-import * as service from 'services';
 import { convertDateWithDay, convertTime } from 'utils/convertDate';
+import HomeService from 'services/HomeService';
 
 class RiseSet extends React.Component {
 
@@ -18,7 +18,7 @@ class RiseSet extends React.Component {
     }
 
     fetch = async () => {
-        service.retrieveRiseSet()
+        HomeService.retrieveRiseSet()
             .then((res) => {
                 this.setState({
                     riseSetInfo: { ...res.data }

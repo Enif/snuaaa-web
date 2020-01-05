@@ -83,6 +83,10 @@ function Navigation({ boards }) {
                                     <Link to='/about/observation'><li>김태영<span> 기념</span> 관측소<span> 소개</span></li></Link>
                                     <Link to='/about/history'><li>동아리 발자취</li></Link>
                                     <Link to='/about/officers'><li><span>역대 </span>회장단/임원진</li></Link>
+                                    <Link to='/about/regulation'><li>AAA회칙</li></Link>
+                                    <a href="https://archive.snuaaa.net" alt="archive" target="_blank" rel="noopener noreferrer">
+                                        <li>AAArchive</li>
+                                    </a>
                                 </ul>
                             </div>
                         }

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import defaultAlbumCover from 'assets/img/default_photo_img.png'
 import defaultStarAlbumCover from 'assets/img/default_photo_img_star.png'
-import Image from '../Common/Image'
+import Image from '../Common/AaaImage.tsx'
 
 const TAG = 'ALBUMLIST'
 
@@ -19,8 +19,8 @@ class AlbumList extends React.Component {
             let categoryInfo = album.content.category;
             // let thumbnailInfo = album.thumbnail && album.thumbnail.photo
             let thumbnailPath = '';
-            if (album.thumbnail && album.thumbnail.photo) {
-                thumbnailPath = album.thumbnail.photo.thumbnail_path;
+            if (album.thumbnail) {
+                thumbnailPath = album.thumbnail.thumbnail_path;
             }
             else if (album.content.albumPhoto && album.content.albumPhoto[0]){
                 thumbnailPath = album.content.albumPhoto[0].thumbnail_path;

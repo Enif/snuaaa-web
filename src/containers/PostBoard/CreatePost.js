@@ -1,6 +1,6 @@
 import React from 'react';
-import * as service from 'services';
 import CreatePostComponent from '../../components/Post/CreatePostComponent';
+import PostService from 'services/PostService.ts';
 
 const TAG = 'CREATEPOST'
 const MAX_SIZE = 20 * 1024 * 1024;
@@ -78,7 +78,7 @@ class CreatePost extends React.Component {
                 postInfo.append('attachedFiles', attachedFiles[i]);
             }
 
-            await service.createPost(board_id, postInfo)
+            await PostService.createPost(board_id, postInfo)
                 .then(() => {
                     fetch();
                     close();

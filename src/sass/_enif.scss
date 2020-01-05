@@ -58,11 +58,45 @@
 .enif-flex-horizontal {
     display: flex;
     flex-direction: row;
-    align-items: center;    
+    align-items: center;
+}
+
+.enif-flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.enif-pointer {
+    cursor: pointer;
+}
+
+.enif-f-1x {
+    font-size: 1rem;
+}
+.enif-f-1p2x {
+    font-size: 1.2rem;
+}
+.enif-f-1p5x {
+    font-size: 1.5rem;
+}
+.enif-f-2x {
+    font-size: 2rem;
+}
+
+.enif-visible {
+    opacity: 1;
+}
+
+.enif-unvisible {
+    opacity: 0;
 }
 
 .enif-popup {
     position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     z-index: 30;
     top: 0;
     left: 0;
@@ -74,10 +108,7 @@
 .enif-popup-content {
     position: relative;
     width: 500px;
-    // height: 300px;
-    margin: 0 auto;
-    margin-top: 200px;
-    padding: 2rem 2rem 3rem 2rem;
+    padding: 2rem 2rem;
     background-color: #ffffff;
     z-index: 99;
     h3 {
@@ -170,14 +201,11 @@
     box-shadow: 1px 1px 3px 0px #949494;
     border: none;
     border-radius: 50%;
-    color: #fff;
+    color: #FFFFFF;
     transition: all 0.3s;
     cursor: pointer;
     &:hover {
-        background-color: darken(#49A0AE, 10%);
-    }
-    .material-icons {
-        color: #FFFFFF;
+        background-color: darken($color_aqua, 10%);
     }
 }
 
@@ -268,7 +296,11 @@
 }
 
 .enif-hide-desktop {
-    visibility: hidden;
+    display: none;
+}
+
+.enif-overflow-hidden {
+    overflow: hidden;
 }
 
 // .enif-input-field input:invalid {
@@ -304,7 +336,7 @@
     }
 
     .enif-hide-desktop {
-        visibility: visible;
+        display: initial;
     }
 
     .enif-hide-mobile {

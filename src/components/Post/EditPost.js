@@ -6,7 +6,7 @@ function EditPost({ editingPostData, handleEditting, handleEdittingText, setPost
     return (
         <div className="writepost-wrapper">
             <div className="writepost-header">
-                <i className="material-icons pointer" onClick={() => setPostState(ContentStateEnum.READY)}>keyboard_backspace</i>
+                <i className="ri-arrow-left-line enif-pointer" onClick={() => setPostState(ContentStateEnum.READY)}></i>
                 <h5>글수정</h5>
             </div>
             <div className="writepost-title">
