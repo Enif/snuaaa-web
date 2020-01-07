@@ -5,6 +5,7 @@ import BoardType from './BoardType';
 import TagType from './TagType';
 import ExhibitionType from './ExhibitionType';
 import CategoryType from './CategoryType';
+import FileType from './FileType';
 
 interface ContentType {
     content_id: number;
@@ -27,6 +28,7 @@ interface ContentType {
     exhibition?: ExhibitionType;
     tags?: TagType[];
     categories?: CategoryType[];
+    attachedFiles?: FileType[];
 }
 
 export default ContentType;

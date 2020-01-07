@@ -13,6 +13,9 @@ import { getToken } from './utils/tokenManager';
 import AuthService from './services/AuthService';
 import { authLogin, authLogout } from './actions';
 import history from './common/history';
+import AuthContext from './contexts/AuthContext';
+import AuthType from './types/AuthType';
+import BoardType from './types/BoardType';
 // import UserContext from './UserContext';
 
 const TAG = 'App'
@@ -26,7 +29,18 @@ type AppProps = {
 
 type AppState = {
     isReady: boolean;
+    authInfo: AuthType;
+    boardInfo: BoardType[];
 }
+
+const initialAuth: AuthType = {
+    isLoggedIn: false,
+    user_id: 0,
+    nickname: '',
+    level: 0,
+    profile_path: '',
+};
+
 
 class App extends React.Component<AppProps, AppState> {
 
@@ -34,39 +48,32 @@ class App extends React.Component<AppProps, AppState> {
         super(props);
         console.log(`[%s] constructor`, TAG)
         this.state = {
-            isReady: false
+            isReady: false,
+            authInfo: initialAuth,
+            boardInfo: []
         }
-        // this.authService = new AuthService();
     }
-    
-    // authService: AuthService;
 
     componentDidMount() {
         this.checkToken();
     }
 
-    shouldComponentUpdate(nextProps: AppProps, nextState: AppState) {
-        if (nextState.isReady === false) {
-            return false;
-        }
-        return true;
-    }
+    // shouldComponentUpdate(nextProps: AppProps, nextState: AppState) {
+    //     if (nextState.isReady === false) {
+    //         return false;
+    //     }
+    //     return true;
+    // }
 
     checkToken = async () => {
-        console.log(`[%s] checkToken`, TAG)
-
-        // const { cookies } = this.props;
-        // const token = (sessionStorage.getItem('token') || localStorage.getItem('token'))
         const accessToken = getToken();
 
         if (!accessToken) {
             //토큰이 없으면 logout
-            console.log(history.location.pathname);
             history.replace({
                 pathname: '/login',
-                state: { accessPath: history.location.pathname}
+                state: { accessPath: history.location.pathname }
             })
-            // history.push(window.location.pathname);
             this.props.onLogout();
             this.setState({
                 isReady: true
@@ -76,23 +83,29 @@ class App extends React.Component<AppProps, AppState> {
             // 서버에 토큰 확인 , invalid => logout, valid => 로그인 유지(연장)
             await AuthService.checkToken()
                 .then((res: any) => {
-                    console.log(`[${TAG}] Token is valid`)
-
                     const { token, user_id, nickname, level, profile_path, autoLogin } = res.data;
 
                     this.props.onAuthLogin(user_id, nickname, level, profile_path, token, autoLogin);
                     this.setState({
-                        isReady: true
+                        isReady: true,
+                        authInfo: {
+                            isLoggedIn: true,
+                            user_id: user_id,
+                            nickname: nickname,
+                            level: level,
+                            profile_path: profile_path
+                        }
                     })
                 })
-                .catch((err: any) => {
-                    console.log(`[${TAG}] Token is not valid`)
+                .catch((err: Error) => {
+
                     alert("토큰이 만료되어 로그아웃 됩니다.")
                     console.error(err);
-                    history.push(window.location.pathname);
+                    // history.push(window.location.pathname);
                     this.props.onLogout();
                     this.setState({
-                        isReady: true
+                        isReady: true,
+                        authInfo: initialAuth
                     })
                 })
         }
@@ -100,23 +113,25 @@ class App extends React.Component<AppProps, AppState> {
 
     render() {
         console.log(`[${TAG}] render...`);
-        let { isReady } = this.state;
+        let { isReady, authInfo } = this.state;
         let { loginState } = this.props;
         return (
             <div className="snuaaa-wrapper">
-                {(() => {
-                    if (!isReady) {
-                        return <Loading />
-                    }
-                    else if (!loginState && !(window.location.pathname === '/page/login' || window.location.pathname === '/page/signup')) {
-                        return <Redirect to='/login' />
-                    }
-                    else {
-                        return (
-                            <Section />
-                        )
-                    }
-                })()}
+                <AuthContext.Provider value={authInfo}>
+                    {(() => {
+                        if (!isReady) {
+                            return <Loading />
+                        }
+                        else if (!loginState && !(window.location.pathname === '/page/login' || window.location.pathname === '/page/signup')) {
+                            return <Redirect to='/login' />
+                        }
+                        else {
+                            return (
+                                <Section />
+                            )
+                        }
+                    })()}
+                </AuthContext.Provider>
             </div>
         );
     }

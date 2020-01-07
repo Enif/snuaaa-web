@@ -1,9 +1,15 @@
-import React, { lazy, Suspense } from 'react';
-import { Route, Switch } from 'react-router-dom';
-import history from 'common/history';
-import DefaultRoute from 'containers/DefaultRoute';
+import React, { lazy, Suspense, useState, useEffect } from 'react';
+import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
+// import history from '../common/history';
+import DefaultRoute from '../containers/DefaultRoute';
+import { Location } from 'history';
 
-import Photo from './pages/Photo'; // Don't load lazy. scroll is reset when initial loading.
+// Don't load lazy. scroll is reset when initial loading.
+import Photo from './pages/Photo';
+import ExhibitPhoto from './pages/ExhibitPhoto';
+import BoardType from '../types/BoardType';
+import BoardService from '../services/BoardService';
+import BoardContext from '../contexts/BoardContext';
 
 const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
@@ -13,7 +19,7 @@ const Album = lazy(() => import('./pages/Album'));
 // const Photo = lazy(() => import('./pages/Photo'));
 const Docu = lazy(() => import('./pages/Document'));
 const Exhibition = lazy(() => import('./pages/Exhibition'));
-const ExhibitPhoto = lazy(() => import('./pages/ExhibitPhoto'));
+// const ExhibitPhoto = lazy(() => import('./pages/ExhibitPhoto'));
 const SignUp = lazy(() => import('./pages/SignUp'));
 const LogIn = lazy(() => import('./pages/LogIn'));
 const MyPage = lazy(() => import('./pages/MyPage'));
@@ -21,39 +27,49 @@ const UserPage = lazy(() => import('./pages/UserPage'));
 const AllPosts = lazy(() => import('./pages/AllPosts'));
 const AllComments = lazy(() => import('./pages/AllComments'));
 
-const TAG = 'SECTION';
 
-class Section extends React.Component {
+function Section() {
+    let isPhotoModal = false;
+    let isExhibitPhotoModal = false;
+    let previousLocation: Location = { pathname: '/', search: '', key: '', hash: '', state: '' };
+    let history = useHistory();
+    let location = useLocation();
+    const [boardInfo, setBoardInfo] = useState<BoardType[]>([])
 
-    constructor(props) {
-        console.log(`[${TAG}] constructor`);
-        super(props);
+    if (location.state && location.state.modal) {
+        previousLocation = location.state.backgroundLocation ? location.state.backgroundLocation : '/';
+        isPhotoModal = true;
+    }
+    else if (location.state && location.state.exhibitPhotoModal) {
+        previousLocation = location.state.backgroundLocation ? location.state.backgroundLocation : '/';
+        isExhibitPhotoModal = true;
+    }
+    else if (history.action === "POP" && location.pathname.includes('/photo/')) {
+        previousLocation = { pathname: '/', search: '', key: '', hash: '', state: '' }
+        isPhotoModal = true;
+    }
+    else if (history.action === "POP" && location.pathname.includes('/exhibitPhoto/')) {
+        previousLocation = { pathname: '/', search: '', key: '', hash: '', state: '' }
+        isExhibitPhotoModal = true;
     }
 
-    render() {
-        let isPhotoModal = false;
-        let isExhibitPhotoModal = false;
-        let previousLocation = '/';
+    useEffect(() => {
+        fetch();
+    }, [])
 
-        if (history.location.state && history.location.state.modal) {
-            previousLocation = history.location.state.backgroundLocation ? history.location.state.backgroundLocation : '/';
-            isPhotoModal = true;
+    const fetch = async () => {
+        try {
+            let res = await BoardService.retrieveBoards();
+            setBoardInfo(res.data);
+            console.log(res)
         }
-        else if (history.location.state && history.location.state.exhibitPhotoModal) {
-            previousLocation = history.location.state.backgroundLocation ? history.location.state.backgroundLocation : '/';
-            isExhibitPhotoModal = true;
+        catch (err) {
+            console.error(err);
         }
-        else if (history.action === "POP" && history.location.pathname.includes('/photo/')) {
-            previousLocation = '/'
-            isPhotoModal = true;
-        }
-        else if (history.action === "POP" && history.location.pathname.includes('/exhibitPhoto/')) {
-            previousLocation = '/'
-            isExhibitPhotoModal = true;
-        }
-
-        return (
-            <>
+    }
+    return (
+        <>
+            <BoardContext.Provider value={boardInfo}>
                 <Suspense fallback={<div>Loading pages...</div>}>
                     <Switch location={(isPhotoModal || isExhibitPhotoModal) ? previousLocation : history.location}>
                         <DefaultRoute exact path="/" component={Home} />
@@ -83,10 +99,9 @@ class Section extends React.Component {
                         <Route path="/exhibitPhoto/:exhibitPhoto_id" component={ExhibitPhoto} />
                     }
                 </Suspense>
-            </>
-        );
-    }
+            </BoardContext.Provider>
+        </>
+    );
 }
-
 
 export default Section;

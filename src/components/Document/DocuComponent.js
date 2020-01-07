@@ -13,7 +13,7 @@ const DocuComponent = ({ docData, my_id, setDocState, deleteDoc, likeDoc, isLike
 
     let contentInfo = docData.content;
     let userInfo = docData.content.user;
-    let filesInfo = docData.content.AttachedFiles;
+    let filesInfo = docData.content.attachedFiles;
 
     const makeFileList = () => {
         if (filesInfo && filesInfo.length > 0) {

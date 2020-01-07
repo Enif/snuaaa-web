@@ -8,7 +8,7 @@ const DocuList = ({ documents }) => {
         let docuList = documents.map(doc => {
             let contentInfo = doc.content;
             let categoryInfo = doc.content.category;
-            let attachedFileInfo = doc.content.AttachedFiles;
+            let attachedFileInfo = doc.content.attachedFiles;
             return (
                 <div className="doculist-body" key={contentInfo.content_id}>
                     <div className="docu-generation">{doc.generation}</div>

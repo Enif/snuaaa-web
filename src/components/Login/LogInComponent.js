@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import InputText from '../Common/InputText'
-import Footer from 'components/Footer'
+import Footer from 'components/Footer.tsx'
 import logo from 'assets/img/login_logo.gif'
 
 const LogInComponent = ({ autoLogin, handleChange, userLogIn, guestLogIn, openFindPopUp, checkAuto }) => {

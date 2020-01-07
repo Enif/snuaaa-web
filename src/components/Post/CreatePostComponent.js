@@ -14,7 +14,7 @@ function CreatePostComponent({ title, text, attachedFiles, handleChange, handleE
                     <h5>글쓰기</h5>
                 </div>
                 <div className="writepost-title">
-                    <input name="title" value={title} maxLength={32} onChange={(e) => handleChange(e)} placeholder="제목을 입력하세요." />
+                    <input name="title" value={title} maxLength={50} onChange={(e) => handleChange(e)} placeholder="제목을 입력하세요." />
                 </div>
                 <div className="writepost-content">
                     <Editor text={text} editText={handleEditor} />
