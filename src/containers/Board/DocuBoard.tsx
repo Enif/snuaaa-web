@@ -1,5 +1,4 @@
 import React, { ChangeEvent } from 'react';
-import { connect } from 'react-redux';
 import { Location } from 'history';
 
 import Loading from '../../components/Common/Loading';
@@ -13,6 +12,7 @@ import BoardName from '../../components/Board/BoardName';
 import DocuService from '../../services/DocuService';
 import BoardType from '../../types/BoardType';
 import ContentType from '../../types/ContentType';
+import AuthContext from '../../contexts/AuthContext';
 
 const TAG = 'DOCUBOARD'
 const DOCROWNUM = 10;
@@ -20,7 +20,6 @@ const DOCROWNUM = 10;
 type DocuBoardProps = {
     boardInfo: BoardType;
     location: Location;
-    level: number;
 }
 
 type DocuBoardState = {
@@ -171,7 +170,7 @@ class DocuBoard extends React.Component<DocuBoardProps, DocuBoardState> {
 
     render() {
         console.log('[%s] render', TAG);
-        const { boardInfo, level, location } = this.props;
+        const { boardInfo, location } = this.props;
         const { boardState } = this.state;
 
         let category = (location.state && location.state.category) ? location.state.category : '';
@@ -185,7 +184,7 @@ class DocuBoard extends React.Component<DocuBoardProps, DocuBoardState> {
             }
         });
 
-        const generationOptions = [];
+        const generationOptions: {id: number, name: string}[] = [];
         const today = new Date();
         let currentGen = 2 * (today.getFullYear() - 1980);
         if (today.getMonth() > 5) currentGen++;
@@ -198,69 +197,70 @@ class DocuBoard extends React.Component<DocuBoardProps, DocuBoardState> {
         }
 
         return (
-            <div className="board-wrapper">
-                <BoardName board_id={boardInfo.board_id} board_name={boardInfo.board_name} />
-                {/* <div className="docboard-top-menu-wrapper"> */}
-                <div className="board-search-wrapper">
-                    <div className="doc-select-wrapper">
-                        <SelectBox
-                            selectName="category"
-                            optionList={categoryOptions}
-                            onSelect={this.handleChange}
-                            selectedOption={category} />
-                        <SelectBox
-                            selectName="generation"
-                            optionList={generationOptions}
-                            onSelect={this.handleChange}
-                            selectedOption={generation} />
+            <AuthContext.Consumer>
+                {
+                    authContext => (
+                        <div className="board-wrapper">
+                        <BoardName board_id={boardInfo.board_id} board_name={boardInfo.board_name} />
+                        {/* <div className="docboard-top-menu-wrapper"> */}
+                        <div className="board-search-wrapper">
+                            <div className="doc-select-wrapper">
+                                <SelectBox
+                                    selectName="category"
+                                    optionList={categoryOptions}
+                                    onSelect={this.handleChange}
+                                    selectedOption={category} />
+                                <SelectBox
+                                    selectName="generation"
+                                    optionList={generationOptions}
+                                    onSelect={this.handleChange}
+                                    selectedOption={generation} />
+                            </div>
+                            {
+                                authContext.authInfo.user.level >= boardInfo.lv_write &&
+                                <button className="board-btn-write" onClick={() => this.setBoardState(BoardStateEnum.WRITING)}>
+                                    <i className="ri-file-add-line enif-f-1p2x"></i>문서생성
+                                </button>
+                            }
+                        </div>
+                        {/* </div> */}
+                        {(() => {
+                            if (boardState === BoardStateEnum.LOADING) {
+                                return <Loading />
+                            }
+                            else if (boardState === BoardStateEnum.READY || boardState === BoardStateEnum.WRITING) {
+                                return (
+                                    <>
+                                        <DocuList documents={this.documents} />
+                                        {this.docCount > 0 &&
+                                            <Paginator
+                                                pageIdx={pageIdx}
+                                                pageNum={Math.ceil(this.docCount / DOCROWNUM)}
+                                                clickPage={this.clickPage} />}
+                                        {
+                                            boardState === BoardStateEnum.WRITING &&
+                                            <CreateDocu
+                                                board_id={boardInfo.board_id}
+                                                fetch={this.fetch}
+                                                categories={boardInfo.categories}
+                                                close={() => this.setBoardState(BoardStateEnum.READY)} />
+                                        }
+                                    </>
+                                )
+                            }
+                            else {
+                                return (
+                                    <div>ERROR PAGE</div>
+                                )
+                            }
+                        })()}
                     </div>
-                    {
-                        level >= boardInfo.lv_write &&
-                        <button className="board-btn-write" onClick={() => this.setBoardState(BoardStateEnum.WRITING)}>
-                            <i className="ri-file-add-line enif-f-1p2x"></i>문서생성
-                        </button>
-                    }
-                </div>
-                {/* </div> */}
-                {(() => {
-                    if (boardState === BoardStateEnum.LOADING) {
-                        return <Loading />
-                    }
-                    else if (boardState === BoardStateEnum.READY || boardState === BoardStateEnum.WRITING) {
-                        return (
-                            <>
-                                <DocuList documents={this.documents} />
-                                {this.docCount > 0 &&
-                                    <Paginator
-                                        pageIdx={pageIdx}
-                                        pageNum={Math.ceil(this.docCount / DOCROWNUM)}
-                                        clickPage={this.clickPage} />}
-                                {
-                                    boardState === BoardStateEnum.WRITING &&
-                                    <CreateDocu
-                                        board_id={boardInfo.board_id}
-                                        fetch={this.fetch}
-                                        categories={boardInfo.categories}
-                                        close={() => this.setBoardState(BoardStateEnum.READY)} />
-                                }
-                            </>
-                        )
-                    }
-                    else {
-                        return (
-                            <div>ERROR PAGE</div>
-                        )
-                    }
-                })()}
-            </div>
+        
+                    )
+                }
+            </AuthContext.Consumer>
         )
     }
 }
 
-const mapStateToProps = (state: any) => {
-    return {
-        level: state.authentication.level,
-    }
-}
-
-export default connect(mapStateToProps, null, null, { pure: false })(DocuBoard);
+export default DocuBoard;

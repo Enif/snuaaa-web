@@ -1,5 +1,4 @@
 import React, { Component, Props } from 'react';
-import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router';
 
 import './App.scss';
@@ -9,13 +8,14 @@ import 'react-quill/dist/quill.core.css';
 
 import Section from './containers/Section';
 import Loading from './components/Common/Loading';
-import { getToken } from './utils/tokenManager';
+import { getToken, setToken, removeToken } from './utils/tokenManager';
 import AuthService from './services/AuthService';
 import { authLogin, authLogout } from './actions';
 import history from './common/history';
 import AuthContext from './contexts/AuthContext';
 import AuthType from './types/AuthType';
 import BoardType from './types/BoardType';
+import UserType from './types/UserType';
 // import UserContext from './UserContext';
 
 const TAG = 'App'
@@ -35,10 +35,12 @@ type AppState = {
 
 const initialAuth: AuthType = {
     isLoggedIn: false,
-    user_id: 0,
-    nickname: '',
-    level: 0,
-    profile_path: '',
+    user: {
+        user_id: 0,
+        nickname: '',
+        level: 0,
+        profile_path: '',
+    }
 };
 
 
@@ -74,7 +76,8 @@ class App extends React.Component<AppProps, AppState> {
                 pathname: '/login',
                 state: { accessPath: history.location.pathname }
             })
-            this.props.onLogout();
+            // this.props.onLogout();
+            this.authLogout();
             this.setState({
                 isReady: true
             })
@@ -83,32 +86,64 @@ class App extends React.Component<AppProps, AppState> {
             // 서버에 토큰 확인 , invalid => logout, valid => 로그인 유지(연장)
             await AuthService.checkToken()
                 .then((res: any) => {
-                    const { token, user_id, nickname, level, profile_path, autoLogin } = res.data;
+                    const { token, userInfo, autoLogin } = res.data;
 
-                    this.props.onAuthLogin(user_id, nickname, level, profile_path, token, autoLogin);
-                    this.setState({
-                        isReady: true,
-                        authInfo: {
-                            isLoggedIn: true,
-                            user_id: user_id,
-                            nickname: nickname,
-                            level: level,
-                            profile_path: profile_path
-                        }
-                    })
+                    this.authLogin(token, autoLogin, userInfo)
+                    // this.props.onAuthLogin(user_id, nickname, level, profile_path, token, autoLogin);
+                    // this.setState({
+                    //     isReady: true,
+                    //     authInfo: {
+                    //         isLoggedIn: true,
+                    //         user: {
+                    //             user_id: user_id,
+                    //             nickname: nickname,
+                    //             level: level,
+                    //             profile_path: profile_path
+                    //         }
+                    //     }
+                    // })
                 })
                 .catch((err: Error) => {
 
                     alert("토큰이 만료되어 로그아웃 됩니다.")
                     console.error(err);
-                    // history.push(window.location.pathname);
-                    this.props.onLogout();
-                    this.setState({
-                        isReady: true,
-                        authInfo: initialAuth
-                    })
+                    this.authLogout();
+                    // this.props.onLogout();
+                    // this.setState({
+                    //     isReady: true,
+                    //     authInfo: initialAuth
+                    // })
                 })
         }
+    }
+
+    authLogin = (token: string, autoLogin: boolean, userInfo: UserType) => {
+        console.log('authLogin')
+        setToken(token, autoLogin);
+        console.log(token)
+        this.setState({
+            isReady: true,
+            authInfo: {
+                isLoggedIn: true,
+                user: userInfo
+            }
+        })
+    }
+
+    authLogout = () => {
+        removeToken();
+        this.setState({
+            isReady: true,
+            authInfo: {
+                isLoggedIn: false,
+                user: {
+                    user_id: 0,
+                    nickname: '',
+                    level: 0,
+                    profile_path: '',
+                }
+            }
+        })
     }
 
     render() {
@@ -117,12 +152,16 @@ class App extends React.Component<AppProps, AppState> {
         let { loginState } = this.props;
         return (
             <div className="snuaaa-wrapper">
-                <AuthContext.Provider value={authInfo}>
+                <AuthContext.Provider value={{
+                    authInfo: authInfo,
+                    authLogin: this.authLogin,
+                    authLogout: this.authLogout
+                }}>
                     {(() => {
                         if (!isReady) {
                             return <Loading />
                         }
-                        else if (!loginState && !(window.location.pathname === '/page/login' || window.location.pathname === '/page/signup')) {
+                        else if (!authInfo.isLoggedIn && !(window.location.pathname === '/page/login' || window.location.pathname === '/page/signup')) {
                             return <Redirect to='/login' />
                         }
                         else {
@@ -151,4 +190,6 @@ const mapDispatchToProps = (dispatch: any) => {
     }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+
+export default App;
+// export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

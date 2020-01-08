@@ -19,7 +19,6 @@ const TAG = 'POST'
 
 type PostProps = {
     match: match<{ post_id: string }>
-    location: Location;
 }
 
 function Post(props: PostProps) {
@@ -31,7 +30,7 @@ function Post(props: PostProps) {
         title: '',
         text: ''
     })
-    const authInfo = useContext(AuthContext);
+    const authContext = useContext(AuthContext);
 
     useEffect(() => {
         fetch();
@@ -148,13 +147,13 @@ function Post(props: PostProps) {
                                 />
                                 <PostComponent
                                     content={postInfo}
-                                    my_id={authInfo.user_id}
+                                    my_id={authContext.authInfo.user.user_id}
                                     isLiked={likeInfo}
                                     likePost={likePost}
                                     editPost={() => setPostState(ContentStateEnum.EDITTING)}
                                     deletePost={deletePost} />
                                 {
-                                    (authInfo.level > 0) &&
+                                    (authContext.authInfo.user.level > 0) &&
                                     <Comment parent_id={postInfo.content_id} />
                                 }
                             </>

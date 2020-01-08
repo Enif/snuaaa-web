@@ -1,6 +1,5 @@
 import React from 'react';
 import { Redirect, match } from 'react-router';
-import { connect } from 'react-redux';
 import ContentStateEnum from '../../common/ContentStateEnum';
 import Loading from '../../components/Common/Loading';
 import PhotoList from '../../components/Album/PhotoList';
@@ -12,12 +11,13 @@ import AlbumService from '../../services/AlbumService';
 import ContentType from '../../types/ContentType';
 import CategoryType from '../../types/CategoryType';
 import TagType from '../../types/TagType';
+import AuthContext from '../../contexts/AuthContext';
 
 const TAG = 'ALBUM'
 
 type AlbumProps = {
     match: match<{ album_id: string }>;
-    my_id: number;
+    // my_id: number;
 }
 
 type AlbumState = {
@@ -99,12 +99,12 @@ class Album extends React.Component<AlbumProps, AlbumState> {
 
     render() {
         let { albumState, popUpState } = this.state
-        const { my_id } = this.props;
+        // const { my_id } = this.props;
 
         return (
-            <>
+            <AuthContext.Consumer>
                 {
-                    (() => {
+                    authContext => (() => {
                         if (albumState === ContentStateEnum.LOADING) {
                             return <Loading />
                         }
@@ -118,11 +118,11 @@ class Album extends React.Component<AlbumProps, AlbumState> {
                                     <div className="album-wrapper">
                                         <AlbumInfo
                                             albumInfo={this.albumInfo}
-                                            my_id={my_id}
+                                            my_id={authContext.authInfo.user.user_id}
                                             setAlbumState={this.setAlbumState}
                                             deleteAlbum={this.deleteAlbum} />
                                         {
-                                            (!this.albumInfo.album.is_private || my_id === this.albumInfo.user.user_id) &&
+                                            (!this.albumInfo.album.is_private || authContext.authInfo.user.user_id === this.albumInfo.user.user_id) &&
                                             <button className="board-btn-write" onClick={this.togglePopUp}>
                                                 <i className="ri-image-line enif-f-1p2x"></i>사진 업로드
                                         </button>
@@ -162,16 +162,11 @@ class Album extends React.Component<AlbumProps, AlbumState> {
                         else {
                             return <Loading />
                         }
-                    })()}
-            </>
+                    })()
+                }
+            </AuthContext.Consumer>
         );
     }
 }
 
-const mapStateToProps = (state: any) => {
-    return {
-        my_id: state.authentication.user_id
-    }
-}
-
-export default connect(mapStateToProps, null)(Album);
+export default Album;

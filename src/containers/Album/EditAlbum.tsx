@@ -4,7 +4,7 @@ import EditAlbumComponent from '../../components/Album/EditAlbumComponent';
 import ContentStateEnum from '../../common/ContentStateEnum';
 import AlbumService from '../../services/AlbumService';
 import ContentType from '../../types/ContentType';
-import { RecordOf, Record, is } from 'immutable';
+import { RecordOf, Record } from 'immutable';
 import CategoryType from '../../types/CategoryType';
 
 const TAG = 'EDITALBUM'

@@ -1,13 +1,12 @@
 import React, { ChangeEvent } from 'react';
-import { connect } from 'react-redux';
 
 import CommentList from '../components/Comment/CommentList';
 import CommentService from '../services/CommentService';
+import AuthContext from '../contexts/AuthContext';
 
 const TAG = 'COMMENT'
 
 type CommentProps = {
-    my_id?: number;
     parent_id: number;
 }
 
@@ -48,7 +47,7 @@ class Comment extends React.Component<CommentProps, CommentState> {
         }
         return true;
     }
-    
+
     setCommentInEdit = (comment_id: number, text: string) => {
         this.setState({
             commentInEdit: comment_id,
@@ -64,21 +63,21 @@ class Comment extends React.Component<CommentProps, CommentState> {
             parent_id = this.props.parent_id;
         }
         await CommentService.retrieveComments(parent_id)
-        .then((res: any) => {
-            // this.comments = res.data;
-            this.setState({
-                comments: res.data,
-                isReady: true
+            .then((res: any) => {
+                // this.comments = res.data;
+                this.setState({
+                    comments: res.data,
+                    isReady: true
+                })
             })
-        })
-        .catch((err: Error) => {
-            console.error(err)
-        })
+            .catch((err: Error) => {
+                console.error(err)
+            })
     }
 
     createComment = async () => {
 
-        if(!this.state.text) {
+        if (!this.state.text) {
             alert("내용을 입력하세요.")
         }
         else {
@@ -86,17 +85,17 @@ class Comment extends React.Component<CommentProps, CommentState> {
                 text: this.state.text
             }
             await CommentService.createComment(this.props.parent_id, commentInfo)
-            .then((res: any) => {
-                console.log('[%s] Create Comment Success', TAG);
-                this.setState({
-                    text: ''
+                .then((res: any) => {
+                    console.log('[%s] Create Comment Success', TAG);
+                    this.setState({
+                        text: ''
+                    })
+                    this.retrieveComments();
                 })
-                this.retrieveComments();
-            })
-            .catch((err: Error) => {
-                console.error(err);
-                alert("댓글 작성 실패");
-            })
+                .catch((err: Error) => {
+                    console.error(err);
+                    alert("댓글 작성 실패");
+                })
         }
     }
 
@@ -105,44 +104,44 @@ class Comment extends React.Component<CommentProps, CommentState> {
         this.setState({
             isReady: false
         })
-        if(!this.state.editingContents) {
+        if (!this.state.editingContents) {
             alert("내용을 입력하세요.")
         }
         else {
             let commentInfo = {
                 text: this.state.editingContents
             }
-    
+
             await CommentService.updateComment(comment_id, commentInfo)
-            .then((res: any) => {
-                console.log('[%s] Update Comment Success', TAG);
-                this.setState({
-                    commentInEdit: 0,
-                    editingContents:''
+                .then((res: any) => {
+                    console.log('[%s] Update Comment Success', TAG);
+                    this.setState({
+                        commentInEdit: 0,
+                        editingContents: ''
+                    })
+                    this.retrieveComments();
                 })
-                this.retrieveComments();
-            })
-            .catch((err: Error) => {
-                console.error(err);
-                alert("댓글 업데이트 실패");
-            })
+                .catch((err: Error) => {
+                    console.error(err);
+                    alert("댓글 업데이트 실패");
+                })
         }
     }
 
     deleteComment = async (comment_id: number) => {
         console.log(`[${TAG}] Delete Comment`);
         let goDrop = window.confirm("정말로 삭제하시겠습니까?");
-        if(goDrop) {
+        if (goDrop) {
 
             await CommentService.deleteComment(comment_id)
-            .then(() => {
-                console.log('[%s] Delete Comment Success', TAG);
-                this.retrieveComments();
-            })
-            .catch((err: Error) => {
-                console.error(err);
-                alert("댓글 삭제 실패");
-            })
+                .then(() => {
+                    console.log('[%s] Delete Comment Success', TAG);
+                    this.retrieveComments();
+                })
+                .catch((err: Error) => {
+                    console.error(err);
+                    alert("댓글 삭제 실패");
+                })
         }
     }
 
@@ -153,38 +152,37 @@ class Comment extends React.Component<CommentProps, CommentState> {
             text: e.target.value
         });
     }
-    
+
     editingContentsChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         this.setState({
             editingContents: e.target.value
         });
     }
-    
+
 
     render() {
         console.log(`[${TAG}] render..`);
-        const { my_id } = this.props;
+        // const { my_id } = this.props;
         const { comments } = this.state;
 
         return (
-            <div className="comment-area-wrapper">
-                <CommentList my_id={my_id} comments={comments} deleteComment={this.deleteComment} 
-                    updateComment={this.updateComment} commentInEdit={this.state.commentInEdit} 
-                    setCommentInEdit={this.setCommentInEdit} editingContents={this.state.editingContents}
-                    editingContentsChange={this.editingContentsChange}/>
-                <div className="comment-write">
-                    <textarea placeholder="댓글을 입력하세요" name="text" onChange={this.handleChange} value={this.state.text}></textarea>
-                    <button onClick={this.createComment}>ENTER</button>
-                </div>
-            </div>            
+            <AuthContext.Consumer>
+                {authContext => (
+                    <div className="comment-area-wrapper">
+                        <CommentList my_id={authContext.authInfo.user.user_id} comments={comments} deleteComment={this.deleteComment}
+                            updateComment={this.updateComment} commentInEdit={this.state.commentInEdit}
+                            setCommentInEdit={this.setCommentInEdit} editingContents={this.state.editingContents}
+                            editingContentsChange={this.editingContentsChange} />
+                        <div className="comment-write">
+                            <textarea placeholder="댓글을 입력하세요" name="text" onChange={this.handleChange} value={this.state.text}></textarea>
+                            <button onClick={this.createComment}>ENTER</button>
+                        </div>
+                    </div>
+                )}
+
+            </AuthContext.Consumer>
         )
     }
 }
 
-const mapStateToProps = (state: any) => {
-    return {
-        my_id: state.authentication.user_id
-    }
-}
-
-export default connect(mapStateToProps, null)(Comment);
+export default Comment;

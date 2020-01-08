@@ -6,6 +6,7 @@ import TagType from './TagType';
 import ExhibitionType from './ExhibitionType';
 import CategoryType from './CategoryType';
 import FileType from './FileType';
+import ExhibitPhotoType from './ExhibitPhotoType';
 
 interface ContentType {
     content_id: number;
@@ -26,6 +27,7 @@ interface ContentType {
     album?: AlbumType;
     photo?: PhotoType;
     exhibition?: ExhibitionType;
+    exhibitPhoto?: ExhibitPhotoType;
     tags?: TagType[];
     categories?: CategoryType[];
     attachedFiles?: FileType[];
