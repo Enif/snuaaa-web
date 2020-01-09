@@ -95,7 +95,11 @@ class EditAlbum extends React.Component<EditAlbumProps, EditAlbumState> {
         return (
             <EditAlbumComponent
                 caption="앨범 수정"
-                albumInfo={albumInfo}
+                // albumInfo={albumInfo}
+                title={albumInfo.title}
+                text={albumInfo.text}
+                isPrivate={albumInfo.album ? albumInfo.album.is_private : false}
+                checkedCategory={albumInfo.category_id}
                 setIsPrivate={this.setIsPrivate}
                 categories={categoryInfo}
                 handleCategory={this.handleCategoryChange}

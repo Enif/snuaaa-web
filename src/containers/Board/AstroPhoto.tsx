@@ -254,7 +254,13 @@ class AstroPhoto extends React.Component<AstroPhotoProps, AstroPhotoState> {
                                             </div>
                                             <div className="enif-divider"></div>
                                             <AlbumList board_id={boardInfo.board_id} albums={this.albums} togglePopUp={this.togglePopUp} />
-                                            {popUpState && <CreateAlbum board_id={boardInfo.board_id} fetch={this.fetch} togglePopUp={this.togglePopUp} setReadyState={() => this.setIsReady(true)} />}
+                                            {
+                                                popUpState &&
+                                                <CreateAlbum
+                                                    board_id={boardInfo.board_id}
+                                                    fetch={this.fetch}
+                                                    togglePopUp={this.togglePopUp} />
+                                            }
                                         </>
                                     )
                             }
