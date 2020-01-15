@@ -30,6 +30,7 @@ function CreateDocu(props: CreateDocuProps) {
     const [attachedFiles, setAttachedFiles] = useState<File[]>([]);
     const [progress, setProgress] = useState<number>(0);
     const [isUploading, setIsUploading] = useState<boolean>(false);
+    const [uploadIdx, setUploadIdx] = useState<number>(0);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setDocuInfo({
@@ -95,19 +96,20 @@ function CreateDocu(props: CreateDocuProps) {
             alert("파일을 첨부해주세요");
         }
         else {
-            const formData = new FormData();
-            formData.append('generation', docuInfo.generation.toString());
-            formData.append('category_id', docuInfo.category_id);
-            formData.append('title', docuInfo.title);
-            formData.append('text', docuInfo.title);
+            // const formData = new FormData();
+            // formData.append('generation', docuInfo.generation.toString());
+            // formData.append('category_id', docuInfo.category_id);
+            // formData.append('title', docuInfo.title);
+            // formData.append('text', docuInfo.title);
             setIsUploading(true);
             try {
-                const res = await DocuService.createDocument(boardInfo.board_id, formData)
+                const res = await DocuService.createDocument(boardInfo.board_id, docuInfo)
                 if (attachedFiles.length > 0) {
                     for (let i = 0, max = attachedFiles.length; i < max; i++) {
                         let fileFormData = new FormData();
                         fileFormData.append('attachedFile', attachedFiles[i]);
                         await ContentService.createFile(res.data.content_id, fileFormData, uploadProgress)
+                        setUploadIdx(uploadIdx + 1);
                     }
                 }
                 setIsUploading(false);
@@ -127,6 +129,7 @@ function CreateDocu(props: CreateDocuProps) {
             attachedFiles={attachedFiles}
             isUploading={isUploading}
             progress={progress}
+            uploadIdx={uploadIdx}
             handleChange={handleChange}
             attachFile={attachFile}
             removeAttachedFile={removeAttachedFile}

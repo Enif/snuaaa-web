@@ -19,6 +19,7 @@ function CreatePost(props: CreatePostProps) {
     const [attachedFiles, setAttachedFiles] = useState<File[]>([]);
     const [progress, setProgress] = useState<number>(0);
     const [isUploading, setIsUploading] = useState<boolean>(false);
+    const [uploadIdx, setUploadIdx] = useState<number>(0);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setPostInfo({
@@ -96,6 +97,7 @@ function CreatePost(props: CreatePostProps) {
                         let fileFormData = new FormData();
                         fileFormData.append('attachedFile', attachedFiles[i]);
                         await ContentService.createFile(res.data.content_id, fileFormData, uploadProgress)
+                        setUploadIdx(uploadIdx + 1);
                     }
                 }
                 setIsUploading(false);
@@ -117,6 +119,7 @@ function CreatePost(props: CreatePostProps) {
             attachedFiles={attachedFiles}
             isUploading={isUploading}
             progress={progress}
+            uploadIdx={uploadIdx}
             handleChange={handleChange}
             handleEditor={handleEditor}
             close={close}

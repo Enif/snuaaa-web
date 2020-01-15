@@ -10,6 +10,7 @@ type CreatePostComponentProps = {
     attachedFiles: File[];
     isUploading: boolean;
     progress: number;
+    uploadIdx: number;
     handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
     handleEditor: (text: string) => void;
     attachFile: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -45,7 +46,7 @@ function CreatePostComponent(props: CreatePostComponentProps) {
             {
                 props.isUploading && props.attachedFiles.length > 0 &&
                 <ProgressBar
-                    currentIdx={0}
+                    currentIdx={props.uploadIdx}
                     loadedPercentage={props.progress}
                     totalIdx={props.attachedFiles.length}
                 />
