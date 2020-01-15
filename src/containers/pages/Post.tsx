@@ -1,6 +1,5 @@
 import React, { useState, useEffect, ChangeEvent, useContext } from 'react';
 import { Redirect, match } from 'react-router';
-import { Location } from 'history';
 
 import ContentStateEnum from '../../common/ContentStateEnum';
 import Comment from '../../containers/Comment';
@@ -13,9 +12,10 @@ import PostService from '../../services/PostService';
 import ContentService from '../../services/ContentService';
 import ContentType from '../../types/ContentType';
 import AuthContext from '../../contexts/AuthContext';
-
+import ProgressBar from '../../components/Common/ProgressBar';
 
 const TAG = 'POST'
+const MAX_SIZE = 20 * 1024 * 1024;
 
 type PostProps = {
     match: match<{ post_id: string }>
@@ -26,11 +26,11 @@ function Post(props: PostProps) {
     const [likeInfo, setLikeInfo] = useState<boolean>(false);
     const [postInfo, setPostInfo] = useState<ContentType>();
     const [postState, setPostState] = useState<number>(ContentStateEnum.LOADING);
-    const [editingPostData, setEditingPostData] = useState({
-        title: '',
-        text: ''
-    })
+    const [attachedFiles, setAttachedFiles] = useState<File[]>([])
+    const [progress, setProgress] = useState<number>(0);
+    const [editingPostData, setEditingPostData] = useState<ContentType>()
     const authContext = useContext(AuthContext);
+    let currentSize = 0;
 
     useEffect(() => {
         fetch();
@@ -39,15 +39,13 @@ function Post(props: PostProps) {
     const fetch = async () => {
         let post_id = Number(props.match.params.post_id);
 
+        setPostState(ContentStateEnum.LOADING);
         await PostService.retrievePost(post_id)
             .then((res) => {
                 setPostInfo(res.data.postInfo)
+                setEditingPostData(res.data.postInfo)
                 setLikeInfo(res.data.likeInfo);
                 setPostState(ContentStateEnum.READY);
-                setEditingPostData({
-                    title: res.data.postInfo.title,
-                    text: res.data.postInfo.text
-                })
             })
             .catch((err: any) => {
                 console.error(err);
@@ -63,15 +61,25 @@ function Post(props: PostProps) {
 
     const updatePost = async () => {
         let post_id = Number(props.match.params.post_id);
+        setPostState(ContentStateEnum.CREATING);
+        try {
+            await PostService.updatePost(post_id, editingPostData)
+            if (attachedFiles.length > 0) {
+                for (let i = 0, max = attachedFiles.length; i < max; i++) {
+                    let formData = new FormData();
+                    formData.append('attachedFile', attachedFiles[i])
+                    await ContentService.createFile(post_id, formData, uploadProgress)
+                }
+            }
+            fetch();
 
-        await PostService.updatePost(post_id, editingPostData)
-            .then((res: any) => {
-                fetch();
-            })
-            .catch((err: Error) => {
-                console.error(err);
-                alert('업데이트 오류');
-            })
+        }
+        catch (err) {
+            console.error(err);
+            setPostState(ContentStateEnum.EDITTING);
+            alert('업데이트 오류');
+
+        }
     }
 
     const deletePost = async () => {
@@ -117,34 +125,87 @@ function Post(props: PostProps) {
 
     const handleEditting = (e: ChangeEvent<HTMLInputElement>) => {
 
-        setEditingPostData({
-            ...editingPostData,
-            [e.target.name]: e.target.value
-        })
+        if (editingPostData) {
+            setEditingPostData({
+                ...editingPostData,
+                [e.target.name]: e.target.value
+            })
+        }
     }
 
     const handleEdittingText = (value: string) => {
 
-        setEditingPostData({
-            ...editingPostData,
-            text: value
-        })
+        if (editingPostData) {
+            setEditingPostData({
+                ...editingPostData,
+                text: value
+            })
+        }
     }
+
+    const attachFile = (e: ChangeEvent<HTMLInputElement>) => {
+        // const { attachedFiles } = this.state;
+        if (e.target.files && postInfo) {
+            if (e.target.files.length + attachFile.length + (postInfo.attachedFiles ? postInfo.attachedFiles.length : 0) > 5) {
+                alert("파일은 최대 5개까지만 첨부해주세요.")
+                e.target.value = '';
+            }
+            else if (e.target.files) {
+                let tmpSize = currentSize;
+                for (let i = 0; i < e.target.files.length; i++) {
+                    tmpSize += e.target.files[i].size;
+                }
+                if (tmpSize > MAX_SIZE) {
+                    alert("한 번에 20MB 이상의 파일은 업로드 할 수 없습니다.")
+                }
+                else {
+                    currentSize = tmpSize;
+                    let newFiles: File[] = [];
+                    for (let i = 0; i < e.target.files.length; i++) {
+                        let tmpFile = e.target.files.item(i);
+                        tmpFile && newFiles.push(tmpFile);
+                    }
+                    if (newFiles && newFiles.length > 0) {
+                        setAttachedFiles(attachedFiles.concat(...newFiles))
+                    }
+                }
+            }
+        }
+    }
+
+    const removeAttachedFile = (index: number) => {
+        setAttachedFiles(
+            attachedFiles.filter((file, i) => {
+                return index !== i
+            })
+        )
+    }
+
+    const uploadProgress = (e: ProgressEvent) => {
+        const totalLength = e.lengthComputable && e.total;
+        if (totalLength) {
+            setProgress(Math.round(e.loaded / totalLength * 100))
+        }
+    }
+
 
     return (
         <>
             {
+                postInfo &&
+                <BoardName
+                    board_id={postInfo.board.board_id}
+                    board_name={postInfo.board.board_name}
+                />
+            }
+            {
                 (() => {
-                    if (!postInfo) {
+                    if (!postInfo || postState === ContentStateEnum.LOADING) {
                         return <Loading />;
                     }
                     else if (postState === ContentStateEnum.READY) {
                         return (
                             <>
-                                <BoardName
-                                    board_id={postInfo.board.board_id}
-                                    board_name={postInfo.board.board_name}
-                                />
                                 <PostComponent
                                     content={postInfo}
                                     my_id={authContext.authInfo.user.user_id}
@@ -160,14 +221,29 @@ function Post(props: PostProps) {
 
                         )
                     }
-                    else if (postState === ContentStateEnum.EDITTING)
+                    else if ((postState === ContentStateEnum.EDITTING || postState === ContentStateEnum.CREATING) && editingPostData)
                         return (
-                            <EditPost
-                                editingPostData={editingPostData}
-                                handleEditting={handleEditting}
-                                handleEdittingText={handleEdittingText}
-                                setPostState={setPostState}
-                                updatePost={updatePost} />
+                            <>
+                                <EditPost
+                                    postInfo={editingPostData}
+                                    isBtnDisabled={postState === ContentStateEnum.CREATING}
+                                    handleEditting={handleEditting}
+                                    handleEdittingText={handleEdittingText}
+                                    attachedFiles={attachedFiles}
+                                    attachFile={attachFile}
+                                    removeAttachedFile={removeAttachedFile}
+                                    cancel={() => setPostState(ContentStateEnum.READY)}
+                                    confirm={updatePost}
+                                />
+                                {
+                                    postState === ContentStateEnum.CREATING &&
+                                    <ProgressBar
+                                        loadedPercentage={progress}
+                                        currentIdx={0}
+                                        totalIdx={attachedFiles.length}
+                                    />
+                                }
+                            </>
                         )
                     else if (postState === ContentStateEnum.DELETED)
                         return (

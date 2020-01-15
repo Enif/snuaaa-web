@@ -36,20 +36,13 @@ class DocuBoard extends React.Component<DocuBoardProps, DocuBoardState> {
         console.info('[%s] constructor', TAG);
         this.documents = [];
         this.docCount = 0;
-        // const hisState = history.location.state;
 
         this.state = {
             boardState: BoardStateEnum.LOADING,
-
-            // category: (hisState && hisState.category) ? hisState.category : '',
-            // generation: (hisState && hisState.generation) ? hisState.generation : 0,
-            // pageIdx: (hisState && hisState.page) ? hisState.page : 1,
         }
     }
 
     componentDidMount() {
-        // const { category, generation, pageIdx } = this.state;
-        // this.fetch(category, generation, pageIdx);
         this.fetch();
     }
 
@@ -59,29 +52,6 @@ class DocuBoard extends React.Component<DocuBoardProps, DocuBoardState> {
         }
     }
 
-    // static getDerivedStateFromProps(props, state) {
-    //     console.log(`[${TAG}] getDerivedStateFromProps`);
-    //     const hisState = history.location.state;
-    //     return {
-    //         category: (hisState && hisState.category) ? hisState.category : '',
-    //         generation: (hisState && hisState.generation) ? hisState.generation : 0,
-    //         pageIdx: (hisState && hisState.page) ? hisState.page : 1
-    //     }
-    // }
-
-    // shouldComponentUpdate(nextProps, nextState) {
-    //     console.log(`[${TAG}] shouldComponentUpdate`);
-    //     console.log(this.state);
-    //     console.log(nextState);
-    //     if (this.state.category !== nextState.category ||
-    //         this.state.generation !== nextState.generation ||
-    //         this.state.pageIdx !== nextState.pageIdx) {
-    //         this.fetch(nextState.category, nextState.generation, nextState.pageIdx);
-    //         return false;
-    //     }
-    //     return true
-    // }
-
     setBoardState = (state: number) => {
         this.setState({
             boardState: state
@@ -89,13 +59,10 @@ class DocuBoard extends React.Component<DocuBoardProps, DocuBoardState> {
     }
 
     fetch = async () => {
-        // if(!category) category = this.state.category;
-        // if(!generation) generation = this.state.generation;
         const { location } = this.props;
         let category = (location.state && location.state.category) ? location.state.category : '';
         let generation = (location.state && location.state.generation) ? location.state.generation : 0;
         let pageIdx = (location.state && location.state.page) ? location.state.page : 1;
-        // if (!pageIdx) pageIdx = this.state.pageIdx;
 
         this.setBoardState(BoardStateEnum.LOADING);
         await DocuService.retrieveDocuments(pageIdx, category, generation)
@@ -128,7 +95,7 @@ class DocuBoard extends React.Component<DocuBoardProps, DocuBoardState> {
     }
 
     handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        // const { category, generation } = this.state;
+
         const { location } = this.props;
         let category = (location.state && location.state.category) ? location.state.category : '';
         let generation = (location.state && location.state.generation) ? location.state.generation : 0;
@@ -154,7 +121,7 @@ class DocuBoard extends React.Component<DocuBoardProps, DocuBoardState> {
     }
 
     clickPage = (idx: number) => {
-        // const { category, generation } = this.state;
+
         const { location } = this.props;
         let category = (location.state && location.state.category) ? location.state.category : '';
         let generation = (location.state && location.state.generation) ? location.state.generation : 0;
@@ -240,9 +207,8 @@ class DocuBoard extends React.Component<DocuBoardProps, DocuBoardState> {
                                         {
                                             boardState === BoardStateEnum.WRITING &&
                                             <CreateDocu
-                                                board_id={boardInfo.board_id}
                                                 fetch={this.fetch}
-                                                categories={boardInfo.categories}
+                                                boardInfo={boardInfo}
                                                 close={() => this.setBoardState(BoardStateEnum.READY)} />
                                         }
                                     </>

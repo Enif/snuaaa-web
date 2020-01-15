@@ -209,7 +209,7 @@ class PostBoard extends React.Component<PostBoardProps, PostBoardState> {
                                                     <i className="ri-search-line enif-f-1x" onClick={this.search}></i>
                                                     <input type="text" onChange={handleSearchKeyword} value={searchInfo.keyword} onKeyDown={handleSearchKeyDown} />
                                                 </div>
-                                                <div>
+                                                <div className="board-btn-write-wrapper">
                                                     {
                                                         authContext.authInfo.user.level >= boardInfo.lv_write &&
                                                         <button className="board-btn-write" onClick={() => this.setBoardState(BoardStateEnum.WRITING)}>

@@ -92,7 +92,7 @@ function Header() {
                     }
                 </div>
             </div>
-            <Navigation boards={boardContext} />
+            <Navigation boards={boardContext.boardsInfo} />
         </>
     );
     // }

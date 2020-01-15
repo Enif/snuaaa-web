@@ -49,7 +49,7 @@ const DocuList = ({ documents }) => {
                                     fileTypeClass = 'ri-file-zip-fill color-zip';
                                     break;
                                 case 'HWP':
-                                    fileTypeClass = 'custom-hwp'
+                                    fileTypeClass = 'ri-file-hwp-line color-hwp'
                                     break;
                                 default:
                                     fileTypeClass = 'ri-file-3-line'

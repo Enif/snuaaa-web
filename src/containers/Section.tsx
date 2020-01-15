@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useState, useEffect } from 'react';
+import React, { lazy, Suspense, useState, useEffect, useContext } from 'react';
 import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
 // import history from '../common/history';
 import DefaultRoute from '../containers/DefaultRoute';
@@ -10,6 +10,7 @@ import ExhibitPhoto from './pages/ExhibitPhoto';
 import BoardType from '../types/BoardType';
 import BoardService from '../services/BoardService';
 import BoardContext from '../contexts/BoardContext';
+import AuthContext from '../contexts/AuthContext';
 
 const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
@@ -34,7 +35,8 @@ function Section() {
     let previousLocation: Location = { pathname: '/', search: '', key: '', hash: '', state: '' };
     let history = useHistory();
     let location = useLocation();
-    const [boardInfo, setBoardInfo] = useState<BoardType[]>([])
+    const [boardsInfo, setBoardsInfo] = useState<BoardType[]>([])
+    const authContext = useContext(AuthContext);
 
     if (location.state && location.state.modal) {
         previousLocation = location.state.backgroundLocation ? location.state.backgroundLocation : '/';
@@ -54,13 +56,15 @@ function Section() {
     }
 
     useEffect(() => {
-        fetch();
-    }, [])
+        if (authContext.authInfo.isLoggedIn) {
+            fetch();
+        }
+    }, [authContext.authInfo])
 
     const fetch = async () => {
         try {
             let res = await BoardService.retrieveBoards();
-            setBoardInfo(res.data);
+            setBoardsInfo(res.data);
             console.log(res)
         }
         catch (err) {
@@ -69,7 +73,7 @@ function Section() {
     }
     return (
         <>
-            <BoardContext.Provider value={boardInfo}>
+            <BoardContext.Provider value={{ boardsInfo: boardsInfo, setBoardsInfo: setBoardsInfo }}>
                 <Suspense fallback={<div>Loading pages...</div>}>
                     <Switch location={(isPhotoModal || isExhibitPhotoModal) ? previousLocation : history.location}>
                         <DefaultRoute exact path="/" component={Home} />

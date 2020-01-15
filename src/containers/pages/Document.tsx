@@ -1,6 +1,5 @@
 import React, { useState, useEffect, ChangeEvent, useContext } from 'react';
 import { Redirect, useRouteMatch } from 'react-router';
-import { connect } from 'react-redux';
 
 import ContentStateEnum from '../../common/ContentStateEnum';
 import Loading from '../../components/Common/Loading';
@@ -147,24 +146,4 @@ function Docu() {
 
 }
 
-
-
-
-
-//     render() {
-//         const { setDocState, updateDoc, handleEditting } = this;
-//         const { docState, isLiked, editingDocData } = this.state;
-//         const { my_id } = this.props;
-
-
-//     }
-// }
-
-// const mapStateToProps = (state) => {
-//     return {
-//         my_id: state.authentication.user_id
-//     }
-// }
-
 export default Docu;
-// export default connect(mapStateToProps, null)(Docu);

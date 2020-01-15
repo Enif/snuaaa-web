@@ -17,7 +17,7 @@ function Board() {
     const boardContext = useContext(BoardContext);
     const match = useRouteMatch<{ board_id: string }>()
 
-    let boardInfo = boardContext.find((board) => board.board_id === match.params.board_id)
+    let boardInfo = boardContext.boardsInfo.find((board) => board.board_id === match.params.board_id)
 
     return (
         <>

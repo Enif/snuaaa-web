@@ -21,7 +21,7 @@ const PostService = {
         return AaaService.delete(`post/${post_id}`)
     },
 
-    createPost: function (board_id: number, data: any) {
+    createPost: function (board_id: string, data: any) {
         return AaaService.post(`board/${board_id}/post`, data)
     }
 }

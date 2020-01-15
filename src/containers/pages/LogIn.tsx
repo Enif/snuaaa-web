@@ -4,10 +4,11 @@ import LogInComponent from '../../components/Login/LogInComponent';
 import Loading from '../../components/Common/Loading';
 import PopUp from '../../components/Common/PopUp';
 import FullScreenPortal from '../../containers/FullScreenPortal';
-import history from '../../common/history';
+// import history from '../../common/history';
 import FindIdPw from '../Login/FindIdPw';
 import AuthService from '../../services/AuthService';
 import AuthContext from '../../contexts/AuthContext';
+import { useHistory, Redirect, useLocation } from 'react-router';
 
 const TAG = 'LOGIN'
 
@@ -17,6 +18,8 @@ function LogIn() {
     const [popUp, setPopUp] = useState(false);
     const [errPopUp, setErrPopUp] = useState(false);
     const [findPopUp, setFindPopUp] = useState(false);
+    const history = useHistory();
+    const location = useLocation();
     const authContext = useContext(AuthContext);
     const popUpTitle = '자동 로그인 기능을 사용하시겠습니까?';
     const popUpText = `자동 로그인 사용시 다음 접속부터는 로그인을 하실 필요가 없습니다.\n
@@ -70,10 +73,10 @@ function LogIn() {
                 const { token, userInfo, autoLogin } = res.data;
                 // onAuthLogin(user_id, nickname, level, profile_path, token, autoLogin);
                 authContext.authLogin(token, autoLogin, userInfo)
-                console.log('[%s] Log In Success', TAG)
+                // console.log('[%s] Log In Success', TAG)
                 setIsLoading(false);
-                if (history.location.state && history.location.state.accessPath) {
-                    history.push(history.location.state.accessPath)
+                if (location.state && location.state.accessPath) {
+                    history.push(location.state.accessPath)
                 }
                 else {
                     history.push('/');
@@ -82,41 +85,22 @@ function LogIn() {
             .catch((err: ErrorEvent) => {
                 console.error(err);
                 setIsLoading(false);
-                // this.setState({
-                //     isLoading: false
-                // })
                 makeErrPopUp()
             })
     }
 
     const guestLogIn = async () => {
-        // const { onAuthLogin } = this.props;
-
-        // this.setState({
-        //     isLoading: true
-        // })
         setIsLoading(true);
 
         await AuthService.guestLogIn()
             .then((res: any) => {
-                console.log('[%s] Log In Success', TAG)
                 setIsLoading(false);
-
-                // this.setState({
-                //     isLoading: false
-                // })
                 const { token, userInfo, autoLogin } = res.data;
                 authContext.authLogin(token, autoLogin, userInfo)
-
-                // onAuthLogin(user_id, nickname, level, profile_path, token, autoLogin);
-                history.push('/');
             })
             .catch((err: ErrorEvent) => {
                 console.error(err);
                 setIsLoading(false);
-                // this.setState({
-                //     isLoading: false
-                // })
                 makeErrPopUp()
             })
     }
@@ -125,6 +109,7 @@ function LogIn() {
 
         <>
             {isLoading && <Loading />}
+            {authContext.authInfo.isLoggedIn && <Redirect to='/'/>}
             {
                 findPopUp
                 && <FindIdPw
@@ -164,11 +149,6 @@ function LogIn() {
             </FullScreenPortal>
         </>
     )
-
-
-
 }
-
-
 
 export default LogIn;
