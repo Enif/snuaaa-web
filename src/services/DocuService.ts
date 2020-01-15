@@ -4,7 +4,10 @@ import ContentType from '../types/ContentType';
 
 const DocuService = {
 
-    retrieveDocument: function (doc_id: number) {
+    retrieveDocument: function (doc_id: number): AxiosPromise<{
+        docuInfo: ContentType,
+        likeInfo: boolean
+    }> {
         return AaaService.get(`document/${doc_id}`)
     },
 

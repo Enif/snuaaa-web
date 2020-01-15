@@ -1,5 +1,4 @@
 import React, { ChangeEvent, KeyboardEvent } from 'react';
-import { connect } from 'react-redux';
 import { Location } from 'history';
 
 import Loading from '../../components/Common/Loading';
@@ -14,6 +13,7 @@ import BoardService from '../../services/BoardService';
 import SelectBox from '../../components/Common/SelectBox';
 import BoardType from '../../types/BoardType';
 import ContentType from '../../types/ContentType';
+import AuthContext from '../../contexts/AuthContext';
 
 const TAG = 'POSTBOARD'
 const POSTROWNUM = 10;
@@ -34,7 +34,7 @@ const searchOptions = [{
 type PostBoardProps = {
     boardInfo: BoardType;
     location: Location;
-    level: number;
+    // level: number;
 }
 
 type PostBoardState = {
@@ -46,7 +46,7 @@ type PostBoardState = {
 
 class PostBoard extends React.Component<PostBoardProps, PostBoardState> {
 
-    
+
     constructor(props: PostBoardProps) {
         super(props);
         console.log(`[${TAG}] Constructor`)
@@ -93,8 +93,7 @@ class PostBoard extends React.Component<PostBoardProps, PostBoardState> {
 
     fetch = async () => {
         const { boardInfo, location } = this.props;
-        console.log(location);
-        
+
         let searchInfo = history.location.state && location.state.searchInfo;
         let pageIdx = location.state && location.state.page;
 
@@ -178,14 +177,14 @@ class PostBoard extends React.Component<PostBoardProps, PostBoardState> {
         console.log(`[${TAG}] render.. `)
 
         const { handleSearchKeyword, handleSearchOption, handleSearchKeyDown } = this
-        const { boardInfo, level } = this.props;
+        const { boardInfo } = this.props;
         const { boardState, searchInfo, posts, postCount } = this.state;
         let pageIdx = history.location.state && history.location.state.page ? history.location.state.page : 1;
 
         return (
-            <>
+            <AuthContext.Consumer>
                 {
-                    (() => {
+                    authContext => (() => {
                         if (boardState === BoardStateEnum.LOADING) {
                             return <Loading />
                         }
@@ -210,9 +209,9 @@ class PostBoard extends React.Component<PostBoardProps, PostBoardState> {
                                                     <i className="ri-search-line enif-f-1x" onClick={this.search}></i>
                                                     <input type="text" onChange={handleSearchKeyword} value={searchInfo.keyword} onKeyDown={handleSearchKeyDown} />
                                                 </div>
-                                                <div>
+                                                <div className="board-btn-write-wrapper">
                                                     {
-                                                        level >= boardInfo.lv_write &&
+                                                        authContext.authInfo.user.level >= boardInfo.lv_write &&
                                                         <button className="board-btn-write" onClick={() => this.setBoardState(BoardStateEnum.WRITING)}>
                                                             <i className="ri-pencil-line enif-f-1p2x"></i>글쓰기
                                                         </button>
@@ -240,15 +239,15 @@ class PostBoard extends React.Component<PostBoardProps, PostBoardState> {
                         )
                     })()
                 }
-            </>
+
+            </AuthContext.Consumer>
+            // <>
+            //     {
+
+            //     }
+            // </>
         );
     }
 }
 
-const mapStateToProps = (state: any) => {
-    return {
-        level: state.authentication.level,
-    }
-}
-
-export default connect(mapStateToProps, null, null, { pure: false })(PostBoard);
+export default PostBoard;

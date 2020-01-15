@@ -1,5 +1,4 @@
 import React, { ChangeEvent } from 'react';
-import { connect } from 'react-redux';
 import { Location } from 'history';
 
 import CreatePhoto from '../Photo/CreatePhoto';
@@ -14,6 +13,7 @@ import PhotoBoardService from '../../services/PhotoBoardService';
 import BoardType from '../../types/BoardType';
 import ContentType from '../../types/ContentType';
 import BoardName from '../../components/Board/BoardName';
+import AuthContext from '../../contexts/AuthContext';
 
 const TAG = 'ASTROPHOTO';
 const ALBUMROWNUM = 12;
@@ -21,7 +21,6 @@ const ALBUMROWNUM = 12;
 type AstroPhotoProps = {
     boardInfo: BoardType;
     location: Location;
-    level: number;
 }
 
 type AstroPhotoState = {
@@ -170,7 +169,7 @@ class AstroPhoto extends React.Component<AstroPhotoProps, AstroPhotoState> {
 
         console.log(`[${TAG}] render..`)
 
-        const { boardInfo, level, location } = this.props;
+        const { boardInfo, location } = this.props;
         const { isReady, popUpState } = this.state;
 
         let isViewPhotos = (location.state && location.state.vp) ? true : false;
@@ -181,85 +180,95 @@ class AstroPhoto extends React.Component<AstroPhotoProps, AstroPhotoState> {
         let photoSelectorClassName = "view-type-selector" + (isViewPhotos ? " selected" : "")
 
         return (
-            <>
-                <div className="board-wrapper photoboard-wrapper">
-                    <BoardName board_id={boardInfo.board_id} board_name={boardInfo.board_name} />
-                    <div className="board-desc">
-                        {boardInfo.board_desc}
-                    </div>
-                    {!isReady && <Loading />}
-                    <div className="view-type-selector-wrapper">
-                        <div className={albumSelectorClassName} onClick={() => this.setIsViewPhotos(false)}>앨범</div>
-                        <div className={photoSelectorClassName} onClick={() => this.setIsViewPhotos(true)}>사진</div>
-                    </div>
-                    {
-                        isViewPhotos ?
-                            (
-                                <>
-                                    <div className="board-search-wrapper">
-                                        <div className="board-search-input">
-                                            <i className="ri-search-line enif-f-1x"></i>
-                                            <input type="text" />
-                                        </div>
-                                        <div>
-                                            {
-                                                level >= boardInfo.lv_write &&
-                                                <button className="board-btn-write" onClick={() => this.togglePopUp()}>
-                                                    <i className="ri-image-line enif-f-1p2x"></i>사진 업로드
-                                            </button>
-                                            }
-                                        </div>
-                                    </div>
-                                    {
-                                        boardInfo.tags &&
+            <AuthContext.Consumer>
+                {
+                    authContext => (
+                        <div className="board-wrapper photoboard-wrapper">
+                            <BoardName board_id={boardInfo.board_id} board_name={boardInfo.board_name} />
+                            <div className="board-desc">
+                                {boardInfo.board_desc}
+                            </div>
+                            {!isReady && <Loading />}
+                            <div className="view-type-selector-wrapper">
+                                <div className={albumSelectorClassName} onClick={() => this.setIsViewPhotos(false)}>앨범</div>
+                                <div className={photoSelectorClassName} onClick={() => this.setIsViewPhotos(true)}>사진</div>
+                            </div>
+                            {
+                                isViewPhotos ?
+                                    (
                                         <>
-                                            <Tag
-                                                tags={boardInfo.tags}
-                                                clickAll={this.clickAll}
-                                                selectedTags={selectedTags}
-                                                clickTag={this.clickTag} />
-                                            <div className="enif-divider"></div>
-                                            <PhotoList
-                                                photos={this.photos} />
+                                            <div className="board-search-wrapper">
+                                                <div className="board-search-input">
+                                                    <i className="ri-search-line enif-f-1x"></i>
+                                                    <input type="text" />
+                                                </div>
+                                                <div>
+                                                    {
+                                                        authContext.authInfo.user.level >= boardInfo.lv_write &&
+                                                        <button className="board-btn-write" onClick={() => this.togglePopUp()}>
+                                                            <i className="ri-image-line enif-f-1p2x"></i>사진 업로드
+                                                </button>
+                                                    }
+                                                </div>
+                                            </div>
                                             {
-                                                popUpState &&
-                                                <CreatePhoto
-                                                    board_id={boardInfo.board_id}
-                                                    tags={boardInfo.tags}
-                                                    fetch={this.fetch}
-                                                    togglePopUp={this.togglePopUp}
-                                                    setReadyState={() => this.setIsReady(true)} />
+                                                boardInfo.tags &&
+                                                <>
+                                                    <Tag
+                                                        tags={boardInfo.tags}
+                                                        clickAll={this.clickAll}
+                                                        selectedTags={selectedTags}
+                                                        clickTag={this.clickTag} />
+                                                    <div className="enif-divider"></div>
+                                                    <PhotoList
+                                                        photos={this.photos} />
+                                                    {
+                                                        popUpState &&
+                                                        <CreatePhoto
+                                                            board_id={boardInfo.board_id}
+                                                            tags={boardInfo.tags}
+                                                            fetch={this.fetch}
+                                                            togglePopUp={this.togglePopUp}
+                                                            setReadyState={() => this.setIsReady(true)} />
+                                                    }
+                                                </>
                                             }
                                         </>
-                                    }
-                                </>
-                            )
-                            :
-                            (
-                                <>
-                                    <div className="board-search-wrapper">
-                                        <div className="board-search-input">
-                                            <i className="ri-search-line enif-f-1x"></i>
-                                            <input type="text" />
-                                        </div>
-                                        <div>
+                                    )
+                                    :
+                                    (
+                                        <>
+                                            <div className="board-search-wrapper">
+                                                <div className="board-search-input">
+                                                    <i className="ri-search-line enif-f-1x"></i>
+                                                    <input type="text" />
+                                                </div>
+                                                <div>
+                                                    {
+                                                        authContext.authInfo.user.level >= boardInfo.lv_write &&
+                                                        <button className="board-btn-write" onClick={() => this.togglePopUp()}>
+                                                            <i className="ri-gallery-line enif-f-1p2x"></i>앨범 생성
+                                                </button>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div className="enif-divider"></div>
+                                            <AlbumList board_id={boardInfo.board_id} albums={this.albums} togglePopUp={this.togglePopUp} />
                                             {
-                                                level >= boardInfo.lv_write &&
-                                                <button className="board-btn-write" onClick={() => this.togglePopUp()}>
-                                                    <i className="ri-gallery-line enif-f-1p2x"></i>앨범 생성
-                                            </button>
+                                                popUpState &&
+                                                <CreateAlbum
+                                                    board_id={boardInfo.board_id}
+                                                    fetch={this.fetch}
+                                                    togglePopUp={this.togglePopUp} />
                                             }
-                                        </div>
-                                    </div>
-                                    <div className="enif-divider"></div>
-                                    <AlbumList board_id={boardInfo.board_id} albums={this.albums} togglePopUp={this.togglePopUp} />
-                                    {popUpState && <CreateAlbum board_id={boardInfo.board_id} fetch={this.fetch} togglePopUp={this.togglePopUp} setReadyState={() => this.setIsReady(true)} />}
-                                </>
-                            )
-                    }
-                    {this.count > 0 && <Paginator pageIdx={pageIdx} pageNum={Math.ceil(this.count / ALBUMROWNUM)} clickPage={this.clickPage} />}
-                </div>
-            </>
+                                        </>
+                                    )
+                            }
+                            {this.count > 0 && <Paginator pageIdx={pageIdx} pageNum={Math.ceil(this.count / ALBUMROWNUM)} clickPage={this.clickPage} />}
+                        </div>
+                    )
+                }
+            </AuthContext.Consumer>
         );
     }
 }
@@ -270,4 +279,4 @@ const mapStateToProps = (state: any) => {
     }
 }
 
-export default connect(mapStateToProps, null, null, { pure: false })(AstroPhoto);
+export default AstroPhoto;

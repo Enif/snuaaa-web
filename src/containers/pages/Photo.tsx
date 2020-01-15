@@ -1,6 +1,5 @@
 import React, { RefObject, ChangeEvent } from 'react';
 import { Redirect, match } from 'react-router';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { RecordOf, Record } from 'immutable';
 import { Location } from 'history';
@@ -22,6 +21,7 @@ import TagType from '../../types/TagType';
 import ContentService from '../../services/ContentService';
 import AlbumService from '../../services/AlbumService';
 import PhotoService from '../../services/PhotoService';
+import AuthContext from '../../contexts/AuthContext';
 
 const TAG = 'PHOTO'
 
@@ -328,13 +328,13 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
 
     render() {
         const { contentInfo, editContentInfo, likeInfo, photoState, isFullscreen } = this.state;
-        const { my_id } = this.props;
+        // const { my_id } = this.props;
         const { setPhotoState, likePhoto, deletePhoto, updatePhoto, setAlbumThumbnail,
             handleChange, handleDate, handleTag, closePhoto, boardTagInfo } = this;
 
         let photo_id = Number(this.props.match.params.photo_id);
         let fullscreenClass = isFullscreen ? 'ri-fullscreen-exit-fill' : 'ri-fullscreen-fill';
-        let backLink;
+        let backLink: string;
         let photoInfo = contentInfo && contentInfo.photo
         if (photoInfo && photoInfo.album) {
             backLink = `/album/${photoInfo.album_id}`
@@ -344,99 +344,96 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
         }
 
         return (
-            <FullScreenPortal>
-                {
-                    contentInfo && editContentInfo && photoInfo &&
-                    <>
-                        <div className="enif-modal-wrapper photo-popup" onClick={closePhoto}>
-                            <div className="photo-section-wrapper" onClick={(e) => e.stopPropagation()}>
-                                <div className="photo-alb-title-wrp">
-                                    <Link className="photo-alb-title" to={backLink}>
-                                        <i className="ri-gallery-line"></i>
-                                        <h5>{photoInfo.album ? photoInfo.album.title : "기본앨범"}</h5>
-                                    </Link>
-                                    <div className="enif-modal-close" onClick={closePhoto}>
-                                        <i className="ri-close-fill enif-f-1p5x enif-pointer"></i>
-                                    </div>
-                                </div>
-                                <div className="photo-section-bottom">
-                                    <div className="photo-section-left">
-                                        <div className="photo-img-wrapper" ref={this.fullscreenRef} >
-                                            <div className="photo-move-action prev" onClick={() => this.moveToPhoto(-1)}>
-                                                <i className="ri-arrow-left-s-line ri-icons enif-pointer"></i>
+            <AuthContext.Consumer>
+                {authContext => (
+                    <FullScreenPortal>
+                        {
+                            contentInfo && editContentInfo && photoInfo &&
+                            <>
+                                <div className="enif-modal-wrapper photo-popup" onClick={closePhoto}>
+                                    <div className="photo-section-wrapper" onClick={(e) => e.stopPropagation()}>
+                                        <div className="photo-alb-title-wrp">
+                                            <Link className="photo-alb-title" to={backLink}>
+                                                <i className="ri-gallery-line"></i>
+                                                <h5>{photoInfo.album ? photoInfo.album.title : "기본앨범"}</h5>
+                                            </Link>
+                                            <div className="enif-modal-close" onClick={closePhoto}>
+                                                <i className="ri-close-fill enif-f-1p5x enif-pointer"></i>
                                             </div>
-                                            <Image imgSrc={photoInfo.file_path} />
-                                            <div className="photo-move-action next" onClick={() => this.moveToPhoto(1)}>
-                                                <i className="ri-arrow-right-s-line ri-icons enif-pointer"></i>
+                                        </div>
+                                        <div className="photo-section-bottom">
+                                            <div className="photo-section-left">
+                                                <div className="photo-img-wrapper" ref={this.fullscreenRef} >
+                                                    <div className="photo-move-action prev" onClick={() => this.moveToPhoto(-1)}>
+                                                        <i className="ri-arrow-left-s-line ri-icons enif-pointer"></i>
+                                                    </div>
+                                                    <Image imgSrc={photoInfo.file_path} />
+                                                    <div className="photo-move-action next" onClick={() => this.moveToPhoto(1)}>
+                                                        <i className="ri-arrow-right-s-line ri-icons enif-pointer"></i>
+                                                    </div>
+                                                    <div className="photo-action-fullscreen-wrapper">
+                                                        <i className={`${fullscreenClass} enif-pointer enif-f-1p2x`} onClick={this.clickFullscreen}></i>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div className="photo-action-fullscreen-wrapper">
-                                                <i className={`${fullscreenClass} enif-pointer enif-f-1p2x`} onClick={this.clickFullscreen}></i>
+                                            <div className="photo-section-right">
+                                                {
+                                                    photoState === ContentStateEnum.EDITTING ?
+                                                        <EditPhotoInfo
+                                                            photoInfo={editContentInfo}
+                                                            boardTagInfo={boardTagInfo}
+                                                            setPhotoState={setPhotoState}
+                                                            updatePhoto={updatePhoto}
+                                                            handleChange={handleChange}
+                                                            handleDate={handleDate}
+                                                            handleTag={handleTag} />
+                                                        :
+                                                        <>
+                                                            <PhotoInfo
+                                                                photoInfo={contentInfo}
+                                                                likeInfo={likeInfo}
+                                                                my_id={authContext.authInfo.user.user_id}
+                                                                setPhotoState={setPhotoState}
+                                                                likePhoto={likePhoto}
+                                                                deletePhoto={deletePhoto}
+                                                                setAlbumThumbnail={setAlbumThumbnail} />
+                                                            <Comment parent_id={photo_id} />
+                                                        </>
+                                                }
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="photo-section-right">
-                                        {
-                                            photoState === ContentStateEnum.EDITTING ?
-                                                <EditPhotoInfo
-                                                    photoInfo={editContentInfo}
-                                                    boardTagInfo={boardTagInfo}
-                                                    setPhotoState={setPhotoState}
-                                                    updatePhoto={updatePhoto}
-                                                    handleChange={handleChange}
-                                                    handleDate={handleDate}
-                                                    handleTag={handleTag} />
-                                                :
-                                                <>
-                                                    <PhotoInfo
-                                                        photoInfo={contentInfo}
-                                                        likeInfo={likeInfo}
-                                                        my_id={my_id}
-                                                        setPhotoState={setPhotoState}
-                                                        likePhoto={likePhoto}
-                                                        deletePhoto={deletePhoto}
-                                                        setAlbumThumbnail={setAlbumThumbnail} />
-                                                    <Comment parent_id={photo_id} />
-                                                </>
-                                        }
-                                    </div>
                                 </div>
-                            </div>
-                        </div>
 
-                        {
-
-                            (() => {
-                                if (photoState === ContentStateEnum.LOADING) {
-                                    return <Loading />
+                                {
+                                    (() => {
+                                        if (photoState === ContentStateEnum.LOADING) {
+                                            return <Loading />
+                                        }
+                                        else if (photoState === ContentStateEnum.DELETED) {
+                                            let backLink;
+                                            if (!photoInfo.album) {
+                                                backLink = `/board/${contentInfo.board_id}`;
+                                            }
+                                            else {
+                                                backLink = `/album/${photoInfo.album_id}`
+                                            }
+                                            return (
+                                                <Redirect to={backLink} />
+                                            )
+                                        }
+                                        else return (
+                                            <div></div>
+                                        )
+                                    })()
                                 }
-                                else if (photoState === ContentStateEnum.DELETED) {
-                                    let backLink;
-                                    if (!photoInfo.album) {
-                                        backLink = `/board/${contentInfo.board_id}`;
-                                    }
-                                    else {
-                                        backLink = `/album/${photoInfo.album_id}`
-                                    }
-                                    return (
-                                        <Redirect to={backLink} />
-                                    )
-                                }
-                                else return (
-                                    <div></div>
-                                )
-                            })()
+                            </>
                         }
-                    </>
-                }
-            </FullScreenPortal>
+                    </FullScreenPortal>
+                )}
+            </AuthContext.Consumer>
         )
     }
 }
 
-const mapStateToProps = (state: any) => {
-    return {
-        my_id: state.authentication.user_id
-    }
-}
-
-export default connect(mapStateToProps, null)(Photo);
+export default Photo;

@@ -4,7 +4,7 @@ import EditAlbumComponent from '../../components/Album/EditAlbumComponent';
 import ContentStateEnum from '../../common/ContentStateEnum';
 import AlbumService from '../../services/AlbumService';
 import ContentType from '../../types/ContentType';
-import { RecordOf, Record, is } from 'immutable';
+import { RecordOf, Record } from 'immutable';
 import CategoryType from '../../types/CategoryType';
 
 const TAG = 'EDITALBUM'
@@ -95,7 +95,11 @@ class EditAlbum extends React.Component<EditAlbumProps, EditAlbumState> {
         return (
             <EditAlbumComponent
                 caption="앨범 수정"
-                albumInfo={albumInfo}
+                // albumInfo={albumInfo}
+                title={albumInfo.title}
+                text={albumInfo.text}
+                isPrivate={albumInfo.album ? albumInfo.album.is_private : false}
+                checkedCategory={albumInfo.category_id}
                 setIsPrivate={this.setIsPrivate}
                 categories={categoryInfo}
                 handleCategory={this.handleCategoryChange}

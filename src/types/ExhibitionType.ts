@@ -1,5 +1,6 @@
 
 interface ExhibitionType {
+    content_id: number;
     exhibition_no: number;
     slogan: string;
     date_start: Date;

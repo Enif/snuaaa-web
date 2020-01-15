@@ -1,7 +1,5 @@
 import React from 'react';
-import { match } from 'react-router';
 import { Location } from 'history';
-import { connect } from 'react-redux';
 
 import CreateAlbum from '../Album/CreateAlbum';
 import AlbumList from '../../components/PhotoBoard/AlbumList';
@@ -13,6 +11,7 @@ import PhotoBoardService from '../../services/PhotoBoardService';
 import ContentType from '../../types/ContentType';
 import BoardType from '../../types/BoardType';
 import BoardName from '../../components/Board/BoardName';
+import AuthContext from '../../contexts/AuthContext';
 
 const TAG = 'MEMORY'
 const ALBUMROWNUM = 12;
@@ -20,7 +19,6 @@ const ALBUMROWNUM = 12;
 type MemoryProps = {
     boardInfo: BoardType;
     location: Location;
-    level: number;
 }
 
 type MemoryState = {
@@ -139,72 +137,70 @@ class Memory extends React.Component<MemoryProps, MemoryState> {
     }
 
     render() {
-        const { boardInfo, location, level } = this.props;
+        const { boardInfo, location } = this.props;
         const { isReady } = this.state;
         let pageIdx = location.state && location.state.page ? location.state.page : 1;
         let category = (location.state && location.state.category) ? location.state.category : null
 
         return (
-            <>
-                <div className="board-wrapper photoboard-wrapper">
+            <AuthContext.Consumer>
+                {
+                    authContext => (
+                        <div className="board-wrapper photoboard-wrapper">
 
-                    <BoardName board_id={boardInfo.board_id} board_name={boardInfo.board_name} />
-                    <div className="board-desc">
-                        {boardInfo.board_desc}
-                    </div>
-                    <Category categories={boardInfo.categories} selected={category} clickAll={this.clickAll} clickCategory={this.clickCategory} />
-                    <div className="board-search-wrapper">
-                        <div className="board-search-input">
-                            <i className="ri-search-line enif-f-1x"></i>
-                            <input type="text" />
-                        </div>
-                        <div>
-                            {
-                                level >= boardInfo.lv_write &&
-                                <button className="board-btn-write" onClick={() => this.togglePopUp()}>
-                                    <i className="ri-gallery-line enif-f-1p2x"></i>앨범 생성
-                            </button>
-                            }
-                        </div>
-                    </div>
+                            <BoardName board_id={boardInfo.board_id} board_name={boardInfo.board_name} />
+                            <div className="board-desc">
+                                {boardInfo.board_desc}
+                            </div>
+                            <Category categories={boardInfo.categories} selected={category} clickAll={this.clickAll} clickCategory={this.clickCategory} />
+                            <div className="board-search-wrapper">
+                                <div className="board-search-input">
+                                    <i className="ri-search-line enif-f-1x"></i>
+                                    <input type="text" />
+                                </div>
+                                <div>
+                                    {
+                                        authContext.authInfo.user.level >= boardInfo.lv_write &&
+                                        <button className="board-btn-write" onClick={() => this.togglePopUp()}>
+                                            <i className="ri-gallery-line enif-f-1p2x"></i>앨범 생성
+                                </button>
+                                    }
+                                </div>
+                            </div>
 
-                    {(() => {
-                        if (isReady) {
-                            return (
-                                <>
-                                    <div className="enif-divider"></div>
-                                    <AlbumList board_id={boardInfo.board_id} albums={this.albums} togglePopUp={this.togglePopUp} />
-                                    {
-                                        this.state.popUpState &&
-                                        <CreateAlbum
-                                            board_id={boardInfo.board_id}
-                                            categories={boardInfo.categories}
-                                            fetch={this.fetch}
-                                            togglePopUp={this.togglePopUp} />
-                                    }
-                                    {
-                                        this.albumCount > 0 &&
-                                        <Paginator
-                                            pageIdx={pageIdx}
-                                            pageNum={Math.ceil(this.albumCount / ALBUMROWNUM)}
-                                            clickPage={this.clickPage} />
-                                    }
-                                </>)
-                        }
-                        else {
-                            return <Loading />
-                        }
-                    })()}
-                </div>
-            </>
+                            {(() => {
+                                if (isReady) {
+                                    return (
+                                        <>
+                                            <div className="enif-divider"></div>
+                                            <AlbumList board_id={boardInfo.board_id} albums={this.albums} togglePopUp={this.togglePopUp} />
+                                            {
+                                                this.state.popUpState &&
+                                                <CreateAlbum
+                                                    board_id={boardInfo.board_id}
+                                                    categories={boardInfo.categories}
+                                                    fetch={this.fetch}
+                                                    togglePopUp={this.togglePopUp} />
+                                            }
+                                            {
+                                                this.albumCount > 0 &&
+                                                <Paginator
+                                                    pageIdx={pageIdx}
+                                                    pageNum={Math.ceil(this.albumCount / ALBUMROWNUM)}
+                                                    clickPage={this.clickPage} />
+                                            }
+                                        </>)
+                                }
+                                else {
+                                    return <Loading />
+                                }
+                            })()}
+                        </div>
+                    )
+                }
+            </AuthContext.Consumer>
         );
     }
 }
 
-const mapStateToProps = (state: any) => {
-    return {
-        level: state.authentication.level,
-    }
-}
-
-export default connect(mapStateToProps, null, null, { pure: false })(Memory);
+export default Memory;

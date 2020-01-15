@@ -28,7 +28,7 @@ function Navigation({ boards }) {
     let officialBoards = [];
     let photoBoards = [];
 
-    if (boards.length > 0) {
+    if (boards && boards.length > 0) {
         boards.forEach((board) => {
             if (board.menu === 1) {
                 noticeBoards.push(board);

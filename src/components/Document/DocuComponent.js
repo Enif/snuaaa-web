@@ -11,9 +11,9 @@ import FileIcon from 'components/Common/FileIcon';
 
 const DocuComponent = ({ docData, my_id, setDocState, deleteDoc, likeDoc, isLiked }) => {
 
-    let contentInfo = docData.content;
-    let userInfo = docData.content.user;
-    let filesInfo = docData.content.AttachedFiles;
+    let contentInfo = docData;
+    let userInfo = docData.user;
+    let filesInfo = docData.attachedFiles;
 
     const makeFileList = () => {
         if (filesInfo && filesInfo.length > 0) {
