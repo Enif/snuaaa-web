@@ -17,29 +17,10 @@ function Header() {
     const history = useHistory();
     const boardContext = useContext(BoardContext);
     const authContext = useContext(AuthContext);
-    // console.log(boardContext)
-    // const authContext = useContext(AuthContext);
-
-    // const dispatch = useDispatch();
-    // const authentication = useSelector((state: any) => state.authentication)
-    // const onLogout = () => dispatch(authLogout())
-
-    // this.state = {
-    //     isShowPopupUser: false,
-    //     boards: []
-    // }
 
     const togglePopup = () => {
         setIsShowPopupUser(!isShowPopupUser)
-        // this.setState({
-        //     isShowPopupUser: !this.state.isShowPopupUser
-        // })
     }
-
-    // componentDidMount() {
-    //     console.log(`[%s] componentDidMount`, TAG)
-    //     this.fetch();
-    // }
 
     const clickLogo = () => {
         if (history.location.pathname === '/') {
@@ -50,20 +31,6 @@ function Header() {
         }
     }
 
-    // fetch = async () => {
-    //     await BoardService.retrieveBoards()
-    //         .then((res) => {
-    //             this.setState({
-    //                 boards: res.data
-    //             })
-    //         })
-    //         .catch((err) => {
-    //             console.error(err);
-    //         })
-    // }
-
-    // const { level, profile_path } = this.props;
-    // const { isShowPopupUser, boards } = this.state;
     return (
         <>
             <div id="aaa-top" className="main-header-wrapper">
@@ -95,7 +62,6 @@ function Header() {
             <Navigation boards={boardContext.boardsInfo} />
         </>
     );
-    // }
 }
 
 export default Header;
