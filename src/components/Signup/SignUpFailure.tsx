@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SignUpFailure = () => {
+function SignUpFailure() {
     return (
         <div>
             회원가입에 실패하였습니다.

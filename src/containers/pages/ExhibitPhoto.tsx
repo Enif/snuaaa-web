@@ -59,34 +59,25 @@ class ExhibitPhoto extends React.Component<ExhibitPhotoProps, ExhibitPhotoState>
         document.onfullscreenchange = function (e) {
             toggleFullScreen();
         };
+        document.body.classList.add('enif-overflow-hidden');
     }
 
-    // shouldComponentUpdate(nextProps, nextState) {
-    //     console.log(`[${TAG}] shouldComponentUpdate`)
-    //     if (this.state.exhibitPhoto_id !== nextState.exhibitPhoto_id) {
-    //         this.fetch(nextState.exhibitPhoto_id);
-    //         return false;
-    //     }
-    //     return true;
-    // }
+    componentDidUpdate(prevProps: ExhibitPhotoProps) {
+        if (prevProps.location !== this.props.location) {
+            this.fetch();
+        }
+    }
 
-    // static getDerivedStateFromProps(props, state) {
-    //     return {
-    //         exhibitPhoto_id: props.match.params.exhibitPhoto_id,
-    //         // photoState: ContentStateEnum.LOADING
-    //     }
-    // }
+    componentWillUnmount() {
+        document.body.classList.remove('enif-overflow-hidden')
+    }
 
     fetch = async () => {
         let exhibitPhoto_id = Number(this.props.match.params.exhibitPhoto_id);
 
         this.setPhotoState(ContentStateEnum.LOADING);
-        // if (!exhibitPhoto_id) {
-        //     exhibitPhoto_id = this.props.match.params.exhibitPhoto_id
-        // }
         await ExhibitPhotoService.retrieveExhibitPhoto(exhibitPhoto_id)
             .then((res) => {
-                // this.contentInfo = res.data.exhibitPhotoInfo;
                 this.exhibitPhotosInfo = res.data.exhibitPhotosInfo;
                 this.setState({
                     contentInfo: Record(res.data.exhibitPhotoInfo)(),

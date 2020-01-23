@@ -309,6 +309,7 @@
 // }
 
 @media screen and (max-width: 800px) {
+
     .enif-popup-content {
         width: 90%;
         padding: 1rem 1rem 3rem 1rem;
@@ -342,6 +343,10 @@
     .enif-hide-mobile {
         display: none;
     }
+
+    .enif-overflow-hidden-mobile {
+        overflow: hidden;
+    }    
 }
 
 /**********  ENIF  **********/
