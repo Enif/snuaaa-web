@@ -26,8 +26,7 @@ function Board() {
                     if (boardInfo.board_type === 'N') {
                         return (
                             <PostBoard
-                                boardInfo={boardInfo}
-                                location={history.location} />
+                                boardInfo={boardInfo} />
                         )
                     }
                     else if (boardInfo.board_type === 'M') {

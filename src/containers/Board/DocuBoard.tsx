@@ -151,7 +151,7 @@ class DocuBoard extends React.Component<DocuBoardProps, DocuBoardState> {
             }
         });
 
-        const generationOptions: {id: number, name: string}[] = [];
+        const generationOptions: { id: number, name: string }[] = [];
         const today = new Date();
         let currentGen = 2 * (today.getFullYear() - 1980);
         if (today.getMonth() > 5) currentGen++;
@@ -168,60 +168,60 @@ class DocuBoard extends React.Component<DocuBoardProps, DocuBoardState> {
                 {
                     authContext => (
                         <div className="board-wrapper">
-                        <BoardName board_id={boardInfo.board_id} board_name={boardInfo.board_name} />
-                        {/* <div className="docboard-top-menu-wrapper"> */}
-                        <div className="board-search-wrapper">
-                            <div className="doc-select-wrapper">
-                                <SelectBox
-                                    selectName="category"
-                                    optionList={categoryOptions}
-                                    onSelect={this.handleChange}
-                                    selectedOption={category} />
-                                <SelectBox
-                                    selectName="generation"
-                                    optionList={generationOptions}
-                                    onSelect={this.handleChange}
-                                    selectedOption={generation} />
-                            </div>
-                            {
-                                authContext.authInfo.user.level >= boardInfo.lv_write &&
-                                <button className="board-btn-write" onClick={() => this.setBoardState(BoardStateEnum.WRITING)}>
-                                    <i className="ri-file-add-line enif-f-1p2x"></i>문서생성
+                            <BoardName board_id={boardInfo.board_id} board_name={boardInfo.board_name} />
+                            {/* <div className="docboard-top-menu-wrapper"> */}
+                            <div className="board-search-wrapper">
+                                <div className="board-select-wrapper">
+                                    <SelectBox
+                                        selectName="category"
+                                        optionList={categoryOptions}
+                                        onSelect={this.handleChange}
+                                        selectedOption={category} />
+                                    <SelectBox
+                                        selectName="generation"
+                                        optionList={generationOptions}
+                                        onSelect={this.handleChange}
+                                        selectedOption={generation} />
+                                </div>
+                                {
+                                    authContext.authInfo.user.level >= boardInfo.lv_write &&
+                                    <button className="board-btn-write" onClick={() => this.setBoardState(BoardStateEnum.WRITING)}>
+                                        <i className="ri-file-add-line enif-f-1p2x"></i>문서생성
                                 </button>
-                            }
+                                }
+                            </div>
+                            {/* </div> */}
+                            {(() => {
+                                if (boardState === BoardStateEnum.LOADING) {
+                                    return <Loading />
+                                }
+                                else if (boardState === BoardStateEnum.READY || boardState === BoardStateEnum.WRITING) {
+                                    return (
+                                        <>
+                                            <DocuList documents={this.documents} />
+                                            {this.docCount > 0 &&
+                                                <Paginator
+                                                    pageIdx={pageIdx}
+                                                    pageNum={Math.ceil(this.docCount / DOCROWNUM)}
+                                                    clickPage={this.clickPage} />}
+                                            {
+                                                boardState === BoardStateEnum.WRITING &&
+                                                <CreateDocu
+                                                    fetch={this.fetch}
+                                                    boardInfo={boardInfo}
+                                                    close={() => this.setBoardState(BoardStateEnum.READY)} />
+                                            }
+                                        </>
+                                    )
+                                }
+                                else {
+                                    return (
+                                        <div>ERROR PAGE</div>
+                                    )
+                                }
+                            })()}
                         </div>
-                        {/* </div> */}
-                        {(() => {
-                            if (boardState === BoardStateEnum.LOADING) {
-                                return <Loading />
-                            }
-                            else if (boardState === BoardStateEnum.READY || boardState === BoardStateEnum.WRITING) {
-                                return (
-                                    <>
-                                        <DocuList documents={this.documents} />
-                                        {this.docCount > 0 &&
-                                            <Paginator
-                                                pageIdx={pageIdx}
-                                                pageNum={Math.ceil(this.docCount / DOCROWNUM)}
-                                                clickPage={this.clickPage} />}
-                                        {
-                                            boardState === BoardStateEnum.WRITING &&
-                                            <CreateDocu
-                                                fetch={this.fetch}
-                                                boardInfo={boardInfo}
-                                                close={() => this.setBoardState(BoardStateEnum.READY)} />
-                                        }
-                                    </>
-                                )
-                            }
-                            else {
-                                return (
-                                    <div>ERROR PAGE</div>
-                                )
-                            }
-                        })()}
-                    </div>
-        
+
                     )
                 }
             </AuthContext.Consumer>

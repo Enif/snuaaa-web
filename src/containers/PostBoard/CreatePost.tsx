@@ -122,7 +122,7 @@ function CreatePost(props: CreatePostProps) {
             uploadIdx={uploadIdx}
             handleChange={handleChange}
             handleEditor={handleEditor}
-            close={close}
+            close={props.close}
             confirm={createPost}
             attachFile={attachFile}
             removeAttachedFile={removeAttachedFile}
