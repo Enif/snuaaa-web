@@ -55,6 +55,8 @@ function Post(props: PostProps) {
                 }
                 else {
                     setPostState(ContentStateEnum.ERROR);
+                    alert("해당 게시물이 존재하지 않습니다.")
+                    history.goBack();
                 }
             })
     }
@@ -106,13 +108,13 @@ function Post(props: PostProps) {
                     if (likeInfo) {
                         setPostInfo({
                             ...postInfo,
-                            like_num: postInfo.like_num--
+                            like_num: postInfo.like_num - 1
                         });
                     }
                     else {
                         setPostInfo({
                             ...postInfo,
-                            like_num: postInfo.like_num++
+                            like_num: postInfo.like_num + 1
                         });
                     }
                     setLikeInfo(!likeInfo)
