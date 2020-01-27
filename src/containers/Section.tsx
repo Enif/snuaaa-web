@@ -10,7 +10,10 @@ import ExhibitPhoto from './pages/ExhibitPhoto';
 import BoardType from '../types/BoardType';
 import BoardService from '../services/BoardService';
 import BoardContext from '../contexts/BoardContext';
+import RiseSetContext from '../contexts/RiseSetContext';
 import AuthContext from '../contexts/AuthContext';
+import RiseSetType from '../types/RiseSetType';
+import HomeService from '../services/HomeService';
 
 const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
@@ -28,6 +31,15 @@ const UserPage = lazy(() => import('./pages/UserPage'));
 const AllPosts = lazy(() => import('./pages/AllPosts'));
 const AllComments = lazy(() => import('./pages/AllComments'));
 
+const defaultRiseSet: RiseSetType = {
+    aste: 0,
+    astm: 0,
+    lunAge: 0,
+    moonrise: 0,
+    moonset: 0,
+    sunrise: 0,
+    sunset: 0
+};
 
 function Section() {
     let isPhotoModal = false;
@@ -36,6 +48,7 @@ function Section() {
     let history = useHistory();
     let location = useLocation();
     const [boardsInfo, setBoardsInfo] = useState<BoardType[]>([])
+    const [riseSetInfo, setRiseSetInfo] = useState<RiseSetType>(defaultRiseSet);
     const authContext = useContext(AuthContext);
 
     if (location.state && location.state.modal) {
@@ -63,9 +76,10 @@ function Section() {
 
     const fetch = async () => {
         try {
-            let res = await BoardService.retrieveBoards();
-            setBoardsInfo(res.data);
-            console.log(res)
+            let boardRes = await BoardService.retrieveBoards();
+            setBoardsInfo(boardRes.data);
+            let riseSetRes = await HomeService.retrieveRiseSet();
+            setRiseSetInfo(riseSetRes.data);
         }
         catch (err) {
             console.error(err);
@@ -74,35 +88,37 @@ function Section() {
     return (
         <>
             <BoardContext.Provider value={{ boardsInfo: boardsInfo, setBoardsInfo: setBoardsInfo }}>
-                <Suspense fallback={<div>Loading pages...</div>}>
-                    <Switch location={(isPhotoModal || isExhibitPhotoModal) ? previousLocation : history.location}>
-                        <DefaultRoute exact path="/" component={Home} />
-                        <DefaultRoute exact path="/about" component={About} />
-                        <DefaultRoute path="/about/:aaa" component={About} />
-                        <DefaultRoute path="/board/:board_id" component={Board} />
-                        <DefaultRoute path="/post/:post_id" component={Post} />
-                        {/* <Route path="/photoboard/:pbNo" component={PhotoBoard}/> */}
-                        <DefaultRoute path="/album/:album_id" component={Album} />
-                        {/* <DefaultRoute path="/photo/:photo_id" component={Photo} /> */}
-                        <DefaultRoute path="/document/:doc_id" component={Docu} />
-                        <DefaultRoute path="/exhibition/:exhibition_id" component={Exhibition} />
-                        <Route path="/signup" component={SignUp} />
-                        <Route path="/login" component={LogIn} />
-                        <DefaultRoute path="/mypage/:index" component={MyPage} />
-                        <DefaultRoute path="/userpage/:uuid" component={UserPage} />
-                        <DefaultRoute path="/posts/all" component={AllPosts} />
-                        <DefaultRoute path="/comments/all" component={AllComments} />
-                        <DefaultRoute component={Home} />
-                    </Switch>
-                    {
-                        isPhotoModal &&
-                        <Route path="/photo/:photo_id" component={Photo} />
-                    }
-                    {
-                        isExhibitPhotoModal &&
-                        <Route path="/exhibitPhoto/:exhibitPhoto_id" component={ExhibitPhoto} />
-                    }
-                </Suspense>
+                <RiseSetContext.Provider value={riseSetInfo}>
+                    <Suspense fallback={<div>Loading pages...</div>}>
+                        <Switch location={(isPhotoModal || isExhibitPhotoModal) ? previousLocation : history.location}>
+                            <DefaultRoute exact path="/" component={Home} />
+                            <DefaultRoute exact path="/about" component={About} />
+                            <DefaultRoute path="/about/:aaa" component={About} />
+                            <DefaultRoute path="/board/:board_id" component={Board} />
+                            <DefaultRoute path="/post/:post_id" component={Post} />
+                            {/* <Route path="/photoboard/:pbNo" component={PhotoBoard}/> */}
+                            <DefaultRoute path="/album/:album_id" component={Album} />
+                            {/* <DefaultRoute path="/photo/:photo_id" component={Photo} /> */}
+                            <DefaultRoute path="/document/:doc_id" component={Docu} />
+                            <DefaultRoute path="/exhibition/:exhibition_id" component={Exhibition} />
+                            <Route path="/signup" component={SignUp} />
+                            <Route path="/login" component={LogIn} />
+                            <DefaultRoute path="/mypage/:index" component={MyPage} />
+                            <DefaultRoute path="/userpage/:uuid" component={UserPage} />
+                            <DefaultRoute path="/posts/all" component={AllPosts} />
+                            <DefaultRoute path="/comments/all" component={AllComments} />
+                            <DefaultRoute component={Home} />
+                        </Switch>
+                        {
+                            isPhotoModal &&
+                            <Route path="/photo/:photo_id" component={Photo} />
+                        }
+                        {
+                            isExhibitPhotoModal &&
+                            <Route path="/exhibitPhoto/:exhibitPhoto_id" component={ExhibitPhoto} />
+                        }
+                    </Suspense>
+                </RiseSetContext.Provider>
             </BoardContext.Provider>
         </>
     );

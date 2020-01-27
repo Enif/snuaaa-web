@@ -25,7 +25,7 @@ class Home extends React.Component {
         this.recentMemory = undefined;
         this.recentAstrophoto = undefined;
         this.recentExhibitions = undefined;
-        this.riseSetInfo = undefined;
+        // this.riseSetInfo = undefined;
         this.state = {
             isReady: false
         }
@@ -46,7 +46,7 @@ class Home extends React.Component {
             HomeService.retrieveRecentMemory(),
             HomeService.retrieveRecentAstroPhoto(),
             BoardService.retrieveExhibitionsInBoard(),
-            HomeService.retrieveRiseSet()
+            // HomeService.retrieveRiseSet()
         ])
             .then((res) => {
                 this.soundBoxData = res[0].data;
@@ -55,7 +55,7 @@ class Home extends React.Component {
                 this.recentMemory = res[3].data;
                 this.recentAstrophoto = res[4].data;
                 this.recentExhibitions = res[5].data;
-                this.riseSetInfo = res[6].data;
+                // this.riseSetInfo = res[6].data;
                 this.setState({
                     isReady: true
                 })
@@ -74,7 +74,7 @@ class Home extends React.Component {
                 <div className="home-wrapper">
                     <SoundBox soundBoxInfo={this.soundBoxData} />
                     <div className="home-row-mobile">
-                        <RiseSetMobile riseSetInfo={this.riseSetInfo} />
+                        <RiseSetMobile />
                         <ExtLinkMobile />
                     </div>
                     <div className="home-row">
