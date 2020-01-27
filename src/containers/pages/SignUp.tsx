@@ -229,7 +229,7 @@ function SignUp() {
         let valid = true;
 
         for (const [key, value] of Object.entries(userInfo)) {
-            if(value.isRequired || value.valid !== undefined) {
+            if(value.isRequired) {
                 valid = valid && value.valid;
             }
         }
