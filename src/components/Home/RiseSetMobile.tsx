@@ -14,7 +14,7 @@ function RiseSetMobile() {
         else {
             document.body.classList.remove('enif-overflow-hidden')
         }
-    })
+    }, [isExpanded])
 
     return (
         <>

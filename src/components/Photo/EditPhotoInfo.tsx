@@ -5,6 +5,7 @@ import ReactDatePicker from 'react-datepicker';
 import ContentType from '../../types/ContentType';
 import 'react-datepicker/dist/react-datepicker.css'
 import TagType from '../../types/TagType';
+import { Prompt } from 'react-router';
 
 type PhotoInfoProps = {
     photoInfo: ContentType;
@@ -51,6 +52,7 @@ const EditPhotoInfo = ({ photoInfo, boardTagInfo, setPhotoState, updatePhoto,
             {
                 content && photo &&
                 <>
+                    <Prompt when={true} message="작성 중인 내용은 저장되지 않습니다. 작성을 취소하시겠습니까?"></Prompt>
                     <div className="photo-input-area-wrapper">
                         {makeEditTagList()}
                         <input className="input-title" type="text" name="title" placeholder="제목" onChange={handleChange} value={content.title} />

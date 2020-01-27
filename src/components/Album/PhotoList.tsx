@@ -8,14 +8,14 @@ type PhotoListProps = {
     photos: ContentType[];
 }
 
-function PhotoList ({ photos }: PhotoListProps) {
+function PhotoList({ photos }: PhotoListProps) {
 
     const makePhotoList = () => {
         if (photos.length > 0) {
             return photos.map(content => {
                 let contentInfo = content;
                 let photo = content.photo;
-                if(photo) {
+                if (photo) {
                     return (
                         <div className="photo-wrapper" key={contentInfo.content_id}>
                             <Link to={{
@@ -26,11 +26,14 @@ function PhotoList ({ photos }: PhotoListProps) {
                                 }
                             }} >
                                 <div className="photo-cover">
-                                    <i className="ri-heart-fill"></i>
-                                    <p>{contentInfo.like_num}</p>
-                                    &nbsp;
-                                    <i className="ri-message-fill"></i>
-                                    <p>{contentInfo.comment_num}</p>
+                                    <div className="photo-cover-unit">
+                                        <i className="ri-heart-fill"></i>
+                                        <p>{contentInfo.like_num}</p>
+                                    </div>
+                                    <div className="photo-cover-unit">
+                                        <i className="ri-message-2-fill"></i>
+                                        <p>{contentInfo.comment_num}</p>
+                                    </div>
                                 </div>
                                 <Image imgSrc={photo.thumbnail_path} />
                             </Link>
