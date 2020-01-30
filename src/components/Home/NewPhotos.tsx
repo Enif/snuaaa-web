@@ -1,10 +1,17 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
-import Image from '../Common/AaaImage.tsx';
-import history from 'common/history';
+import { Link, useHistory } from 'react-router-dom';
+import Image from '../Common/AaaImage';
+import ContentType from '../../types/ContentType';
 
-const NewPhotos = ({ title, board_id, photos }) => {
+type NewPhotosProps = {
+    title: string;
+    board_id: string;
+    photos: ContentType[];
+}
 
+function NewPhotos({ title, board_id, photos }: NewPhotosProps) {
+
+    const history = useHistory();
     const makePhotoList = () => {
         if (photos) {
             return photos.map(photo => {
@@ -17,7 +24,10 @@ const NewPhotos = ({ title, board_id, photos }) => {
                                 backgroundLocation: history.location
                             }
                         }}>
-                            <Image imgSrc={photo.photo.thumbnail_path} />
+                            {
+                                photo.photo &&
+                                <Image imgSrc={photo.photo.thumbnail_path} />
+                            }
                         </Link>
                     </div>
                 )

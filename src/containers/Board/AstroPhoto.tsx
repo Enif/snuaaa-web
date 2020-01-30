@@ -14,6 +14,7 @@ import BoardType from '../../types/BoardType';
 import ContentType from '../../types/ContentType';
 import BoardName from '../../components/Board/BoardName';
 import AuthContext from '../../contexts/AuthContext';
+import AlbumType from '../../types/AlbumType';
 
 const TAG = 'ASTROPHOTO';
 const ALBUMROWNUM = 12;
@@ -30,7 +31,7 @@ type AstroPhotoState = {
 
 class AstroPhoto extends React.Component<AstroPhotoProps, AstroPhotoState> {
 
-    albums: ContentType[];
+    albums: AlbumType[];
     photos: ContentType[];
     count: number;
 

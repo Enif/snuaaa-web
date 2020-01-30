@@ -2,28 +2,32 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import defaultAlbumCover from 'assets/img/default_photo_img.png'
 import defaultStarAlbumCover from 'assets/img/default_photo_img_star.png'
-import Image from '../Common/AaaImage.tsx'
+import Image from '../Common/AaaImage'
+import AlbumType from '../../types/AlbumType';
 
 const TAG = 'ALBUMLIST'
 
-class AlbumList extends React.Component {
+type AlbumListProps = {
+    board_id: string;
+    albums: AlbumType[];
+    togglePopUp: () => void;
+}
 
-    retrieveAlbums = () => {
+function AlbumList({board_id, albums, togglePopUp}: AlbumListProps) {
 
-        // let boardInfo = 
-        let albumCover = this.props.board_id === 'brd32' ? defaultStarAlbumCover : defaultAlbumCover;
-        let albums = this.props.albums;
+    const makeAlbumList = () => {
+        let albumCover = board_id === 'brd32' ? defaultStarAlbumCover : defaultAlbumCover;
 
         let albumList = albums.map(album => {
-            let contentInfo = album.content;
-            let categoryInfo = album.content.category;
+            let contentInfo = album;
+            let categoryInfo = album.category;
             // let thumbnailInfo = album.thumbnail && album.thumbnail.photo
             let thumbnailPath = '';
-            if (album.thumbnail) {
-                thumbnailPath = album.thumbnail.thumbnail_path;
+            if (album.album.thumbnail && album.album.thumbnail.photo) {
+                thumbnailPath = album.album.thumbnail.photo.thumbnail_path;
             }
-            else if (album.content.albumPhoto && album.content.albumPhoto[0]){
-                thumbnailPath = album.content.albumPhoto[0].thumbnail_path;
+            else if (album.albumPhoto && album.albumPhoto[0]){
+                thumbnailPath = album.albumPhoto[0].thumbnail_path;
             }
             else {
                 thumbnailPath = '';
@@ -54,22 +58,11 @@ class AlbumList extends React.Component {
         return albumList;
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        console.log('[%s] shouldComponentUpdate', TAG)
-        if (this.props.albums.length === nextProps.albums.length) {
-            return false;
-        }
-        return true;
-    }
-
-    render() {
-        console.log('[%s] render', TAG)
-        return (
-            <div className="album-list-wrapper">
-                {this.retrieveAlbums()}
-            </div>
-        )
-    }
+    return (
+        <div className="album-list-wrapper">
+            {makeAlbumList()}
+        </div>
+    )
 }
 
 export default AlbumList;

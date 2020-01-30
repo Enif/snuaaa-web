@@ -12,6 +12,7 @@ import ContentType from '../../types/ContentType';
 import CategoryType from '../../types/CategoryType';
 import TagType from '../../types/TagType';
 import AuthContext from '../../contexts/AuthContext';
+import AlbumType from '../../types/AlbumType';
 
 const TAG = 'ALBUM'
 
@@ -28,7 +29,7 @@ type AlbumState = {
 class Album extends React.Component<AlbumProps, AlbumState> {
 
     photos: ContentType[];
-    albumInfo?: ContentType;
+    albumInfo?: AlbumType;
     categoryInfo?: CategoryType[];
     tagInfo?: TagType[];
 
