@@ -1,7 +1,7 @@
 
 .post-wrapper {
     // padding-top: 30px;
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
     // border-top: 1px solid #c9c9c9;
     .post-title {
@@ -35,6 +35,8 @@
             display: flex;
             align-items: center;
             padding-right: 7px;
+            height: 100%;
+            top: 0;
             right: 0;
             height: 100%;
         }
@@ -112,12 +114,13 @@
 
 .attach-file-wrapper {
     display: flex;
-    margin: 20px 10px;
+    margin: 20px 0px;
     height: 100%;
     width: 100%;
     .file-list {
         flex-grow: 1;
         padding: 10px;
+        word-break: break-all;
         border: 1px solid #CCC;
         border-top-left-radius: 10px;
         border-bottom-left-radius: 10px;
@@ -172,9 +175,6 @@
         .post-title {
             padding-top: 0.8rem;
             padding-bottom: 0.8rem;
-            .actions-drawer {
-                height: calc(100% - 0.8rem);
-            }
         }
     }
 }

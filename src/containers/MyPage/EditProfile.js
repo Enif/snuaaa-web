@@ -1,14 +1,15 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { authLogout } from 'actions';
 
 import UserService from 'services/UserService.ts';
 import Loading from 'components/Common/Loading';
 import ProfileComponent from 'components/MyPage/ProfileComponent';
+import AuthContext from '../../contexts/AuthContext';
 
 const TAG = 'PROFILE'
 
 class EditProfile extends React.Component {
+
+    static contextType = AuthContext;
 
     constructor(props) {
         super(props);
@@ -91,7 +92,6 @@ class EditProfile extends React.Component {
 
     findInfo = (label) => {
         const { userInfo } = this.state;
-        console.log(userInfo);
         let info = userInfo.find(info => info.label === label)
         return info
     }
@@ -230,7 +230,8 @@ class EditProfile extends React.Component {
             await UserService.deleteUserInfo()
             .then(() => {
                 alert("탈퇴 요청이 정상적으로 처리되었습니다.");
-                this.props.onLogout();
+                // this.props.onLogout();
+                this.context.authLogout();
             })
             .catch((err) => {
                 console.error(err);
@@ -265,10 +266,4 @@ class EditProfile extends React.Component {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onLogout: () => dispatch(authLogout())
-    }
-}
-
-export default connect(null, mapDispatchToProps)(EditProfile);
+export default EditProfile;

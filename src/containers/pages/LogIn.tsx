@@ -1,128 +1,82 @@
-import React, { ChangeEvent } from 'react';
-import { connect } from 'react-redux';
+import React, { ChangeEvent, useState, useContext } from 'react';
 
-import { authLogin } from '../../actions';
 import LogInComponent from '../../components/Login/LogInComponent';
 import Loading from '../../components/Common/Loading';
 import PopUp from '../../components/Common/PopUp';
 import FullScreenPortal from '../../containers/FullScreenPortal';
-import history from '../../common/history';
+// import history from '../../common/history';
 import FindIdPw from '../Login/FindIdPw';
 import AuthService from '../../services/AuthService';
+import AuthContext from '../../contexts/AuthContext';
+import { useHistory, Redirect, useLocation } from 'react-router';
 
 const TAG = 'LOGIN'
 
-type LoginProps = {
-    onAuthLogin: (user_id: number, nickname: string, level: number,
-        profile_path: string, token: string, autoLogin: boolean) => void;
-}
+function LogIn() {
+    const [loginInfo, setLoginInfo] = useState({ id: '', password: '', autoLogin: false });
+    const [isLoading, setIsLoading] = useState(false);
+    const [popUp, setPopUp] = useState(false);
+    const [errPopUp, setErrPopUp] = useState(false);
+    const [findPopUp, setFindPopUp] = useState(false);
+    const history = useHistory();
+    const location = useLocation();
+    const authContext = useContext(AuthContext);
+    const popUpTitle = '자동 로그인 기능을 사용하시겠습니까?';
+    const popUpText = `자동 로그인 사용시 다음 접속부터는 로그인을 하실 필요가 없습니다.\n
+            단, 게임방, 학교 등 공공장소에서 이용 시 개인정보가 유출될 수 있으니 주의해주세요.`;
+    const errText = "로그인에 실패하였습니다.\n아이디나 비밀번호를 확인해주세요.";
 
-type LoginState = {
-    id: string,
-    password: string,
-    isLoading: boolean,
-    popUp: boolean,
-    errPopUp: boolean,
-    findPopUp: boolean,
-    autoLogin: boolean,
-}
-
-class LogIn extends React.Component<LoginProps, LoginState> {
- 
-    constructor(props: LoginProps) {
-        super(props);
-
-        this.state = {
-            id: '',
-            password: '',
-            isLoading: false,
-            popUp: false,
-            errPopUp: false,
-            findPopUp: false,
-            autoLogin: false,
-        }
-        this.popupTitle = '';
-        this.popupContents = '';
-    }
-
-    // authServie;
-    popupTitle: string;
-    popupContents: string;
-
-    handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        if(e.target.name === 'id') {
-            this.setState({
-                id: e.target.value
-            })            
-        }
-        else {
-            this.setState({
-                password: e.target.value
-            })            
-        }
-    }
-
-    checkAuto = (e: ChangeEvent<HTMLInputElement>) => {
-        this.setState({
-            autoLogin: e.target.checked,
-            popUp: e.target.checked
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setLoginInfo({
+            ...loginInfo,
+            [e.target.name]: e.target.value
         })
     }
 
-    setAutoLoginState = (state: boolean) => {
-        this.setState({
-            autoLogin: state
-        })
+    const checkAuto = (e: ChangeEvent<HTMLInputElement>) => {
+        setPopUp(e.target.checked);
+        setLoginInfo({
+            ...loginInfo,
+            autoLogin: e.target.checked
+        });
     }
 
-    setPopUpState = (state: boolean) => {
-        this.setState({
-            popUp: state
-        })
-    }
-
-    setFindPopUp = (state: boolean) => {
-        this.setState({
-            findPopUp: state
-        })
-    }
-
-    makeErrPopUp = () => {
-        this.setState({
-            errPopUp: true
-        })
+    const makeErrPopUp = () => {
+        setErrPopUp(true);
         setTimeout(() => {
-            this.setState({
-                errPopUp: false
-            })
+            setErrPopUp(false)
         }, 1500)
     }
 
-    userLogIn = async () => {
-
-        const { id, password, autoLogin } = this.state;
-        const { onAuthLogin } = this.props;
-
-        this.setState({
-            isLoading: true
+    const setAutoLogin = (isAuto: boolean) => {
+        setLoginInfo({
+            ...loginInfo,
+            autoLogin: isAuto
         })
-        let logInInfo = {
-            id: id,
-            password: password,
-            autoLogin: autoLogin
-        }
+    }
 
-        await AuthService.logIn(logInInfo)
+
+    const userLogIn = async () => {
+
+        // const { id, password, autoLogin } = this.state;
+        // const { onAuthLogin } = this.props;
+        setIsLoading(true);
+        // this.setState({
+        //     isLoading: true
+        // })
+        // authContext
+        await AuthService.logIn(loginInfo)
             .then((res: any) => {
-                console.log('[%s] Log In Success', TAG)
-                this.setState({
-                    isLoading: false
-                })
-                const { token, user_id, nickname, level, profile_path, autoLogin } = res.data;
-                onAuthLogin(user_id, nickname, level, profile_path, token, autoLogin);
-
-                if(history.location.state && history.location.state.accessPath) {
-                    history.push(history.location.state.accessPath)
+                // this.setState({
+                //     isLoading: false
+                // })
+                const { token, userInfo, autoLogin } = res.data;
+                // onAuthLogin(user_id, nickname, level, profile_path, token, autoLogin);
+                authContext.authLogin(token, autoLogin, userInfo)
+                // console.log('[%s] Log In Success', TAG)
+                setIsLoading(false);
+                if (location.state && location.state.accessPath) {
+                    history.push(location.state.accessPath)
                 }
                 else {
                     history.push('/');
@@ -130,106 +84,71 @@ class LogIn extends React.Component<LoginProps, LoginState> {
             })
             .catch((err: ErrorEvent) => {
                 console.error(err);
-                this.setState({
-                    isLoading: false
-                })
-                this.makeErrPopUp()
+                setIsLoading(false);
+                makeErrPopUp()
             })
     }
 
-    guestLogIn = async () => {
-        const { onAuthLogin } = this.props;
-
-        this.setState({
-            isLoading: true
-        })
+    const guestLogIn = async () => {
+        setIsLoading(true);
 
         await AuthService.guestLogIn()
             .then((res: any) => {
-                console.log('[%s] Log In Success', TAG)
-                this.setState({
-                    isLoading: false
-                })
-                const { token, user_id, nickname, level, profile_path, autoLogin } = res.data;
-
-                onAuthLogin(user_id, nickname, level, profile_path, token, autoLogin);
-                history.push('/');
+                setIsLoading(false);
+                const { token, userInfo, autoLogin } = res.data;
+                authContext.authLogin(token, autoLogin, userInfo)
             })
             .catch((err: ErrorEvent) => {
                 console.error(err);
-                this.setState({
-                    isLoading: false
-                })
-                this.makeErrPopUp()
+                setIsLoading(false);
+                makeErrPopUp()
             })
     }
 
-    render() {
-        // const { loginState } = this.props
-        const { isLoading, popUp, errPopUp, findPopUp, autoLogin } = this.state
-        const popUpTitle = '자동 로그인 기능을 사용하시겠습니까?';
-        const popUpText = `자동 로그인 사용시 다음 접속부터는 로그인을 하실 필요가 없습니다.\n
-            단, 게임방, 학교 등 공공장소에서 이용 시 개인정보가 유출될 수 있으니 주의해주세요.`;
-        const errText = "로그인에 실패하였습니다.\n아이디나 비밀번호를 확인해주세요.";
+    return (
 
-
-        return (
-            <>
-                {/* {loginState && <Redirect to='/' />} */}
-                {isLoading && <Loading />}
-                {
-                    findPopUp
-                    && <FindIdPw
-                        cancel={() => this.setFindPopUp(false)}
-                    />
-                }
-                {
-                    errPopUp &&
-                    <PopUp
-                        title={''}
-                        contents={errText}
-                        isAction={false}
-                        cancel={false}
-                        confirm={false}
-                    />
-                }
-                {popUp &&
-                    <PopUp
-                        title={popUpTitle}
-                        contents={popUpText}
-                        isAction={true}
-                        cancel={() => {
-                            this.setPopUpState(false);
-                            this.setAutoLoginState(false);
-                        }}
-                        confirm={() => {
-                            this.setPopUpState(false);
-                        }} />}
-                <FullScreenPortal>
-                    <LogInComponent
-                        autoLogin={autoLogin}
-                        handleChange={this.handleChange}
-                        userLogIn={this.userLogIn}
-                        guestLogIn={this.guestLogIn}
-                        openFindPopUp={() => this.setFindPopUp(true)}
-                        checkAuto={this.checkAuto} />
-                </FullScreenPortal>
-            </>
-        )
-    }
+        <>
+            {isLoading && <Loading />}
+            {authContext.authInfo.isLoggedIn && <Redirect to='/'/>}
+            {
+                findPopUp
+                && <FindIdPw
+                    cancel={() => setFindPopUp(false)}
+                />
+            }
+            {
+                errPopUp &&
+                <PopUp
+                    title={''}
+                    contents={errText}
+                    isAction={false}
+                    cancel={false}
+                    confirm={false}
+                />
+            }
+            {popUp &&
+                <PopUp
+                    title={popUpTitle}
+                    contents={popUpText}
+                    isAction={true}
+                    cancel={() => {
+                        setPopUp(false);
+                        setAutoLogin(false);
+                    }}
+                    confirm={() => {
+                        setPopUp(false);
+                    }} />}
+            <FullScreenPortal>
+                <LogInComponent
+                    autoLogin={loginInfo.autoLogin}
+                    handleChange={handleChange}
+                    userLogIn={userLogIn}
+                    guestLogIn={guestLogIn}
+                    openFindPopUp={() => setFindPopUp(true)}
+                    checkAuto={checkAuto} />
+            </FullScreenPortal>
+        </>
+    )
 }
 
-const mapStateToProps = (state: any) => {
-    return {
-        loginState: state.authentication.isLoggedIn
-    }
-}
-
-const mapDispatchToProps = (dispatch: any) => {
-    return {
-        onAuthLogin: (user_id: number, nickname: string, level: number,
-            profile_path: string, token: string, autoLogin: boolean) => dispatch(authLogin(user_id, nickname, level, profile_path, token, autoLogin)),
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(LogIn);
+export default LogIn;

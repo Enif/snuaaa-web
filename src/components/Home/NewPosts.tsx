@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import { convertDate } from '../../utils/convertDate';
 import ContentType from '../../types/ContentType';
+import ContentTypeEnum from '../../common/ContentTypeEnum';
 
 const NewPosts = ({ posts }: { posts: ContentType[] }) => {
 
@@ -20,7 +21,10 @@ const NewPosts = ({ posts }: { posts: ContentType[] }) => {
                         }
                     </div>
                     <div className="new-post-title">
-                        <Link to={`/post/${content.content_id}`}>
+                        <Link to={
+                            content.type === ContentTypeEnum.POST ? `/post/${content.content_id}`
+                            : content.type === ContentTypeEnum.DOCUMENT ? `/document/${content.content_id}`
+                            : '/'}>
                             <h5>{`${content.title} `}</h5>
                         </Link>
                     </div>

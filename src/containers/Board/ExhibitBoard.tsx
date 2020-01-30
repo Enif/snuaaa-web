@@ -1,9 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Loading from '../../components/Common/Loading';
 import BoardStateEnum from '../../common/BoardStateEnum';
-import history from '../../common/history';
 import { convertDateWithDay } from '../../utils/convertDate'
 import BoardService from '../../services/BoardService';
 import BoardName from '../../components/Board/BoardName';
@@ -11,12 +9,12 @@ import Image from '../../components/Common/AaaImage';
 import CreateExhibition from '../../containers/ExhibitBoard/CreateExhibition';
 import BoardType from '../../types/BoardType';
 import ContentType from '../../types/ContentType';
+import AuthContext from '../../contexts/AuthContext';
 
 const TAG = 'EXHIBITBOARD'
 
 type ExhibitBoardProps = {
     boardInfo: BoardType;
-    level: number;
 }
 
 type ExhibitBoardState = {
@@ -65,7 +63,7 @@ class ExhibitBoard extends React.Component<ExhibitBoardProps, ExhibitBoardState>
         const { exhibitions } = this;
         if (exhibitions && exhibitions.length > 0) {
             return exhibitions.map((content) => {
-                if(content.exhibition) {
+                if (content.exhibition) {
                     return (
                         <Link to={`/exhibition/${content.content_id}`}>
                             <div className="exhibition-unit">
@@ -93,58 +91,64 @@ class ExhibitBoard extends React.Component<ExhibitBoardProps, ExhibitBoardState>
         console.log(`[${TAG}] render.. `)
 
         const { makeExhibitionList } = this;
-        const { boardInfo, level } = this.props;
+        const { boardInfo } = this.props;
         const { boardState } = this.state;
 
         return (
-            <>
+            <AuthContext.Consumer>
                 {
-                    (() => {
-                        if (boardState === BoardStateEnum.LOADING) {
-                            return <Loading />
-                        }
-                        else if (boardState === BoardStateEnum.READY || boardState === BoardStateEnum.WRITING) {
-                            return (
-                                <div className="board-wrapper exhibition-board-wrapper">
-                                    <BoardName board_id={boardInfo.board_id} board_name={boardInfo.board_name} />
-                                    <div className="board-desc">
-                                        {boardInfo.board_desc}
-                                    </div>
-                                    <div className="board-search-wrapper">
-                                        {
-                                            level >= boardInfo.lv_write &&
-                                            <button className="board-btn-write" onClick={() => this.setBoardState(BoardStateEnum.WRITING)}>
-                                                <i className="ri-gallery-line enif-f-1p2x"></i>
-                                                <>사진전 생성</>
-                                            </button>
-                                        }
-                                    </div>
-                                    {
-                                        (boardState === BoardStateEnum.READY || boardState === BoardStateEnum.WRITING) &&
-                                        <>
-                                            <div className="exhibition-list-wrapper">
-                                                {makeExhibitionList()}
+                    authContext => (
+                        <>
+                            {
+                                (() => {
+                                    if (boardState === BoardStateEnum.LOADING) {
+                                        return <Loading />
+                                    }
+                                    else if (boardState === BoardStateEnum.READY || boardState === BoardStateEnum.WRITING) {
+                                        return (
+                                            <div className="board-wrapper exhibition-board-wrapper">
+                                                <BoardName board_id={boardInfo.board_id} board_name={boardInfo.board_name} />
+                                                <div className="board-desc">
+                                                    {boardInfo.board_desc}
+                                                </div>
+                                                <div className="board-search-wrapper">
+                                                    {
+                                                        authContext.authInfo.user.level >= boardInfo.lv_write &&
+                                                        <button className="board-btn-write" onClick={() => this.setBoardState(BoardStateEnum.WRITING)}>
+                                                            <i className="ri-gallery-line enif-f-1p2x"></i>
+                                                            <>사진전 생성</>
+                                                        </button>
+                                                    }
+                                                </div>
+                                                {
+                                                    (boardState === BoardStateEnum.READY || boardState === BoardStateEnum.WRITING) &&
+                                                    <>
+                                                        <div className="exhibition-list-wrapper">
+                                                            {makeExhibitionList()}
+                                                        </div>
+                                                    </>
+                                                }
+                                                {
+                                                    boardState === BoardStateEnum.WRITING &&
+                                                    <CreateExhibition
+                                                        board_id={boardInfo.board_id}
+                                                        boardInfo={boardInfo}
+                                                        // confirm={() => }
+                                                        close={() => this.setBoardState(BoardStateEnum.READY)}
+                                                        fetch={this.fetch} />
+                                                }
                                             </div>
-                                        </>
+                                        )
                                     }
-                                    {
-                                        boardState === BoardStateEnum.WRITING &&
-                                        <CreateExhibition
-                                            board_id={boardInfo.board_id}
-                                            boardInfo={boardInfo}
-                                            // confirm={() => }
-                                            close={() => this.setBoardState(BoardStateEnum.READY)}
-                                            fetch={this.fetch} />
-                                    }
-                                </div>
-                            )
-                        }
-                        else return (
-                            <div>ERROR PAGE</div>
-                        )
-                    })()
+                                    else return (
+                                        <div>ERROR PAGE</div>
+                                    )
+                                })()
+                            }
+                        </>
+                    )
                 }
-            </>
+            </AuthContext.Consumer>
         );
     }
 }
@@ -155,4 +159,4 @@ const mapStateToProps = (state: any) => {
     }
 }
 
-export default connect(mapStateToProps, null, null, { pure: false })(ExhibitBoard);
+export default ExhibitBoard;

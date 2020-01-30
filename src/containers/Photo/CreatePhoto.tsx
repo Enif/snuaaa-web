@@ -63,6 +63,14 @@ class CreatePhoto extends React.Component<CreatePhotoProps, CreatePhotoState> {
         }
     }
 
+    componentDidMount() {
+        document.body.classList.add('enif-overflow-hidden');
+    }
+
+    componentWillUnmount() {
+        document.body.classList.remove('enif-overflow-hidden')
+    }
+
     handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { photoInfo, imgIdx } = this.state;
         const name: string = e.target.name;

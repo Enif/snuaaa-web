@@ -14,24 +14,23 @@ type PostComponentProps = {
     content: ContentType,
     my_id: number,
     isLiked: boolean,
-    files: FileType[],
     likePost: () => void;
     editPost: () => void;
     deletePost: () => void;
 }
 
 function PostComponent(
-    { content, my_id, isLiked, files,
+    { content, my_id, isLiked,
         likePost, editPost, deletePost }: PostComponentProps
 ) {
 
     let user = content.user;
 
     const makeFileList = () => {
-        if (files && files.length > 0) {
+        if (content.attachedFiles && content.attachedFiles.length > 0) {
             return (
                 <div className="file-download-wrapper" >
-                    {files.map((file: FileType) => {
+                    {content.attachedFiles.map((file: FileType) => {
                         return (
                             <div className="file-download-list" key={file.file_id} >
                                 <DownloadFile key={file.file_id} content_id={file.parent_id} file_id={file.file_id} >

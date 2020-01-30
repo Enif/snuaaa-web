@@ -22,6 +22,14 @@ class CreateExhibition extends React.Component {
         }
     }
 
+    componentDidMount() {
+        document.body.classList.add('enif-overflow-hidden');
+    }
+
+    componentWillUnmount() {
+        document.body.classList.remove('enif-overflow-hidden')
+    }
+
     handleChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
@@ -91,7 +99,7 @@ class CreateExhibition extends React.Component {
         const { text, exhibition_no, slogan, date_start, date_end, place } = this.state;
         const { close } = this.props;
         return (
-            <div className="enif-modal-wrapper">
+            <div className="enif-popup">
                 <div className="crt-exhibition-wrapper">
                     <h3>사진전 생성</h3>
                     <div className="crt-exhibition-input-wrapper">

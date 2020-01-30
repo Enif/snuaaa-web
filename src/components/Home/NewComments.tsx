@@ -1,9 +1,9 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { convertDate } from '../../utils/convertDate';
-import history from '../../common/history';
 import CommentType from '../../types/CommentType';
 import { LocationDescriptorObject } from 'history';
+import ContentTypeEnum from '../../common/ContentTypeEnum';
 
 type NewCommentsProps = {
     comments: CommentType[]
@@ -11,6 +11,7 @@ type NewCommentsProps = {
 
 function NewComments({ comments }: NewCommentsProps) {
 
+    const history = useHistory();
     const makeCommentList = () => {
         return comments.map(comment => {
 
@@ -18,10 +19,10 @@ function NewComments({ comments }: NewCommentsProps) {
             let boardInfo = comment.content.board;
 
             let linkTo: string | LocationDescriptorObject;
-            if (contentInfo.type === "PO") {
+            if (contentInfo.type === ContentTypeEnum.POST) {
                 linkTo = `/post/${comment.parent_id}`
             }
-            else if (contentInfo.type === "PH") {
+            else if (contentInfo.type === ContentTypeEnum.PHOTO) {
                 linkTo = {
                     pathname: `/photo/${comment.parent_id}`,
                     state: {
@@ -30,11 +31,11 @@ function NewComments({ comments }: NewCommentsProps) {
                     }
                 }
             }
-            else if (contentInfo.type === "DO") {
+            else if (contentInfo.type === ContentTypeEnum.DOCUMENT) {
                 linkTo = `/document/${comment.parent_id}`
             }
             else {
-                linkTo = '';
+                linkTo = '/';
             }
 
             return (

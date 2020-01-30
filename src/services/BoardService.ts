@@ -5,9 +5,7 @@ import ContentType from '../types/ContentType';
 
 const BoardService = {
 
-    retrieveBoards: function (): AxiosPromise<{
-        boardInfo: BoardType[]
-    }> {
+    retrieveBoards: function (): AxiosPromise<BoardType[]> {
         return AaaService.get(`board`)
     },
 

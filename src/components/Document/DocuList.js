@@ -8,7 +8,7 @@ const DocuList = ({ documents }) => {
         let docuList = documents.map(doc => {
             let contentInfo = doc.content;
             let categoryInfo = doc.content.category;
-            let attachedFileInfo = doc.content.AttachedFiles;
+            let attachedFileInfo = doc.content.attachedFiles;
             return (
                 <div className="doculist-body" key={contentInfo.content_id}>
                     <div className="docu-generation">{doc.generation}</div>
@@ -49,7 +49,7 @@ const DocuList = ({ documents }) => {
                                     fileTypeClass = 'ri-file-zip-fill color-zip';
                                     break;
                                 case 'HWP':
-                                    fileTypeClass = 'custom-hwp'
+                                    fileTypeClass = 'ri-file-hwp-line color-hwp'
                                     break;
                                 default:
                                     fileTypeClass = 'ri-file-3-line'

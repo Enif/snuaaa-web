@@ -2,6 +2,7 @@ import { AaaService } from './index';
 import { AxiosPromise } from 'axios';
 import CommentType from '../types/CommentType';
 import ContentType from '../types/ContentType';
+import RiseSetType from '../types/RiseSetType';
 
 const HomeService = {
 
@@ -39,7 +40,7 @@ const HomeService = {
         return AaaService.get(`home/astrophoto`);
     },
 
-    retrieveRiseSet() {
+    retrieveRiseSet: function(): AxiosPromise<RiseSetType> {
         return AaaService.get(`home/riseset`);
     }
 }

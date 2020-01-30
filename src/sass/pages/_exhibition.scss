@@ -1,32 +1,39 @@
 
 .crt-exhibition-wrapper {
-
     position: relative;
     width: 500px;
     margin: 0 auto;
-    margin-top: 200px;
     padding: 2rem 2rem 3rem 2rem;
     background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     h3 {
         text-align: center;
         font-size: 1.3rem;
         font-weight: bold;
     }
-
-    // .crt-exhibition-input-wrapper {
-
-    // }
+    .crt-exhibition-input-wrapper {
+        width: 100%;
+    }
 
     .crt-exhibition-input-unit {
         margin: 1rem 0;
         display: flex;
         align-items: center;
+        // justify-content: center;
         label {
             font-size: 1rem;
             font-weight: bold;
             width: 5rem;
             flex-shrink: 0;
+        }
+        input {
+            height: 1.5rem;
+            // flex-shrink: 1;
+            width: 50%;
         }
         textarea {
             resize: none;
@@ -94,7 +101,7 @@
     .img-poster {
         /* margin-top: 10px; */
         width: 230px;
-        height: 230px;
+        height: 325px;
         /* object-fit: cover; */
         object-fit: fill;
     }
@@ -139,5 +146,12 @@
             flex-shrink: 0;
             margin: 0rem 1rem;
         }
+    }
+}
+
+@media screen and (max-width: 800px) {
+
+    .crt-exhibition-wrapper {
+        width: 80%;
     }
 }

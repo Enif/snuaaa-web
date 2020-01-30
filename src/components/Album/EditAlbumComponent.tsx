@@ -5,7 +5,11 @@ import ContentType from '../../types/ContentType';
 
 type EditAlbumComponentProps = {
     caption: string;
-    albumInfo: RecordOf<ContentType>
+    // albumInfo: RecordOf<ContentType>
+    title: string;
+    text: string;
+    isPrivate: boolean;
+    checkedCategory?: string;
     setIsPrivate: (isPrv: boolean) => void;
     categories?: CategoryType[];
     handleCategory: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -14,34 +18,28 @@ type EditAlbumComponentProps = {
     cancelAlbum: () => void;
 }
 
-function EditAlbumComponent ({
-    caption, albumInfo, setIsPrivate,
-    categories, handleCategory,
-    handleChange, confirmAlbum, cancelAlbum }: EditAlbumComponentProps) {
+function EditAlbumComponent(props: EditAlbumComponentProps) {
 
     const makeIsPrivate = () => {
-        if(albumInfo.album) {
-
-            return (
-                <div className="select-private-wrapper">
-                    <div
-                        className={`select-private-unit ${albumInfo.album.is_private ? 'selected' : ''}`}
-                        onClick={() => setIsPrivate(true)}>
-                        <i className="ri-user-fill enif-f-1p2x"></i>개인앨범
+        return (
+            <div className="select-private-wrapper">
+                <div
+                    className={`select-private-unit ${props.isPrivate ? 'selected' : ''}`}
+                    onClick={() => props.setIsPrivate(true)}>
+                    <i className="ri-user-fill enif-f-1p2x"></i>개인앨범
                     </div>
-                    <div
-                        className={`select-private-unit ${albumInfo.album.is_private ? '' : 'selected'}`}
-                        onClick={() => setIsPrivate(false)}>
-                        <i className="ri-group-fill enif-f-1p2x"></i>그룹앨범
+                <div
+                    className={`select-private-unit ${props.isPrivate ? '' : 'selected'}`}
+                    onClick={() => props.setIsPrivate(false)}>
+                    <i className="ri-group-fill enif-f-1p2x"></i>그룹앨범
                     </div>
-                </div>
-            )
-        }
+            </div>
+        )
     }
 
     const makeCategoryList = () => {
-        if (categories && categories.length > 0) {
-            return categories.map((category) => {
+        if (props.categories && props.categories.length > 0) {
+            return props.categories.map((category) => {
                 let style = {
                     "border": `1px solid ${category.category_color}`,
                 }
@@ -52,10 +50,17 @@ function EditAlbumComponent ({
                 }
                 return (
                     <>
-                        <input type="radio" id={category.category_id} name="category" value={category.category_id}
-                            checked={albumInfo.category_id === category.category_id} onChange={handleCategory} />
-                        <label htmlFor={category.category_id}
-                            style={albumInfo.category_id === category.category_id ? style_selected : style}>{category.category_name}</label>
+                        <input
+                            type="radio"
+                            id={category.category_id}
+                            name="category"
+                            value={category.category_id}
+                            checked={props.checkedCategory === category.category_id}
+                            onChange={props.handleCategory} />
+                        <label
+                            htmlFor={category.category_id}
+                            style={props.checkedCategory === category.category_id ? style_selected : style}>{category.category_name}
+                        </label>
                     </>
                 )
             })
@@ -66,13 +71,13 @@ function EditAlbumComponent ({
         <div className="enif-popup">
             <div className="enif-popup-content crt-alb-wrapper">
                 <table className="enif-table">
-                    <caption>{caption}</caption>
+                    <caption>{props.caption}</caption>
                     <tbody>
                         <tr>
                             <td colSpan={2}>{makeIsPrivate()}</td>
                         </tr>
                         {
-                            (categories && categories.length > 0) &&
+                            (props.categories && props.categories.length > 0) &&
                             <tr>
                                 <th>카테고리</th>
                                 <td className="categories-wrapper">{makeCategoryList()}</td>
@@ -81,19 +86,19 @@ function EditAlbumComponent ({
                         <tr>
                             <th>제목</th>
                             <td className="input-text crt-alb-title">
-                                <input type="text" name="title" placeholder="앨범 제목" value={albumInfo.title} onChange={handleChange} />
+                                <input type="text" name="title" placeholder="앨범 제목" value={props.title} onChange={props.handleChange} />
                             </td>
                         </tr>
                         <tr>
                             <th>설명</th>
                             <td className="crt-alb-contents">
-                                <textarea name="text" placeholder="앨범 설명" value={albumInfo.text} onChange={handleChange} />
+                                <textarea name="text" placeholder="앨범 설명" value={props.text} onChange={props.handleChange} />
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                <button className="enif-btn-common enif-btn-ok" onClick={confirmAlbum}>OK</button>
-                <button className="enif-btn-common enif-btn-cancel" onClick={cancelAlbum} >CANCEL</button>
+                <button className="enif-btn-common enif-btn-ok" onClick={props.confirmAlbum}>OK</button>
+                <button className="enif-btn-common enif-btn-cancel" onClick={props.cancelAlbum} >CANCEL</button>
             </div>
         </div>
     )

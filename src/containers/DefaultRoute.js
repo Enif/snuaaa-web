@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import Header from 'containers/Header';
-import Footer from 'components/Footer';
+import Footer from 'components/Footer.tsx';
 import SideBar from 'components/Home/SideBar';
 import RiseSet from 'components/Home/RiseSet';
 import TopUpButton from 'components/Common/TopUpButton';
