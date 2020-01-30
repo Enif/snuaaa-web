@@ -1,8 +1,10 @@
-import PhotoType from "./PhotoType";
+import ContentType from "./ContentType";
 
-interface AlbumType {
-    is_private: boolean,
-    thumbnail: PhotoType
+interface AlbumType extends ContentType {
+    album: {
+        is_private: boolean,
+        thumbnail: ContentType
+    }
 }
 
 export default AlbumType;

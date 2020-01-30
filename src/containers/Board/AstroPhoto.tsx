@@ -14,6 +14,7 @@ import BoardType from '../../types/BoardType';
 import ContentType from '../../types/ContentType';
 import BoardName from '../../components/Board/BoardName';
 import AuthContext from '../../contexts/AuthContext';
+import AlbumType from '../../types/AlbumType';
 
 const TAG = 'ASTROPHOTO';
 const ALBUMROWNUM = 12;
@@ -30,7 +31,7 @@ type AstroPhotoState = {
 
 class AstroPhoto extends React.Component<AstroPhotoProps, AstroPhotoState> {
 
-    albums: ContentType[];
+    albums: AlbumType[];
     photos: ContentType[];
     count: number;
 
@@ -60,12 +61,12 @@ class AstroPhoto extends React.Component<AstroPhotoProps, AstroPhotoState> {
     fetch = async () => {
         const { boardInfo, location } = this.props;
 
-        let isViewPhotos = (location.state && location.state.vp) ? true : false;
+        let isViewAlbums = (location.state && location.state.isViewAlbums) ? true : false;
         let pageIdx = (location.state && location.state.page) ? location.state.page : 1;
         let selectedTags = (location.state && location.state.tags && location.state.tags.length > 0) ? location.state.tags : [];
 
         this.setIsReady(false);
-        if (!isViewPhotos) {
+        if (isViewAlbums) {
             await PhotoBoardService.retrieveAlbumsInPhotoBoard(boardInfo.board_id, pageIdx)
                 .then((res) => {
                     this.albums = res.data.albumInfo;
@@ -96,10 +97,10 @@ class AstroPhoto extends React.Component<AstroPhotoProps, AstroPhotoState> {
         })
     }
 
-    setIsViewPhotos = (isViewPhotos: boolean) => {
-        history.push({
+    setIsViewAlbums = (isViewAlbums: boolean) => {
+        history.replace({
             state: {
-                vp: isViewPhotos,
+                isViewAlbums: isViewAlbums,
                 page: 1
             }
         })
@@ -107,7 +108,7 @@ class AstroPhoto extends React.Component<AstroPhotoProps, AstroPhotoState> {
 
     clickTag = (e: ChangeEvent<HTMLInputElement>) => {
         const { location } = this.props;
-        let isViewPhotos = (location.state && location.state.vp) ? true : false;
+        let isViewAlbums = (location.state && location.state.isViewAlbums) ? true : false;
         let selectedTags = (location.state && location.state.tags && location.state.tags.length > 0) ? location.state.tags : [];
 
         const tagId = e.target.id;
@@ -115,7 +116,7 @@ class AstroPhoto extends React.Component<AstroPhotoProps, AstroPhotoState> {
         if (selectedTags.includes(tagId)) {
             history.replace({
                 state: {
-                    vp: isViewPhotos,
+                    isViewAlbums: isViewAlbums,
                     page: 1,
                     tags: selectedTags.filter((tag: any) => tagId !== tag)
                 }
@@ -124,7 +125,7 @@ class AstroPhoto extends React.Component<AstroPhotoProps, AstroPhotoState> {
         else {
             history.replace({
                 state: {
-                    vp: isViewPhotos,
+                    isViewAlbums: isViewAlbums,
                     page: 1,
                     tags: selectedTags.concat(tagId)
                 }
@@ -134,11 +135,11 @@ class AstroPhoto extends React.Component<AstroPhotoProps, AstroPhotoState> {
 
     clickAll = () => {
         const { location } = this.props;
-        let isViewPhotos = (location.state && location.state.vp) ? true : false;
+        let isViewAlbums = (location.state && location.state.isViewAlbums) ? true : false;
 
         history.push({
             state: {
-                vp: isViewPhotos,
+                isViewAlbums: isViewAlbums,
                 page: 1,
                 tags: []
             }
@@ -153,12 +154,12 @@ class AstroPhoto extends React.Component<AstroPhotoProps, AstroPhotoState> {
 
     clickPage = (idx: number) => {
         const { location } = this.props;
-        let isViewPhotos = (location.state && location.state.vp) ? true : false;
+        let isViewAlbums = (location.state && location.state.isViewAlbums) ? true : false;
         let selectedTags = (location.state && location.state.tags && location.state.tags.length > 0) ? location.state.tags : [];
 
         history.push({
             state: {
-                vp: isViewPhotos,
+                isViewAlbums: isViewAlbums,
                 page: idx,
                 tags: selectedTags
             }
@@ -172,12 +173,12 @@ class AstroPhoto extends React.Component<AstroPhotoProps, AstroPhotoState> {
         const { boardInfo, location } = this.props;
         const { isReady, popUpState } = this.state;
 
-        let isViewPhotos = (location.state && location.state.vp) ? true : false;
+        let isViewAlbums = (location.state && location.state.isViewAlbums) ? true : false;
         let pageIdx = (location.state && location.state.page) ? location.state.page : 1;
         let selectedTags = (location.state && location.state.tags && location.state.tags.length > 0) ? location.state.tags : [];
 
-        let albumSelectorClassName = "view-type-selector" + (isViewPhotos ? "" : " selected")
-        let photoSelectorClassName = "view-type-selector" + (isViewPhotos ? " selected" : "")
+        let albumSelectorClassName = "view-type-selector" + (isViewAlbums ? "" : " selected")
+        let photoSelectorClassName = "view-type-selector" + (isViewAlbums ? " selected" : "")
 
         return (
             <AuthContext.Consumer>
@@ -190,11 +191,11 @@ class AstroPhoto extends React.Component<AstroPhotoProps, AstroPhotoState> {
                             </div>
                             {!isReady && <Loading />}
                             <div className="view-type-selector-wrapper">
-                                <div className={albumSelectorClassName} onClick={() => this.setIsViewPhotos(false)}>앨범</div>
-                                <div className={photoSelectorClassName} onClick={() => this.setIsViewPhotos(true)}>사진</div>
+                                <div className={albumSelectorClassName} onClick={() => this.setIsViewAlbums(false)}>사진</div>
+                                <div className={photoSelectorClassName} onClick={() => this.setIsViewAlbums(true)}>앨범</div>
                             </div>
                             {
-                                isViewPhotos ?
+                                !isViewAlbums ?
                                     (
                                         <>
                                             <div className="board-search-wrapper">

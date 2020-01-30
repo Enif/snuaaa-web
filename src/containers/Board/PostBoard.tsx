@@ -1,12 +1,10 @@
-import React, { ChangeEvent, KeyboardEvent } from 'react';
-import { Location } from 'history';
+import React, { ChangeEvent, KeyboardEvent, useState, useEffect } from 'react';
 
 import Loading from '../../components/Common/Loading';
 import PostList from '../../components/Post/PostList';
 import Paginator from '../../components/Common/Paginator';
 import CreatePost from '../PostBoard/CreatePost';
 import BoardStateEnum from '../../common/BoardStateEnum';
-import history from '../../common/history';
 import BoardName from '../../components/Board/BoardName';
 import SearchTypeEnum from '../../common/SearchTypeEnum';
 import BoardService from '../../services/BoardService';
@@ -14,8 +12,8 @@ import SelectBox from '../../components/Common/SelectBox';
 import BoardType from '../../types/BoardType';
 import ContentType from '../../types/ContentType';
 import AuthContext from '../../contexts/AuthContext';
+import { useLocation, useHistory } from 'react-router';
 
-const TAG = 'POSTBOARD'
 const POSTROWNUM = 10;
 const searchOptions = [{
     id: SearchTypeEnum.ALL,
@@ -33,56 +31,31 @@ const searchOptions = [{
 
 type PostBoardProps = {
     boardInfo: BoardType;
-    location: Location;
-    // level: number;
 }
 
-type PostBoardState = {
-    boardState: number;
-    searchInfo: { type: string, keyword: string };
-    posts: ContentType[];
-    postCount: number;
-}
+function PostBoard({ boardInfo }: PostBoardProps) {
 
-class PostBoard extends React.Component<PostBoardProps, PostBoardState> {
+    const location = useLocation();
+    const history = useHistory();
+    const [boardState, setBoardState] = useState<number>(BoardStateEnum.LOADING);
+    const [posts, setPosts] = useState<ContentType[]>([]);
+    const [postCount, setPostCount] = useState<number>(0);
+    const [searchInfo, setSearchInfo] = useState<{ type: string, keyword: string }>({
+        type: SearchTypeEnum.ALL,
+        keyword: ''
+    })
 
+    useEffect(() => {
+        fetch();
+    }, [location])
 
-    constructor(props: PostBoardProps) {
-        super(props);
-        console.log(`[${TAG}] Constructor`)
-
-        const hisState = history.location.state;
-        this.state = {
-            boardState: BoardStateEnum.LOADING,
-            posts: [],
-            postCount: 0,
-            searchInfo: (hisState && hisState.searchInfo) ?
-                hisState.searchInfo :
-                {
-                    type: SearchTypeEnum.ALL,
-                    keyword: ''
-                }
+    useEffect(() => {
+        if (location.state && location.state.searchInfo) {
+            setSearchInfo(location.state.searchInfo)
         }
-    }
+    }, [])
 
-    componentDidMount() {
-        this.fetch()
-    }
-
-    componentDidUpdate(prevProps: PostBoardProps) {
-        if (prevProps.boardInfo !== this.props.boardInfo ||
-            prevProps.location !== this.props.location) {
-            this.fetch();
-        }
-    }
-
-    setBoardState = (state: number) => {
-        this.setState({
-            boardState: state
-        })
-    }
-
-    clickPage = (idx: number) => {
+    const clickPage = (idx: number) => {
         history.push({
             state: {
                 ...history.location.state,
@@ -91,8 +64,7 @@ class PostBoard extends React.Component<PostBoardProps, PostBoardState> {
         })
     }
 
-    fetch = async () => {
-        const { boardInfo, location } = this.props;
+    const fetch = async () => {
 
         let searchInfo = history.location.state && location.state.searchInfo;
         let pageIdx = location.state && location.state.page;
@@ -101,37 +73,31 @@ class PostBoard extends React.Component<PostBoardProps, PostBoardState> {
             pageIdx = 1;
         }
         try {
-            this.setBoardState(BoardStateEnum.LOADING)
+            setBoardState(BoardStateEnum.LOADING)
             let res;
             if (searchInfo && searchInfo.keyword) {
-                res = await BoardService.searchPostsInBoard(boardInfo.board_id, searchInfo.type, searchInfo.keyword, 0)
+                res = await BoardService.searchPostsInBoard(boardInfo.board_id, searchInfo.type, searchInfo.keyword, pageIdx)
             }
             else {
                 res = await BoardService.retrievePostsInBoard(boardInfo.board_id, pageIdx)
             }
-            this.setState({
-                posts: res.data.postInfo,
-                postCount: res.data.postCount,
-                boardState: BoardStateEnum.READY
-            })
+            setPosts(res.data.postInfo);
+            setPostCount(res.data.postCount);
+            setBoardState(BoardStateEnum.READY);
         }
         catch (err) {
             console.error(err);
         }
     }
 
-    handleSearchOption = (e: ChangeEvent<HTMLInputElement>) => {
-        const { searchInfo } = this.state;
-        this.setState({
-            searchInfo: {
-                ...searchInfo,
-                type: e.target.value
-            }
+    const handleSearchOption = (e: ChangeEvent<HTMLInputElement>) => {
+        setSearchInfo({
+            ...searchInfo,
+            type: e.target.value
         })
     }
 
-    search = async () => {
-        const { searchInfo } = this.state;
+    const search = async () => {
         if (!searchInfo || !searchInfo.keyword || searchInfo.keyword.length < 2) {
             alert("2글자 이상 입력해주세요.")
         }
@@ -146,24 +112,20 @@ class PostBoard extends React.Component<PostBoardProps, PostBoardState> {
         }
     }
 
-    handleSearchKeyDown = (e: KeyboardEvent) => {
+    const handleSearchKeyDown = (e: KeyboardEvent) => {
         if (e.keyCode === 13) {
-            this.search();
+            search();
         }
     }
 
-    handleSearchKeyword = (e: ChangeEvent<HTMLInputElement>) => {
-        const { searchInfo } = this.state;
-        this.setState({
-            searchInfo: {
-                ...searchInfo,
-                keyword: e.target.value
-            }
+    const handleSearchKeyword = (e: ChangeEvent<HTMLInputElement>) => {
+        setSearchInfo({
+            ...searchInfo,
+            keyword: e.target.value
         })
     }
 
-    makeCategoryList = () => {
-        const { boardInfo } = this.props;
+    const makeCategoryList = () => {
         if (boardInfo.categories && boardInfo.categories.length > 0) {
             return (
                 <select>
@@ -173,81 +135,73 @@ class PostBoard extends React.Component<PostBoardProps, PostBoardState> {
         }
     }
 
-    render() {
-        console.log(`[${TAG}] render.. `)
+    let pageIdx = history.location.state && history.location.state.page ? history.location.state.page : 1;
 
-        const { handleSearchKeyword, handleSearchOption, handleSearchKeyDown } = this
-        const { boardInfo } = this.props;
-        const { boardState, searchInfo, posts, postCount } = this.state;
-        let pageIdx = history.location.state && history.location.state.page ? history.location.state.page : 1;
-
-        return (
-            <AuthContext.Consumer>
-                {
-                    authContext => (() => {
-                        if (boardState === BoardStateEnum.LOADING) {
-                            return <Loading />
-                        }
-                        else if (boardState === BoardStateEnum.READY || boardState === BoardStateEnum.WRITING) {
-                            return (
-                                <div className="board-wrapper postboard-wrapper">
-                                    <BoardName board_id={boardInfo.board_id} board_name={boardInfo.board_name} />
-                                    <div className="board-desc">
-                                        {boardInfo.board_desc}
-                                    </div>
-                                    {
-                                        boardState === BoardStateEnum.READY &&
-                                        <>
-                                            {this.makeCategoryList()}
-                                            <div className="board-search-wrapper">
-                                                <div className="board-search-input">
-                                                    <SelectBox
-                                                        selectName={"searchOption"}
-                                                        optionList={searchOptions}
-                                                        onSelect={handleSearchOption}
-                                                        selectedOption={searchInfo.type} />
-                                                    <i className="ri-search-line enif-f-1x" onClick={this.search}></i>
-                                                    <input type="text" onChange={handleSearchKeyword} value={searchInfo.keyword} onKeyDown={handleSearchKeyDown} />
-                                                </div>
-                                                <div className="board-btn-write-wrapper">
-                                                    {
-                                                        authContext.authInfo.user.level >= boardInfo.lv_write &&
-                                                        <button className="board-btn-write" onClick={() => this.setBoardState(BoardStateEnum.WRITING)}>
-                                                            <i className="ri-pencil-line enif-f-1p2x"></i>글쓰기
-                                                        </button>
-                                                    }
-                                                </div>
-                                            </div>
-
-                                            <PostList posts={posts} />
-                                            {postCount > 0 && <Paginator pageIdx={pageIdx} pageNum={Math.ceil(postCount / POSTROWNUM)} clickPage={this.clickPage} />}
-
-                                        </>
-                                    }
-                                    {
-                                        boardState === BoardStateEnum.WRITING &&
-                                        <CreatePost
-                                            board_id={boardInfo.board_id}
-                                            close={() => this.setBoardState(BoardStateEnum.READY)}
-                                            fetch={this.fetch} />
-                                    }
+    return (
+        <AuthContext.Consumer>
+            {
+                authContext => (() => {
+                    if (boardState === BoardStateEnum.LOADING) {
+                        return <Loading />
+                    }
+                    else if (boardState === BoardStateEnum.READY || boardState === BoardStateEnum.WRITING) {
+                        return (
+                            <div className="board-wrapper postboard-wrapper">
+                                <BoardName board_id={boardInfo.board_id} board_name={boardInfo.board_name} />
+                                <div className="board-desc">
+                                    {boardInfo.board_desc}
                                 </div>
-                            )
-                        }
-                        else return (
-                            <div>ERROR PAGE</div>
+                                {
+                                    boardState === BoardStateEnum.READY &&
+                                    <>
+                                        {makeCategoryList()}
+                                        <div className="board-search-wrapper">
+                                            <div className="board-select-wrapper ">
+                                                <SelectBox
+                                                    selectName={"searchOption"}
+                                                    optionList={searchOptions}
+                                                    onSelect={handleSearchOption}
+                                                    selectedOption={searchInfo.type} />
+                                            </div>
+                                            <div className="board-search-input">
+                                                <input type="text" onChange={handleSearchKeyword} value={searchInfo.keyword} onKeyDown={handleSearchKeyDown} />
+                                                <button className="board-search-btn" onClick={search}>
+                                                    <i className="ri-search-line enif-f-1x"></i>
+                                                </button>
+                                            </div>
+                                            <div className="board-btn-write-wrapper">
+                                                {
+                                                    authContext.authInfo.user.level >= boardInfo.lv_write &&
+                                                    <button className="board-btn-write" onClick={() => setBoardState(BoardStateEnum.WRITING)}>
+                                                        <i className="ri-pencil-line enif-f-1p2x"></i>글쓰기
+                                                        </button>
+                                                }
+                                            </div>
+                                        </div>
+
+                                        <PostList posts={posts} />
+                                        {postCount > 0 && <Paginator pageIdx={pageIdx} pageNum={Math.ceil(postCount / POSTROWNUM)} clickPage={clickPage} />}
+
+                                    </>
+                                }
+                                {
+                                    boardState === BoardStateEnum.WRITING &&
+                                    <CreatePost
+                                        board_id={boardInfo.board_id}
+                                        close={() => setBoardState(BoardStateEnum.READY)}
+                                        fetch={fetch} />
+                                }
+                            </div>
                         )
-                    })()
-                }
+                    }
+                    else return (
+                        <div>ERROR PAGE</div>
+                    )
+                })()
+            }
 
-            </AuthContext.Consumer>
-            // <>
-            //     {
-
-            //     }
-            // </>
-        );
-    }
+        </AuthContext.Consumer>
+    );
 }
 
 export default PostBoard;

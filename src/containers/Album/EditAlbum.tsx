@@ -6,18 +6,19 @@ import AlbumService from '../../services/AlbumService';
 import ContentType from '../../types/ContentType';
 import { RecordOf, Record } from 'immutable';
 import CategoryType from '../../types/CategoryType';
+import AlbumType from '../../types/AlbumType';
 
 const TAG = 'EDITALBUM'
 
 type EditAlbumProps = {
-    albumInfo: ContentType;
+    albumInfo: AlbumType;
     categoryInfo?: CategoryType[];
     setAlbumState: (state: number) => void;
     fetch: () => void;
 }
 
 type EditAlbumState = {
-    albumInfo: RecordOf<ContentType>;
+    albumInfo: RecordOf<AlbumType>;
 }
 
 class EditAlbum extends React.Component<EditAlbumProps, EditAlbumState> {

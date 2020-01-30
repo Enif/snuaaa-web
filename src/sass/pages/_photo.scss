@@ -27,21 +27,29 @@
             height: 100%;
             object-fit: cover;
         }
+        &:hover {
+            .photo-cover {
+                max-height: 100px;
+                transition: all 0.15s ease-in-out;
+            }
+        }
         .photo-cover {
             position: absolute;
-            // visibility: hidden;
             display: flex;
+            justify-content: space-between;
             color: #C9C9C9;
             bottom: 0;
             z-index: 1;
             width: 100%;
-            padding: 5px;
+            // padding: 5px;
             font-size: 16px;
             background-color: rgba(22, 22, 22, 0.5);
-            &:hover {
-                visibility: visible;
+            max-height: 0;
+            overflow: hidden;
+            .photo-cover-unit {
+                padding: 0.5rem;
+                display: flex;
             }
-    
         }
     }
     
@@ -142,24 +150,32 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            width: 60px;
             max-width: 0px;
             overflow: hidden;
             height: 100%;
             z-index: 1;
-            // transition: all 0.2s;
-            cursor: pointer;
+            transition: all 0.2s;
+            // cursor: pointer;
             user-select: none;
             &.prev {
                 left: 0;
-                background: linear-gradient(-90deg, rgba(128, 128, 128, 0.01), rgba(128, 128, 128, 0.3));
+                // background: linear-gradient(-90deg, rgba(128, 128, 128, 0.01), rgba(128, 128, 128, 0.3));
             }
             &.next {
                 right: 0;
-                background: linear-gradient(90deg, rgba(232, 232, 232, 0.01),rgba(232, 232, 232, 0.3));
+                // background: linear-gradient(90deg, rgba(232, 232, 232, 0.01),rgba(232, 232, 232, 0.3));
+            }
+            .photo-move-btn {
+                background-color: rgba(200, 200, 200, 0.8);
+                border-radius: 50%;
+                border: none;
+                height: 2.5rem;
+                width: 2.5rem;
             }
             .ri-icons {
-                font-size: 3rem;
-                color: #FFFFFF;
+                font-size: 1.5rem;
+                color: $color-gray5;
             }
         }
         .photo-action-fullscreen-wrapper {
@@ -177,7 +193,6 @@
         }
         &:hover {
             .photo-move-action {
-                width: 50px;
                 max-width: 200px;
             }
         }
@@ -571,11 +586,9 @@
     .photo-section-wrapper {
         width: 90%;
         height: 90%;
-        overflow: auto;
-
         .photo-section-bottom {
             display: flex;
-            // height: 100%;
+            overflow: auto;            
             flex-direction: column;
         }
         .photo-section-right {

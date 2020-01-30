@@ -1,32 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import BoardType from '../../types/BoardType';
 
-function Navigation({ boards }) {
+type NavigationProps = {
+    boards: BoardType[];
+}
 
-    const [isShowAbout, setIsShowAbout] = useState(false);
-    const [isShowNotice, setIsShowNotice] = useState(false);
-    const [isShowBoard, setIsShowBoard] = useState(false);
-    const [isShowOfficial, setIsShowOfficial] = useState(false);
-    const [isShowPhotoBoard, setIsShowPhotoBoard] = useState(false);
-
-
-    let subAboutClass = 'menu-nav-sub' + (isShowAbout ? '' : ' menu-nav-hidden')
-    let subNoticeClass = 'menu-nav-sub' + (isShowNotice ? '' : ' menu-nav-hidden')
-    let subBoardClass = 'menu-nav-sub' + (isShowBoard ? '' : ' menu-nav-hidden')
-    let subPhotoBoardClass = 'menu-nav-sub' + (isShowPhotoBoard ? '' : ' menu-nav-hidden')
-    let subOfficialClass = 'menu-nav-sub' + (isShowOfficial ? '' : ' menu-nav-hidden')
-    let subOpen = isShowAbout || isShowNotice || isShowBoard || isShowPhotoBoard || isShowOfficial;
-    let navClass = 'main-menu-nav-wrapper pos-relative' + (subOpen ? ' nav-open' : '')
+function Navigation({ boards }: NavigationProps) {
 
     const activeStyle = {
-        fontWeight: 'bold',
-        color: '#fad55f'
+        fontWeight: 900,
+        color: "#fad55f"
     };
 
-    let noticeBoards = [];
-    let communityBoards = [];
-    let officialBoards = [];
-    let photoBoards = [];
+    let noticeBoards: BoardType[] = [];
+    let communityBoards: BoardType[] = [];
+    let officialBoards: BoardType[] = [];
+    let photoBoards: BoardType[] = [];
 
     if (boards && boards.length > 0) {
         boards.forEach((board) => {
@@ -47,7 +37,7 @@ function Navigation({ boards }) {
         })
     }
 
-    function makeBoardList(boards) {
+    function makeBoardList(boards: BoardType[]) {
         const boardList = boards.map((board) => {
             return (
                 <Link to={`/board/${board.board_id}`} key={board.board_id}>
@@ -61,7 +51,7 @@ function Navigation({ boards }) {
     }
 
     return (
-        <div className={navClass}>
+        <div className={"main-menu-nav-wrapper pos-relative"}>
             <nav>
                 {/* <input className="nav-toggle" id="nav-toggle" type="checkbox"/> 
                     <label className="navicon" htmlFor="nav-toggle"><span className="navicon-bar"></span></label> */}
@@ -72,10 +62,10 @@ function Navigation({ boards }) {
                             <div className="menu-item-1">★</div>
                         </NavLink>
                     </li>
-                    <li className="menu-nav" onClick={() => setIsShowAbout(true)} onMouseEnter={() => setIsShowAbout(true)} onMouseLeave={() => setIsShowAbout(false)}>
+                    <li className="menu-nav">
                         <div className="menu-item-1"><span></span>A.A.A.</div>
                         {
-                            <div className={subAboutClass}>
+                            <div className="menu-nav-sub">
                                 <ul>
                                     <Link to='/about/aboutAAA'><li>AAA는?</li></Link>
                                     <Link to='/about/contact'><li>찾아오는길&amp;연락처</li></Link>
@@ -84,38 +74,37 @@ function Navigation({ boards }) {
                                     <Link to='/about/history'><li>동아리 발자취</li></Link>
                                     <Link to='/about/officers'><li><span>역대 </span>회장단/임원진</li></Link>
                                     <Link to='/about/regulation'><li>AAA회칙</li></Link>
-                                    <a href="https://archive.snuaaa.net" alt="archive" target="_blank" rel="noopener noreferrer">
-                                        <li>AAArchive</li>
+                                    <a href="https://archive.snuaaa.net" target="_blank" rel="noopener noreferrer">
+                                        <li>AAArchive<i className="ri-external-link-line"></i></li>
                                     </a>
                                 </ul>
                             </div>
                         }
                     </li>
-                    <li className="menu-nav" onClick={() => setIsShowNotice(true)} onMouseEnter={() => setIsShowNotice(true)} onMouseLeave={() => setIsShowNotice(false)}>
+                    <li className="menu-nav">
                         <div className="menu-item-1"><span></span>A-Notice</div>
-                        <div className={subNoticeClass}>
+                        <div className="menu-nav-sub">
                             {makeBoardList(noticeBoards)}
                         </div>
                     </li>
-                    <li className="menu-nav" onClick={() => setIsShowBoard(true)} onMouseEnter={() => setIsShowBoard(true)} onMouseLeave={() => setIsShowBoard(false)}>
+                    <li className="menu-nav">
                         <div className="menu-item-1"><span></span>A-Daily</div>
-                        <div className={subBoardClass}>
+                        <div className="menu-nav-sub">
                             {makeBoardList(communityBoards)}
                         </div>
                     </li>
-                    <li className="menu-nav" onClick={() => setIsShowOfficial(true)} onMouseEnter={() => setIsShowOfficial(true)} onMouseLeave={() => setIsShowOfficial(false)}>
+                    <li className="menu-nav">
                         <div className="menu-item-1"><span></span>A-Docu</div>
-                        <div className={subOfficialClass}>
+                        <div className="menu-nav-sub">
                             {makeBoardList(officialBoards)}
                         </div>
                     </li>
-                    <li className="menu-nav" onClick={() => setIsShowPhotoBoard(true)} onMouseEnter={() => setIsShowPhotoBoard(true)} onMouseLeave={() => setIsShowPhotoBoard(false)}>
+                    <li className="menu-nav">
                         <div className="menu-item-1"><span></span>A-Photo</div>
-                        <div className={subPhotoBoardClass}>
+                        <div className="menu-nav-sub">
                             {makeBoardList(photoBoards)}
                         </div>
                     </li>
-                    {/* <li className="menu-nav"><a href="http://snuaaa.net">별들의 흔적</a></li> */}
                 </ul>
             </nav>
         </div>

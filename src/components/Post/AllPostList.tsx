@@ -46,7 +46,7 @@ const AllPostList = ({ posts }: { posts: ContentType[] }) => {
                         </div>
                         <div className="post-list-unit post-list-unit-3">
                             <span className="color-gray1 icon-wrapper">
-                                <i className="ri-message-fill"></i>
+                                <i className="ri-message-2-fill"></i>
                                 {contentInfo.comment_num}
                             </span>
                         </div>

@@ -16,7 +16,7 @@ const AlbumService = {
     },
 
     retrieveAlbum: function (album_id: number): AxiosPromise<{
-        albumInfo: ContentType,
+        albumInfo: AlbumType,
         categoryInfo: CategoryType[],
         tagInfo: TagType[]
     }> {

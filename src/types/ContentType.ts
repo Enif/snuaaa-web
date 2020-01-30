@@ -24,12 +24,13 @@ interface ContentType {
     updatedAt: string;
     board: BoardType;
     user: UserType;
-    album?: AlbumType;
+    // album?: AlbumType;
+    albumPhoto?: PhotoType[];
     photo?: PhotoType;
     exhibition?: ExhibitionType;
     exhibitPhoto?: ExhibitPhotoType;
     tags?: TagType[];
-    categories?: CategoryType[];
+    category?: CategoryType;
     attachedFiles?: FileType[];
 }
 

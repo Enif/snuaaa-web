@@ -1,11 +1,12 @@
 import { AaaService } from './index';
 import { AxiosPromise } from 'axios';
 import ContentType from '../types/ContentType';
+import AlbumType from '../types/AlbumType';
 
 const PhotoBoardService = {
 
     retrieveAlbumsInPhotoBoard: function (board_id: string, pageIdx: number, ctg_id?: string): AxiosPromise<{
-        albumInfo: ContentType[],
+        albumInfo: AlbumType[],
         albumCount: number
     }> {
         if (!ctg_id) {

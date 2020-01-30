@@ -8,6 +8,7 @@
     top: 0;
     left: 0;
     width: 100%;
+    min-height: 100%;
     padding-left: 8%;
     padding-right: 8%;
     background: linear-gradient(0deg, #fef5ce,#c7dbc5 50%, #4ca1af);
@@ -21,7 +22,7 @@
         font-family: 'NIXGONB-Vb';
     }
     .div-agreement {
-        height: 350px;
+        height: 600px;
         width: 800px;
         margin: 5px auto;
         padding: 3px;
@@ -146,7 +147,7 @@
         // height: 100%;
         // background-color: #182641;
         .div-agreement {
-            height: 15rem;
+            height: 25rem;
             width: 100%;
         }
     

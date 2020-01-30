@@ -24,6 +24,7 @@ import PhotoService from '../../services/PhotoService';
 import AuthContext from '../../contexts/AuthContext';
 
 const TAG = 'PHOTO'
+const VISIBLE_TIME = 3;
 
 type PhotoProps = {
     match: match<{ photo_id: string }>
@@ -37,6 +38,7 @@ type PhotoState = {
     isFullscreen: boolean;
     contentInfo?: RecordOf<ContentType>;
     editContentInfo?: RecordOf<ContentType>;
+    remainedTime: number;
 }
 
 class Photo extends React.Component<PhotoProps, PhotoState> {
@@ -44,6 +46,7 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
     boardTagInfo: TagType[];
     albumPhotosInfo: any;
     fullscreenRef: RefObject<HTMLDivElement>;
+    timer?: NodeJS.Timer;
 
     constructor(props: PhotoProps) {
         super(props);
@@ -51,12 +54,14 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
         this.boardTagInfo = [];
         this.albumPhotosInfo = undefined;
         this.fullscreenRef = React.createRef();
+        this.timer = undefined;
         this.state = {
             likeInfo: false,
             photoState: ContentStateEnum.LOADING,
             isFullscreen: false,
             contentInfo: undefined,
-            editContentInfo: undefined
+            editContentInfo: undefined,
+            remainedTime: VISIBLE_TIME
         }
     }
 
@@ -68,6 +73,13 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
             toggleFullScreen();
         };
         document.body.classList.add('enif-overflow-hidden');
+        this.timer = setInterval(() => {
+            if (this.state.remainedTime > 0) {
+                this.setState({
+                    remainedTime: this.state.remainedTime - 1
+                })
+            }
+        }, 1000)
     }
 
     componentDidUpdate(prevProps: PhotoProps) {
@@ -78,10 +90,13 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
 
     componentWillUnmount() {
         document.body.classList.remove('enif-overflow-hidden')
+        if (this.timer) {
+            clearInterval(this.timer);
+        }
     }
 
-    fetch = async () => {
 
+    fetch = async () => {
         let photo_id = Number(this.props.match.params.photo_id);
         this.setPhotoState(ContentStateEnum.LOADING)
 
@@ -263,7 +278,6 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
                     editContentInfo: editContentInfo.set("tags", editContentInfo.tags.concat(this.boardTagInfo.filter(tag => tagId === tag.tag_id)))
                 })
             }
-
         }
     }
 
@@ -326,8 +340,14 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
         }
     }
 
+    mouseOver = () => {
+        this.setState({
+            remainedTime: VISIBLE_TIME
+        })
+    }
+
     render() {
-        const { contentInfo, editContentInfo, likeInfo, photoState, isFullscreen } = this.state;
+        const { contentInfo, editContentInfo, likeInfo, photoState, isFullscreen, remainedTime } = this.state;
         // const { my_id } = this.props;
         const { setPhotoState, likePhoto, deletePhoto, updatePhoto, setAlbumThumbnail,
             handleChange, handleDate, handleTag, closePhoto, boardTagInfo } = this;
@@ -350,7 +370,7 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
                         {
                             contentInfo && editContentInfo && photoInfo &&
                             <>
-                                <div className="enif-modal-wrapper photo-popup" onClick={closePhoto}>
+                                <div className="enif-popup photo-popup" onClick={closePhoto}>
                                     <div className="photo-section-wrapper" onClick={(e) => e.stopPropagation()}>
                                         <div className="photo-alb-title-wrp">
                                             <Link className="photo-alb-title" to={backLink}>
@@ -363,15 +383,25 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
                                         </div>
                                         <div className="photo-section-bottom">
                                             <div className="photo-section-left">
-                                                <div className="photo-img-wrapper" ref={this.fullscreenRef} >
-                                                    <div className="photo-move-action prev" onClick={() => this.moveToPhoto(-1)}>
-                                                        <i className="ri-arrow-left-s-line ri-icons enif-pointer"></i>
-                                                    </div>
+                                                <div className="photo-img-wrapper" ref={this.fullscreenRef} onMouseMove={this.mouseOver} >
+                                                    {
+                                                        remainedTime > 0 &&
+                                                        <div className="photo-move-action prev">
+                                                            <button className="photo-move-btn" onClick={() => this.moveToPhoto(-1)}>
+                                                                <i className="ri-arrow-left-s-line ri-icons enif-pointer"></i>
+                                                            </button>
+                                                        </div>
+                                                    }
                                                     <Image imgSrc={photoInfo.file_path} />
-                                                    <div className="photo-move-action next" onClick={() => this.moveToPhoto(1)}>
-                                                        <i className="ri-arrow-right-s-line ri-icons enif-pointer"></i>
-                                                    </div>
-                                                    <div className="photo-action-fullscreen-wrapper">
+                                                    {
+                                                        remainedTime > 0 &&
+                                                        <div className="photo-move-action next">
+                                                            <button className="photo-move-btn enif-flex-center" onClick={() => this.moveToPhoto(1)}>
+                                                                <i className="ri-arrow-right-s-line ri-icons enif-pointer"></i>
+                                                            </button>
+                                                        </div>
+                                                    }
+                                                    <div className="photo-action-fullscreen-wrapper enif-flex-center">
                                                         <i className={`${fullscreenClass} enif-pointer enif-f-1p2x`} onClick={this.clickFullscreen}></i>
                                                     </div>
                                                 </div>

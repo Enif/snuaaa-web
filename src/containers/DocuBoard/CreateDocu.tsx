@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, useEffect } from 'react';
 import DocuService from '../../services/DocuService';
 import CrtDocuType from '../../types/CrtDocuType';
 import CreateDocuComponent from '../../components/Document/CreateDocuComponent';
@@ -32,6 +32,13 @@ function CreateDocu(props: CreateDocuProps) {
     const [isUploading, setIsUploading] = useState<boolean>(false);
     const [uploadIdx, setUploadIdx] = useState<number>(0);
 
+    useEffect(() => {
+        document.body.classList.add('enif-overflow-hidden');
+        return function() {
+            document.body.classList.remove('enif-overflow-hidden');
+        }
+    }, [])
+    
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setDocuInfo({
             ...docuInfo,

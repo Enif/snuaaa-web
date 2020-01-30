@@ -1,8 +1,24 @@
-import React from 'react';
+import React, { ChangeEvent, FocusEvent } from 'react';
+
+type InputFieldProps = {
+    label: string;
+    name: string;
+    type?: string;
+    value: string;
+    valid?: boolean;
+    placeholder?: string;
+    pattern?: string;
+    disabled?: boolean;
+    maxLength?: number;
+    required?: boolean;
+    invalidMessage?: string;
+    handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    handleBlur?: (e: FocusEvent<HTMLInputElement>) => void;
+}
 
 const InputField = ({ label, name, type, value, valid,
     placeholder, pattern, disabled, maxLength, required,
-    invalidMessage, handleChange, handleBlur }) => {
+    invalidMessage, handleChange, handleBlur }: InputFieldProps) => {
 
     // this.inputRef = React.createRef();
     let fieldClass;

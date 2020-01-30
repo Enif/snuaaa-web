@@ -23,7 +23,7 @@ function CreatePostComponent(props: CreatePostComponentProps) {
 
     return (
         <>
-            <Prompt when={true} message="글 작성을 취소하시겠습니까?"></Prompt>
+            <Prompt when={true} message="작성 중인 내용은 저장되지 않습니다. 작성을 취소하시겠습니까? 작성을 취소하시겠습니까?"></Prompt>
             <div className="writepost-wrapper">
                 <div className="writepost-header">
                     <i className="ri-arrow-left-line enif-pointer" onClick={props.close}></i>

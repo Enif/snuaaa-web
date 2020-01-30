@@ -350,6 +350,47 @@
     }
 }
 
+.new-albums-wrapper {
+    width: 50%;
+    padding: 5px;
+    h4 {
+        font-size: 20px;
+        font-weight: bold;
+        color: #7193C4;
+        padding: 10px 5px;
+    }
+    .new-album-list-wrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-content: flex-start;
+        flex-wrap: wrap;    
+    }
+    .new-album-list {
+        width: calc(50% - 2px);
+        position: relative;
+        margin: 1px;
+
+        &::before {
+            content: '';
+            padding-top: 100%;
+            float: left;
+        }
+        &::after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+        img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+}
+
+
 .new-exhibitions-wrapper {
     width: 100%;
     padding: 5px;
@@ -518,6 +559,13 @@
     }
 
     .new-posts-wrapper {
+        width: 100%;
+        padding: 0rem 0.5rem;
+        margin-top: 0.7rem;
+    }
+
+    
+    .new-albums-wrapper {
         width: 100%;
         padding: 0rem 0.5rem;
         margin-top: 0.7rem;

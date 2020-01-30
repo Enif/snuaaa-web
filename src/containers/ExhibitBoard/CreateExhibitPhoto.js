@@ -39,6 +39,14 @@ class CreateExhibitPhoto extends React.Component {
             btnDisabled: false
         }
     }
+    
+    componentDidMount() {
+        document.body.classList.add('enif-overflow-hidden');
+    }
+
+    componentWillUnmount() {
+        document.body.classList.remove('enif-overflow-hidden')
+    }
 
     handleChange = (e) => {
         this.setState({

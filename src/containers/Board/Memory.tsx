@@ -12,6 +12,7 @@ import ContentType from '../../types/ContentType';
 import BoardType from '../../types/BoardType';
 import BoardName from '../../components/Board/BoardName';
 import AuthContext from '../../contexts/AuthContext';
+import AlbumType from '../../types/AlbumType';
 
 const TAG = 'MEMORY'
 const ALBUMROWNUM = 12;
@@ -28,7 +29,7 @@ type MemoryState = {
 
 class Memory extends React.Component<MemoryProps, MemoryState> {
 
-    albums: ContentType[];
+    albums: AlbumType[];
     albumCount: number;
 
     constructor(props: MemoryProps) {
@@ -40,41 +41,18 @@ class Memory extends React.Component<MemoryProps, MemoryState> {
         this.state = {
             popUpState: false,
             isReady: false,
-            // pageIdx: (hisState && hisState.page) ? hisState.page : 1,
-            // category: (hisState && hisState.category) ? hisState.category : null
         }
     }
 
     componentDidMount() {
         this.fetch();
-        // const { category, pageIdx } = this.state;
-        // this.fetch(category, pageIdx);
     }
-
-    // static getDerivedStateFromProps(props, state) {
-    //     console.log(`[${TAG}] getDerivedStateFromProps`);
-    //     const hisState = history.location.state;
-    //     return {
-    //         category: (hisState && hisState.category) ? hisState.category : null,
-    //         pageIdx: (hisState && hisState.page) ? hisState.page : 1
-    //     }
-    // }
 
     componentDidUpdate(prevProps: MemoryProps) {
         if (prevProps.location !== this.props.location) {
             this.fetch();
         }
     }
-
-    // shouldComponentUpdate(nextProps, nextState) {
-    //     console.log(`[${TAG}] shouldComponentUpdate`);
-    //     if (this.state.category !== nextState.category ||
-    //         this.state.pageIdx !== nextState.pageIdx) {
-    //         this.fetch(nextState.category, nextState.pageIdx);
-    //         return false;
-    //     }
-    //     return true
-    // }
 
     setIsReady = (isReady: boolean) => {
         this.setState({

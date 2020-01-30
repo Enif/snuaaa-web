@@ -38,7 +38,7 @@ class Comment extends React.Component<CommentProps, CommentState> {
     }
 
     componentDidUpdate(prevProps: CommentProps) {
-        console.log(prevProps)
+        // console.log(prevProps)
     }
 
     shouldComponentUpdate(nextProps: CommentProps, nextState: CommentState) {
@@ -86,7 +86,6 @@ class Comment extends React.Component<CommentProps, CommentState> {
             }
             await CommentService.createComment(this.props.parent_id, commentInfo)
                 .then((res: any) => {
-                    console.log('[%s] Create Comment Success', TAG);
                     this.setState({
                         text: ''
                     })
@@ -100,7 +99,7 @@ class Comment extends React.Component<CommentProps, CommentState> {
     }
 
     updateComment = async (comment_id: number) => {
-        console.log(`[${TAG}] Update Comment`);
+        // console.log(`[${TAG}] Update Comment`);
         this.setState({
             isReady: false
         })
@@ -129,7 +128,7 @@ class Comment extends React.Component<CommentProps, CommentState> {
     }
 
     deleteComment = async (comment_id: number) => {
-        console.log(`[${TAG}] Delete Comment`);
+        // console.log(`[${TAG}] Delete Comment`);
         let goDrop = window.confirm("정말로 삭제하시겠습니까?");
         if (goDrop) {
 
@@ -161,7 +160,7 @@ class Comment extends React.Component<CommentProps, CommentState> {
 
 
     render() {
-        console.log(`[${TAG}] render..`);
+        // console.log(`[${TAG}] render..`);
         // const { my_id } = this.props;
         const { comments } = this.state;
 

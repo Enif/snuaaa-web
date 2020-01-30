@@ -1,9 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { convertDate } from 'utils/convertDate'
-import history from 'common/history';
+import { Link, useHistory } from 'react-router-dom';
+import { convertDate } from '../../utils/convertDate'
+import CommentType from '../../types/CommentType';
+import { LocationDescriptorObject } from 'history';
+import ContentTypeEnum from '../../common/ContentTypeEnum';
 
-const MyCommentList = ({ comments }) => {
+type MyCommentListProps = {
+    comments: CommentType[];
+}
+
+function MyCommentList ({ comments }: MyCommentListProps) {
+
+    const history = useHistory();
 
     const makeCommentList = () => {
 
@@ -11,11 +19,11 @@ const MyCommentList = ({ comments }) => {
             return comments.map(comment => {
                 let contentInfo = comment.content;
                 let boardInfo = comment.content.board;
-                let linkTo = '';
-                if (contentInfo.type === "PO") {
+                let linkTo: string | LocationDescriptorObject;
+                if (contentInfo.type === ContentTypeEnum.POST) {
                     linkTo = `/post/${comment.parent_id}`
                 }
-                else if (contentInfo.type === "PH") {
+                else if (contentInfo.type === ContentTypeEnum.PHOTO) {
                     linkTo = {
                         pathname: `/photo/${comment.parent_id}`,
                         state: {
@@ -24,10 +32,13 @@ const MyCommentList = ({ comments }) => {
                         }
                     }
                 }
-                else if (contentInfo.type === "DO") {
+                else if (contentInfo.type === ContentTypeEnum.DOCUMENT) {
                     linkTo = `/document/${comment.parent_id}`
                 }
-
+                else {
+                    linkTo = '/';
+                }
+                
                 return (
                     <div className="my-cmt-wrapper" key={comment.comment_id}>
                         <div className="my-cmt-boardname">

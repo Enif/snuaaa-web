@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const SignUpSuccess = () => {
+function SignUpSuccess() {
     return (
         <div className="popup-wrapper">
             <div className="popup-box">
@@ -11,7 +11,7 @@ const SignUpSuccess = () => {
                     <p>가입을 환영합니다!"</p>
                 </div>
                 <div className="popup-confirm">
-                    <Link to="login">
+                    <Link to="/login">
                         <button>LOGIN</button>
                     </Link>
                 </div>

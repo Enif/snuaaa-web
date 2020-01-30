@@ -24,7 +24,7 @@ const MyPhotoList = ({ photos }: { photos: ContentType[] }) => {
                         }}>
                             <div className="photo-cover">
                                 <i className="ri-heart-fill"></i> {contentInfo.like_num}&nbsp;
-                                <i className="ri-message-fill"></i> {contentInfo.comment_num}
+                                <i className="ri-message-2-fill"></i> {contentInfo.comment_num}
                             </div>
                             {
                                 photoInfo &&
