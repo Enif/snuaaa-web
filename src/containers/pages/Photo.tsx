@@ -370,7 +370,7 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
                         {
                             contentInfo && editContentInfo && photoInfo &&
                             <>
-                                <div className="enif-modal-wrapper photo-popup" onClick={closePhoto}>
+                                <div className="enif-popup photo-popup" onClick={closePhoto}>
                                     <div className="photo-section-wrapper" onClick={(e) => e.stopPropagation()}>
                                         <div className="photo-alb-title-wrp">
                                             <Link className="photo-alb-title" to={backLink}>

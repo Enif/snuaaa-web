@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, useEffect } from 'react';
 import EditAlbumComponent from '../../components/Album/EditAlbumComponent';
 import PhotoBoardService from '../../services/PhotoBoardService';
 import CrtAlbumType from '../../types/CrtAlbumType';
@@ -17,6 +17,13 @@ function CreateAlbum(props: CreateAlbumProps) {
         text: '',
         is_private: false
     })
+
+    useEffect(() => {
+        document.body.classList.add('enif-overflow-hidden');
+        return function() {
+            document.body.classList.remove('enif-overflow-hidden');
+        }
+    }, [])
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setAlbumInfo({

@@ -41,7 +41,7 @@ function RiseSetMobile() {
             </div>
             {
                 isExpanded &&
-                <div className="enif-modal-wrapper enif-flex-center" onClick={() => setIsExpanded(false)}>
+                <div className="enif-popup" onClick={() => setIsExpanded(false)}>
                     <div className="rise-set-wrapper">
                         <div className="moon-phase-wrapper">
                             <div className="moon-container">

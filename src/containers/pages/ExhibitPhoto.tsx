@@ -233,7 +233,7 @@ class ExhibitPhoto extends React.Component<ExhibitPhotoProps, ExhibitPhotoState>
             <AuthContext.Consumer>
                 {authContext => (
                     <FullScreenPortal>
-                        <div className="enif-modal-wrapper photo-popup" onClick={closePhoto}>
+                        <div className="enif-popup photo-popup" onClick={closePhoto}>
                             <div className="photo-section-wrapper" onClick={(e) => e.stopPropagation()}>
                                 <div className="photo-alb-title-wrp">
                                     <div className="photo-alb-title">

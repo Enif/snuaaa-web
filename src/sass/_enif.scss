@@ -103,7 +103,11 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.6);
+    animation-name: appear;
+    animation-duration: 300ms;
 }
+
+
 
 .enif-popup-content {
     position: relative;
@@ -111,6 +115,8 @@
     padding: 2rem 2rem;
     background-color: #ffffff;
     z-index: 99;
+    animation-name: slide-in;
+    animation-duration: 0.5s;
     h3 {
         text-align: center;
         font-size: 1.3rem;
@@ -150,9 +156,23 @@
         }
     }
 }
+@keyframes appear {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
 
-
-
+@keyframes slide-in {
+    from {
+        transform: translateY(-150px);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
 
 .enif-popup .enif-btn-common {
     // position: relative;
