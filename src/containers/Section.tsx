@@ -14,6 +14,7 @@ import RiseSetContext from '../contexts/RiseSetContext';
 import AuthContext from '../contexts/AuthContext';
 import RiseSetType from '../types/RiseSetType';
 import HomeService from '../services/HomeService';
+import MightyCalculator from './pages/MightyCalculator';
 
 const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
@@ -107,6 +108,7 @@ function Section() {
                             <DefaultRoute path="/userpage/:uuid" component={UserPage} />
                             <DefaultRoute path="/posts/all" component={AllPosts} />
                             <DefaultRoute path="/comments/all" component={AllComments} />
+                            <DefaultRoute path="/mightyCalculator" component={MightyCalculator} />
                             <DefaultRoute component={Home} />
                         </Switch>
                         {
