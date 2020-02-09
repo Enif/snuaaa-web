@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic');
 @import url('https://fonts.googleapis.com/css?family=Nanum+Myeongjo&display=swap');
-// @import url('https://fonts.googleapis.com/css?family=Jua');
+@import url('https://fonts.googleapis.com/css?family=Charmonman&display=swap');
+
 @font-face {
     font-family: 'NIXGONB-Vb';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/NIXGONB-Vb.woff') format('woff');
@@ -70,47 +70,15 @@
     font-feature-settings: 'liga';
 }
 
-.material-icons.pointer { cursor: pointer; }
-
-/* Rules for sizing the icon. */
-.material-icons.md-18 { font-size: 18px; }
-.material-icons.md-24 { font-size: 24px; }
-.material-icons.md-36 { font-size: 36px; }
-.material-icons.md-48 { font-size: 48px; }
-
-/* Rules for using icons as black on a light background. */
-.material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
-.material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
-
-/* Rules for using icons as white on a dark background. */
-.material-icons.md-light { color: rgba(255, 255, 255, 1); }
-.material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
-
 .snuaaa-wrapper {
     min-height: 100%;
     display: flex;
     flex-direction: column;
 }
 
-.block-scroll {
-    overflow: hidden;
-    height: 100%;
-}
-
 .font-20 {
     font-size: 20px;
 }
 
-.sa-color-aqua {
-    color: $color_aqua;
-}
-/*ffa5a5
-color1: #153450
-color2: #294052
-color3: #447294
-color4: #8FBCDB
-color5: #F4D6BC
-color6: #F8E4CC
-*/
 
 

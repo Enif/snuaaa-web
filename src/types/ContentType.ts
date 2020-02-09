@@ -28,7 +28,7 @@ interface ContentType {
     albumPhoto?: PhotoType[];
     photo?: PhotoType;
     exhibition?: ExhibitionType;
-    exhibitPhoto?: ExhibitPhotoType;
+    // exhibitPhoto?: ExhibitPhotoType;
     tags?: TagType[];
     category?: CategoryType;
     attachedFiles?: FileType[];

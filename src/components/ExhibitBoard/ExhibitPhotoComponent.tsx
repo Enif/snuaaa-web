@@ -1,13 +1,21 @@
 import React from 'react';
 
-import { breakLine } from 'utils/breakLine';
-import { convertDate, convertFullDate } from 'utils/convertDate'
+import { breakLine } from '../../utils/breakLine';
+import { convertDate, convertFullDate } from '../../utils/convertDate'
 import ActionDrawer from '../Common/ActionDrawer';
-import Image from '../Common/AaaImage.tsx';
+import Image from '../Common/AaaImage';
 import defaultProfile from 'assets/img/profile.png';
+import ExhibitPhotoType from '../../types/ExhibitPhotoType';
 
-const ExhibitPhotoComponent = ({ contentInfo, likeInfo, my_id,
-    editPhoto, deletePhoto, likePhoto }) => {
+type ExhibitPhotoComponentProps = {
+    contentInfo: ExhibitPhotoType;
+    my_id: number;
+    editPhoto: () => void;
+    deletePhoto: () => void;
+}
+
+const ExhibitPhotoComponent = ({ contentInfo, my_id,
+    editPhoto, deletePhoto }: ExhibitPhotoComponentProps) => {
 
     let content = contentInfo;
     let photoInfo = contentInfo && contentInfo.exhibitPhoto;
@@ -55,7 +63,7 @@ const ExhibitPhotoComponent = ({ contentInfo, likeInfo, my_id,
                                         {
                                             (photographerInfo || photoInfo.photographer_alt) &&
                                             <div className="photo-info-unit">
-                                                <div className="photo-info-label">Photo By</div>
+                                                <div className="photo-info-label">Photographer</div>
                                                 {photographerInfo
                                                     ?
                                                     <>
@@ -91,7 +99,7 @@ const ExhibitPhotoComponent = ({ contentInfo, likeInfo, my_id,
                                                 <div>{photoInfo.lens}</div>
                                                 {photoInfo.focal_length && (
                                                     <>
-                                                        <div className="photo-info-label">@</div>
+                                                        <div className="photo-info-fl">@</div>
                                                         <div>{photoInfo.focal_length}mm</div>
                                                     </>)}
                                             </div>)}

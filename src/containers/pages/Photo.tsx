@@ -22,6 +22,7 @@ import ContentService from '../../services/ContentService';
 import AlbumService from '../../services/AlbumService';
 import PhotoService from '../../services/PhotoService';
 import AuthContext from '../../contexts/AuthContext';
+import AlbumType from '../../types/AlbumType';
 
 const TAG = 'PHOTO'
 const VISIBLE_TIME = 3;
@@ -38,13 +39,16 @@ type PhotoState = {
     isFullscreen: boolean;
     contentInfo?: RecordOf<ContentType>;
     editContentInfo?: RecordOf<ContentType>;
+    prevPhoto?: ContentType,
+    nextPhoto?: ContentType,
+    prevAlbumPhoto?: ContentType,
+    nextAlbumPhoto?: ContentType,
     remainedTime: number;
 }
 
 class Photo extends React.Component<PhotoProps, PhotoState> {
 
     boardTagInfo: TagType[];
-    albumPhotosInfo: any;
     fullscreenRef: RefObject<HTMLDivElement>;
     timer?: NodeJS.Timer;
 
@@ -52,7 +56,6 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
         super(props);
 
         this.boardTagInfo = [];
-        this.albumPhotosInfo = undefined;
         this.fullscreenRef = React.createRef();
         this.timer = undefined;
         this.state = {
@@ -60,6 +63,8 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
             photoState: ContentStateEnum.LOADING,
             isFullscreen: false,
             contentInfo: undefined,
+            prevPhoto: undefined,
+            nextPhoto: undefined,
             editContentInfo: undefined,
             remainedTime: VISIBLE_TIME
         }
@@ -104,10 +109,14 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
             await PhotoService.retrievePhoto(photo_id)
                 .then((res) => {
                     this.boardTagInfo = res.data.boardTagInfo
-                    this.albumPhotosInfo = res.data.albumPhotosInfo;
+                    // this.albumPhotosInfo = res.data.albumPhotosInfo;
                     this.setState({
                         contentInfo: Record(res.data.photoInfo)(),
                         editContentInfo: Record(res.data.photoInfo)(),
+                        prevPhoto: res.data.prevPhoto,
+                        nextPhoto: res.data.nextPhoto,
+                        prevAlbumPhoto: res.data.prevAlbumPhoto,
+                        nextAlbumPhoto: res.data.nextAlbumPhoto,
                         likeInfo: res.data.likeInfo,
                         photoState: ContentStateEnum.READY
                     })
@@ -155,39 +164,55 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
         })
     }
 
+    moveToAlbum = (direction: number) => {
+        const { prevAlbumPhoto, nextAlbumPhoto } = this.state;
+
+        if (direction === 1 && prevAlbumPhoto) {
+            history.replace({
+                pathname: `/photo/${prevAlbumPhoto.content_id}`,
+                state: {
+                    modal: true,
+                    backgroundLocation: history.location.state.backgroundLocation
+                }
+            })
+        }
+        else if (direction === -1 && nextAlbumPhoto) {
+            history.replace({
+                pathname: `/photo/${nextAlbumPhoto.content_id}`,
+                state: {
+                    modal: true,
+                    backgroundLocation: history.location.state.backgroundLocation
+                }
+            })
+        }
+        else {
+            console.error('Cannot Move')
+        }
+    }
+
     moveToPhoto = (direction: number) => {
-        const { contentInfo } = this.state;
-        const { albumPhotosInfo } = this;
-        if (contentInfo && albumPhotosInfo && albumPhotosInfo.length > 0) {
-            let index = -1;
-            for (let i = 0; i < albumPhotosInfo.length; i++) {
-                if (albumPhotosInfo[i].content_id === contentInfo.content_id) {
-                    index = i;
-                    break;
+        const { prevPhoto, nextPhoto } = this.state;
+
+        if (direction === 1 && prevPhoto) {
+            history.replace({
+                pathname: `/photo/${prevPhoto.content_id}`,
+                state: {
+                    modal: true,
+                    backgroundLocation: history.location.state.backgroundLocation
                 }
-            }
-            if (direction === 1) {
-                if (index < albumPhotosInfo.length - 1 && index > -1) {
-                    history.replace({
-                        pathname: `/photo/${albumPhotosInfo[index + 1].content_id}`,
-                        state: {
-                            modal: true,
-                            backgroundLocation: history.location.state.backgroundLocation
-                        }
-                    })
+            })
+        }
+        else if (direction === -1 && nextPhoto) {
+            history.replace({
+                pathname: `/photo/${nextPhoto.content_id}`,
+                state: {
+                    modal: true,
+                    backgroundLocation: history.location.state.backgroundLocation
                 }
-            }
-            else if (direction === -1) {
-                if (index < albumPhotosInfo.length && index > 0) {
-                    history.replace({
-                        pathname: `/photo/${albumPhotosInfo[index - 1].content_id}`,
-                        state: {
-                            modal: true,
-                            backgroundLocation: history.location.state.backgroundLocation
-                        }
-                    })
-                }
-            }
+            })
+        }
+        else {
+            console.error('Cannot Move')
         }
     }
 
@@ -373,10 +398,12 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
                                 <div className="enif-popup photo-popup" onClick={closePhoto}>
                                     <div className="photo-section-wrapper" onClick={(e) => e.stopPropagation()}>
                                         <div className="photo-alb-title-wrp">
+                                            <i className="ri-arrow-left-s-line enif-pointer" onClick={() => this.moveToAlbum(-1)}></i>
                                             <Link className="photo-alb-title" to={backLink}>
                                                 <i className="ri-gallery-line"></i>
                                                 <h5>{photoInfo.album ? photoInfo.album.title : "기본앨범"}</h5>
                                             </Link>
+                                            <i className="ri-arrow-right-s-line enif-pointer" onClick={() => this.moveToAlbum(1)}></i>
                                             <div className="enif-modal-close" onClick={closePhoto}>
                                                 <i className="ri-close-fill enif-f-1p5x enif-pointer"></i>
                                             </div>

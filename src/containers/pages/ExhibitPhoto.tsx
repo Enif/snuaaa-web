@@ -1,23 +1,18 @@
 import React, { RefObject } from 'react';
 import { Redirect, match } from 'react-router';
-import { Link } from 'react-router-dom';
 import ExhibitPhotoService from '../../services/ExhibitPhotoService';
 import ContentService from '../../services/ContentService';
 import Loading from '../../components/Common/Loading';
 import ContentStateEnum from '../../common/ContentStateEnum';
-import Comment from '../../containers/Comment';
 import history from '../../common/history';
 import FullScreenPortal from '../../containers/FullScreenPortal';
 import Image from '../../components/Common/AaaImage';
 import ExhibitPhotoComponent from '../../components/ExhibitBoard/ExhibitPhotoComponent';
 import EditExhibitPhoto from '../ExhibitBoard/EditExhibitPhoto';
 import { Location } from 'history';
-import ContentType from '../../types/ContentType';
 import { RecordOf, Record } from 'immutable';
 import AuthContext from '../../contexts/AuthContext';
-
-
-const TAG = 'EXHIBITPHOTO'
+import ExhibitPhotoType from '../../types/ExhibitPhotoType';
 
 type ExhibitPhotoProps = {
     match: match<{ exhibitPhoto_id: string }>;
@@ -28,12 +23,12 @@ type ExhibitPhotoState = {
     likeInfo: boolean;
     photoState: number;
     isFullscreen: boolean;
-    contentInfo?: RecordOf<ContentType>;
+    contentInfo?: RecordOf<ExhibitPhotoType>;
 }
 
 class ExhibitPhoto extends React.Component<ExhibitPhotoProps, ExhibitPhotoState> {
 
-    exhibitPhotosInfo: ContentType[];
+    exhibitPhotosInfo: ExhibitPhotoType[];
     fullscreenRef: RefObject<HTMLDivElement>;
 
 
@@ -41,11 +36,9 @@ class ExhibitPhoto extends React.Component<ExhibitPhotoProps, ExhibitPhotoState>
 
         super(props);
 
-        // this.contentInfo = undefined;
         this.exhibitPhotosInfo = [];
         this.fullscreenRef = React.createRef();
         this.state = {
-            // exhibitPhoto_id: this.props.match.params.exhibitPhoto_id,
             likeInfo: false,
             photoState: ContentStateEnum.LOADING,
             isFullscreen: false
@@ -264,11 +257,11 @@ class ExhibitPhoto extends React.Component<ExhibitPhotoProps, ExhibitPhotoState>
                                         contentInfo &&
                                     <ExhibitPhotoComponent
                                         contentInfo={contentInfo}
-                                        likeInfo={likeInfo}
+                                        // likeInfo={likeInfo}
                                         my_id={authContext.authInfo.user.user_id}
                                         // setPhotoState={setPhotoState}
                                         editPhoto={() => setPhotoState(ContentStateEnum.EDITTING)}
-                                        likePhoto={likePhoto}
+                                        // likePhoto={likePhoto}
                                         deletePhoto={deletePhoto} />
                                     }
                                 </div>
