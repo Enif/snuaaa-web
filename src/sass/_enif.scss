@@ -34,15 +34,6 @@
     height: 100%;
     overflow: hidden;
     background-color: rgba(0, 0, 0, 0.6);
-    .enif-modal-close {
-        position: absolute;
-        right: 10px;
-        top: 10px;
-        color: $color_gray2;
-        &:hover {
-            color: $color_gray5;
-        }
-    }
     .enif-btn-common {
         float: right;
         bottom: 20px;
@@ -105,6 +96,15 @@
     background-color: rgba(0, 0, 0, 0.6);
     animation-name: appear;
     animation-duration: 300ms;
+}
+
+.enif-modal-close {
+    position: absolute;
+    right: 10px;
+    color: $color_gray2;
+    &:hover {
+        color: $color_gray5;
+    }
 }
 
 

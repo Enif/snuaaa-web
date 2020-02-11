@@ -9,7 +9,11 @@ const PhotoService = {
         photoInfo: ContentType,
         likeInfo: boolean,
         boardTagInfo: TagType[],
-        albumPhotosInfo: ContentType[]
+        albumPhotosInfo: ContentType[],
+        prevPhoto: ContentType,
+        nextPhoto: ContentType,
+        prevAlbumPhoto: ContentType,
+        nextAlbumPhoto: ContentType
     }> {
         return AaaService.get(`photo/${photo_id}`)
     },

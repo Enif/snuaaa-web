@@ -135,13 +135,16 @@
 .exhibition-info-wrapper {
     h5 {
         text-align: center;
-        font-size: 15px;
+        font-size: 1.5rem;
+        margin: 2rem 0px;
+        font-family: 'Nanum Myeongjo', serif;
     }
     .exhibition-slogan-wrapper {
         display: flex;
         margin: 1rem 0rem;
         align-items: center;
         h3 {
+            font-family: 'Charmonman', cursive;
             font-size: 1.5rem;
             flex-shrink: 0;
             margin: 0rem 1rem;

@@ -18,6 +18,7 @@ const TAG = 'ALBUM'
 
 type AlbumProps = {
     match: match<{ album_id: string }>;
+    location: Location;
     // my_id: number;
 }
 
@@ -48,6 +49,12 @@ class Album extends React.Component<AlbumProps, AlbumState> {
 
     componentDidMount() {
         this.fetch();
+    }
+
+    componentDidUpdate(prevProps: AlbumProps) {
+        if (prevProps.location !== this.props.location) {
+            this.fetch();
+        }
     }
 
     fetch = async () => {

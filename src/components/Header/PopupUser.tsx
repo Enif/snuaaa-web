@@ -10,7 +10,6 @@ type PopupUserProps = {
 }
 
 function PopupUser({ profile_path, togglePopup, logout }: PopupUserProps) {
-
     useEffect(() => {
         window.addEventListener('click', togglePopup);
         document.body.classList.add('enif-overflow-hidden-mobile');

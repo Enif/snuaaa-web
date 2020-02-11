@@ -1,12 +1,12 @@
 import { AaaService } from './index';
 import { AxiosPromise } from 'axios';
-import ContentType from '../types/ContentType';
+import ExhibitPhotoType from '../types/ExhibitPhotoType';
 
 const ExhibitPhotoService = {
 
     retrieveExhibitPhoto: function (exhibitPhoto_id: number): AxiosPromise<{
-        exhibitPhotoInfo: ContentType,
-        exhibitPhotosInfo: ContentType[],
+        exhibitPhotoInfo: ExhibitPhotoType,
+        exhibitPhotosInfo: ExhibitPhotoType[],
         likeInfo: boolean,
     }> {
         return AaaService.get(`exhibitPhoto/${exhibitPhoto_id}`);
