@@ -69,49 +69,47 @@ const PhotoInfo = ({ photoInfo, likeInfo, my_id, setPhotoState, deletePhoto,
                                 <div className="enif-divider enif-hide-desktop"></div>
                                 {
                                     photo &&
-                                    <table className="info-infos-wrapper">
-                                        <tbody>
-                                            {photo.date && (
-                                                <tr>
-                                                    <td>Date</td>
-                                                    <td>{convertDate(photo.date)}</td>
-                                                </tr>)}
+                                    <div className="info-infos-wrapper">
+                                        {photo.date && (
+                                            <div className="photo-info-unit">
+                                                <div className="photo-info-label">Date</div>
+                                                <div>{convertDate(photo.date)}</div>
+                                            </div>)}
 
-                                            {photo.location && (
-                                                <tr>
-                                                    <td>Location</td>
-                                                    <td>{photo.location}</td>
-                                                </tr>)}
+                                        {photo.location && (
+                                            <div className="photo-info-unit">
+                                                <div className="photo-info-label">Location</div>
+                                                <div>{photo.location}</div>
+                                            </div>)}
 
-                                            {photo.camera && (
-                                                <tr>
-                                                    <td>Camera</td>
-                                                    <td>{photo.camera}</td>
-                                                </tr>)}
+                                        {photo.camera && (
+                                            <div className="photo-info-unit">
+                                                <div className="photo-info-label">Camera</div>
+                                                <div>{photo.camera}</div>
+                                            </div>)}
 
-                                            {photo.lens && (
-                                                <tr>
-                                                    <td>Lens</td>
-                                                    <td>{photo.lens}</td>
-                                                </tr>)}
+                                        {photo.lens && (
+                                            <div className="photo-info-unit">
+                                                <div className="photo-info-label">Lens</div>
+                                                <div>{photo.lens}</div>
+                                                {photo.focal_length && (
+                                                    <>
+                                                        <div className="photo-info-fl">@</div>
+                                                        <div>{photo.focal_length}mm</div>
+                                                    </>)}
+                                            </div>)}
 
-                                            {photo.focal_length && (
-                                                <tr>
-                                                    <td>@</td>
-                                                    <td>{photo.focal_length}</td>
-                                                </tr>)}
 
-                                            {(photo.f_stop || photo.exposure_time || photo.iso) && (
-                                                <tr>
-                                                    <td>Setting</td>
-                                                    <td>
-                                                        {photo.f_stop && <>F/{photo.f_stop}</>}
-                                                        {photo.exposure_time && <> {photo.exposure_time}</>}
-                                                        {photo.iso && <> ISO{photo.iso}</>}
-                                                    </td>
-                                                </tr>)}
-                                        </tbody>
-                                    </table>
+                                        {(photo.f_stop || photo.exposure_time || photo.iso) && (
+                                            <div className="photo-info-unit">
+                                                <div className="photo-info-label">Setting</div>
+                                                <div>
+                                                    {photo.f_stop && <>F/{photo.f_stop}</>}
+                                                    {photo.exposure_time && <> {photo.exposure_time}</>}
+                                                    {photo.iso && <> ISO{photo.iso}</>}
+                                                </div>
+                                            </div>)}
+                                    </div>
                                 }
                             </div>
                         </div>
