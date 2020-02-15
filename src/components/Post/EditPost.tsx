@@ -2,6 +2,8 @@ import React, { ChangeEvent } from 'react';
 import Editor from '../../containers/Common/Editor';
 import ContentType from '../../types/ContentType';
 import AttachFile from './AttachFile';
+import FileType from '../../types/FileType';
+import FileIcon from '../Common/FileIcon';
 
 type EditPostProps = {
     postInfo: ContentType;
@@ -11,11 +13,42 @@ type EditPostProps = {
     attachedFiles: File[];
     attachFile: (e: ChangeEvent<HTMLInputElement>) => void;
     removeAttachedFile: (index: number) => void;
+    removedFiles: number[];
+    removeFile: (file_id: number) => void;
+    cancelRemoveFile: (file_id: number) => void;
     cancel: () => void;
     confirm: () => void;
 }
 
+
 function EditPost(props: EditPostProps) {
+
+    const makeFileList = () => {
+        if (props.postInfo.attachedFiles && props.postInfo.attachedFiles.length > 0) {
+            return (
+                <div className="file-download-wrapper" >
+                    {props.postInfo.attachedFiles.map((file: FileType) => {
+                        let isDeleted = props.removedFiles.includes(file.file_id);
+
+                        return (
+                            <div key={file.file_id}>
+                                <div className={`file-attached-list ${isDeleted ? "deleted" : ""}`}>
+                                    <FileIcon fileInfo={file} isFull={true} isDownload={false} />
+                                </div>
+                                {
+                                    props.removedFiles.includes(file.file_id) ?
+                                        <i className="ri-delete-bin-2-line" onClick={() => props.cancelRemoveFile(file.file_id)}>취소</i>
+                                        :
+                                        <i className="ri-delete-bin-line" onClick={() => props.removeFile(file.file_id)}></i>
+                                }
+                            </div>
+                        )
+                    }
+                    )}
+                </div>
+            )
+        }
+    }
 
     return (
         <div className="writepost-wrapper">
@@ -29,9 +62,9 @@ function EditPost(props: EditPostProps) {
             <div className="writepost-content">
                 <Editor text={props.postInfo.text} editText={props.handleEdittingText} />
             </div>
+            {props.postInfo.attachedFiles && makeFileList()}
             <div className="writepost-file">
                 <AttachFile
-                    existedFiles={props.postInfo.attachedFiles}
                     files={props.attachedFiles}
                     attachFile={props.attachFile}
                     removeFile={props.removeAttachedFile} />

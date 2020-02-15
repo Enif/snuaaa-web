@@ -1,31 +1,12 @@
 import React, { ChangeEvent } from 'react';
-import FileType from '../../types/FileType';
 
 type AttachFileProps = {
-    existedFiles?: FileType[];
-    removeExistedFiles?: (file_id: number) => void;
     files: File[];
     attachFile: (e: ChangeEvent<HTMLInputElement>) => void;
     removeFile: (index: number) => void;
 }
 
 function AttachFile(props: AttachFileProps) {
-
-    const makeExFileList = (files: FileType[]) => {
-        if (files && files.length > 0) {
-            return files.map((file, index) => {
-                return (
-                    <li key={file.file_id}>
-                        <p>{file.original_name}</p>
-                        {/* <i className="ri-close-circle-line ri-icons enif-pointer"
-                            onClick={() => {
-                                props.removeExistedFiles && props.removeExistedFiles(file.file_id)
-                            }}>
-                        </i> */}
-                    </li>)
-            })
-        }
-    }
 
     const makeFileList = (files: File[]) => {
         if (files && files.length > 0) {
@@ -55,19 +36,12 @@ function AttachFile(props: AttachFileProps) {
         <div className="attach-file-wrapper">
             <div className="file-list">
                 {
-                    props.existedFiles && props.existedFiles.length > 0 &&
-                    <>
-                        <ul>
-                            {makeExFileList(props.existedFiles)}
-                        </ul>
-                    </>
-                }
-                {
                     props.files && props.files.length > 0 &&
                     <ul>
                         {makeFileList(props.files)}
                     </ul>
                 }
+                <p className="guide-message">파일은 최대 5개, 개당 20MB까지 첨부 가능합니다.</p>
             </div>
             <label htmlFor="attach_file" >
                 <div className="attach-btn-wrapper">

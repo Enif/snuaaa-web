@@ -34,7 +34,7 @@ function PostComponent(
                         return (
                             <div className="file-download-list" key={file.file_id} >
                                 <DownloadFile key={file.file_id} content_id={file.parent_id} file_id={file.file_id} >
-                                    <FileIcon fileInfo={file} isFull={true} />
+                                    <FileIcon fileInfo={file} isFull={true} isDownload={true} />
                                 </DownloadFile>
                             </div>
                         )

@@ -7,7 +7,7 @@ import { convertFullDate } from 'utils/convertDate';
 import { breakLine } from 'utils/breakLine';
 import ActionDrawer from '../Common/ActionDrawer';
 import history from 'common/history';
-import FileIcon from 'components/Common/FileIcon';
+import FileIcon from 'components/Common/FileIcon.tsx';
 
 const DocuComponent = ({ docData, my_id, setDocState, deleteDoc, likeDoc, isLiked }) => {
 
@@ -21,7 +21,7 @@ const DocuComponent = ({ docData, my_id, setDocState, deleteDoc, likeDoc, isLike
                 return (
                     <div className="file-download-list" key={file.file_id}>
                         <DownloadFile key={file.file_id} content_id={file.parent_id} file_id={file.file_id}>
-                            <FileIcon fileInfo={file} isFull={true} />
+                            <FileIcon fileInfo={file} isFull={true} isDownload={true} />
                         </DownloadFile>
                     </div>
                 )
