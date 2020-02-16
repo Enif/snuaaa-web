@@ -1,6 +1,14 @@
 import React from 'react';
+import FileType from '../../types/FileType';
 
-const FileIcon = ({ fileInfo, isFull }) => {
+type FileIconProps = {
+    fileInfo: FileType;
+    isFull: boolean;
+    isDownload: boolean;
+    isDeleted?: boolean;
+}
+
+const FileIcon = ({ fileInfo, isFull, isDownload, isDeleted }: FileIconProps) => {
 
     let fileTypeClass = '';
 
@@ -30,13 +38,18 @@ const FileIcon = ({ fileInfo, isFull }) => {
 
     return (
         <>
-            <i className={`fas ${fileTypeClass} font-20 file-icon`}></i>
+            <i className={`fas ${fileTypeClass} ${isDeleted ? 'deleted ' : ''}font-20 file-icon`}></i>
             {
                 isFull &&
                 <>
                     <div className="file-download-name">{fileInfo.original_name}</div>
                     &nbsp;
-                    <i className="ri-download-2-line enif-f-1p2x"></i>{fileInfo.download_count}
+                    {
+                        isDownload &&
+                        <>
+                            <i className="ri-download-2-line enif-f-1p2x"></i>{fileInfo.download_count}
+                        </>
+                    }
                 </>
             }
         </>
