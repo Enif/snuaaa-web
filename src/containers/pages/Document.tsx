@@ -9,8 +9,10 @@ import ContentService from '../../services/ContentService';
 import DocuService from '../../services/DocuService';
 import ContentType from '../../types/ContentType';
 import AuthContext from '../../contexts/AuthContext';
+import FileService from '../../services/FileService';
 
 const TAG = 'DOCU'
+const MAX_SIZE = 20 * 1024 * 1024;
 
 function Docu() {
 
@@ -18,11 +20,12 @@ function Docu() {
     const [docuInfo, setDocuInfo] = useState<ContentType>();
     const [likeInfo, setLikeInfo] = useState<boolean>(false);
     const [docState, setDocState] = useState<number>(ContentStateEnum.LOADING);
-    const [editingDocData, setEditingDocData] = useState({
-        title: '',
-        text: ''
-    })
+    const [attachedFiles, setAttachedFiles] = useState<File[]>([]);
+    const [progress, setProgress] = useState<number>(0);
+    const [removedFiles, setRemovedFiles] = useState<number[]>([]);
+    const [editingDocData, setEditingDocData] = useState<ContentType>()
     const authContext = useContext(AuthContext);
+    let currentSize = 0;
 
     useEffect(() => {
         fetch();
@@ -35,34 +38,45 @@ function Docu() {
                 setDocuInfo(res.data.docuInfo);
                 setLikeInfo(res.data.likeInfo);
                 setDocState(ContentStateEnum.READY);
-                setEditingDocData({                    
-                    title: res.data.docuInfo.title,
-                    text: res.data.docuInfo.text
-                })
+                setEditingDocData(res.data.docuInfo)
             })
             .catch((err) => {
                 console.error(err);
                 setDocState(ContentStateEnum.ERROR);
             })
     }
-    const handleEditting = (e: ChangeEvent<HTMLInputElement>) => {
-        setEditingDocData({
-            ...editingDocData,
-            [e.target.name]: e.target.value
-        })
+    const handleEditting = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        if(editingDocData && (e.target.name === 'title' || e.target.name === 'text')) {
+            setEditingDocData({
+                ...editingDocData,
+                [e.target.name]: e.target.value
+            })
+        }
     }
 
     const updateDoc = async () => {
         let doc_id = Number(match.params.doc_id);
 
-        await DocuService.updateDocument(doc_id, editingDocData)
-            .then((res: any) => {
-                fetch();
-            })
-            .catch((err: Error) => {
-                console.error(err);
-                alert('업데이트 오류');
-            })
+        try {
+            await DocuService.updateDocument(doc_id, editingDocData)
+            if(attachedFiles.length > 0) {
+                for(let i = 0; i < attachedFiles.length; i++) {
+                    let formData = new FormData();
+                    formData.append('attachedFile', attachedFiles[i]);
+                    await ContentService.createFile(doc_id, formData, uploadProgress)
+                }
+            }
+            if (removedFiles.length > 0) {
+                for(let i = 0; i < removedFiles.length; i++) {
+                    await FileService.deleteFile(removedFiles[i])
+                }
+            }
+            fetch();
+        }
+        catch (err) {
+            console.error(err);
+            alert('업데이트 오류');
+        }
     }
 
     const deleteDoc = async () => {
@@ -105,6 +119,59 @@ function Docu() {
             })
     }
 
+    const attachFile = (e: ChangeEvent<HTMLInputElement>) => {
+        // const { attachedFiles } = this.state;
+        if (e.target.files && docuInfo) {
+            if (e.target.files.length + attachFile.length + (docuInfo.attachedFiles ? docuInfo.attachedFiles.length : 0) > 5) {
+                alert("파일은 최대 5개까지만 첨부해주세요.")
+                e.target.value = '';
+            }
+            else if (e.target.files) {
+                let tmpSize = currentSize;
+                for (let i = 0; i < e.target.files.length; i++) {
+                    tmpSize += e.target.files[i].size;
+                }
+                if (tmpSize > MAX_SIZE) {
+                    alert("한 번에 20MB 이상의 파일은 업로드 할 수 없습니다.")
+                }
+                else {
+                    currentSize = tmpSize;
+                    let newFiles: File[] = [];
+                    for (let i = 0; i < e.target.files.length; i++) {
+                        let tmpFile = e.target.files.item(i);
+                        tmpFile && newFiles.push(tmpFile);
+                    }
+                    if (newFiles && newFiles.length > 0) {
+                        setAttachedFiles(attachedFiles.concat(...newFiles))
+                    }
+                }
+            }
+        }
+    }
+
+    const removeAttachedFile = (index: number) => {
+        setAttachedFiles(
+            attachedFiles.filter((file, i) => {
+                return index !== i
+            })
+        )
+    }
+
+    const removeFile = (file_id: number) => {
+        setRemovedFiles(removedFiles.concat(file_id));
+    }
+
+    const cancelRemoveFile = (file_id: number) => {
+        setRemovedFiles(removedFiles.filter((file) => file !== file_id));
+    }
+
+    const uploadProgress = (e: ProgressEvent) => {
+        const totalLength = e.lengthComputable && e.total;
+        if (totalLength) {
+            setProgress(Math.round(e.loaded / totalLength * 100))
+        }
+    }
+
     return (
         <>
             {
@@ -123,13 +190,20 @@ function Docu() {
                                 setDocState={setDocState} />
                         )
                     }
-                    else if (docState === ContentStateEnum.EDITTING) {
+                    else if (docState === ContentStateEnum.EDITTING && editingDocData) {
                         return (
                             <EditDocu
                                 editingDocData={editingDocData}
                                 handleEditting={handleEditting}
-                                setDocState={setDocState}
-                                updateDoc={updateDoc} />
+                                attachedFiles={attachedFiles}
+                                attachFile={attachFile}
+                                removeAttachedFile={removeAttachedFile}
+                                removedFiles={removedFiles}
+                                removeFile={removeFile}
+                                cancelRemoveFile={cancelRemoveFile}
+                                cancel ={() => setDocState(ContentStateEnum.READY)}
+                                confirm={() => updateDoc()}
+                                />
                         )
                     }
                     else if (docState === ContentStateEnum.DELETED && docuInfo)
