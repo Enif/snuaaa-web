@@ -6,7 +6,6 @@ import TagType from './TagType';
 import ExhibitionType from './ExhibitionType';
 import CategoryType from './CategoryType';
 import FileType from './FileType';
-import ExhibitPhotoType from './ExhibitPhotoType';
 
 interface ContentType {
     content_id: number;
@@ -24,11 +23,7 @@ interface ContentType {
     updatedAt: string;
     board: BoardType;
     user: UserType;
-    // album?: AlbumType;
-    albumPhoto?: PhotoType[];
-    photo?: PhotoType;
     exhibition?: ExhibitionType;
-    // exhibitPhoto?: ExhibitPhotoType;
     tags?: TagType[];
     category?: CategoryType;
     attachedFiles?: FileType[];

@@ -2,11 +2,12 @@ import React from 'react'
 import { Link, useHistory } from 'react-router-dom';
 import Image from '../Common/AaaImage';
 import ContentType from '../../types/ContentType';
+import PhotoType from '../../types/PhotoType';
 
 type NewPhotosProps = {
     title: string;
     board_id: string;
-    photos: ContentType[];
+    photos: PhotoType[];
 }
 
 function NewPhotos({ title, board_id, photos }: NewPhotosProps) {
@@ -14,19 +15,19 @@ function NewPhotos({ title, board_id, photos }: NewPhotosProps) {
     const history = useHistory();
     const makePhotoList = () => {
         if (photos) {
-            return photos.map(photo => {
+            return photos.map(content => {
                 return (
-                    <div className="new-photo-list" key={photo.content_id}>
+                    <div className="new-photo-list" key={content.content_id}>
                         <Link to={{
-                            pathname: `/photo/${photo.content_id}`,
+                            pathname: `/photo/${content.content_id}`,
                             state: {
                                 modal: true,
                                 backgroundLocation: history.location
                             }
                         }}>
                             {
-                                photo.photo &&
-                                <Image imgSrc={photo.photo.thumbnail_path} />
+                                content.photo &&
+                                <Image imgSrc={content.photo.thumbnail_path} />
                             }
                         </Link>
                     </div>

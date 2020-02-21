@@ -23,6 +23,7 @@ import AlbumService from '../../services/AlbumService';
 import PhotoService from '../../services/PhotoService';
 import AuthContext from '../../contexts/AuthContext';
 import AlbumType from '../../types/AlbumType';
+import PhotoType from '../../types/PhotoType';
 
 const TAG = 'PHOTO'
 const VISIBLE_TIME = 3;
@@ -37,12 +38,12 @@ type PhotoState = {
     likeInfo: boolean;
     photoState: number;
     isFullscreen: boolean;
-    contentInfo?: RecordOf<ContentType>;
-    editContentInfo?: RecordOf<ContentType>;
-    prevPhoto?: ContentType,
-    nextPhoto?: ContentType,
-    prevAlbumPhoto?: ContentType,
-    nextAlbumPhoto?: ContentType,
+    contentInfo?: RecordOf<PhotoType>;
+    editContentInfo?: RecordOf<PhotoType>;
+    prevPhoto?: PhotoType,
+    nextPhoto?: PhotoType,
+    prevAlbumPhoto?: PhotoType,
+    nextAlbumPhoto?: PhotoType,
     remainedTime: number;
 }
 
@@ -109,7 +110,6 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
             await PhotoService.retrievePhoto(photo_id)
                 .then((res) => {
                     this.boardTagInfo = res.data.boardTagInfo
-                    // this.albumPhotosInfo = res.data.albumPhotosInfo;
                     this.setState({
                         contentInfo: Record(res.data.photoInfo)(),
                         editContentInfo: Record(res.data.photoInfo)(),
@@ -137,7 +137,7 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
     setAlbumThumbnail = async () => {
         const { contentInfo } = this.state;
         let photo_id = Number(this.props.match.params.photo_id);
-        let albumInfo = contentInfo && contentInfo.photo && contentInfo.photo.album;
+        let albumInfo = contentInfo && contentInfo.parent;
 
         const data = {
             tn_photo_id: photo_id
@@ -381,8 +381,8 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
         let fullscreenClass = isFullscreen ? 'ri-fullscreen-exit-fill' : 'ri-fullscreen-fill';
         let backLink: string;
         let photoInfo = contentInfo && contentInfo.photo
-        if (photoInfo && photoInfo.album) {
-            backLink = `/album/${photoInfo.album_id}`
+        if (contentInfo && contentInfo.parent) {
+            backLink = `/album/${contentInfo.parent.content_id}`
         }
         else {
             backLink = `/board/brd32`;
@@ -401,7 +401,7 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
                                             <i className="ri-arrow-left-s-line enif-pointer" onClick={() => this.moveToAlbum(-1)}></i>
                                             <Link className="photo-alb-title" to={backLink}>
                                                 <i className="ri-gallery-line"></i>
-                                                <h5>{photoInfo.album ? photoInfo.album.title : "기본앨범"}</h5>
+                                                <h5>{contentInfo.parent ? contentInfo.parent.title : "기본앨범"}</h5>
                                             </Link>
                                             <i className="ri-arrow-right-s-line enif-pointer" onClick={() => this.moveToAlbum(1)}></i>
                                             <div className="enif-modal-close" onClick={closePhoto}>
@@ -469,11 +469,11 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
                                         }
                                         else if (photoState === ContentStateEnum.DELETED) {
                                             let backLink;
-                                            if (!photoInfo.album) {
+                                            if (!contentInfo.parent) {
                                                 backLink = `/board/${contentInfo.board_id}`;
                                             }
                                             else {
-                                                backLink = `/album/${photoInfo.album_id}`
+                                                backLink = `/album/${contentInfo.parent.content_id}`
                                             }
                                             return (
                                                 <Redirect to={backLink} />

@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 import Image from '../../components/Common/AaaImage';
 import history from '../../common/history';
 import ContentType from '../../types/ContentType';
+import PhotoType from '../../types/PhotoType';
 
 type PhotoListProps = {
-    photos: ContentType[];
+    photos: PhotoType[];
 }
 
 function PhotoList({ photos }: PhotoListProps) {

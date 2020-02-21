@@ -15,6 +15,7 @@ import ContentType from '../../types/ContentType';
 import BoardName from '../../components/Board/BoardName';
 import AuthContext from '../../contexts/AuthContext';
 import AlbumType from '../../types/AlbumType';
+import PhotoType from '../../types/PhotoType';
 
 const TAG = 'ASTROPHOTO';
 const ALBUMROWNUM = 12;
@@ -32,7 +33,7 @@ type AstroPhotoState = {
 class AstroPhoto extends React.Component<AstroPhotoProps, AstroPhotoState> {
 
     albums: AlbumType[];
-    photos: ContentType[];
+    photos: PhotoType[];
     count: number;
 
     constructor(props: AstroPhotoProps) {
@@ -254,7 +255,9 @@ class AstroPhoto extends React.Component<AstroPhotoProps, AstroPhotoState> {
                                                 </div>
                                             </div>
                                             <div className="enif-divider"></div>
-                                            <AlbumList board_id={boardInfo.board_id} albums={this.albums} togglePopUp={this.togglePopUp} />
+                                            <AlbumList
+                                                board_id={boardInfo.board_id}
+                                                albums={this.albums} />
                                             {
                                                 popUpState &&
                                                 <CreateAlbum

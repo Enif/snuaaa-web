@@ -4,8 +4,9 @@ import Image from '../Common/AaaImage';
 import history from '../../common/history';
 import ContentType from '../../types/ContentType';
 import defaultPhotoCover from 'assets/img/default_photo_img.png'
+import PhotoType from '../../types/PhotoType';
 
-const MyPhotoList = ({ photos }: { photos: ContentType[] }) => {
+const MyPhotoList = ({ photos }: { photos: PhotoType[] }) => {
 
     const makePhotoList = () => {
 

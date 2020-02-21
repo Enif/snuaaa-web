@@ -7,9 +7,10 @@ import { convertDate, convertFullDate } from '../../utils/convertDate'
 import ActionDrawer from '../Common/ActionDrawer';
 import ContentType from '../../types/ContentType';
 import 'react-datepicker/dist/react-datepicker.css'
+import PhotoType from '../../types/PhotoType';
 
 type PhotoInfoProps = {
-    photoInfo: ContentType;
+    photoInfo: PhotoType;
     likeInfo: boolean;
     my_id: number;
     setPhotoState: (state: number) => void;
