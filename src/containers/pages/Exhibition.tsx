@@ -6,8 +6,9 @@ import Loading from '../../components/Common/Loading';
 import CreateExhibitPhoto from '../../containers/ExhibitBoard/CreateExhibitPhoto';
 import ExhibitionInfo from '../../components/ExhibitBoard/ExhibitionInfo';
 import ExhibitPhotoList from '../../components/ExhibitBoard/ExhibitPhotoList';
-import ContentType from '../../types/ContentType';
 import AuthContext from '../../contexts/AuthContext';
+import ExhibitionType from '../../types/ExhibitionType';
+import ExhibitPhotoType from '../../types/ExhibitPhotoType';
 
 const TAG = 'EXHIBITION'
 
@@ -22,15 +23,15 @@ type ExhibitionState = {
 
 class Exhibition extends React.Component<ExhibitionProps, ExhibitionState> {
 
-    exhibitionInfo?: ContentType;
-    exhibitPhotos?: ContentType[];
+    exhibitionInfo?: ExhibitionType;
+    exhibitPhotos: ExhibitPhotoType[];
 
     constructor(props: ExhibitionProps) {
         super(props);
         console.log(`[${TAG}] Constructor`)
         // this.photos = [];
         this.exhibitionInfo = undefined;
-        this.exhibitPhotos = undefined;
+        this.exhibitPhotos = [];
         this.state = {
             // exhibition_id: this.props.match.params.exhibition_id,
             exhibitionState: ContentStateEnum.LOADING,
@@ -120,12 +121,11 @@ class Exhibition extends React.Component<ExhibitionProps, ExhibitionState> {
                                                         {
                                                             popUpState &&
                                                             <CreateExhibitPhoto
+                                                                board_id={exhibitionInfo.board_id}
                                                                 exhibition_id={exhibition_id}
                                                                 exhibition_no={exhibitionInfo.exhibition.exhibition_no}
-                                                                board_id={exhibitionInfo.board_id}
                                                                 fetch={this.fetch}
-                                                                togglePopUp={this.togglePopUp}
-                                                                setReadyState={() => this.setAlbumState(ContentStateEnum.READY)} />
+                                                                togglePopUp={this.togglePopUp} />
                                                         }
                                                     </div>
                                                 </>

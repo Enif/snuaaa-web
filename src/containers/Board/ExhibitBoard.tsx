@@ -8,8 +8,8 @@ import BoardName from '../../components/Board/BoardName';
 import Image from '../../components/Common/AaaImage';
 import CreateExhibition from '../../containers/ExhibitBoard/CreateExhibition';
 import BoardType from '../../types/BoardType';
-import ContentType from '../../types/ContentType';
 import AuthContext from '../../contexts/AuthContext';
+import ExhibitionType from '../../types/ExhibitionType';
 
 const TAG = 'EXHIBITBOARD'
 
@@ -23,7 +23,7 @@ type ExhibitBoardState = {
 
 class ExhibitBoard extends React.Component<ExhibitBoardProps, ExhibitBoardState> {
 
-    exhibitions: ContentType[];
+    exhibitions: ExhibitionType[];
 
     constructor(props: ExhibitBoardProps) {
         super(props);

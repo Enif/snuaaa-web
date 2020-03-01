@@ -3,7 +3,6 @@ import AlbumType from './AlbumType';
 import PhotoType from './PhotoType';
 import BoardType from './BoardType';
 import TagType from './TagType';
-import ExhibitionType from './ExhibitionType';
 import CategoryType from './CategoryType';
 import FileType from './FileType';
 
@@ -23,7 +22,7 @@ interface ContentType {
     updatedAt: string;
     board: BoardType;
     user: UserType;
-    exhibition?: ExhibitionType;
+    // exhibition?: ExhibitionType;
     tags?: TagType[];
     category?: CategoryType;
     attachedFiles?: FileType[];

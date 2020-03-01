@@ -1,10 +1,11 @@
 import ContentType from "./ContentType";
 import UserType from "./UserType";
+import ExhibitionType from "./ExhibitionType";
 
 interface ExhibitPhotoType extends ContentType {
+    parent: ExhibitionType,
     exhibitPhoto: {
         exhibition_id: number,
-        exhibitionContent: ContentType,
         order: number,
         photographer_id: number,
         photographer: UserType,

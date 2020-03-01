@@ -1,49 +1,25 @@
 import React from 'react';
-import ProfileMini from '../Common/ProfileMini';
-import ContentStateEnum from '../../common/ContentStateEnum';
-
 import { breakLine } from '../../utils/breakLine';
 import { convertDate, convertFullDate } from '../../utils/convertDate'
+import defaultProfile from 'assets/img/profile.png';
 import ActionDrawer from '../Common/ActionDrawer';
-import ContentType from '../../types/ContentType';
+import Image from '../Common/AaaImage';
 import 'react-datepicker/dist/react-datepicker.css'
-import PhotoType from '../../types/PhotoType';
 import ExhibitPhotoType from '../../types/ExhibitPhotoType';
 
-type PhotoInfoProps = {
-    photoInfo: PhotoType | ExhibitPhotoType;
-    likeInfo: boolean;
+type ExhibitPhotoInfoProps = {
+    photoInfo: ExhibitPhotoType;
     my_id: number;
-    setPhotoState: (state: number) => void;
+    setEditState: () => void;
     deletePhoto: () => void;
-    likePhoto: () => void;
-    setAlbumThumbnail: () => void;
 }
 
-const PhotoInfo = ({ photoInfo, likeInfo, my_id, setPhotoState, deletePhoto,
-    likePhoto, setAlbumThumbnail }: PhotoInfoProps) => {
+function ExhibitPhotoInfo({ photoInfo, my_id, setEditState, deletePhoto }: ExhibitPhotoInfoProps) {
 
     let content = photoInfo;
-    let photo;
-    if ((photoInfo as PhotoType).photo) {
-        photo = (photoInfo as PhotoType).photo;
-    }
-    else if ((photoInfo as ExhibitPhotoType).exhibitPhoto) {
-        photo = (photoInfo as ExhibitPhotoType).exhibitPhoto;
-    }
+    let photo = photoInfo.exhibitPhoto;
     let userInfo = photoInfo && photoInfo.user;
-    let tagInfo = photoInfo && photoInfo.tags;
-
-    const makeTagList = () => {
-        if (tagInfo) {
-            return tagInfo.map((tag) => {
-                let tagClassName = (tag.tag_type === 'M') ? 'tag-type-1' : 'tag-type-2';
-                return (
-                    <div key={tag.tag_id} className={`tag-unit ${tagClassName}`}># {tag.tag_name}</div>
-                )
-            })
-        }
-    }
+    let photographerInfo = photoInfo && photoInfo.exhibitPhoto.photographer;
 
     return (
         <>
@@ -54,37 +30,54 @@ const PhotoInfo = ({ photoInfo, likeInfo, my_id, setPhotoState, deletePhoto,
                         {
                             userInfo && (my_id === userInfo.user_id) &&
                             <ActionDrawer
-                                clickEdit={() => setPhotoState(ContentStateEnum.EDITTING)}
-                                clickDelete={deletePhoto}
-                                isPhoto={true}
-                                clickSetThumbnail={setAlbumThumbnail} />
+                                clickEdit={setEditState}
+                                clickDelete={deletePhoto} />
                         }
-
                         <div className="info-wrapper">
                             <div className="info-title-date">
                                 <h4>{content.title}</h4>
-                                <p className="info-date">{convertFullDate(content.createdAt)}</p>
                             </div>
-                            <div className="info-tags">{makeTagList()}</div>
+                            <div className="info-basic enif-flex-horizontal">
+                                <div className="enif-flex-horizontal">
+                                    <i className="ri-icons ri-eye-fill"></i>
+                                    <p className="">{content.view_num}</p>
+                                    {
+                                        userInfo &&
+                                        <>
+                                            <i className="ri-icons ri-pencil-fill"></i>
+                                            <p className="">{userInfo.nickname}</p>
+                                        </>
+                                    }
+                                </div>
+                                <div className="enif-flex-horizontal">
+                                    <i className="ri-icons ri-time-line"></i>
+                                    <p className="">{convertFullDate(content.createdAt)}</p>
+                                </div>
+                            </div>
                             <div className="info-text-infos-wrapper">
                                 {
-                                    content.text &&
-                                    <>
-                                        <div className="enif-divider"></div>
-                                        <div className="info-text-wrapper">
-                                            <p>{breakLine(content.text)}</p>
-                                        </div>
-                                    </>
-                                }
-
-                                {
-                                    photo && (photo.date || photo.location
+                                    photo && (photo.date || photo.location || photo.photographer || photo.photographer_alt
                                         || photo.camera || photo.lens || photo.focal_length
                                         || photo.focal_length || photo.exposure_time || photo.iso)
                                     &&
                                     <>
                                         <div className="enif-divider"></div>
                                         <div className="info-infos-wrapper">
+                                            {
+                                                (photographerInfo || photo.photographer_alt) &&
+                                                <div className="photo-info-unit">
+                                                    <div className="photo-info-label">Photographer</div>
+                                                    {photographerInfo
+                                                        ?
+                                                        <>
+                                                            <Image className="photo-info-profile" imgSrc={photographerInfo.profile_path} defaultImgSrc={defaultProfile} />
+                                                            <div>{photographerInfo.nickname}</div>
+                                                        </>
+                                                        :
+                                                        <div>{photo.photographer_alt}</div>
+                                                    }
+                                                </div>
+                                            }
                                             {photo.date && (
                                                 <div className="photo-info-unit">
                                                     <div className="photo-info-label">Date</div>
@@ -129,26 +122,15 @@ const PhotoInfo = ({ photoInfo, likeInfo, my_id, setPhotoState, deletePhoto,
                                 }
                             </div>
                         </div>
-                        <div className="enif-divider"></div>
-                        <ProfileMini userInfo={userInfo} />
-                        <div className="enif-divider"></div>
-                    </div>
-                    <div className="actions-wrapper">
-                        <div className="nums-wrapper">
-                            <div className="view-num-wrapper">
-                                <i className="ri-eye-fill"></i>
-                                {content.view_num}
-                            </div>
-                            <div className="like-num-wrapper">
-                                <i className={`${likeInfo ? 'ri-heart-fill' : 'ri-heart-line'} enif-f-1p5x enif-pointer`} onClick={() => likePhoto()}>
-                                </i>
-                                {content.like_num}
-                            </div>
-                            <div className="comment-num-wrapper">
-                                <i className="ri-message-2-fill enif-f-1p5x"></i>
-                                {content.comment_num}
-                            </div>
-                        </div>
+                        {
+                            content.text &&
+                            <>
+                                <div className="enif-divider"></div>
+                                <div className="info-text-wrapper">
+                                    <p>{breakLine(content.text)}</p>
+                                </div>
+                            </>
+                        }
                     </div>
                 </>
             }
@@ -156,4 +138,4 @@ const PhotoInfo = ({ photoInfo, likeInfo, my_id, setPhotoState, deletePhoto,
     )
 }
 
-export default PhotoInfo;
+export default ExhibitPhotoInfo;
