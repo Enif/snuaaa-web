@@ -6,9 +6,10 @@ import ContentType from '../../types/ContentType';
 import 'react-datepicker/dist/react-datepicker.css'
 import TagType from '../../types/TagType';
 import { Prompt } from 'react-router';
+import PhotoType from '../../types/PhotoType';
 
 type PhotoInfoProps = {
-    photoInfo: ContentType;
+    photoInfo: PhotoType;
     boardTagInfo: TagType[];
     setPhotoState: (state: number) => void;
     updatePhoto: () => void;

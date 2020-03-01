@@ -1,7 +1,7 @@
 import { AaaService } from './index';
 import { AxiosPromise } from 'axios';
 import BoardType from '../types/BoardType';
-import ContentType from '../types/ContentType';
+import ExhibitionType from '../types/ExhibitionType';
 
 const BoardService = {
 
@@ -23,7 +23,7 @@ const BoardService = {
         return AaaService.get(`board/${board_id}/posts/search?type=${searchType}&keyword=${keyword}&page=${pageIdx}`);
     },
 
-    retrieveExhibitionsInBoard: function (board_id: string): AxiosPromise<ContentType[]> {
+    retrieveExhibitionsInBoard: function (board_id: string): AxiosPromise<ExhibitionType[]> {
         return AaaService.get(`board/${board_id}/exhibitions`)
     },
 

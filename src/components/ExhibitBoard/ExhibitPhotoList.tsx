@@ -1,10 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import Image from 'components/Common/AaaImage.tsx';
-import history from 'common/history';
+import { Link, useHistory } from 'react-router-dom';
+import Image from '../../components/Common/AaaImage';
+import ExhibitPhotoType from '../../types/ExhibitPhotoType';
 
-const ExhibitPhotoList = ({ exhibitPhotos }) => {
+function ExhibitPhotoList({ exhibitPhotos }: { exhibitPhotos: ExhibitPhotoType[] }) {
 
+    const history = useHistory();
     const makePhotoList = () => {
         if (exhibitPhotos && exhibitPhotos.length > 0) {
             return exhibitPhotos.map(content => {

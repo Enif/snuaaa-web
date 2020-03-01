@@ -1,28 +1,32 @@
-import React from 'react';
-import CreateExhibitPhotoInfo from 'components/ExhibitBoard/CreateExhibitPhotoInfo';
-import ThumbnailList from 'components/Album/ThumbnailList';
-import PreviewImage from 'components/Album/PreviewImage';
+import React, { ChangeEvent } from 'react';
+import CreateExhibitPhotoInfo from '../../components/ExhibitBoard/CreateExhibitPhotoInfo';
+import ThumbnailList from '../../components/Album/ThumbnailList';
+import PreviewImage from '../../components/Album/PreviewImage';
+import CrtExhibitPhototype from '../../types/CrtExhibitPhotoType';
+import UserType from '../../types/UserType';
 
-const CreateExhibitPhotoComponent = ({ handleChange, handleDate, handlePhotographer, selectPhotographer, removePhotographer,
-    uploadFile, clickTag, imgUrls, setImgIdx, removeImg, checkForm,
-    tags, togglePopUp, imgIdx, selectedTags,
-    title, text, order, photographer, date, location, camera, lens, focal_length, f_stop, exposure_time, iso,
-    searchUsers, btnDisabled }) => {
+type CreateExhibitPhotoComponentProps = {
+    handleChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    handleDate: (date: Date) => void;
+    handlePhotographer: (e: ChangeEvent<HTMLInputElement>) => void;
+    selectPhotographer: (index: number) => void;
+    removePhotographer: () => void;
+    uploadFile: (e: ChangeEvent<HTMLInputElement>) => void;
+    imgUrls: string[]
+    setImgIdx: (index: number) => void;
+    removeImg: (index: number) => void;
+    checkForm: () => void;
+    togglePopUp: () => void;
+    imgIdx: number;
+    photoInfos: CrtExhibitPhototype[];
+    searchUsers: UserType[]
+    btnDisabled: boolean
+}
 
-
-    const makeTagList = () => {
-        const tagList = tags.map((tag) => {
-            let labelClassName = (tag.tag_type === 'M') ? 'tag-label-1' : 'tag-label-2';
-            return (
-                <div className="tag-unit" key={tag.tag_id} >
-                    <input type="checkbox" id={"crt_" + tag.tag_id} checked={selectedTags.includes(tag.tag_id)}
-                        onChange={clickTag} />
-                    <label className={labelClassName} htmlFor={"crt_" + tag.tag_id}># {tag.tag_name}</label>
-                </div>
-            )
-        })
-        return tagList;
-    }
+function CreateExhibitPhotoComponent ({
+    handleChange, handleDate, handlePhotographer, selectPhotographer, removePhotographer,
+    uploadFile, imgUrls, setImgIdx, removeImg, checkForm,
+    togglePopUp, imgIdx, photoInfos, searchUsers, btnDisabled }: CreateExhibitPhotoComponentProps) {
 
     return (
         <div className="crt-photo-popup">
@@ -42,9 +46,8 @@ const CreateExhibitPhotoComponent = ({ handleChange, handleDate, handlePhotograp
                         </div>
                         <ThumbnailList imgUrls={imgUrls} imgIdx={imgIdx} setImgIdx={setImgIdx} removeImg={removeImg} />
                     </div>
-
                     <div className="crt-photo-center">
-                        <PreviewImage imgUrls={imgUrls} imgIdx={imgIdx} />
+                        <PreviewImage imgUrl={imgUrls[imgIdx]} />
                     </div>
 
                     <div className="crt-photo-right">
@@ -53,20 +56,8 @@ const CreateExhibitPhotoComponent = ({ handleChange, handleDate, handlePhotograp
                                 if (imgIdx >= 0) {
                                     return (
                                         <>
-                                            {tags &&
-                                                <div className="tag-list-wrapper">
-                                                    {makeTagList()}
-                                                </div>}
-
                                             <CreateExhibitPhotoInfo
-                                                title={title}
-                                                text={text}
-                                                order={order}
-                                                photographer={photographer}
-                                                date={date} location={location}
-                                                camera={camera} lens={lens}
-                                                focal_length={focal_length} f_stop={f_stop}
-                                                exposure_time={exposure_time} iso={iso}
+                                                photoInfo={photoInfos[imgIdx]}
                                                 searchUsers={searchUsers}
                                                 handleChange={handleChange}
                                                 handleDate={handleDate}

@@ -1,13 +1,25 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css"
-import Image from '../Common/AaaImage.tsx';
+import Image from '../Common/AaaImage';
 import imgDefaultProfile from 'assets/img/profile.png';
+import CrtExhibitPhotoType from '../../types/CrtExhibitPhotoType';
+import UserType from '../../types/UserType';
 
-const CreateExhibitPhotoInfo = ({ title, text, order, photographer, photographer_alt, date, location, camera, lens, focal_length, f_stop,
-    exposure_time, iso, searchUsers, selectPhotographer, removePhotographer, handleChange, handleDate, handlePhotographer }) => {
+type CreateExhibitPhotoInfoProps = {
+    photoInfo: CrtExhibitPhotoType;
+    searchUsers: UserType[]
+    handleChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    handleDate: (date: Date) => void;
+    handlePhotographer: (e: ChangeEvent<HTMLInputElement>) => void;
+    selectPhotographer: (index: number) => void;
+    removePhotographer: () => void;
+}
 
-    const makeUserList = function (users) {
+function CreateExhibitPhotoInfo({ photoInfo, searchUsers, handleChange, handleDate,
+    selectPhotographer, removePhotographer, handlePhotographer }: CreateExhibitPhotoInfoProps) {
+
+    const makeUserList = function (users: UserType[]) {
         if (users && users.length > 0) {
             return users.map((user, index) => {
                 return (
@@ -22,23 +34,23 @@ const CreateExhibitPhotoInfo = ({ title, text, order, photographer, photographer
 
     return (
         <div className="photo-input-area-wrapper">
-            <input className="input-title" type="text" name="title" placeholder="제목" onChange={handleChange} value={title} />
-            <textarea className="input-desc" placeholder="설명" name="text" onChange={handleChange} value={text} />
+            <input className="input-title" type="text" name="title" placeholder="제목" onChange={handleChange} value={photoInfo.title} />
+            <textarea className="input-desc" placeholder="설명" name="text" onChange={handleChange} value={photoInfo.text} />
             <div className="photo-infos">
                 <div className="photo-info">
                     <div className="label-wrapper"><label>Order</label></div>
-                    <input type="number" name="order" onChange={handleChange} value={order}></input>
+                    <input type="number" name="order" onChange={handleChange} value={photoInfo.order}></input>
                 </div>
                 <div className="photo-info">
                     <div className="label-wrapper"><label>Photographer</label></div>
                     {
-                        photographer.uuid ?
+                        photoInfo.photographer && photoInfo.photographer.user_uuid ?
                             <div className="mini-user-selected enif-f-1x">
-                                <div>{photographer.nickname}</div>
+                                <div>{photoInfo.photographer.nickname}</div>
                                 <i className="ri-close-circle-line enif-pointer" onClick={removePhotographer}></i>
                             </div>
                             :
-                            <input type="text" name="photographer" onChange={handlePhotographer} autoComplete="off" value={photographer_alt}/>
+                            <input type="text" name="photographer" onChange={handlePhotographer} autoComplete="off" value={photoInfo.photographer_alt} />
                     }
                     {
                         searchUsers && searchUsers.length > 0 &&
@@ -49,23 +61,23 @@ const CreateExhibitPhotoInfo = ({ title, text, order, photographer, photographer
                 </div>
                 <div className="photo-info">
                     <div className="label-wrapper"><label>Date</label></div>
-                    <DatePicker selected={date} onChange={handleDate} dateFormat="yyyy/MM/dd" />
+                    <DatePicker selected={photoInfo.date} onChange={handleDate} dateFormat="yyyy/MM/dd" />
                 </div>
                 <div className="photo-info">
                     <div className="label-wrapper"><label>Location</label></div>
-                    <input type="text" name="location" onChange={(e) => handleChange(e)} value={location}></input>
+                    <input type="text" name="location" onChange={(e) => handleChange(e)} value={photoInfo.location}></input>
                 </div>
                 <div className="photo-info">
                     <div className="label-wrapper"><label>Camera</label></div>
-                    <input type="text" name="camera" onChange={(e) => handleChange(e)} value={camera}></input>
+                    <input type="text" name="camera" onChange={(e) => handleChange(e)} value={photoInfo.camera}></input>
                 </div>
                 <div className="photo-info">
                     <div className="label-wrapper"><label>Lens</label></div>
                     <div>
-                        <input type="text" name="lens" onChange={(e) => handleChange(e)} value={lens} />
+                        <input type="text" name="lens" onChange={(e) => handleChange(e)} value={photoInfo.lens} />
                         <div className="enif-flex-horizontal">
                             <label>@</label>
-                            <input className="enif-wid-half" type="number" name="focal_length" onChange={(e) => handleChange(e)} value={focal_length} />mm
+                            <input className="enif-wid-half" type="number" name="focal_length" onChange={(e) => handleChange(e)} value={photoInfo.focal_length} />mm
                         </div>
                     </div>
                 </div>
@@ -74,15 +86,15 @@ const CreateExhibitPhotoInfo = ({ title, text, order, photographer, photographer
                     <div className="input-wrapper">
                         <div>
                             <label>F/</label>
-                            <input className="enif-wid-quater" type="text" name="f_stop" onChange={(e) => handleChange(e)} value={f_stop}></input>
+                            <input className="enif-wid-quater" type="text" name="f_stop" onChange={(e) => handleChange(e)} value={photoInfo.f_stop}></input>
                         </div>
                         <div>
                             <label>time</label>
-                            <input className="enif-wid-quater" type="text" name="exposure_time" onChange={(e) => handleChange(e)} value={exposure_time}></input>
+                            <input className="enif-wid-quater" type="text" name="exposure_time" onChange={(e) => handleChange(e)} value={photoInfo.exposure_time}></input>
                         </div>
                         <div>
                             <label>ISO</label>
-                            <input className="enif-wid-quater" type="text" name="iso" onChange={(e) => handleChange(e)} value={iso}></input>
+                            <input className="enif-wid-quater" type="text" name="iso" onChange={(e) => handleChange(e)} value={photoInfo.iso}></input>
                         </div>
                     </div>
                 </div>

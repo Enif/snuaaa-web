@@ -151,7 +151,9 @@ class Memory extends React.Component<MemoryProps, MemoryState> {
                                     return (
                                         <>
                                             <div className="enif-divider"></div>
-                                            <AlbumList board_id={boardInfo.board_id} albums={this.albums} togglePopUp={this.togglePopUp} />
+                                            <AlbumList
+                                                board_id={boardInfo.board_id}
+                                                albums={this.albums} />
                                             {
                                                 this.state.popUpState &&
                                                 <CreateAlbum

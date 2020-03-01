@@ -22,7 +22,6 @@ type CreatePhotoProps = {
 type CreatePhotoState = {
     photoInfo: List<CrtPhotoType>;
     uploadPhotos: File[];
-    imgDatas: string[],
     imgIdx: number,
     progress: number,
     uploadIdx: number,
@@ -55,7 +54,6 @@ class CreatePhoto extends React.Component<CreatePhotoProps, CreatePhotoState> {
         this.state = {
             photoInfo: List<CrtPhotoType>(),
             uploadPhotos: [],
-            imgDatas: [],
             imgIdx: -1,
             progress: 0,
             uploadIdx: 0,
