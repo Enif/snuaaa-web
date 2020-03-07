@@ -17,6 +17,7 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin-alt');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
+const { styles } = require('@ckeditor/ckeditor5-dev-utils');
 
 
 // Webpack uses `publicPath` to determine where the app is being served from.
@@ -186,7 +187,7 @@ module.exports = {
             options: {
               formatter: require.resolve('react-dev-utils/eslintFormatter'),
               eslintPath: require.resolve('eslint'),
-              
+
             },
             loader: require.resolve('eslint-loader'),
           },
@@ -219,7 +220,7 @@ module.exports = {
               customize: require.resolve(
                 'babel-preset-react-app/webpack-overrides'
               ),
-              
+
               plugins: [
                 [
                   require.resolve('babel-plugin-named-asset-import'),
@@ -259,13 +260,37 @@ module.exports = {
               cacheDirectory: true,
               // Don't waste time on Gzipping the cache
               cacheCompression: false,
-              
+
               // If an error happens in a package, it's possible to be
               // because it was compiled. Thus, we don't want the browser
               // debugger to show the original code. Instead, the code
               // being evaluated would be much more helpful.
               sourceMaps: false,
             },
+          },
+          {
+            test: /ckeditor5-[^/\\]+[/\\]theme[/\\]icons[/\\][^/\\]+\.svg$/,
+            use: ['raw-loader']
+          },
+          {
+            test: /ckeditor5-[^/\\]+[/\\]theme[/\\].+\.css$/,
+            use: [
+              {
+                loader: 'style-loader',
+                options: {
+                  injectType: 'singletonStyleTag'
+                }
+              },
+              {
+                loader: 'postcss-loader',
+                options: styles.getPostCssConfig({
+                  themeImporter: {
+                    themePath: require.resolve('@ckeditor/ckeditor5-theme-lark')
+                  },
+                  minify: true
+                })
+              }
+            ]
           },
           // "postcss" loader applies autoprefixer to our CSS.
           // "css" loader resolves paths in CSS and adds assets as dependencies.
@@ -275,7 +300,10 @@ module.exports = {
           // By default we support CSS Modules with the extension .module.css
           {
             test: cssRegex,
-            exclude: cssModuleRegex,
+            exclude: [
+              cssModuleRegex,
+              /ckeditor5-[^/\\]+[/\\]theme[/\\].+\.css$/,
+            ],
             use: getStyleLoaders({
               importLoaders: 1,
             }),
@@ -284,6 +312,9 @@ module.exports = {
           // using the extension .module.css
           {
             test: cssModuleRegex,
+            exclude: [
+              /ckeditor5-[^/\\]+[/\\]theme[/\\].+\.css$/,
+            ],
             use: getStyleLoaders({
               importLoaders: 1,
               modules: true,
@@ -323,9 +354,14 @@ module.exports = {
             // its runtime that would otherwise be processed through "file" loader.
             // Also exclude `html` and `json` extensions so they get processed
             // by webpacks internal loaders.
-            exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
             loader: require.resolve('file-loader'),
-            options: {
+            exclude: [
+              /\.(js|mjs|jsx|ts|tsx)$/,
+              /\.html$/,
+              /\.json$/,
+              /ckeditor5-[^/\\]+[/\\]theme[/\\]icons[/\\][^/\\]+\.svg$/,
+              /ckeditor5-[^/\\]+[/\\]theme[/\\].+\.css$/
+            ], options: {
               name: 'static/media/[name].[hash:8].[ext]',
             },
           },
@@ -378,33 +414,33 @@ module.exports = {
     }),
     // TypeScript type checking
     useTypeScript &&
-      new ForkTsCheckerWebpackPlugin({
-        typescript: resolve.sync('typescript', {
-          basedir: paths.appNodeModules,
-        }),
-        async: false,
-        checkSyntacticErrors: true,
-        tsconfig: paths.appTsConfig,
-        compilerOptions: {
-          module: 'esnext',
-          moduleResolution: 'node',
-          resolveJsonModule: true,
-          isolatedModules: true,
-          noEmit: true,
-          jsx: 'preserve',
-        },
-        reportFiles: [
-          '**',
-          '!**/*.json',
-          '!**/__tests__/**',
-          '!**/?(*.)(spec|test).*',
-          '!src/setupProxy.js',
-          '!src/setupTests.*',
-        ],
-        watch: paths.appSrc,
-        silent: true,
-        formatter: typescriptFormatter,
+    new ForkTsCheckerWebpackPlugin({
+      typescript: resolve.sync('typescript', {
+        basedir: paths.appNodeModules,
       }),
+      async: false,
+      checkSyntacticErrors: true,
+      tsconfig: paths.appTsConfig,
+      compilerOptions: {
+        module: 'esnext',
+        moduleResolution: 'node',
+        resolveJsonModule: true,
+        isolatedModules: true,
+        noEmit: true,
+        jsx: 'preserve',
+      },
+      reportFiles: [
+        '**',
+        '!**/*.json',
+        '!**/__tests__/**',
+        '!**/?(*.)(spec|test).*',
+        '!src/setupProxy.js',
+        '!src/setupTests.*',
+      ],
+      watch: paths.appSrc,
+      silent: true,
+      formatter: typescriptFormatter,
+    }),
   ].filter(Boolean),
 
   // Some libraries import Node modules but don't use them in the browser.

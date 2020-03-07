@@ -1,5 +1,6 @@
 import React, { ChangeEvent } from 'react';
 import Editor from '../../containers/Common/Editor';
+import Editor2 from '../../containers/Common/Editor2';
 import ContentType from '../../types/ContentType';
 import AttachFile from './AttachFile';
 import FileType from '../../types/FileType';
@@ -60,7 +61,9 @@ function EditPost(props: EditPostProps) {
                 <input name="title" value={props.postInfo.title} onChange={props.handleEditting} placeholder="제목" />
             </div>
             <div className="writepost-content">
-                <Editor text={props.postInfo.text} editText={props.handleEdittingText} />
+                {/* <Editor text={props.postInfo.text} editText={props.handleEdittingText} /> */}
+                <Editor2 text={props.postInfo.text} setText={props.handleEdittingText} />
+
             </div>
             {props.postInfo.attachedFiles && makeFileList()}
             <div className="writepost-file">

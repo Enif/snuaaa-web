@@ -9,6 +9,7 @@ import history from '../../common/history';
 import FileIcon from '../../components/Common/FileIcon';
 import ContentType from '../../types/ContentType';
 import FileType from '../../types/FileType';
+import Viewer from '../../containers/Common/Viewer';
 
 type PostComponentProps = {
     content: ContentType,
@@ -75,8 +76,9 @@ function PostComponent(
                     }
                 </div>
             </div>
-            < div className="post-content" >
-                <ReactQuill value={content.text} readOnly={true} theme="bubble" />
+            <div className="post-content">
+                <Viewer text={content.text} />
+                {/* <ReactQuill value={content.text} readOnly={true} theme="bubble" /> */}
             </div>
             {makeFileList()}
             <ProfileMini userInfo={user} />
