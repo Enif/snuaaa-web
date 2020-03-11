@@ -105,6 +105,7 @@ function EditExhibitPhotoInfo({ exhibitPhotoInfo, fetch, cancel }: EditExhibitPh
                     user_id: -1,
                     nickname: '',
                     profile_path: '',
+                    grade: 10,
                     level: 0
                 }
             })

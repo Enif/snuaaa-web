@@ -12,6 +12,7 @@ interface UserType {
     mobile?: string;
     introduction?: string;
     profile_path: string;
+    grade: number;
     level: number;
     login_at?: string;
 }

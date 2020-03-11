@@ -184,7 +184,7 @@ class DocuBoard extends React.Component<DocuBoardProps, DocuBoardState> {
                                         selectedOption={generation} />
                                 </div>
                                 {
-                                    authContext.authInfo.user.level >= boardInfo.lv_write &&
+                                    authContext.authInfo.user.grade <= boardInfo.lv_write &&
                                     <button className="board-btn-write" onClick={() => this.setBoardState(BoardStateEnum.WRITING)}>
                                         <i className="ri-file-add-line enif-f-1p2x"></i>문서생성
                                 </button>

@@ -1,7 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ReactChild, MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 
-function UserActionDrawer({ children, user_uuid, className }) {
+type UserActionDrawerProps = {
+    children: ReactChild,
+    user_uuid: string,
+    className?: string
+}
+
+function UserActionDrawer({ children, user_uuid, className }: UserActionDrawerProps) {
 
     const [isOpened, setIsOpened] = useState(false);
 
@@ -19,7 +25,7 @@ function UserActionDrawer({ children, user_uuid, className }) {
         window.removeEventListener('click', closeDrawer, true)
     }
 
-    const clickChildren = function (e) {
+    const clickChildren = function (e: MouseEvent<HTMLSpanElement>) {
         setIsOpened(!isOpened);
     }
 

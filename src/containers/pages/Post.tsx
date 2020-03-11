@@ -230,7 +230,7 @@ function Post(props: PostProps) {
                                     editPost={() => setPostState(ContentStateEnum.EDITTING)}
                                     deletePost={deletePost} />
                                 {
-                                    (authContext.authInfo.user.level > 0) &&
+                                    (authContext.authInfo.user.grade < 10) &&
                                     <Comment parent_id={postInfo.content_id} />
                                 }
                             </>

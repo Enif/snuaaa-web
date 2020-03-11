@@ -1,96 +1,156 @@
 .profile-mini-wrapper {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  margin: 0 auto;
+  position: relative;
+  width: 80%;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  .profile-img {
+    width: 20%;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    .profile-img-border {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 58px;
+      width: 58px;
+      border-radius: 50%;
+      /* Sun */
+      &.grade1 {
+        background: linear-gradient(
+          125deg,
+          #e86200 0%,
+          #ffb000 20%,
+          #ffec9f 30%,
+          #ffa100 50%,
+          #ffec9f 70%,
+          #ffb000 80%,
+          #e86200 100%
+        );
+      }
+      /* Earth */
+      &.grade3 {
+        background: linear-gradient(125deg, #fff900 0%, #fff900 10%, #29d5d6 40%, #2fa9ea 70%, #84ff00 100%);
+      }
+      /* Mars */
+      &.grade4 {
+        background: linear-gradient(180deg, #f3f1e6 0%, #de7702 25%);
+      }
+      /* Jupiter */
+      &.grade5 {
+        background: linear-gradient(180deg, #ecddb3 10%, #efbf71 25%, #ecddb3 50%, #efbf71 75%, #ecddb3 90%);
+      }
+      /* Saturn */
+      &.grade6 {
+        background: linear-gradient(180deg, #ecddb3 25%, #4a4a4a 50%, #ecddb3 75%);
+      }
+      /* Uranus */
+      &.grade7 {
+        background: #ade8e1;
+      }
+      /* Neptune */
+      &.grade8 {
+        background: #74a9ff;
+      }
+      /* Pluto */
+      &.grade9 {
+        background: #999;
+      }
+    }
+    img {
+      height: 50px;
+      width: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-sizing: border-box;
+      // margin: 10px;
+      border: 3px solid #fff;
+      // border-image:
+      // border-image-slice: 1;
+      // border-image-width: 3px;
+
+      // border-image-slice: 1;
+      // border-style: solid;
+      // border-image-width: 3px;
+      // border-image: linear-gradient(to bottom, #000000 10%, #ffffff 50%, #000 90%);
+      cursor: pointer;
+    }
+  }
+  .nickname {
+    width: 25%;
     display: flex;
     justify-content: center;
-    align-content: center;
-    text-align: center;
-    margin: 0 auto;
+    align-items: center;
+    font-size: 17px;
+    font-weight: bold;
+    // border-right: 2px solid #F4F4F4;
+  }
+  .userdesc {
+    width: 50%;
+    // flex-grow: 1;
     position: relative;
-    width: 80%;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    .profile-img {
-        width: 20%;
-        display: flex;
-        position: relative;
-        justify-content: center;
-        align-items: center;
-        img {
-            height: 50px;
-            width: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-            cursor: pointer;
-        }
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    // align-items: center;
+    align-content: flex-start;
+    text-align: left;
+    height: 70px;
+    padding-top: 10px;
+    padding-left: 20px;
+    min-height: 70px;
+    line-height: 16px;
+    overflow: hidden;
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 25px;
+      margin: 0 auto;
+      background: linear-gradient(rgba(255, 255, 255, 0.01), #ffffff);
     }
-    .nickname {
-        width: 25%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 17px;
-        font-weight: bold;
-        // border-right: 2px solid #F4F4F4;
+    &.expanded::after {
+      display: none;
     }
-    .userdesc {
-        width: 50%;
-        // flex-grow: 1;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        // align-items: center;
-        align-content: flex-start;
-        text-align: left;
-        height: 70px;
-        padding-top: 10px;
-        padding-left: 20px;
-        min-height: 70px;
-        line-height: 16px;
-        overflow: hidden;
-        &::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 25px;
-            margin: 0 auto;
-            background: linear-gradient(rgba(255, 255, 255, 0.01),#FFFFFF);
-        }
-        &.expanded::after {
-            display: none;
-        }
-    }
-    .expanded {
-        height: auto;
-    }
-    .icon-expand {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-    }
+  }
+  .expanded {
+    height: auto;
+  }
+  .icon-expand {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
 }
 
 @media screen and (max-width: 800px) {
-    .profile-mini-wrapper {
-        width: 100%;
-        padding: 0.5rem 1rem 0rem 1rem;
-        .profile-img {
-            width: 4rem;
-            flex-shrink: 0;
-            img {
-                height: 3rem;
-                width: 3rem;
-            }
-        }
-        .nickname {
-            width: 5rem;
-            font-size: 0.9rem;
-            // width: 6rem;
-            flex-shrink: 0;
-        }
-        .userdesc {
-            font-size: 0.8rem;
-            flex-grow: 1;
-        }
+  .profile-mini-wrapper {
+    width: 100%;
+    padding: 0.5rem 1rem 0rem 1rem;
+    .profile-img {
+      width: 4rem;
+      flex-shrink: 0;
+      img {
+        height: 3rem;
+        width: 3rem;
+      }
     }
+    .nickname {
+      width: 5rem;
+      font-size: 0.9rem;
+      // width: 6rem;
+      flex-shrink: 0;
+    }
+    .userdesc {
+      font-size: 0.8rem;
+      flex-grow: 1;
+    }
+  }
 }

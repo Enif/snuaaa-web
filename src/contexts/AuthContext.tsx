@@ -7,6 +7,7 @@ const initialAuth = {
         user: {
             user_id: 0,
             nickname: '',
+            grade: 10,
             level: 0,
             profile_path: '',
         }

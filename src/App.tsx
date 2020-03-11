@@ -29,6 +29,7 @@ const initialAuth: AuthType = {
     user: {
         user_id: 0,
         nickname: '',
+        grade: 10,
         level: 0,
         profile_path: '',
     }
@@ -104,15 +105,7 @@ class App extends React.Component<RouteComponentProps, AppState> {
         removeToken();
         this.setState({
             isReady: true,
-            authInfo: {
-                isLoggedIn: false,
-                user: {
-                    user_id: 0,
-                    nickname: '',
-                    level: 0,
-                    profile_path: '',
-                }
-            }
+            authInfo: initialAuth
         })
     }
 
