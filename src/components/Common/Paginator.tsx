@@ -2,7 +2,13 @@ import React, { useState } from 'react';
 
 const PAGELISTNUM = 10;
 
-function Paginator({ pageIdx, pageNum, clickPage }) {
+type PagenatorType = {
+    pageIdx: number;
+    pageNum: number;
+    clickPage: (page: number) => void;
+}
+
+function Paginator({ pageIdx, pageNum, clickPage }: PagenatorType) {
 
     const [pageIdxOffset, setPageIdxOffset] = useState(Math.floor((pageIdx - 1) / PAGELISTNUM) * PAGELISTNUM + 1);
 

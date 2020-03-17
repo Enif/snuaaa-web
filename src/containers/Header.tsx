@@ -39,7 +39,7 @@ function Header() {
                         <img src={logo} alt="logo" /><p>서울대학교 아마추어 천문회</p>
                     </div>
                     {
-                        authContext.authInfo.user.level > 0 &&
+                        authContext.authInfo.user.grade < 10 ?
                         <div className="profile-img-wrapper">
                             <Image className="profile-img" onClick={togglePopup} imgSrc={authContext.authInfo.user.profile_path} defaultImgSrc={imgProfile} />
                             {
@@ -50,9 +50,7 @@ function Header() {
                                     logout={authContext.authLogout} />
                             }
                         </div>
-                    }
-                    {
-                        authContext.authInfo.user.level === 0 &&
+                        :
                         <div className="guest-logout-wrapper">
                             <p onClick={authContext.authLogout}>LOGOUT</p>
                         </div>

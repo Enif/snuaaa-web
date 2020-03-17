@@ -206,7 +206,7 @@ class AstroPhoto extends React.Component<AstroPhotoProps, AstroPhotoState> {
                                                 </div>
                                                 <div>
                                                     {
-                                                        authContext.authInfo.user.level >= boardInfo.lv_write &&
+                                                        authContext.authInfo.user.grade <= boardInfo.lv_write &&
                                                         <button className="board-btn-write" onClick={() => this.togglePopUp()}>
                                                             <i className="ri-image-line enif-f-1p2x"></i>사진 업로드
                                                 </button>
@@ -247,7 +247,7 @@ class AstroPhoto extends React.Component<AstroPhotoProps, AstroPhotoState> {
                                                 </div>
                                                 <div>
                                                     {
-                                                        authContext.authInfo.user.level >= boardInfo.lv_write &&
+                                                        authContext.authInfo.user.grade <= boardInfo.lv_write &&
                                                         <button className="board-btn-write" onClick={() => this.togglePopUp()}>
                                                             <i className="ri-gallery-line enif-f-1p2x"></i>앨범 생성
                                                 </button>
@@ -274,12 +274,6 @@ class AstroPhoto extends React.Component<AstroPhotoProps, AstroPhotoState> {
                 }
             </AuthContext.Consumer>
         );
-    }
-}
-
-const mapStateToProps = (state: any) => {
-    return {
-        level: state.authentication.level,
     }
 }
 

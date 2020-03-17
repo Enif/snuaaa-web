@@ -111,7 +111,7 @@ class Exhibition extends React.Component<ExhibitionProps, ExhibitionState> {
                                                 <>
                                                     <ExhibitionInfo exhibition_no={exhibitionInfo.exhibition.exhibition_no} slogan={exhibitionInfo.exhibition.slogan} />
                                                     {
-                                                        (authContext.authInfo.user.level >= exhibitionInfo.board.lv_write) &&
+                                                        (authContext.authInfo.user.grade <= exhibitionInfo.board.lv_write) &&
                                                         <button className="board-btn-write" onClick={this.togglePopUp}>
                                                             <i className="ri-image-line enif-f-1p2x"></i>사진 업로드
                                                         </button>

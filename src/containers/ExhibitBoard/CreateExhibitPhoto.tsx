@@ -18,7 +18,8 @@ const defaultPhotoInfo: CrtExhibitPhotoType = {
         user_id: -1,
         nickname: '',
         profile_path: '',
-        level: 0
+        level: 0,
+        grade: 10
     },
     photographer_alt: '',
     date: undefined,
@@ -124,7 +125,8 @@ function CreateExhibitPhoto({ board_id, exhibition_id, exhibition_no, togglePopU
                         user_id: -1,
                         nickname: '',
                         profile_path: '',
-                        level: 0
+                        level: 0,
+                        grade: 10,
                     }
                 })
             );

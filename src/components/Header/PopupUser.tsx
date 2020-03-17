@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Image from '../../components/Common/AaaImage';
 import imgProfile from '../../assets/img/profile.png';
+import AuthContext from '../../contexts/AuthContext';
 
 type PopupUserProps = {
     profile_path: string;
@@ -10,10 +11,13 @@ type PopupUserProps = {
 }
 
 function PopupUser({ profile_path, togglePopup, logout }: PopupUserProps) {
+
+    const authContext = useContext(AuthContext);
+
     useEffect(() => {
         window.addEventListener('click', togglePopup);
         document.body.classList.add('enif-overflow-hidden-mobile');
-        return function() {
+        return function () {
             window.removeEventListener('click', togglePopup);
             document.body.classList.remove('enif-overflow-hidden-mobile');
         }
@@ -30,6 +34,14 @@ function PopupUser({ profile_path, togglePopup, logout }: PopupUserProps) {
             <Link to="/mypage/info" onClick={togglePopup}>
                 <p>My Page</p>
             </Link>
+            {
+                authContext.authInfo.user.grade <= 6 &&
+                <Link to="/mgt/user" onClick={togglePopup}>
+                    <p>
+                        {/* <i className="ri-admin-line"></i> */}
+                        회원 관리</p>
+                </Link>
+            }
             <p onClick={() => {
                 logout();
                 togglePopup();

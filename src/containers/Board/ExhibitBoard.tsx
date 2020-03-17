@@ -113,7 +113,7 @@ class ExhibitBoard extends React.Component<ExhibitBoardProps, ExhibitBoardState>
                                                 </div>
                                                 <div className="board-search-wrapper">
                                                     {
-                                                        authContext.authInfo.user.level >= boardInfo.lv_write &&
+                                                        authContext.authInfo.user.grade <= boardInfo.lv_write &&
                                                         <button className="board-btn-write" onClick={() => this.setBoardState(BoardStateEnum.WRITING)}>
                                                             <i className="ri-gallery-line enif-f-1p2x"></i>
                                                             <>사진전 생성</>
