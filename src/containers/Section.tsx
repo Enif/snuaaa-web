@@ -14,7 +14,6 @@ import RiseSetContext from '../contexts/RiseSetContext';
 import AuthContext from '../contexts/AuthContext';
 import RiseSetType from '../types/RiseSetType';
 import HomeService from '../services/HomeService';
-import MightyCalculator from './pages/MightyCalculator';
 
 const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
@@ -31,6 +30,8 @@ const MyPage = lazy(() => import('./pages/MyPage'));
 const UserPage = lazy(() => import('./pages/UserPage'));
 const AllPosts = lazy(() => import('./pages/AllPosts'));
 const AllComments = lazy(() => import('./pages/AllComments'));
+const MightyCalculator = lazy(() => import('./pages/MightyCalculator'));
+const MgtUser = lazy(() => import('./pages/MgtUser'));
 
 const defaultRiseSet: RiseSetType = {
     aste: 0,
@@ -109,6 +110,7 @@ function Section() {
                             <DefaultRoute path="/posts/all" component={AllPosts} />
                             <DefaultRoute path="/comments/all" component={AllComments} />
                             <DefaultRoute path="/mightyCalculator" component={MightyCalculator} />
+                            <DefaultRoute paht="/mgt/user" component={MgtUser} />
                             <DefaultRoute component={Home} />
                         </Switch>
                         {

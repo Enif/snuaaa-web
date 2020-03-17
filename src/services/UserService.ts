@@ -1,11 +1,12 @@
 import { AaaService } from './index'
 import UserType from '../types/UserType';
 import { AxiosPromise } from 'axios';
+import { UsersSearchType } from '../types/SearchTypes';
 
 const UserService = {
 
-    retrieveUserInfo: function(user_uuid: string): AxiosPromise<UserType> {
-        if(user_uuid) {
+    retrieveUserInfo: function (user_uuid: string): AxiosPromise<UserType> {
+        if (user_uuid) {
             return AaaService.get(`userinfo/${user_uuid}`)
         }
         else {
@@ -13,55 +14,73 @@ const UserService = {
         }
     },
 
-    updateUserInfo: function(data: any) {
+    updateUserInfo: function (data: any) {
         return AaaService.patch('userinfo', data);
     },
-    
-    deleteUserInfo: function() {
+
+    deleteUserInfo: function () {
         return AaaService.delete('userinfo');
     },
 
-    retrieveUserPosts: function(user_uuid: string) {
-        if(user_uuid) {
+    retrieveUsers: function (sortOption?: UsersSearchType): AxiosPromise<{
+        userInfo: UserType[],
+        count: number
+    }> {
+        let query = '';
+        if (sortOption) {
+            // query += '/sort?'
+            query += `?`
+            query += `sort=${sortOption.sort}&`;
+            query += `order=${sortOption.order}&`;
+            sortOption.limit && (query += `limit=${sortOption.limit}&`);
+            sortOption.offset && (query += `offset=${sortOption.offset}&`);
+            query.substring(query.length - 1)
+        }
+
+        return AaaService.get(`userinfo/all${query}`);
+    },
+
+    retrieveUserPosts: function (user_uuid: string) {
+        if (user_uuid) {
             return AaaService.get(`userinfo/${user_uuid}/posts`);
         }
         else {
             return AaaService.get('userinfo/posts');
         }
     },
-    
-    retrieveUserPhotos: function(user_uuid: string) {
-        if(user_uuid) {
+
+    retrieveUserPhotos: function (user_uuid: string) {
+        if (user_uuid) {
             return AaaService.get(`userinfo/${user_uuid}/photos`);
         }
         else {
             return AaaService.get('userinfo/photos');
         }
     },
-    
-    retrieveUserComments: function(user_uuid: string) {
-        if(user_uuid) {
+
+    retrieveUserComments: function (user_uuid: string) {
+        if (user_uuid) {
             return AaaService.get(`userinfo/${user_uuid}/comments`);
         }
         else {
-            return AaaService.get(`userinfo/comments`);        
+            return AaaService.get(`userinfo/comments`);
         }
     },
-    
-    updatePassword: function(data: any) {
+
+    updatePassword: function (data: any) {
         return AaaService.patch(`userinfo/password`, data)
     },
 
-    findId: function(data: any) {
+    findId: function (data: any) {
         return AaaService.post(`userinfo/find/id`, data)
     },
 
-    findPw: function(data: any) {
+    findPw: function (data: any) {
         return AaaService.post(`userinfo/find/pw`, data)
     },
 
-    searchMini: function(name: string) {
-        if(name) {
+    searchMini: function (name: string) {
+        if (name) {
             return AaaService.get(`userinfo/search/mini?name=${name}`)
         }
     }

@@ -2,7 +2,7 @@
 interface UserType {
     user_id: number;
     user_uuid?: string;
-    // id: string;
+    id?: string;
     username?: string;
     aaa_no?: string;
     nickname: string;
@@ -15,6 +15,7 @@ interface UserType {
     grade: number;
     level: number;
     login_at?: string;
+    created_at?: string;
 }
 
 export default UserType;
