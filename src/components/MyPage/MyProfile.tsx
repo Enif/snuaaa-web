@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Image from '../Common/AaaImage.tsx';
-import imgDefaultProfile from 'assets/img/profile.png';
-import { breakLine } from 'utils/breakLine';
+import AaaImage from '../Common/AaaImage';
+import imgDefaultProfile from 'assets/img/common/profile.png';
+import { breakLine } from '../../utils/breakLine';
+import UserType from '../../types/UserType';
 
-function MyProfile({ userInfo, isCanEdit }) {
+type MyProfileProps = {
+    userInfo: UserType;
+    isCanEdit: boolean;
+}
+
+function MyProfile({ userInfo, isCanEdit }: MyProfileProps) {
 
     const [isExpand, setIsExpand] = useState(false);
 
@@ -14,12 +20,17 @@ function MyProfile({ userInfo, isCanEdit }) {
     return (
         <div className="my-profile-wrapper">
             <div className="my-left">
+                <div className="profile-img-wrapper with-border">
+                    <div className={`profile-img-border grade${userInfo.grade ? userInfo.grade : 9}`}>
+                        <AaaImage className="profile-img" imgSrc={userInfo.profile_path} defaultImgSrc={imgDefaultProfile} />
+
+                    </div>
+                </div>
                 <div className="profile-img">
-                    <Image imgSrc={userInfo.profile_path} defaultImgSrc={imgDefaultProfile} />
                 </div>
                 <div className="nickname">{userInfo.nickname}</div>
                 <div className="aaa-no">{userInfo.aaa_no}</div>
-                
+
                 {isCanEdit &&
                     <div className="btn-edit-info">
                         <Link to="profile">

@@ -5,6 +5,7 @@
     padding: 20px 23px 25px 23px;
     border-radius: 30px;
     background-color: #f4f4f4;
+    // min-height: 100px;
 
     .comment-list-wrapper {
         .comment-wrapper {
@@ -12,12 +13,12 @@
             margin: 12px 0px;
             .profile {
                 flex-shrink: 0;
-                img {
-                    border-radius: 50%;
-                    height: 40px;
-                    width: 40px;
-                    object-fit: cover;
-                }    
+            }
+            .comment-profile-img {
+                border-radius: 50%;
+                height: 40px;
+                width: 40px;
+                object-fit: cover;
             }
             .com-cont-wrp {
                 // width: 480px;

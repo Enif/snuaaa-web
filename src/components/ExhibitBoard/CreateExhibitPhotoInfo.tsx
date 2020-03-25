@@ -2,7 +2,7 @@ import React, { ChangeEvent } from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css"
 import Image from '../Common/AaaImage';
-import imgDefaultProfile from 'assets/img/profile.png';
+import imgDefaultProfile from 'assets/img/common/profile.png';
 import CrtExhibitPhotoType from '../../types/CrtExhibitPhotoType';
 import UserType from '../../types/UserType';
 

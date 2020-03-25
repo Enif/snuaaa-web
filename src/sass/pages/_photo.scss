@@ -84,11 +84,12 @@
         flex-direction: column;
         flex-basis: 400px;
         background-color: $color-white;
+        overflow: auto;
         // max-height: 100%;
         // overflow: hidden;
         .comment-area-wrapper {
             height: auto;
-            overflow-y: auto;
+            // overflow-y: auto;
         }
     }
     .photo-alb-title-wrp {
@@ -607,7 +608,7 @@
         }
         .photo-section-right {
             .comment-area-wrapper {
-                overflow-y: initial;
+                // overflow-y: initial;
             }
         }
     

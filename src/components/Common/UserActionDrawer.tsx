@@ -1,28 +1,33 @@
 import React, { useState, useEffect, ReactChild, MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
+import UserType from '../../types/UserType';
+import AaaImage from './AaaImage';
+import defaultProfile from 'assets/img/common/profile.png';
+import { gradeAssigner } from '../../utils/gradeAssigner';
+
 
 type UserActionDrawerProps = {
     children: ReactChild,
-    user_uuid: string,
+    userInfo: UserType,
     className?: string
 }
 
-function UserActionDrawer({ children, user_uuid, className }: UserActionDrawerProps) {
+function UserActionDrawer({ children, userInfo, className }: UserActionDrawerProps) {
 
     const [isOpened, setIsOpened] = useState(false);
 
-    useEffect(() => {
-        if (isOpened) {
-            window.addEventListener('click', closeDrawer, true)
-        }
-        else {
-            window.removeEventListener('click', closeDrawer, true)
-        }
-    }, [isOpened])
+    // useEffect(() => {
+    //     if (isOpened) {
+    //         window.addEventListener('click', closeDrawer, true)
+    //     }
+    //     else {
+    //         window.removeEventListener('click', closeDrawer, true)
+    //     }
+    // }, [isOpened])
 
     const closeDrawer = function () {
         setIsOpened(false);
-        window.removeEventListener('click', closeDrawer, true)
+        // window.removeEventListener('click', closeDrawer, true)
     }
 
     const clickChildren = function (e: MouseEvent<HTMLSpanElement>) {
@@ -38,17 +43,39 @@ function UserActionDrawer({ children, user_uuid, className }: UserActionDrawerPr
                 <div className="actions-drawer">
                     {
                         isOpened &&
-                        <Link to={`/userpage/${user_uuid}`}>
-                            <div className={`user-actions-wrapper ${isOpened && " opened"}`}>
-                                <div className="edit-delete-wrapper">
-                                    <div className="action-unit-wrapper edit-wrapper" >
-                                        <div className="action-unit">
-                                            <i className="ri-account-box-line enif-f-1p2x"></i>&nbsp;유저정보
+                        <>
+                            <div className="profile-popup-wrapper" onClick={closeDrawer}>
+                                <div className="profile-popup" onClick={(e) => e.stopPropagation()}>
+                                    <h5>회원 정보</h5>
+                                    <div className="profile-img-wrapper with-border">
+                                        <div className={`profile-img-border grade${userInfo.grade ? userInfo.grade : 9}`}>
+                                            <AaaImage className="profile-img" imgSrc={userInfo.profile_path} defaultImgSrc={defaultProfile} />
+                                        </div>
                                     </div>
+                                    <div className="profile-nickname">{userInfo.nickname}</div>
+                                    <div className="profile-units-wrapper">
+                                        {
+                                            userInfo.aaa_no &&
+                                            <div className="profile-unit">
+                                                <div className="profile-unit-label">가입번호</div>
+                                                <div className="profile-unit-info">{userInfo.aaa_no}</div>
+                                            </div>
+                                        }
+                                        <div className="profile-unit">
+                                            <div className="profile-unit-label">등급</div>
+                                            <div className="profile-unit-info">{userInfo.grade}&nbsp;{gradeAssigner(userInfo.grade)}</div>
+                                        </div>
+                                        <div className="profile-unit">
+                                            <div className="profile-unit-label">이메일</div>
+                                            <div className="profile-unit-info">{userInfo.email}</div>
+                                        </div>
                                     </div>
+                                    <Link className={"profile-more-btn"} to={`/userpage/${userInfo.user_uuid}`}>
+                                        <div>상세 정보</div>
+                                    </Link>
                                 </div>
                             </div>
-                        </Link>
+                        </>
                     }
                 </div>
             </span>

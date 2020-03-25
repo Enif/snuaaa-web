@@ -8,6 +8,7 @@ import EditAlbum from '../../containers/Album/EditAlbum';
 import CreatePhoto from '../../containers/Photo/CreatePhoto';
 import BoardName from '../../components/Board/BoardName';
 import AlbumService from '../../services/AlbumService';
+import history from '../../common/history';
 import ContentType from '../../types/ContentType';
 import CategoryType from '../../types/CategoryType';
 import TagType from '../../types/TagType';
@@ -75,6 +76,15 @@ class Album extends React.Component<AlbumProps, AlbumState> {
             })
             .catch((err) => {
                 console.error(err);
+                if (err.response && err.response.data && err.response.data.code === 4001) {
+                    alert("권한이 없습니다.")
+                    history.goBack();
+                }
+                else {
+                    this.setAlbumState(ContentStateEnum.ERROR);
+                    alert("해당 게시물이 존재하지 않습니다.")
+                    history.goBack();
+                }
             })
     }
 

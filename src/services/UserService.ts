@@ -2,10 +2,15 @@ import { AaaService } from './index'
 import UserType from '../types/UserType';
 import { AxiosPromise } from 'axios';
 import { UsersSearchType } from '../types/SearchTypes';
+import ContentType from '../types/ContentType';
+import CommentType from '../types/CommentType';
+import PhotoType from '../types/PhotoType';
 
 const UserService = {
 
-    retrieveUserInfo: function (user_uuid: string): AxiosPromise<UserType> {
+    retrieveUserInfo: function (user_uuid?: string): AxiosPromise<{
+        userInfo: UserType
+    }> {
         if (user_uuid) {
             return AaaService.get(`userinfo/${user_uuid}`)
         }
@@ -40,7 +45,9 @@ const UserService = {
         return AaaService.get(`userinfo/all${query}`);
     },
 
-    retrieveUserPosts: function (user_uuid: string) {
+    retrieveUserPosts: function (user_uuid?: string): AxiosPromise<{
+        postList: ContentType[]
+    }> {
         if (user_uuid) {
             return AaaService.get(`userinfo/${user_uuid}/posts`);
         }
@@ -49,7 +56,9 @@ const UserService = {
         }
     },
 
-    retrieveUserPhotos: function (user_uuid: string) {
+    retrieveUserPhotos: function (user_uuid?: string): AxiosPromise<{
+        photoList: PhotoType[]
+    }> {
         if (user_uuid) {
             return AaaService.get(`userinfo/${user_uuid}/photos`);
         }
@@ -58,7 +67,9 @@ const UserService = {
         }
     },
 
-    retrieveUserComments: function (user_uuid: string) {
+    retrieveUserComments: function (user_uuid?: string): AxiosPromise<{
+        commentList: CommentType[]
+    }> {
         if (user_uuid) {
             return AaaService.get(`userinfo/${user_uuid}/comments`);
         }

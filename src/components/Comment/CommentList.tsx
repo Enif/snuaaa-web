@@ -1,11 +1,24 @@
-import React from 'react';
-import Image from '../Common/AaaImage.tsx';
-import { breakLine } from 'utils/breakLine';
-import { convertFullDate } from 'utils/convertDate';
-import defaultProfile from 'assets/img/profile.png';
-import UserActionDrawer from 'components/Common/UserActionDrawer';
+import React, { ChangeEvent } from 'react';
+import Image from '../Common/AaaImage';
+import { breakLine } from '../../utils/breakLine';
+import { convertFullDate } from '../../utils/convertDate';
+import defaultProfile from 'assets/img/common/profile.png';
+import UserActionDrawer from '../../components/Common/UserActionDrawer';
+import CommentType from '../../types/CommentType';
 
-const CommentList = ({ my_id, comments, commentInEdit, editingContents, editingContentsChange, setCommentInEdit, updateComment, deleteComment }) => {
+type CommnetListProps = {
+    my_id: number;
+    comments: CommentType[];
+    commentInEdit: number;
+    editingContents: string;
+    editingContentsChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+    setCommentInEdit: (commnet_id: number, text: string) => void;
+    updateComment: (commnet_id: number) => void;
+    deleteComment: (commnet_id: number) => void;
+}
+
+const CommentList = ({ my_id, comments, commentInEdit, editingContents, editingContentsChange,
+    setCommentInEdit, updateComment, deleteComment }: CommnetListProps) => {
 
     const makeCommentList = () => {
         if (comments && comments.length > 0) {
@@ -13,10 +26,8 @@ const CommentList = ({ my_id, comments, commentInEdit, editingContents, editingC
                 let user = comment.user;
                 return (
                     <div key={comment.comment_id} className="comment-wrapper">
-                        <UserActionDrawer user_uuid={user.user_uuid} className="profile">
-                            {/* <div className="profile"> */}
-                                <Image imgSrc={user.profile_path} defaultImgSrc={defaultProfile} />
-                            {/* </div> */}
+                        <UserActionDrawer userInfo={user} className="profile">
+                            <Image className="comment-profile-img" imgSrc={user.profile_path} defaultImgSrc={defaultProfile} />
                         </UserActionDrawer>
                         <div className="com-cont-wrp">
                             <div className="com-cont-top">

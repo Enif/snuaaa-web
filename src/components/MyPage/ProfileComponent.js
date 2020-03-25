@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from '../Common/AaaImage.tsx';
 import InputField from '../Common/InputField';
-import imgDefaultProfile from 'assets/img/profile.png';
+import imgDefaultProfile from 'assets/img/common/profile.png';
 
 const ProfileComponent = ({ profilePath, userInfo, handleChange, uploadProfileImg, updateInfo, deleteUser, isProfileImgChanged, valid }) => {
 

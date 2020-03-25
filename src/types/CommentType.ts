@@ -1,4 +1,5 @@
 import ContentType from './ContentType';
+import UserType from './UserType';
 
 interface CommentType {
     comment_id: number;
@@ -10,6 +11,7 @@ interface CommentType {
     createdAt: string;
     updatedAt: string;
     content: ContentType;
+    user: UserType;
 }
 
 export default CommentType;
