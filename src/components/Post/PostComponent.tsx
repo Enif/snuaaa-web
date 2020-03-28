@@ -63,6 +63,7 @@ function PostComponent(
             </div>
             <div className="post-info-other" >
                 <div className="post-author" >
+                    <i className="ri-icons ri-pencil-fill"></i>
                     {user && user.nickname}
                 </div>
                 <div className="post-date-created enif-flex-center" >

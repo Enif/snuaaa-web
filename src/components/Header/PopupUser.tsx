@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Image from '../../components/Common/AaaImage';
-import imgProfile from '../../assets/img/profile.png';
+import imgProfile from '../../assets/img/common/profile.png';
 import AuthContext from '../../contexts/AuthContext';
 
 type PopupUserProps = {

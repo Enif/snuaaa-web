@@ -2,6 +2,7 @@ import React from 'react'
 import ReactQuill from 'react-quill';
 import { Link } from 'react-router-dom';
 import ContentType from '../../types/ContentType';
+import Viewer from '../../containers/Common/Viewer';
 
 const SoundBox = ({ soundBoxInfo }: { soundBoxInfo: ContentType }) => {
 
@@ -16,7 +17,8 @@ const SoundBox = ({ soundBoxInfo }: { soundBoxInfo: ContentType }) => {
                             <Link to={`/post/${soundBoxInfo.content_id}`}>
                                 <h5>{soundBoxInfo.title}</h5>
                             </Link>
-                            <ReactQuill value={soundBoxInfo.text} readOnly={true} theme="bubble" />
+                            <Viewer text={soundBoxInfo.text} />
+                            {/* <ReactQuill value={soundBoxInfo.text} readOnly={true} theme="bubble" /> */}
                         </>
                     }
                 </div>

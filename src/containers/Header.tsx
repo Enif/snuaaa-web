@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import logo from '../assets/img/logo_white.png'
-import imgProfile from '../assets/img/profile.png';
+import imgProfile from '../assets/img/common/profile.png';
 import Navigation from '../components/Header/Navigation'
 import PopupUser from '../components/Header/PopupUser'
 import Image from '../components/Common/AaaImage';

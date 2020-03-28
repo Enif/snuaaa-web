@@ -1,7 +1,7 @@
 import React from 'react';
 import { breakLine } from '../../utils/breakLine';
 import { convertDate, convertFullDate } from '../../utils/convertDate'
-import defaultProfile from 'assets/img/profile.png';
+import defaultProfile from 'assets/img/common/profile.png';
 import ActionDrawer from '../Common/ActionDrawer';
 import Image from '../Common/AaaImage';
 import 'react-datepicker/dist/react-datepicker.css'

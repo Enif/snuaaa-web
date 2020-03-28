@@ -83,8 +83,12 @@ class App extends React.Component<RouteComponentProps, AppState> {
                     this.authLogin(token, autoLogin, userInfo)
                 })
                 .catch((err: Error) => {
-                    alert("토큰이 만료되어 로그아웃 됩니다.")
                     console.error(err);
+                    alert("토큰이 만료되어 로그아웃 됩니다.")
+                    history.replace({
+                        pathname: '/login',
+                        state: { accessPath: history.location.pathname }
+                    })
                     this.authLogout();
                 })
         }
