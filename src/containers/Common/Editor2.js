@@ -11,6 +11,7 @@ import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
 import Strikethrough from '@ckeditor/ckeditor5-basic-styles/src/strikethrough';
 import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline';
 import TodoList from '@ckeditor/ckeditor5-list/src/todolist';
+import List from '@ckeditor/ckeditor5-list/src/list';
 
 import Indent from '@ckeditor/ckeditor5-indent/src/indent';
 import IndentBlock from '@ckeditor/ckeditor5-indent/src/indentblock';
@@ -80,7 +81,7 @@ function MyCustomUploadAdapterPlugin(editor) {
 const editorConfiguration = {
     plugins: [
         Essentials, Heading, Paragraph,
-        Bold, Strikethrough, Underline, TodoList,
+        Bold, Strikethrough, Underline, TodoList, List,
         Indent, IndentBlock, BlockQuote,
         Image, ImageCaption, ImageToolbar, ImageUpload, ImageResize, ImageStyle,
         Table, TableToolbar],
@@ -88,7 +89,7 @@ const editorConfiguration = {
     toolbar: [
         'heading', '|',
         'bold', 'Strikethrough', 'Underline', '|',
-        'link', 'todoList', 'blockQuote', '|',
+        'link', 'bulletedList', 'todoList', 'blockQuote', '|',
         'indent', 'outdent', '|',
         'undo', 'redo', '|',
         'imageUpload', 'insertTable'],

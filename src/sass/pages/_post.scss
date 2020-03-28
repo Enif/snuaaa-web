@@ -48,6 +48,10 @@
         display: flex;
         justify-content: space-between;
         padding: 10px 23px;
+        .post-author {
+            display: flex;
+            align-items: center;
+        }
     }
     .post-date-created {
         position: relative;
