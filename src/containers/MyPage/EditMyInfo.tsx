@@ -5,8 +5,7 @@ import EditProfile from './EditProfile';
 
 function EditMyInfo() {
 
-    const [isSelectInfo, setIsSelectInfo] = useState(true);
-
+    const [isSelectInfo, setIsSelectInfo] = useState<boolean>(true);
 
     return (
         <div>

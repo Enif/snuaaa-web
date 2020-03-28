@@ -5,7 +5,7 @@ type InputFieldProps = {
     name: string;
     type?: string;
     value: string;
-    valid?: boolean;
+    valid?: boolean | null;
     placeholder?: string;
     pattern?: string;
     disabled?: boolean;
