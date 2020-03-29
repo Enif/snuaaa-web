@@ -1,22 +1,56 @@
-import React from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import Image from '../../components/Common/AaaImage';
 import history from '../../common/history';
-import ContentType from '../../types/ContentType';
 import PhotoType from '../../types/PhotoType';
+import SpinningLoader from '../Common/SpinningLoader';
 
 type PhotoListProps = {
     photos: PhotoType[];
 }
 
+const LIMIT_UNIT = 12;
+
+const fakeFetch = (delay = 1000) => new Promise(res => setTimeout(res, delay));
+
 function PhotoList({ photos }: PhotoListProps) {
 
-    const makePhotoList = () => {
+    const target = useRef<HTMLDivElement>(null);
+    const [limit, setLimit] = useState<number>(LIMIT_UNIT);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(onIntersect)
+        if (target.current) {
+            observer.observe(target.current)
+        }
+        return () => observer.disconnect();
+    }, [])
+
+
+    const onIntersect = async ([entry]: IntersectionObserverEntry[], observer: IntersectionObserver) => {
+        if (entry.isIntersecting) {
+            setIsLoading(true);
+            await fakeFetch();
+            increaseLimit();
+            setIsLoading(false)
+        }
+        else {
+            // console.log('not intersecting')
+            setIsLoading(false)
+        }
+    }
+
+    const increaseLimit = () => {
+        setLimit(prevLimit => prevLimit + LIMIT_UNIT);
+    }
+
+    const makePhotoList = (photos: PhotoType[]) => {
         if (photos.length > 0) {
-            return photos.map(content => {
+            return photos.map((content, index) => {
                 let contentInfo = content;
                 let photo = content.photo;
-                if (photo) {
+                if (index < limit) {
                     return (
                         <div className="photo-wrapper" key={contentInfo.content_id}>
                             <Link to={{
@@ -48,7 +82,13 @@ function PhotoList({ photos }: PhotoListProps) {
     return (
         <>
             <div className="photo-list-wrapper">
-                {makePhotoList()}
+                {makePhotoList(photos)}
+            </div>
+            <div className="photo-list-loader-wrapper" ref={target}>
+                {
+                    isLoading && limit < photos.length &&
+                    <SpinningLoader size={40} />
+                }
             </div>
         </>
     )
