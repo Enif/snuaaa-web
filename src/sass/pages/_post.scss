@@ -48,6 +48,10 @@
         display: flex;
         justify-content: space-between;
         padding: 10px 23px;
+        .post-author {
+            display: flex;
+            align-items: center;
+        }
     }
     .post-date-created {
         position: relative;
@@ -69,10 +73,9 @@
         }
     }
     .post-content {
-        padding: 0.5rem;
+        // padding: 0.5rem;
         border: 2px solid #E8E8E8;
-        min-height: 300px;
-        line-height: 200%;
+
         border-top: none;
         .ql-container {
             font-family: 'D2Coding';
@@ -93,22 +96,31 @@
         }
     }
 
-    .file-download-wrapper {
-        padding: 10px 23px;
-        background-color: #E8E8E8;
-        .file-download-list {
-            a {
-                display: inline-flex;
-                align-items: center;
-                color: $color_gray1;
-            }
-            .file-download-name {
-                font-weight: bold;
-            }
-        }
-    }
     .enif-divider {
         margin: 0px 0px 10px 0px;
+    }
+}
+
+.file-download-wrapper {
+    padding: 10px 23px;
+    background-color: #E8E8E8;
+    .file-download-list {
+        a {
+            display: inline-flex;
+            align-items: center;
+            color: $color_gray1;
+        }
+        .file-download-name {
+            font-weight: bold;
+        }
+    }
+    .file-attached-list {
+        display: inline-flex;
+        align-items: center;
+        color: $color_gray1;
+        &.deleted {
+            text-decoration: line-through;
+        }
     }
 }
 
@@ -125,6 +137,7 @@
         border-top-left-radius: 10px;
         border-bottom-left-radius: 10px;
         li {
+            margin: 3px 0px;
             display: flex;
             align-items: center;
             font-size: 1rem;
@@ -137,6 +150,9 @@
                 color: rgb(255, 79, 79);
             }
         }
+    }
+    .guide-message {
+        color: rgb(255, 79, 79);
     }
 
     .attach-btn-wrapper {

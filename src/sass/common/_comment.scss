@@ -5,6 +5,7 @@
     padding: 20px 23px 25px 23px;
     border-radius: 30px;
     background-color: #f4f4f4;
+    // min-height: 100px;
 
     .comment-list-wrapper {
         .comment-wrapper {
@@ -12,12 +13,12 @@
             margin: 12px 0px;
             .profile {
                 flex-shrink: 0;
-                img {
-                    border-radius: 50%;
-                    height: 40px;
-                    width: 40px;
-                    object-fit: cover;
-                }    
+            }
+            .comment-profile-img {
+                border-radius: 50%;
+                height: 40px;
+                width: 40px;
+                object-fit: cover;
             }
             .com-cont-wrp {
                 // width: 480px;
@@ -59,7 +60,7 @@
                     position: absolute;
                     right: 0px;
                     height: 50px;
-                    font-family: 'NIXGONM-Vb', 'Nanum Gothic', Arial, Tahoma, Verdana, sans-serif;
+                    font-family: 'NIXGONM-Vb', Arial, Tahoma, Verdana, sans-serif;
                     font-size: 16px;
                     color: $color_white;
                     background-color: $color_gray2;
@@ -115,7 +116,7 @@
             height: 100%;
             width: 20%;
             font-size: 1rem;
-            font-family: 'NIXGONM-Vb', 'Nanum Gothic', Arial, Tahoma, Verdana, sans-serif;
+            font-family: 'NIXGONM-Vb', Arial, Tahoma, Verdana, sans-serif;
             color: $color_white;
             border: none;
             border-radius: 15px;

@@ -2,6 +2,7 @@ import React, { ChangeEvent } from 'react';
 import { Prompt } from 'react-router';
 import AttachFile from './AttachFile';
 import Editor from '../../containers/Common/Editor';
+import Editor2 from '../../containers/Common/Editor2';
 import CrtPostType from '../../types/CrtPostType';
 import ProgressBar from '../Common/ProgressBar';
 
@@ -33,7 +34,8 @@ function CreatePostComponent(props: CreatePostComponentProps) {
                     <input name="title" value={props.postInfo.title} maxLength={50} onChange={props.handleChange} placeholder="제목을 입력하세요." />
                 </div>
                 <div className="writepost-content">
-                    <Editor text={props.postInfo.text} editText={props.handleEditor} />
+                    {/* <Editor text={props.postInfo.text} editText={props.handleEditor} /> */}
+                    <Editor2 text={props.postInfo.text} setText={props.handleEditor} />
                 </div>
                 <div className="writepost-file">
                     <AttachFile files={props.attachedFiles} attachFile={props.attachFile} removeFile={props.removeAttachedFile} />

@@ -4,6 +4,7 @@ import CrtDocuType from '../../types/CrtDocuType';
 import CreateDocuComponent from '../../components/Document/CreateDocuComponent';
 import BoardType from '../../types/BoardType';
 import ContentService from '../../services/ContentService';
+import useBlockBackgroundScroll from '../../hooks/useBlockBackgroundScroll';
 
 const TAG = 'CREATEDOCU'
 const MAX_SIZE = 20 * 1024 * 1024;
@@ -32,12 +33,7 @@ function CreateDocu(props: CreateDocuProps) {
     const [isUploading, setIsUploading] = useState<boolean>(false);
     const [uploadIdx, setUploadIdx] = useState<number>(0);
 
-    useEffect(() => {
-        document.body.classList.add('enif-overflow-hidden');
-        return function() {
-            document.body.classList.remove('enif-overflow-hidden');
-        }
-    }, [])
+    useBlockBackgroundScroll();
     
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setDocuInfo({

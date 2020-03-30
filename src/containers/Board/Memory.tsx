@@ -138,7 +138,7 @@ class Memory extends React.Component<MemoryProps, MemoryState> {
                                 </div>
                                 <div>
                                     {
-                                        authContext.authInfo.user.level >= boardInfo.lv_write &&
+                                        authContext.authInfo.user.grade <= boardInfo.lv_write &&
                                         <button className="board-btn-write" onClick={() => this.togglePopUp()}>
                                             <i className="ri-gallery-line enif-f-1p2x"></i>앨범 생성
                                 </button>
@@ -151,7 +151,9 @@ class Memory extends React.Component<MemoryProps, MemoryState> {
                                     return (
                                         <>
                                             <div className="enif-divider"></div>
-                                            <AlbumList board_id={boardInfo.board_id} albums={this.albums} togglePopUp={this.togglePopUp} />
+                                            <AlbumList
+                                                board_id={boardInfo.board_id}
+                                                albums={this.albums} />
                                             {
                                                 this.state.popUpState &&
                                                 <CreateAlbum

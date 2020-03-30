@@ -8,8 +8,8 @@ import BoardName from '../../components/Board/BoardName';
 import Image from '../../components/Common/AaaImage';
 import CreateExhibition from '../../containers/ExhibitBoard/CreateExhibition';
 import BoardType from '../../types/BoardType';
-import ContentType from '../../types/ContentType';
 import AuthContext from '../../contexts/AuthContext';
+import ExhibitionType from '../../types/ExhibitionType';
 
 const TAG = 'EXHIBITBOARD'
 
@@ -23,7 +23,7 @@ type ExhibitBoardState = {
 
 class ExhibitBoard extends React.Component<ExhibitBoardProps, ExhibitBoardState> {
 
-    exhibitions: ContentType[];
+    exhibitions: ExhibitionType[];
 
     constructor(props: ExhibitBoardProps) {
         super(props);
@@ -113,7 +113,7 @@ class ExhibitBoard extends React.Component<ExhibitBoardProps, ExhibitBoardState>
                                                 </div>
                                                 <div className="board-search-wrapper">
                                                     {
-                                                        authContext.authInfo.user.level >= boardInfo.lv_write &&
+                                                        authContext.authInfo.user.grade <= boardInfo.lv_write &&
                                                         <button className="board-btn-write" onClick={() => this.setBoardState(BoardStateEnum.WRITING)}>
                                                             <i className="ri-gallery-line enif-f-1p2x"></i>
                                                             <>사진전 생성</>

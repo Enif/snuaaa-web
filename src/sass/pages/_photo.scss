@@ -84,11 +84,12 @@
         flex-direction: column;
         flex-basis: 400px;
         background-color: $color-white;
+        overflow: auto;
         // max-height: 100%;
         // overflow: hidden;
         .comment-area-wrapper {
             height: auto;
-            overflow-y: auto;
+            // overflow-y: auto;
         }
     }
     .photo-alb-title-wrp {
@@ -97,11 +98,11 @@
         color: #F1F1F1;
         // display: flex;
         display: inline-flex;
-        // justify-content: center;
+        justify-content: center;
         align-items: center;
-
-        padding-top: 10px;
-        padding-bottom: 8px;
+        padding: 0.2rem 2rem;
+        // padding-top: 10px;
+        // padding-bottom: 8px;
         position: relative;
         .photo-alb-title-back {
             position: absolute;
@@ -111,18 +112,12 @@
             color: #FFFFFF;
         }
         .photo-alb-title {
-            // flex-basis: 50px;
-            // display: flex;
             display: flex;
+            padding: 0.5rem 0.5rem;
             align-items: center;
-
-            margin: auto;
             font-size: 20px;
             flex-grow: 0;
             font-weight: bold;
-            // text-align: center;
-            // width: 100%;
-            padding: 0px 30px;
             color: #FFFFFF;
             h5 {
                 display: inline;
@@ -200,7 +195,7 @@
 
     .photo-contents-wrapper {
         margin-top: 10px;
-        // padding: 10px 0px;
+        padding: 0px 1rem;
         position: relative;
         display: flex;
         flex-direction: column;
@@ -256,7 +251,7 @@
             .info-date {
                 // padding: 7px 0px 0px 5px;
                 width: 50%;
-                padding-right: 37px;
+                padding-right: 1rem;
                 text-align: right;
                 font-size: 13px;
                 color: #3E3E3E;
@@ -265,11 +260,21 @@
             .info-text-infos-wrapper {
                 display: flex;
                 flex-direction: column;
-                padding: 0px 1rem;
+                // padding: 0px 1rem;
                 .info-text-wrapper {
-                    // width: 50%;
-                    padding: 10px 0px;
-                    // border-right: 2px dashed #F1F1F1;
+                    position: relative;
+                    padding: 1rem 0px;
+                    max-height: 200px;
+                    overflow: auto;
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        bottom: 0;
+                        width: 100%;
+                        height: 1rem;
+                        margin: 0 auto;
+                        background: linear-gradient(rgba(255, 255, 255, 0.01), rgb(255, 255, 255));
+                    }
                 }
                 .info-infos-wrapper {
                     // width: 50%;
@@ -284,14 +289,24 @@
                 .photo-info-label {
                     margin: 0px 3px;
                     padding: 5px;
-                    background-color: $color-gray3;
-                    border-radius: 5px;
-                    color: $color-white;
+                    width: 50%;
+                    font-weight: bold;
+                    color: $color-gray1;
+                    flex-shrink: 0;
                 }
                 .photo-info-profile {
                     width: 20px;
                     height: 20px;
                     border-radius: 50%;            
+                }
+                .photo-info-fl {
+                    margin: 0px 1px;
+                    padding: 5px;
+                    font-weight: bold;
+                    color: $color-black;
+                    // background-color: $color-gray3;
+                    // border-radius: 5px;
+                    // color: $color-white;
                 }
             }
 
@@ -301,7 +316,7 @@
             }
 
             h4 {
-                margin-left: 23px;
+                // margin-left: 0.5rem;
                 width: 50%;
                 font-family: 'S-CoreDream-5Medium';
                 font-size: 23px;
@@ -593,7 +608,7 @@
         }
         .photo-section-right {
             .comment-area-wrapper {
-                overflow-y: initial;
+                // overflow-y: initial;
             }
         }
     

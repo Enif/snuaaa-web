@@ -29,6 +29,7 @@ const initialAuth: AuthType = {
     user: {
         user_id: 0,
         nickname: '',
+        grade: 10,
         level: 0,
         profile_path: '',
     }
@@ -82,8 +83,12 @@ class App extends React.Component<RouteComponentProps, AppState> {
                     this.authLogin(token, autoLogin, userInfo)
                 })
                 .catch((err: Error) => {
-                    alert("토큰이 만료되어 로그아웃 됩니다.")
                     console.error(err);
+                    alert("토큰이 만료되어 로그아웃 됩니다.")
+                    history.replace({
+                        pathname: '/login',
+                        state: { accessPath: history.location.pathname }
+                    })
                     this.authLogout();
                 })
         }
@@ -104,15 +109,7 @@ class App extends React.Component<RouteComponentProps, AppState> {
         removeToken();
         this.setState({
             isReady: true,
-            authInfo: {
-                isLoggedIn: false,
-                user: {
-                    user_id: 0,
-                    nickname: '',
-                    level: 0,
-                    profile_path: '',
-                }
-            }
+            authInfo: initialAuth
         })
     }
 

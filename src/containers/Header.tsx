@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import logo from '../assets/img/logo_white.png'
-import imgProfile from '../assets/img/profile.png';
+import imgProfile from '../assets/img/common/profile.png';
 import Navigation from '../components/Header/Navigation'
 import PopupUser from '../components/Header/PopupUser'
 import Image from '../components/Common/AaaImage';
@@ -39,7 +39,7 @@ function Header() {
                         <img src={logo} alt="logo" /><p>서울대학교 아마추어 천문회</p>
                     </div>
                     {
-                        authContext.authInfo.user.level > 0 &&
+                        authContext.authInfo.user.grade < 10 ?
                         <div className="profile-img-wrapper">
                             <Image className="profile-img" onClick={togglePopup} imgSrc={authContext.authInfo.user.profile_path} defaultImgSrc={imgProfile} />
                             {
@@ -50,9 +50,7 @@ function Header() {
                                     logout={authContext.authLogout} />
                             }
                         </div>
-                    }
-                    {
-                        authContext.authInfo.user.level === 0 &&
+                        :
                         <div className="guest-logout-wrapper">
                             <p onClick={authContext.authLogout}>LOGOUT</p>
                         </div>

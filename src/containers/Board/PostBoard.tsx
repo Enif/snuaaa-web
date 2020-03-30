@@ -171,7 +171,7 @@ function PostBoard({ boardInfo }: PostBoardProps) {
                                             </div>
                                             <div className="board-btn-write-wrapper">
                                                 {
-                                                    authContext.authInfo.user.level >= boardInfo.lv_write &&
+                                                    authContext.authInfo.user.grade <= boardInfo.lv_write &&
                                                     <button className="board-btn-write" onClick={() => setBoardState(BoardStateEnum.WRITING)}>
                                                         <i className="ri-pencil-line enif-f-1p2x"></i>글쓰기
                                                         </button>

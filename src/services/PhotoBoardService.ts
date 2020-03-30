@@ -2,6 +2,7 @@ import { AaaService } from './index';
 import { AxiosPromise } from 'axios';
 import ContentType from '../types/ContentType';
 import AlbumType from '../types/AlbumType';
+import PhotoType from '../types/PhotoType';
 
 const PhotoBoardService = {
 
@@ -22,7 +23,7 @@ const PhotoBoardService = {
     },
 
     retrievePhotosInPhotoBoard: function (board_id: string, pageIdx: number, tags?: string[]): AxiosPromise<{
-        photoInfo: ContentType[],
+        photoInfo: PhotoType[],
         photoCount: number
     }> {
         if(tags && tags.length > 0) {

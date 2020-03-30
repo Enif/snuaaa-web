@@ -45,7 +45,7 @@ const defaultFormat: SignUpInputType = {
         value: '',
         valid: undefined,
         isRequired: true,
-        regExp: '^[0-9]{3}-[0-9]{4}-[0-9]{4}$'
+        regExp: '^[0-9]{1,8}-[0-9]{1,8}-[0-9]{1,8}$'
     },
     aaaNum: {
         value: '',

@@ -9,6 +9,7 @@ import history from '../../common/history';
 import FileIcon from '../../components/Common/FileIcon';
 import ContentType from '../../types/ContentType';
 import FileType from '../../types/FileType';
+import Viewer from '../../containers/Common/Viewer';
 
 type PostComponentProps = {
     content: ContentType,
@@ -34,7 +35,7 @@ function PostComponent(
                         return (
                             <div className="file-download-list" key={file.file_id} >
                                 <DownloadFile key={file.file_id} content_id={file.parent_id} file_id={file.file_id} >
-                                    <FileIcon fileInfo={file} isFull={true} />
+                                    <FileIcon fileInfo={file} isFull={true} isDownload={true} />
                                 </DownloadFile>
                             </div>
                         )
@@ -62,6 +63,7 @@ function PostComponent(
             </div>
             <div className="post-info-other" >
                 <div className="post-author" >
+                    <i className="ri-icons ri-pencil-fill"></i>
                     {user && user.nickname}
                 </div>
                 <div className="post-date-created enif-flex-center" >
@@ -75,8 +77,9 @@ function PostComponent(
                     }
                 </div>
             </div>
-            < div className="post-content" >
-                <ReactQuill value={content.text} readOnly={true} theme="bubble" />
+            <div className="post-content">
+                <Viewer text={content.text} />
+                {/* <ReactQuill value={content.text} readOnly={true} theme="bubble" /> */}
             </div>
             {makeFileList()}
             <ProfileMini userInfo={user} />

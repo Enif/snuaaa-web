@@ -1,113 +1,48 @@
-@import './pages/signup';
-@import './pages/login';
-@import './pages/intro';
-@import './pages/board';
-@import './pages/photoboard';
-@import './pages/album';
-@import './pages/document';
-@import './pages/userinfo';
-@import './pages/photo';
-@import './pages/post';
-@import './pages/home';
-@import './pages/exhibition';
-
+@import "./pages/signup";
+@import "./pages/login";
+@import "./pages/intro";
+@import "./pages/board";
+@import "./pages/photoboard";
+@import "./pages/album";
+@import "./pages/document";
+@import "./pages/userinfo";
+@import "./pages/photo";
+@import "./pages/post";
+@import "./pages/home";
+@import "./pages/exhibition";
+@import "./pages/mighty";
+@import "./pages/management";
 
 .section-wrapper {
-    display: flex;
-    flex-grow: 1;
-    background-color: #f0f0f0;
+  display: flex;
+  flex-grow: 1;
+  background-color: #f0f0f0;
 }
-  
+
 section {
-    position: relative;
-    width: 900px;
-    padding-top: 15px;
-    padding-left: 150px;
-    padding-right: 150px;
-    padding-bottom: 50px;
-    margin: 0 auto;
-    background-color: #ffffff;
-    font-size: 13px; 
-    // padding: 30px;
-    h2 {
-        font-family: 'S-CoreDream-5Medium';
-        font-size: 23px;
-        font-weight: bold;
-        margin: 0px 0px 0px 0px;
-        color: #000E2C;
-    }
+  position: relative;
+  width: 900px;
+  padding-top: 15px;
+  padding-left: 150px;
+  padding-right: 150px;
+  padding-bottom: 50px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  font-size: 13px;
+  // padding: 30px;
+  h2 {
+    font-family: "S-CoreDream-5Medium";
+    font-size: 23px;
+    font-weight: bold;
+    margin: 0px 0px 0px 0px;
+    color: #000e2c;
+  }
 }
 
- 
- #calendar-wrapper {
-     width: min-content;
-     h5 {
-        margin-top: 2em;
-        margin-bottom: 0.5em;
-        color: #808080;
-    }
-}
- 
- #calendar-wrapper .title-left, #calendar-wrapper .title-right {
-     display: inline-block;
-     width: 50%;
- }
- 
- #calendar-tb {
-     width: 700px;
-     border-collapse: collapse;
-     color: #909090;
- }
- 
- #calendar-tb, #calendar-tb th, #calendar-tb td {
-     border: 2px solid #909090;
-     vertical-align: middle;
- }
- /* 
- #calender-tb tbody {
-     
- } */
- 
- #calendar-tb th {
-     font-size: 0.9em;
-     width: 100px;
-     padding: 3px;
-     background-color: #f3eade;
-     font-weight: normal;
- }
- 
- #calendar-tb td {
-     font-size: 0.8em;
-     text-align: center;
-     width: 100px;
-     height: 80px;
- }
- 
- .title-left{
-     float: left;
-     text-align: left;
- }
- 
- 
- .title-right{
-     float: right;
-     text-align: right;
- }
- 
- .content {
-     margin: 20px auto;
-     line-height: 1.5;
- }
- 
-
-
- @media screen and (max-width: 800px) {
-
-    section {
-        width: 100%;
-        // min-height: 95%;
-        display: block;
-        padding: 0rem 0rem 1rem 0rem;
-
-    }
+@media screen and (max-width: 800px) {
+  section {
+    width: 100%;
+    display: block;
+    padding: 0rem 0rem 1rem 0rem;
+  }
 }

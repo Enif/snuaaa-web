@@ -3,6 +3,7 @@ import EditAlbumComponent from '../../components/Album/EditAlbumComponent';
 import PhotoBoardService from '../../services/PhotoBoardService';
 import CrtAlbumType from '../../types/CrtAlbumType';
 import CategoryType from '../../types/CategoryType';
+import useBlockBackgroundScroll from '../../hooks/useBlockBackgroundScroll';
 const TAG = 'CREATEALBUM'
 
 type CreateAlbumProps = {
@@ -12,18 +13,14 @@ type CreateAlbumProps = {
     fetch: () => void;
 }
 function CreateAlbum(props: CreateAlbumProps) {
+
+    useBlockBackgroundScroll();
     const [albumInfo, setAlbumInfo] = useState<CrtAlbumType>({
         title: '',
         text: '',
         is_private: false
     })
 
-    useEffect(() => {
-        document.body.classList.add('enif-overflow-hidden');
-        return function() {
-            document.body.classList.remove('enif-overflow-hidden');
-        }
-    }, [])
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setAlbumInfo({

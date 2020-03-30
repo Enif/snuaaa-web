@@ -13,6 +13,7 @@ import ContentService from '../../services/ContentService';
 import ContentType from '../../types/ContentType';
 import AuthContext from '../../contexts/AuthContext';
 import ProgressBar from '../../components/Common/ProgressBar';
+import FileService from '../../services/FileService';
 
 const TAG = 'POST'
 const MAX_SIZE = 20 * 1024 * 1024;
@@ -29,6 +30,7 @@ function Post(props: PostProps) {
     const [attachedFiles, setAttachedFiles] = useState<File[]>([])
     const [progress, setProgress] = useState<number>(0);
     const [editingPostData, setEditingPostData] = useState<ContentType>()
+    const [removedFiles, setRemovedFiles] = useState<number[]>([]);
     const authContext = useContext(AuthContext);
     let currentSize = 0;
 
@@ -67,10 +69,15 @@ function Post(props: PostProps) {
         try {
             await PostService.updatePost(post_id, editingPostData)
             if (attachedFiles.length > 0) {
-                for (let i = 0, max = attachedFiles.length; i < max; i++) {
+                for (let i = 0; i < attachedFiles.length; i++) {
                     let formData = new FormData();
-                    formData.append('attachedFile', attachedFiles[i])
+                    formData.append('attachedFile', attachedFiles[i]);
                     await ContentService.createFile(post_id, formData, uploadProgress)
+                }
+            }
+            if (removedFiles.length > 0) {
+                for(let i = 0; i < removedFiles.length; i++) {
+                    await FileService.deleteFile(removedFiles[i])
                 }
             }
             fetch();
@@ -183,13 +190,20 @@ function Post(props: PostProps) {
         )
     }
 
+    const removeFile = (file_id: number) => {
+        setRemovedFiles(removedFiles.concat(file_id));
+    }
+
+    const cancelRemoveFile = (file_id: number) => {
+        setRemovedFiles(removedFiles.filter((file) => file !== file_id));
+    }
+
     const uploadProgress = (e: ProgressEvent) => {
         const totalLength = e.lengthComputable && e.total;
         if (totalLength) {
             setProgress(Math.round(e.loaded / totalLength * 100))
         }
     }
-
 
     return (
         <>
@@ -216,7 +230,7 @@ function Post(props: PostProps) {
                                     editPost={() => setPostState(ContentStateEnum.EDITTING)}
                                     deletePost={deletePost} />
                                 {
-                                    (authContext.authInfo.user.level > 0) &&
+                                    (authContext.authInfo.user.grade < 10) &&
                                     <Comment parent_id={postInfo.content_id} />
                                 }
                             </>
@@ -234,6 +248,9 @@ function Post(props: PostProps) {
                                     attachedFiles={attachedFiles}
                                     attachFile={attachFile}
                                     removeAttachedFile={removeAttachedFile}
+                                    removedFiles={removedFiles}
+                                    removeFile={removeFile}
+                                    cancelRemoveFile={cancelRemoveFile}
                                     cancel={() => setPostState(ContentStateEnum.READY)}
                                     confirm={updatePost}
                                 />

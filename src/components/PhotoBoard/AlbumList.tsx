@@ -10,10 +10,9 @@ const TAG = 'ALBUMLIST'
 type AlbumListProps = {
     board_id: string;
     albums: AlbumType[];
-    togglePopUp: () => void;
 }
 
-function AlbumList({board_id, albums, togglePopUp}: AlbumListProps) {
+function AlbumList({board_id, albums}: AlbumListProps) {
 
     const makeAlbumList = () => {
         let albumCover = board_id === 'brd32' ? defaultStarAlbumCover : defaultAlbumCover;
@@ -26,8 +25,8 @@ function AlbumList({board_id, albums, togglePopUp}: AlbumListProps) {
             if (album.album.thumbnail && album.album.thumbnail.photo) {
                 thumbnailPath = album.album.thumbnail.photo.thumbnail_path;
             }
-            else if (album.albumPhoto && album.albumPhoto[0]){
-                thumbnailPath = album.albumPhoto[0].thumbnail_path;
+            else if (album.children && album.children[0]){
+                thumbnailPath = album.children[0].photo.thumbnail_path;
             }
             else {
                 thumbnailPath = '';

@@ -18,6 +18,14 @@ import App from './App';
 import reducers from './reducers';
 import * as serviceWorker from './serviceWorker';
 
+if (process.env.NODE_ENV === 'production') {
+    console.log('production mode')
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { window.dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-154430849-1');
+}
+
 const store = createStore(reducers);
 
 ReactDOM.render(

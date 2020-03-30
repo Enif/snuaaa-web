@@ -19,8 +19,8 @@ function NewAlbums({ title, board_id, albums }: NewAlbumsProps) {
                 if (content.album.thumbnail && content.album.thumbnail.photo) {
                     thumbnailPath = content.album.thumbnail.photo.thumbnail_path;
                 }
-                else if (content.albumPhoto && content.albumPhoto[0]) {
-                    thumbnailPath = content.albumPhoto[0].thumbnail_path;
+                else if (content.children && content.children[0]) {
+                    thumbnailPath = content.children[0].photo.thumbnail_path;
                 }
                 else {
                     thumbnailPath = '';

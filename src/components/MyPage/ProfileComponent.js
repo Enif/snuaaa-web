@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from '../Common/AaaImage.tsx';
 import InputField from '../Common/InputField';
-import imgDefaultProfile from 'assets/img/profile.png';
+import imgDefaultProfile from 'assets/img/common/profile.png';
 
 const ProfileComponent = ({ profilePath, userInfo, handleChange, uploadProfileImg, updateInfo, deleteUser, isProfileImgChanged, valid }) => {
 
@@ -56,12 +56,12 @@ const ProfileComponent = ({ profilePath, userInfo, handleChange, uploadProfileIm
                     <input type="file" id="profileImg" accept="image/*" onChange={uploadProfileImg} />
                 </div>
                 <h5 className="profile-nickname">{nicknameInfo.value}</h5>
-                <InputField label="ID" name="id" value={idInfo.value} disabled={true} valid={idInfo.valid} />
-                <InputField label="이름" name="username" value={usernameInfo.value} required={true} valid={usernameInfo.valid}
+                <InputField label="ID*" name="id" value={idInfo.value} disabled={true} valid={idInfo.valid} />
+                <InputField label="이름*" name="username" value={usernameInfo.value} required={true} valid={usernameInfo.valid}
                     handleChange={handleChange} invalidMessage="2-10자의 한글 혹은 영문" />
-                <InputField label="E-mail" name="email" value={emailInfo.value} handleChange={handleChange} maxLength={30} valid={emailInfo.valid}
+                <InputField label="E-mail*" name="email" value={emailInfo.value} handleChange={handleChange} maxLength={30} valid={emailInfo.valid}
                     invalidMessage="이메일 형식에 맞게 입력해주세요" />
-                <InputField label="Mobile" name="mobile" value={mobileInfo.value} valid={mobileInfo.valid}
+                <InputField label="Mobile*" name="mobile" value={mobileInfo.value} valid={mobileInfo.valid}
                     handleChange={handleChange} invalidMessage="전화번호 형식에 맞게 입력해주세요(xxx-xxxx-xxxx)" />
                 <InputField label="동아리번호" name="aaa_no" value={aaaNumInfo.value} valid={aaaNumInfo.valid}
                     handleChange={handleChange} invalidMessage="가입번호 형식에 맞게 입력해주세요. 동아리 회원이 아닌 경우, 입력하지 않으셔도 됩니다." />

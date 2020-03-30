@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import Image from '../Common/AaaImage';
-import ContentType from '../../types/ContentType';
+import ExhibitionType from '../../types/ExhibitionType';
 
 const NUM_UNIT_DESKTOP = 4;
 const NUM_UNIT_MOBILE = 2;
 
 type NewExhibitionsProps = {
     board_id: string,
-    exhibitions: ContentType[]
+    exhibitions: ExhibitionType[]
 }
 
 function NewExhibitions({ board_id, exhibitions }: NewExhibitionsProps) {

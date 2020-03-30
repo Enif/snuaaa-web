@@ -1,89 +1,57 @@
-import React, { RefObject } from 'react';
-import { Redirect, match } from 'react-router';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, createRef } from 'react';
+import { Redirect, match, useLocation, useRouteMatch, useHistory } from 'react-router';
 import ExhibitPhotoService from '../../services/ExhibitPhotoService';
-import ContentService from '../../services/ContentService';
 import Loading from '../../components/Common/Loading';
 import ContentStateEnum from '../../common/ContentStateEnum';
-import Comment from '../../containers/Comment';
-import history from '../../common/history';
+// import history from '../../common/history';
 import FullScreenPortal from '../../containers/FullScreenPortal';
 import Image from '../../components/Common/AaaImage';
 import ExhibitPhotoComponent from '../../components/ExhibitBoard/ExhibitPhotoComponent';
-import EditExhibitPhoto from '../ExhibitBoard/EditExhibitPhoto';
 import { Location } from 'history';
-import ContentType from '../../types/ContentType';
 import { RecordOf, Record } from 'immutable';
 import AuthContext from '../../contexts/AuthContext';
-
-
-const TAG = 'EXHIBITPHOTO'
+import ExhibitPhotoType from '../../types/ExhibitPhotoType';
+import useBlockBackgroundScroll from '../../hooks/useBlockBackgroundScroll';
 
 type ExhibitPhotoProps = {
     match: match<{ exhibitPhoto_id: string }>;
     location: Location;
 }
 
-type ExhibitPhotoState = {
-    likeInfo: boolean;
-    photoState: number;
-    isFullscreen: boolean;
-    contentInfo?: RecordOf<ContentType>;
-}
 
-class ExhibitPhoto extends React.Component<ExhibitPhotoProps, ExhibitPhotoState> {
-
-    exhibitPhotosInfo: ContentType[];
-    fullscreenRef: RefObject<HTMLDivElement>;
+function ExhibitPhoto() {
+    const location = useLocation();
+    const history = useHistory();
+    const match = useRouteMatch<{ exhibitPhoto_id: string }>();
+    const fullscreenRef = createRef<HTMLDivElement>();
 
 
-    constructor(props: ExhibitPhotoProps) {
+    const [exhibitPhotosInfo, setexhibitPhotosInfo] = useState<ExhibitPhotoType[]>([]);
+    const [contentInfo, setContentInfo] = useState<RecordOf<ExhibitPhotoType>>();
+    const [photoState, setPhotoState] = useState<number>(ContentStateEnum.LOADING);
+    const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
 
-        super(props);
+    useBlockBackgroundScroll();
 
-        // this.contentInfo = undefined;
-        this.exhibitPhotosInfo = [];
-        this.fullscreenRef = React.createRef();
-        this.state = {
-            // exhibitPhoto_id: this.props.match.params.exhibitPhoto_id,
-            likeInfo: false,
-            photoState: ContentStateEnum.LOADING,
-            isFullscreen: false
-        }
-    }
-
-    componentDidMount() {
-        this.fetch();
-        // document.addEventListener('keydown', this.keyDownEvent);
-        const { toggleFullScreen } = this;
+    useEffect(() => {
+        fetch();
         document.onfullscreenchange = function (e) {
             toggleFullScreen();
         };
-        document.body.classList.add('enif-overflow-hidden');
-    }
+    }, [location])
 
-    componentDidUpdate(prevProps: ExhibitPhotoProps) {
-        if (prevProps.location !== this.props.location) {
-            this.fetch();
-        }
-    }
 
-    componentWillUnmount() {
-        document.body.classList.remove('enif-overflow-hidden')
-    }
+    const fetch = async () => {
+        let exhibitPhoto_id = Number(match.params.exhibitPhoto_id);
 
-    fetch = async () => {
-        let exhibitPhoto_id = Number(this.props.match.params.exhibitPhoto_id);
-
-        this.setPhotoState(ContentStateEnum.LOADING);
+        setPhotoState(ContentStateEnum.LOADING);
         await ExhibitPhotoService.retrieveExhibitPhoto(exhibitPhoto_id)
             .then((res) => {
-                this.exhibitPhotosInfo = res.data.exhibitPhotosInfo;
-                this.setState({
-                    contentInfo: Record(res.data.exhibitPhotoInfo)(),
-                    likeInfo: res.data.likeInfo,
-                    photoState: ContentStateEnum.READY
-                })
+                let exhibitPhotoInfo = res.data.exhibitPhotoInfo;
+                setexhibitPhotosInfo(res.data.exhibitPhotosInfo)
+                setContentInfo(Record(exhibitPhotoInfo)())
+                setPhotoState(ContentStateEnum.READY);
+                // likeInfo: res.data.likeInfo,
             })
             .catch((err) => {
                 console.error(err);
@@ -92,20 +60,12 @@ class ExhibitPhoto extends React.Component<ExhibitPhotoProps, ExhibitPhotoState>
                     history.goBack();
                 }
                 else {
-                    this.setPhotoState(ContentStateEnum.ERROR);
+                    setPhotoState(ContentStateEnum.ERROR);
                 }
             })
     }
 
-    setPhotoState = (state: number) => {
-        this.setState({
-            photoState: state
-        })
-    }
-
-    moveToPhoto = (direction: number) => {
-        const { exhibitPhotosInfo } = this;
-        const { contentInfo } = this.state;
+    const moveToPhoto = (direction: number) => {
         if (contentInfo && exhibitPhotosInfo && exhibitPhotosInfo.length > 0) {
             let index = -1;
             for (let i = 0; i < exhibitPhotosInfo.length; i++) {
@@ -139,7 +99,7 @@ class ExhibitPhoto extends React.Component<ExhibitPhotoProps, ExhibitPhotoState>
         }
     }
 
-    closePhoto = () => {
+    const closePhoto = () => {
         if (history.action === 'POP' && !history.location.state) {
             history.push(`/`)
         }
@@ -148,16 +108,12 @@ class ExhibitPhoto extends React.Component<ExhibitPhotoProps, ExhibitPhotoState>
         }
     }
 
-    toggleFullScreen = () => {
-        const { isFullscreen } = this.state;
-        this.setState({
-            isFullscreen: !isFullscreen
-        })
+    const toggleFullScreen = () => {
+        setIsFullscreen(!isFullscreen);
     }
 
-    clickFullscreen = () => {
-        const elem = this.fullscreenRef.current;
-        const { isFullscreen } = this.state;
+    const clickFullscreen = () => {
+        const elem = fullscreenRef.current;
 
         if (isFullscreen) {
             if (document.fullscreenElement) {
@@ -174,41 +130,16 @@ class ExhibitPhoto extends React.Component<ExhibitPhotoProps, ExhibitPhotoState>
         }
     }
 
-    likePhoto = async () => {
-        const { contentInfo, likeInfo } = this.state;
-        let exhibitPhoto_id = Number(this.props.match.params.exhibitPhoto_id);
 
-        await ContentService.likeContent(exhibitPhoto_id)
-            .then(() => {
-                if (contentInfo) {
 
-                    if (this.state.likeInfo) {
-                        this.setState({
-                            contentInfo: contentInfo.set("like_num", contentInfo.like_num - 1),
-                            likeInfo: !likeInfo
-                        })
-                    }
-                    else {
-                        this.setState({
-                            contentInfo: contentInfo.set("like_num", contentInfo.like_num + 1),
-                            likeInfo: !likeInfo
-                        })
-                    }
-                }
-            })
-            .catch((err: any) => {
-                console.error(err)
-            })
-    }
-
-    deletePhoto = async () => {
-        let exhibitPhoto_id = Number(this.props.match.params.exhibitPhoto_id);
+    const deletePhoto = async () => {
+        let exhibitPhoto_id = Number(match.params.exhibitPhoto_id);
 
         let goDrop = window.confirm("정말로 삭제하시겠습니까? 삭제한 게시글은 다시 복원할 수 없습니다.");
         if (goDrop) {
             await ExhibitPhotoService.deleteExhibitPhoto(exhibitPhoto_id)
                 .then(() => {
-                    this.setPhotoState(ContentStateEnum.DELETED);
+                    setPhotoState(ContentStateEnum.DELETED);
                 })
                 .catch((err: Error) => {
                     console.error(err);
@@ -217,89 +148,50 @@ class ExhibitPhoto extends React.Component<ExhibitPhotoProps, ExhibitPhotoState>
         }
     }
 
-    render() {
-        const { contentInfo, likeInfo, photoState, isFullscreen } = this.state;
-        // const { my_id } = this.props;
-        const { setPhotoState, likePhoto, deletePhoto, closePhoto } = this;
-
-        let exhibitPhotoInfo = contentInfo && contentInfo.exhibitPhoto;
-        let exhibitionInfo = contentInfo
-            && contentInfo.exhibitPhoto
-            && contentInfo.exhibitPhoto.exhibitionContent
-            && contentInfo.exhibitPhoto.exhibitionContent.exhibition;
-        let fullscreenClass = isFullscreen ? 'ri-fullscreen-exit-fill' : 'ri-fullscreen-fill';
-
-        return (
-            <AuthContext.Consumer>
-                {authContext => (
-                    <FullScreenPortal>
-                        <div className="enif-popup photo-popup" onClick={closePhoto}>
-                            <div className="photo-section-wrapper" onClick={(e) => e.stopPropagation()}>
-                                <div className="photo-alb-title-wrp">
-                                    <div className="photo-alb-title">
-                                        <h5>{exhibitionInfo ? exhibitionInfo.slogan : "slogan"}</h5>&nbsp;
-                                        <i className="ri-image-2-line"></i>
-                                        {exhibitPhotoInfo && exhibitPhotoInfo.order}
-                                    </div>
-                                    <div className="enif-modal-close" onClick={closePhoto}>
-                                        <i className="ri-close-fill enif-f-1p5x enif-pointer"></i>
-                                    </div>
-                                </div>
-                                <div className="photo-section-bottom">
-                                    <div className="photo-section-left">
-                                        <div className="photo-img-wrapper" ref={this.fullscreenRef} >
-                                            <div className="photo-move-action prev" onClick={() => this.moveToPhoto(-1)}>
-                                                <i className="ri-arrow-left-s-line ri-icons enif-pointer"></i>
-                                            </div>
-                                            <Image imgSrc={exhibitPhotoInfo && exhibitPhotoInfo.file_path} />
-                                            <div className="photo-move-action next" onClick={() => this.moveToPhoto(1)}>
-                                                <i className="ri-arrow-right-s-line ri-icons enif-pointer"></i>
-                                            </div>
-                                            <div className="photo-action-fullscreen-wrapper">
-                                                <i className={`${fullscreenClass} enif-pointer enif-f-1p2x`} onClick={this.clickFullscreen}></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {
-                                        contentInfo &&
-                                    <ExhibitPhotoComponent
-                                        contentInfo={contentInfo}
-                                        likeInfo={likeInfo}
-                                        my_id={authContext.authInfo.user.user_id}
-                                        // setPhotoState={setPhotoState}
-                                        editPhoto={() => setPhotoState(ContentStateEnum.EDITTING)}
-                                        likePhoto={likePhoto}
-                                        deletePhoto={deletePhoto} />
-                                    }
-                                </div>
-                            </div>
-                        </div>
-
+    return (
+        <AuthContext.Consumer>
+            {authContext => (
+                <FullScreenPortal>
+                    <>
+                        {/* {
+                            photoState === ContentStateEnum.LOADING && 
+                            <Loading />
+                        } */}
                         {
                             (() => {
-                                if (photoState === ContentStateEnum.LOADING) {
-                                    return <Loading />
-                                }
-                                else if (photoState === ContentStateEnum.EDITTING) {
-                                    return (
-                                        <div className="enif-popup photo-popup">
-                                            <EditExhibitPhoto
-                                                contentInfo={contentInfo}
-                                                fetch={this.fetch}
-                                                setPhotoState={this.setPhotoState} />
-                                        </div>
-                                    )
-                                }
-                                else if (photoState === ContentStateEnum.DELETED) {
+                                // if (photoState === ContentStateEnum.LOADING) {
+                                //     return <Loading />
+                                // }
+                                if (photoState === ContentStateEnum.DELETED && contentInfo) {
                                     let backLink;
-                                    if (!exhibitionInfo) {
+                                    if (!contentInfo.parent) {
                                         backLink = `/board/brd41`;
                                     }
                                     else {
-                                        backLink = `/exhibition/${exhibitionInfo.content_id}`
+                                        backLink = `/exhibition/${contentInfo.parent.content_id}`
                                     }
                                     return (
                                         <Redirect to={backLink} />
+                                    )
+                                }
+                                else if (contentInfo) {
+                                    return (
+                                        <>
+                                            <ExhibitPhotoComponent
+                                                contentInfo={contentInfo}
+                                                my_id={authContext.authInfo.user.user_id}
+                                                fullscreenRef={fullscreenRef}
+                                                clickFullscreen={clickFullscreen}
+                                                moveToPrev={() => moveToPhoto(-1)}
+                                                moveToNext={() => moveToPhoto(1)}
+                                                isFullscreen={isFullscreen}
+                                                isEditting={photoState === ContentStateEnum.EDITTING}
+                                                editPhoto={() => setPhotoState(ContentStateEnum.EDITTING)}
+                                                cancelEdit={() => setPhotoState(ContentStateEnum.READY)}
+                                                deletePhoto={deletePhoto}
+                                                fetch={fetch}
+                                                close={closePhoto} />
+                                        </>
                                     )
                                 }
                                 else return (
@@ -307,12 +199,13 @@ class ExhibitPhoto extends React.Component<ExhibitPhotoProps, ExhibitPhotoState>
                                 )
                             })()
                         }
-                    </FullScreenPortal>
-                )}
-            </AuthContext.Consumer>
+                    </>
 
-        )
-    }
+                </FullScreenPortal>
+            )}
+        </AuthContext.Consumer>
+    )
 }
+
 
 export default ExhibitPhoto;

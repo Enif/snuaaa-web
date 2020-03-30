@@ -30,6 +30,8 @@ const MyPage = lazy(() => import('./pages/MyPage'));
 const UserPage = lazy(() => import('./pages/UserPage'));
 const AllPosts = lazy(() => import('./pages/AllPosts'));
 const AllComments = lazy(() => import('./pages/AllComments'));
+const MightyCalculator = lazy(() => import('./pages/MightyCalculator'));
+const MgtUser = lazy(() => import('./pages/MgtUser'));
 
 const defaultRiseSet: RiseSetType = {
     aste: 0,
@@ -107,6 +109,8 @@ function Section() {
                             <DefaultRoute path="/userpage/:uuid" component={UserPage} />
                             <DefaultRoute path="/posts/all" component={AllPosts} />
                             <DefaultRoute path="/comments/all" component={AllComments} />
+                            <DefaultRoute path="/mightyCalculator" component={MightyCalculator} />
+                            <DefaultRoute paht="/mgt/user" component={MgtUser} />
                             <DefaultRoute component={Home} />
                         </Switch>
                         {

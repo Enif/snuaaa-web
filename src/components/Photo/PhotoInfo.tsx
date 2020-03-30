@@ -7,9 +7,11 @@ import { convertDate, convertFullDate } from '../../utils/convertDate'
 import ActionDrawer from '../Common/ActionDrawer';
 import ContentType from '../../types/ContentType';
 import 'react-datepicker/dist/react-datepicker.css'
+import PhotoType from '../../types/PhotoType';
+import ExhibitPhotoType from '../../types/ExhibitPhotoType';
 
 type PhotoInfoProps = {
-    photoInfo: ContentType;
+    photoInfo: PhotoType | ExhibitPhotoType;
     likeInfo: boolean;
     my_id: number;
     setPhotoState: (state: number) => void;
@@ -22,7 +24,13 @@ const PhotoInfo = ({ photoInfo, likeInfo, my_id, setPhotoState, deletePhoto,
     likePhoto, setAlbumThumbnail }: PhotoInfoProps) => {
 
     let content = photoInfo;
-    let photo = photoInfo && photoInfo.photo;
+    let photo;
+    if ((photoInfo as PhotoType).photo) {
+        photo = (photoInfo as PhotoType).photo;
+    }
+    else if ((photoInfo as ExhibitPhotoType).exhibitPhoto) {
+        photo = (photoInfo as ExhibitPhotoType).exhibitPhoto;
+    }
     let userInfo = photoInfo && photoInfo.user;
     let tagInfo = photoInfo && photoInfo.tags;
 
@@ -58,81 +66,87 @@ const PhotoInfo = ({ photoInfo, likeInfo, my_id, setPhotoState, deletePhoto,
                                 <p className="info-date">{convertFullDate(content.createdAt)}</p>
                             </div>
                             <div className="info-tags">{makeTagList()}</div>
-                            {
-                                content.text &&
-                                <div className="enif-divider"></div>
-                            }
                             <div className="info-text-infos-wrapper">
-                                <div className="info-text-wrapper">
-                                    <p>{breakLine(content.text)}</p>
-                                </div>
-                                <div className="enif-divider enif-hide-desktop"></div>
                                 {
-                                    photo &&
-                                    <table className="info-infos-wrapper">
-                                        <tbody>
+                                    content.text &&
+                                    <>
+                                        <div className="enif-divider"></div>
+                                        <div className="info-text-wrapper">
+                                            <p>{breakLine(content.text)}</p>
+                                        </div>
+                                    </>
+                                }
+
+                                {
+                                    photo && (photo.date || photo.location
+                                        || photo.camera || photo.lens || photo.focal_length
+                                        || photo.focal_length || photo.exposure_time || photo.iso)
+                                    &&
+                                    <>
+                                        <div className="enif-divider"></div>
+                                        <div className="info-infos-wrapper">
                                             {photo.date && (
-                                                <tr>
-                                                    <td>Date</td>
-                                                    <td>{convertDate(photo.date)}</td>
-                                                </tr>)}
+                                                <div className="photo-info-unit">
+                                                    <div className="photo-info-label">Date</div>
+                                                    <div>{convertDate(photo.date)}</div>
+                                                </div>)}
 
                                             {photo.location && (
-                                                <tr>
-                                                    <td>Location</td>
-                                                    <td>{photo.location}</td>
-                                                </tr>)}
+                                                <div className="photo-info-unit">
+                                                    <div className="photo-info-label">Location</div>
+                                                    <div>{photo.location}</div>
+                                                </div>)}
 
                                             {photo.camera && (
-                                                <tr>
-                                                    <td>Camera</td>
-                                                    <td>{photo.camera}</td>
-                                                </tr>)}
+                                                <div className="photo-info-unit">
+                                                    <div className="photo-info-label">Camera</div>
+                                                    <div>{photo.camera}</div>
+                                                </div>)}
 
                                             {photo.lens && (
-                                                <tr>
-                                                    <td>Lens</td>
-                                                    <td>{photo.lens}</td>
-                                                </tr>)}
+                                                <div className="photo-info-unit">
+                                                    <div className="photo-info-label">Lens</div>
+                                                    <div>{photo.lens}</div>
+                                                    {photo.focal_length && (
+                                                        <>
+                                                            <div className="photo-info-fl">@</div>
+                                                            <div>{photo.focal_length}mm</div>
+                                                        </>)}
+                                                </div>)}
 
-                                            {photo.focal_length && (
-                                                <tr>
-                                                    <td>@</td>
-                                                    <td>{photo.focal_length}</td>
-                                                </tr>)}
 
                                             {(photo.f_stop || photo.exposure_time || photo.iso) && (
-                                                <tr>
-                                                    <td>Setting</td>
-                                                    <td>
+                                                <div className="photo-info-unit">
+                                                    <div className="photo-info-label">Setting</div>
+                                                    <div>
                                                         {photo.f_stop && <>F/{photo.f_stop}</>}
                                                         {photo.exposure_time && <> {photo.exposure_time}</>}
                                                         {photo.iso && <> ISO{photo.iso}</>}
-                                                    </td>
-                                                </tr>)}
-                                        </tbody>
-                                    </table>
+                                                    </div>
+                                                </div>)}
+                                        </div>
+                                    </>
                                 }
                             </div>
                         </div>
                         <div className="enif-divider"></div>
                         <ProfileMini userInfo={userInfo} />
                         <div className="enif-divider"></div>
-                        <div className="actions-wrapper">
-                            <div className="nums-wrapper">
-                                <div className="view-num-wrapper">
-                                    <i className="ri-eye-fill"></i>
-                                    {content.view_num}
-                                </div>
-                                <div className="like-num-wrapper">
-                                    <i className={`${likeInfo ? 'ri-heart-fill' : 'ri-heart-line'} enif-f-1p5x enif-pointer`} onClick={() => likePhoto()}>
-                                    </i>
-                                    {content.like_num}
-                                </div>
-                                <div className="comment-num-wrapper">
-                                    <i className="ri-message-2-fill enif-f-1p5x"></i>
-                                    {content.comment_num}
-                                </div>
+                    </div>
+                    <div className="actions-wrapper">
+                        <div className="nums-wrapper">
+                            <div className="view-num-wrapper">
+                                <i className="ri-eye-fill"></i>
+                                {content.view_num}
+                            </div>
+                            <div className="like-num-wrapper">
+                                <i className={`${likeInfo ? 'ri-heart-fill' : 'ri-heart-line'} enif-f-1p5x enif-pointer`} onClick={() => likePhoto()}>
+                                </i>
+                                {content.like_num}
+                            </div>
+                            <div className="comment-num-wrapper">
+                                <i className="ri-message-2-fill enif-f-1p5x"></i>
+                                {content.comment_num}
                             </div>
                         </div>
                     </div>

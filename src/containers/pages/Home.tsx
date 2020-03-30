@@ -13,6 +13,8 @@ import ContentType from '../../types/ContentType';
 import CommentType from '../../types/CommentType';
 import NewAlbums from '../../components/Home/NewAlbums';
 import AlbumType from '../../types/AlbumType';
+import PhotoType from '../../types/PhotoType';
+import ExhibitionType from '../../types/ExhibitionType';
 
 const TAG = 'HOME'
 
@@ -21,8 +23,8 @@ type HomeInfo = {
     recentPosts?: ContentType[];
     recentComments?: CommentType[];
     recentMemory?: AlbumType[];
-    recentAstrophoto?: ContentType[];
-    recentExhibitions?: ContentType[]
+    recentAstrophoto?: PhotoType[];
+    recentExhibitions?: ExhibitionType[]
 
 }
 
