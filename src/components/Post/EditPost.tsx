@@ -62,7 +62,7 @@ function EditPost(props: EditPostProps) {
             </div>
             <div className="writepost-content">
                 {/* <Editor text={props.postInfo.text} editText={props.handleEdittingText} /> */}
-                <Editor2 text={props.postInfo.text} setText={props.handleEdittingText} />
+                <Editor2 text={props.postInfo.text} setText={props.handleEdittingText} readOnly={false} />
 
             </div>
             {props.postInfo.attachedFiles && makeFileList()}

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Image from '../../components/Common/AaaImage';
 import history from '../../common/history';
@@ -11,7 +11,7 @@ type PhotoListProps = {
 
 const LIMIT_UNIT = 12;
 
-const fakeFetch = (delay = 1000) => new Promise(res => setTimeout(res, delay));
+const fakeFetch = (delay = 500) => new Promise(res => setTimeout(res, delay));
 
 function PhotoList({ photos }: PhotoListProps) {
 
@@ -36,7 +36,6 @@ function PhotoList({ photos }: PhotoListProps) {
             setIsLoading(false)
         }
         else {
-            // console.log('not intersecting')
             setIsLoading(false)
         }
     }

@@ -35,7 +35,7 @@ function CreatePostComponent(props: CreatePostComponentProps) {
                 </div>
                 <div className="writepost-content">
                     {/* <Editor text={props.postInfo.text} editText={props.handleEditor} /> */}
-                    <Editor2 text={props.postInfo.text} setText={props.handleEditor} />
+                    <Editor2 text={props.postInfo.text} setText={props.handleEditor} readOnly={false} />
                 </div>
                 <div className="writepost-file">
                     <AttachFile files={props.attachedFiles} attachFile={props.attachFile} removeFile={props.removeAttachedFile} />

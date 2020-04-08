@@ -10,6 +10,7 @@ import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
 import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
 import Strikethrough from '@ckeditor/ckeditor5-basic-styles/src/strikethrough';
 import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline';
+import Link from '@ckeditor/ckeditor5-link/src/link';
 import TodoList from '@ckeditor/ckeditor5-list/src/todolist';
 import List from '@ckeditor/ckeditor5-list/src/list';
 
@@ -24,6 +25,7 @@ import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload';
 import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize';
 import ImageToolbar from '@ckeditor/ckeditor5-image/src/imagetoolbar';
 
+import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed'
 // import FileRepository from '@ckeditor/ckeditor5-upload/src/filerepository';
 import Table from '@ckeditor/ckeditor5-table/src/table';
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
@@ -78,37 +80,42 @@ function MyCustomUploadAdapterPlugin(editor) {
     };
 }
 
-const editorConfiguration = {
-    plugins: [
-        Essentials, Heading, Paragraph,
-        Bold, Strikethrough, Underline, TodoList, List,
-        Indent, IndentBlock, BlockQuote,
-        Image, ImageCaption, ImageToolbar, ImageUpload, ImageResize, ImageStyle,
-        Table, TableToolbar],
-    extraPlugins: [MyCustomUploadAdapterPlugin],
-    toolbar: [
-        'heading', '|',
-        'bold', 'Strikethrough', 'Underline', '|',
-        'link', 'bulletedList', 'todoList', 'blockQuote', '|',
-        'indent', 'outdent', '|',
-        'undo', 'redo', '|',
-        'imageUpload', 'insertTable'],
-    image: {
-        toolbar: ['imageStyle:full', 'imageStyle:side', '|', 'imageTextAlternative']
-    },
-    table: {
-        contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']
-    }
-};
+function Editor2({ text, setText, readOnly }) {
 
-function Editor2({ text, setText }) {
+    const editorConfiguration = {
+        plugins: [
+            Essentials, Heading, Paragraph,
+            Bold, Strikethrough, Underline, Link, TodoList, List, 
+            Indent, IndentBlock, BlockQuote,
+            Image, ImageCaption, ImageToolbar, ImageUpload, ImageResize, ImageStyle,
+            MediaEmbed, Table, TableToolbar],
+        extraPlugins: [MyCustomUploadAdapterPlugin],
+        toolbar: [
+            'heading', '|',
+            'bold', 'Strikethrough', 'Underline', '|',
+            'link', 'bulletedList', 'todoList', 'blockQuote', '|',
+            'indent', 'outdent', '|',
+            'undo', 'redo', '|',
+            'imageUpload', 'mediaembed', 'insertTable'],
+        image: {
+            toolbar: ['imageStyle:full', 'imageStyle:side', '|', 'imageTextAlternative']
+        },
+        table: {
+            contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']
+        }
+    };
+
+    if(readOnly) {
+        delete editorConfiguration.toolbar;
+    }
 
     return (
-        <div className="sa-ck sa-editor">
+        <div className={`sa-ck ${readOnly ? "sa-viewer" : "sa-editor"}`}>
             <CKEditor
                 editor={ClassicEditor}
                 config={editorConfiguration}
                 data={text}
+                disabled={readOnly}
                 onInit={editor => {
                     // You can store the "editor" and use when it is needed.
                     console.log('Editor is ready to use!', editor);
