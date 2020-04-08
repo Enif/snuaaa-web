@@ -75,13 +75,14 @@
     .post-content {
         // padding: 0.5rem;
         border: 2px solid #E8E8E8;
+        min-height: 200px;
 
         border-top: none;
-        .ql-container {
-            font-family: 'D2Coding';
-            font-size: 14px;
-            // text-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
-        }
+        // .ql-container {
+        //     font-family: 'D2Coding';
+        //     font-size: 14px;
+        //     // text-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+        // }
     }
     .post-filelist-wrapper {
         margin: 10px 0px;
