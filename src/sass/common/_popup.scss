@@ -79,6 +79,10 @@
             }
             .btn-ok {
                 color: $color-aqua;
+                &:disabled {
+                    color: $color-gray1;
+                    cursor: not-allowed;
+                }
             }
             .btn-cancel {
                 color: #b4b4b4;
