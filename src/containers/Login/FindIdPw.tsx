@@ -1,33 +1,44 @@
-import React from 'react';
-import UserService from 'services/UserService.ts';
-import { FindStateEnum } from 'common/FindStateEnum';
+import React, { useState, ChangeEvent } from 'react';
+import UserService from '../../services/UserService';
+import { FindStateEnum } from '../../common/FindStateEnum';
 
-class FindIdPw extends React.Component {
 
-    constructor(props) {
-        super(props);
+type FindIdPwProps = {
+    cancel: () => void
+}
 
-        this.state = {
-            isFindId: true,
-            idName: '',
-            idEmail: '',
-            pwId: '',
-            pwName: '',
-            pwEmail: '',
-            findState: FindStateEnum.DEFAULT
-        }
-    }
+type FindInfoType = {
+    idName: string,
+    idEmail: string,
+    pwId: string,
+    pwName: string,
+    pwEmail: string
+}
 
-    handleChange = (e) => {
-        this.setState({
+const defaultFindInfo = {
+    idName: '',
+    idEmail: '',
+    pwId: '',
+    pwName: '',
+    pwEmail: '',
+}
+
+function FindIdPw({ cancel }: FindIdPwProps) {
+
+    const [findInfo, setFindInfo] = useState<FindInfoType>(defaultFindInfo);
+    const [isFindId, setIsFindId] = useState<boolean>(true);
+    const [findState, setFindState] = useState<number>(FindStateEnum.DEFAULT);
+
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setFindInfo({
+            ...findInfo,
             [e.target.name]: e.target.value
-        });
+        })
     }
 
-    makeForm = () => {
-        const { handleChange } = this;
-        const { isFindId, idName, idEmail, pwId, pwName, pwEmail } = this.state;
-
+    const makeForm = () => {
+        const { idName, idEmail, pwId, pwName, pwEmail } = findInfo;
         if (isFindId) {
             return (
                 <>
@@ -60,28 +71,14 @@ class FindIdPw extends React.Component {
                 </>
             )
         }
-
     }
 
-    setIsFindId = (isFindId) => {
-        this.setState({
-            isFindId: isFindId
-        })
-    }
-
-    setFindState = (state) => {
-        this.setState({
-            findState: state
-        })
-    }
-
-    submit = async () => {
-        const { setFindState } = this;
-        const { isFindId, idName, idEmail, pwId, pwName, pwEmail } = this.state;
+    const submit = async () => {
+        const { idName, idEmail, pwId, pwName, pwEmail } = findInfo;
 
         setFindState(FindStateEnum.LOADING);
 
-        if(isFindId) {
+        if (isFindId) {
             const data = {
                 name: idName,
                 email: idEmail
@@ -91,7 +88,7 @@ class FindIdPw extends React.Component {
                 if (res.data.success) {
                     setFindState(FindStateEnum.IDFOUND);
                 }
-    
+
             }
             catch (err) {
                 console.error(err);
@@ -109,19 +106,17 @@ class FindIdPw extends React.Component {
                 if (res.data.success) {
                     setFindState(FindStateEnum.PWFOUND);
                 }
-    
+
             }
             catch (err) {
                 console.error(err);
                 setFindState(FindStateEnum.PWNOTFOUND);
             }
         }
-
-
     }
 
-    makeMessage = () => {
-        const { findState } = this.state;
+    const makeMessage = () => {
+
         if (findState === FindStateEnum.LOADING) {
             return <p>계정확인중</p>
         }
@@ -142,36 +137,30 @@ class FindIdPw extends React.Component {
         }
     }
 
-    render() {
 
-        const { makeForm, submit, makeMessage, setIsFindId } = this;
-        const { cancel } = this.props;
-        const { isFindId } = this.state;
-        let idSelectClass = `popup-selector ${isFindId ? "selected" : ""}`
-        let pwSelectClass = `popup-selector ${isFindId ? "" : "selected"}`
+    let idSelectClass = `popup-selector ${isFindId ? "selected" : ""}`
+    let pwSelectClass = `popup-selector ${isFindId ? "" : "selected"}`
 
-        return (
-            <div className="popup-wrapper">
-                <div className="popup-box">
-                    <div className="popup-star">★</div>
-                    <div className="popup-selector-wrapper">
-                        <div className={idSelectClass} onClick={() => setIsFindId(true)}>아이디 찾기</div>
-                        <div className={pwSelectClass} onClick={() => setIsFindId(false)}>패스워드 찾기</div>
-                    </div>
-                    <div className="popup-contents">
-                        {makeForm()}
-                    </div>
-                    <div>{makeMessage()}</div>
-                    <div className="popup-action">
-                        <button className="btn-ok" onClick={submit}>OK</button>
-                        <button className="btn-cancel" onClick={cancel}>CANCEL</button>
-                    </div>
-
+    return (
+        <div className="popup-wrapper">
+            <div className="popup-box">
+                <div className="popup-star">★</div>
+                <div className="popup-selector-wrapper">
+                    <div className={idSelectClass} onClick={() => setIsFindId(true)}>아이디 찾기</div>
+                    <div className={pwSelectClass} onClick={() => setIsFindId(false)}>패스워드 찾기</div>
                 </div>
-            </div>
-        )
-    }
-}
+                <div className="popup-contents">
+                    {makeForm()}
+                </div>
+                <div>{makeMessage()}</div>
+                <div className="popup-action">
+                    <button className="btn-ok" disabled={findState === FindStateEnum.LOADING} onClick={submit}>OK</button>
+                    <button className="btn-cancel" onClick={cancel}>CANCEL</button>
+                </div>
 
+            </div>
+        </div>
+    )
+}
 
 export default FindIdPw;
