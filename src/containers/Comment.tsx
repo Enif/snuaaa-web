@@ -1,8 +1,9 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useState, useEffect, useContext } from 'react';
 
 import CommentList from '../components/Comment/CommentList';
 import CommentService from '../services/CommentService';
 import AuthContext from '../contexts/AuthContext';
+import CommentType from '../types/CommentType';
 
 const TAG = 'COMMENT'
 
@@ -10,86 +11,50 @@ type CommentProps = {
     parent_id: number;
 }
 
-type CommentState = {
-    comments: any;
-    text: string;
-    isReady: boolean;
-    commentInEdit: number;
-    editingContents: string;
-}
+function Comment({ parent_id }: CommentProps) {
 
-class Comment extends React.Component<CommentProps, CommentState> {
+    const [comments, setComments] = useState<CommentType[]>([]);
+    const [text, setText] = useState<string>('');
+    const [editingCommentId, setEditingCommentId] = useState<number>(0);
+    const [editingCommentText, setEditingCommentText] = useState<string>('');
+    const [parentCommentId, setParentCommentId] = useState<number>(0);
+    const authContext = useContext(AuthContext);
 
-    constructor(props: CommentProps) {
-        super(props);
-        console.log('[%s] constructor', TAG);
+    useEffect(() => {
+        fetch();
+    }, [parent_id])
 
-        this.state = {
-            comments: [],
-            text: '',
-            isReady: false,
-            commentInEdit: -1,
-            editingContents: ''
-        }
-    }
 
-    componentDidMount() {
-        this.retrieveComments(this.props.parent_id)
-    }
+    const fetch = async () => {
 
-    componentDidUpdate(prevProps: CommentProps) {
-        // console.log(prevProps)
-    }
-
-    shouldComponentUpdate(nextProps: CommentProps, nextState: CommentState) {
-        if (this.props.parent_id !== nextProps.parent_id) {
-            this.retrieveComments(nextProps.parent_id);
-        }
-        return true;
-    }
-
-    setCommentInEdit = (comment_id: number, text: string) => {
-        this.setState({
-            commentInEdit: comment_id,
-            editingContents: text
-        })
-    }
-
-    retrieveComments = async (parent_id?: number) => {
-        this.setState({
-            isReady: false
-        })
-        if (!parent_id) {
-            parent_id = this.props.parent_id;
-        }
         await CommentService.retrieveComments(parent_id)
-            .then((res: any) => {
-                // this.comments = res.data;
-                this.setState({
-                    comments: res.data,
-                    isReady: true
-                })
+            .then((res) => {
+                setComments(res.data)
             })
             .catch((err: Error) => {
                 console.error(err)
             })
     }
 
-    createComment = async () => {
+    const setEditingComment = (comment_id: number, text: string) => {
+        setEditingCommentId(comment_id);
+        setEditingCommentText(text)
+    }
 
-        if (!this.state.text) {
+    const createComment = async () => {
+
+        if (!text) {
             alert("내용을 입력하세요.")
         }
         else {
             let commentInfo = {
-                text: this.state.text
+                parent_comment_id: parentCommentId ? parentCommentId : null,
+                text: text
             }
-            await CommentService.createComment(this.props.parent_id, commentInfo)
+            await CommentService.createComment(parent_id, commentInfo)
                 .then((res: any) => {
-                    this.setState({
-                        text: ''
-                    })
-                    this.retrieveComments();
+                    setText('')
+                    fetch();
                 })
                 .catch((err: Error) => {
                     console.error(err);
@@ -98,27 +63,21 @@ class Comment extends React.Component<CommentProps, CommentState> {
         }
     }
 
-    updateComment = async (comment_id: number) => {
-        // console.log(`[${TAG}] Update Comment`);
-        this.setState({
-            isReady: false
-        })
-        if (!this.state.editingContents) {
+    const updateComment = async (comment_id: number) => {
+
+        if (!editingCommentText) {
             alert("내용을 입력하세요.")
         }
         else {
             let commentInfo = {
-                text: this.state.editingContents
+                text: editingCommentText
             }
 
             await CommentService.updateComment(comment_id, commentInfo)
                 .then((res: any) => {
-                    console.log('[%s] Update Comment Success', TAG);
-                    this.setState({
-                        commentInEdit: 0,
-                        editingContents: ''
-                    })
-                    this.retrieveComments();
+                    setEditingCommentId(0);
+                    setEditingCommentText('');
+                    fetch();
                 })
                 .catch((err: Error) => {
                     console.error(err);
@@ -127,15 +86,13 @@ class Comment extends React.Component<CommentProps, CommentState> {
         }
     }
 
-    deleteComment = async (comment_id: number) => {
-        // console.log(`[${TAG}] Delete Comment`);
+    const deleteComment = async (comment_id: number) => {
+
         let goDrop = window.confirm("정말로 삭제하시겠습니까?");
         if (goDrop) {
-
             await CommentService.deleteComment(comment_id)
                 .then(() => {
-                    console.log('[%s] Delete Comment Success', TAG);
-                    this.retrieveComments();
+                    fetch();
                 })
                 .catch((err: Error) => {
                     console.error(err);
@@ -144,44 +101,45 @@ class Comment extends React.Component<CommentProps, CommentState> {
         }
     }
 
-
-
-    handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        this.setState({
-            text: e.target.value
-        });
+    const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        setText(e.target.value)
     }
 
-    editingContentsChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        this.setState({
-            editingContents: e.target.value
-        });
+    const handleEditingCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        setEditingCommentText(e.target.value)
     }
 
-
-    render() {
-        // console.log(`[${TAG}] render..`);
-        // const { my_id } = this.props;
-        const { comments } = this.state;
-
-        return (
-            <AuthContext.Consumer>
-                {authContext => (
-                    <div className="comment-area-wrapper">
-                        <CommentList my_id={authContext.authInfo.user.user_id} comments={comments} deleteComment={this.deleteComment}
-                            updateComment={this.updateComment} commentInEdit={this.state.commentInEdit}
-                            setCommentInEdit={this.setCommentInEdit} editingContents={this.state.editingContents}
-                            editingContentsChange={this.editingContentsChange} />
-                        <div className="comment-write">
-                            <textarea placeholder="댓글을 입력하세요" name="text" onChange={this.handleChange} value={this.state.text}></textarea>
-                            <button onClick={this.createComment}>ENTER</button>
-                        </div>
-                    </div>
-                )}
-
-            </AuthContext.Consumer>
-        )
+    const onClickSubComment = (parent_comment_id: number) => {
+        setText('');
+        setParentCommentId(parent_comment_id);
     }
+
+    return (
+        <div className="comment-area-wrapper">
+            <CommentList
+                my_id={authContext.authInfo.user.user_id}
+                comments={comments}
+                text={text}
+                deleteComment={deleteComment}
+                updateComment={updateComment}
+                commentInEdit={editingCommentId}
+                setCommentInEdit={setEditingComment}
+                editingContents={editingCommentText}
+                parentCommentId={parentCommentId}
+                createComment={createComment}
+                // setParentCommentId={setParentCommentId}
+                handleChange={handleChange}
+                onClickSubComment={onClickSubComment}
+                editingContentsChange={handleEditingCommentChange} />
+            {
+                parentCommentId <= 0 &&
+                <div className="comment-write">
+                    <textarea placeholder="댓글을 입력하세요" name="text" onChange={handleChange} value={text}></textarea>
+                    <button onClick={createComment}>ENTER</button>
+                </div>
+            }
+        </div>
+    )
 }
 
 export default Comment;

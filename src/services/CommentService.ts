@@ -1,8 +1,10 @@
 import { AaaService } from './index';
+import { AxiosPromise } from 'axios';
+import CommentType from '../types/CommentType';
 
 const CommentService = {
     
-    retrieveComments: function(parent_id: number) {
+    retrieveComments: function(parent_id: number): AxiosPromise<CommentType[]> {
         return AaaService.get(`content/${parent_id}/comments`);
     },
     
