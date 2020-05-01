@@ -14,6 +14,7 @@ interface CommentType {
     user: UserType;
     parent_comment_id: number;
     children: CommentType[];
+    likeUsers: UserType[];
 }
 
 export default CommentType;

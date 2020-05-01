@@ -1,10 +1,12 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useContext, RefObject } from 'react';
 import Image from '../Common/AaaImage';
 import { breakLine } from '../../utils/breakLine';
 import { convertFullDate } from '../../utils/convertDate';
 import defaultProfile from 'assets/img/common/profile.png';
 import UserActionDrawer from '../../components/Common/UserActionDrawer';
 import CommentType from '../../types/CommentType';
+import UserType from '../../types/UserType';
+import AuthContext from '../../contexts/AuthContext';
 
 type CommentListProps = {
     my_id: number;
@@ -21,10 +23,20 @@ type CommentListProps = {
     createComment: () => void;
     updateComment: (comment_id: number) => void;
     deleteComment: (comment_id: number) => void;
+    likeComment: (comment_id: number) => void;
+    textareaTarget: RefObject<HTMLTextAreaElement>
 }
 
-const CommentList = ({ my_id, comments, commentInEdit, editingContents, parentCommentId, text, editingContentsChange, handleChange,
-    setCommentInEdit, onClickSubComment, createComment, updateComment, deleteComment }: CommentListProps) => {
+const CommentList = ({ my_id, comments, commentInEdit, editingContents, parentCommentId, text, textareaTarget, editingContentsChange, handleChange,
+    setCommentInEdit, onClickSubComment, createComment, updateComment, deleteComment, likeComment }: CommentListProps) => {
+
+    const authContext = useContext(AuthContext);
+
+    const checkLike = (users: UserType[]) => {
+        return users
+            .map(user => user.user_id)
+            .includes(authContext.authInfo.user.user_id)
+    }
 
     const makeCommentList = (comments: CommentType[]) => {
         if (comments && comments.length > 0) {
@@ -69,9 +81,9 @@ const CommentList = ({ my_id, comments, commentInEdit, editingContents, parentCo
                                     }
                                 </div>
                                 <div className="com-cont-bot">
-                                    <div className="cmt-like-wrp">
-                                        <i className="ri-heart-line"></i>
-                                        <p>3</p>
+                                    <div className={`cmt-like-wrp ${checkLike(comment.likeUsers) ? "color-pink" : "color-gray1"} `}>
+                                        <i className={`ri-heart-${checkLike(comment.likeUsers) ? "fill" : "line"}`} onClick={() => likeComment(comment.comment_id)}></i>
+                                        <p>{comment.likeUsers.length}</p>
                                     </div>
                                     {
                                         parentCommentId === comment.comment_id
@@ -88,7 +100,7 @@ const CommentList = ({ my_id, comments, commentInEdit, editingContents, parentCo
                             parentCommentId === comment.comment_id
                             &&
                             <div className="comment-write sub">
-                                <textarea placeholder="댓글을 입력하세요" name="text" value={text} onChange={handleChange}></textarea>
+                                <textarea ref={textareaTarget} placeholder="댓글을 입력하세요" name="text" value={text} onChange={handleChange}></textarea>
                                 <button onClick={createComment}>ENTER</button>
                             </div>
                         }
@@ -139,9 +151,9 @@ const CommentList = ({ my_id, comments, commentInEdit, editingContents, parentCo
                             }
                         </div>
                         <div className="com-cont-bot">
-                            <div className="cmt-like-wrp">
-                                <i className="ri-heart-line"></i>
-                                <p>3</p>
+                            <div className={`cmt-like-wrp ${checkLike(comment.likeUsers) ? "color-pink" : "color-gray1"} `}>
+                                <i className={`ri-heart-${checkLike(comment.likeUsers) ? "fill" : "line"}`} onClick={() => likeComment(comment.comment_id)}></i>
+                                <p>{comment.likeUsers.length}</p>
                             </div>
                             {
                                 parentCommentId === comment.parent_comment_id

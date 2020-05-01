@@ -18,6 +18,10 @@ const CommentService = {
     
     deleteComment(comment_id: number) {
         return AaaService.delete(`comment/${comment_id}`);
+    },
+
+    likeComment(comment_id: number) {
+        return AaaService.post(`comment/${comment_id}/like`);
     }
 }
 

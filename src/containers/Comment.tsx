@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState, useEffect, useContext } from 'react';
+import React, { ChangeEvent, useState, useEffect, useContext, useRef } from 'react';
 
 import CommentList from '../components/Comment/CommentList';
 import CommentService from '../services/CommentService';
@@ -19,6 +19,7 @@ function Comment({ parent_id }: CommentProps) {
     const [editingCommentText, setEditingCommentText] = useState<string>('');
     const [parentCommentId, setParentCommentId] = useState<number>(0);
     const authContext = useContext(AuthContext);
+    const textareaTarget = useRef<HTMLTextAreaElement>(null);
 
     useEffect(() => {
         fetch();
@@ -113,6 +114,22 @@ function Comment({ parent_id }: CommentProps) {
         setText('');
         setParentCommentId(parent_comment_id);
     }
+    
+    const likeComment = async (comment_id: number) => {
+        await CommentService.likeComment(comment_id)
+        .then(() => {
+            fetch();
+        })
+        .catch((err: Error) => {
+            console.error(err);
+        })
+    }
+    
+    useEffect(() => {        
+        if (textareaTarget.current) {
+            textareaTarget.current.focus();
+        }
+    }, [parentCommentId])
 
     return (
         <div className="comment-area-wrapper">
@@ -127,7 +144,9 @@ function Comment({ parent_id }: CommentProps) {
                 editingContents={editingCommentText}
                 parentCommentId={parentCommentId}
                 createComment={createComment}
+                likeComment={likeComment}
                 // setParentCommentId={setParentCommentId}
+                textareaTarget={textareaTarget}
                 handleChange={handleChange}
                 onClickSubComment={onClickSubComment}
                 editingContentsChange={handleEditingCommentChange} />
