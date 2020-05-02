@@ -36,22 +36,24 @@ function CreatePhotoInfo(
                     </div>
                     <div className="photo-info">
                         <div className="label-wrapper"><label>Lens</label></div>
-                        <input className="enif-wid-half" type="text" name="lens" onChange={(e) => handleChange(e)} value={photoInfo.lens}></input>
+                        <div>
+                            <input type="text" name="lens" onChange={(e) => handleChange(e)} value={photoInfo.lens}></input>
+                            <div className="enif-flex-horizontal">
+                                <label>@</label>
+                                <input className="enif-wid-half" type="text" name="focal_length" onChange={(e) => handleChange(e)} value={photoInfo.focal_length}></input>mm
+                            </div>
+                        </div>
                     </div>
                     <div className="photo-info">
-                        <div className="label-wrapper"><label>@</label></div>
-                        <input className="enif-wid-half" type="text" name="focal_length" onChange={(e) => handleChange(e)} value={photoInfo.focal_length}></input>
-                    </div>
-                    <div className="photo-info">
-                        <div className="label-wrapper">Setting</div>
+                        <div className="label-wrapper">Exposure</div>
                         <div className="input-wrapper">
                             <div>
                                 <label>F/</label>
                                 <input className="enif-wid-quater" type="text" name="f_stop" onChange={(e) => handleChange(e)} value={photoInfo.f_stop}></input>
                             </div>
                             <div>
+                                <label>time</label>
                                 <input className="enif-wid-quater" type="text" name="exposure_time" onChange={(e) => handleChange(e)} value={photoInfo.exposure_time}></input>
-                                <label>s</label>
                             </div>
                             <div>
                                 <label>ISO</label>
