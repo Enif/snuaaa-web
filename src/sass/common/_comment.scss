@@ -35,13 +35,14 @@
         .com-cont-wrp {
             flex-grow: 1;
             position: relative;
-            padding-left: 5px;
+            padding-left: 10px;
             .com-cont-top {
                 display: flex;
-                padding: 5px;
+                padding: 5px 0px;
                 align-items: center;
+                font-size: 14px;
                 h5 {
-                    font-size: 15px;
+                    // font-size: 15px;
                     font-weight: bold;
                 }    
                 .com-date {
@@ -81,7 +82,7 @@
             }
             .com-cont-bot {
                 display: flex;
-                font-size: 15px;
+                font-size: 14px;
                 color: $color_gray2;
                 .cmt-like-wrp {
                     margin-right: 0.5rem;
@@ -95,13 +96,15 @@
         }
         .actions-wrapper {
             display: flex;
-            margin-left: 1rem;
+            margin-left: 0.5rem;
             margin-right: 0px;
             justify-content: space-between;
+            // font-size: 1rem;
             // padding-top: 5px;
             .action-icons {
                 color: $color_gray1;
-                font-size: 20px;
+                font-size: 1rem;
+                margin: 0px 3px;
             }
     
             .edit-wrapper {

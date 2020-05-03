@@ -77,6 +77,9 @@
     .photo-section-left {
         flex-basis: 66%;
         max-height: 100%;
+        @media screen and (max-height: 400px) {
+            display: none;
+        }
     }
     .photo-section-right {
         flex-grow: 1;

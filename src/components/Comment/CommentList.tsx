@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useContext, RefObject } from 'react';
 import Image from '../Common/AaaImage';
 import { breakLine } from '../../utils/breakLine';
-import { convertFullDate } from '../../utils/convertDate';
+import { convertFullDate, convertDynamicTime } from '../../utils/convertDate';
 import defaultProfile from 'assets/img/common/profile.png';
 import UserActionDrawer from '../../components/Common/UserActionDrawer';
 import CommentType from '../../types/CommentType';
@@ -64,7 +64,7 @@ const CommentList = ({ my_id, comments, commentInEdit, editingContents, parentCo
                                             </div>
                                         </div>
                                     }
-                                    <p className="com-date">{convertFullDate(comment.createdAt)}</p>
+                                    <p className="com-date">{convertDynamicTime(comment.createdAt)}</p>
                                 </div>
                                 <div className="com-cont-mid">
                                     {
@@ -134,7 +134,7 @@ const CommentList = ({ my_id, comments, commentInEdit, editingContents, parentCo
                                     </div>
                                 </div>
                             }
-                            <p className="com-date">{convertFullDate(comment.createdAt)}</p>
+                            <p className="com-date">{convertDynamicTime(comment.createdAt)}</p>
                         </div>
                         <div className="com-cont-mid">
                             {
