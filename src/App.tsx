@@ -1,5 +1,5 @@
-import React from 'react';
-import { Redirect, withRouter, RouteComponentProps } from 'react-router';
+import React, { useState, useEffect } from 'react';
+import { Redirect, withRouter, useHistory } from 'react-router';
 
 import './App.scss';
 import 'react-quill/dist/quill.snow.css';
@@ -10,19 +10,11 @@ import Section from './containers/Section';
 import Loading from './components/Common/Loading';
 import { getToken, setToken, removeToken } from './utils/tokenManager';
 import AuthService from './services/AuthService';
-// import history from './common/history';
 import AuthContext from './contexts/AuthContext';
 import AuthType from './types/AuthType';
-import BoardType from './types/BoardType';
 import UserType from './types/UserType';
 
 const TAG = 'App'
-
-type AppState = {
-    isReady: boolean;
-    authInfo: AuthType;
-    boardInfo: BoardType[];
-}
 
 const initialAuth: AuthType = {
     isLoggedIn: false,
@@ -36,111 +28,98 @@ const initialAuth: AuthType = {
 };
 
 
-class App extends React.Component<RouteComponentProps, AppState> {
+function App() {
 
-    constructor(props: RouteComponentProps) {
-        super(props);
-        console.log(`[%s] constructor`, TAG)
-        this.state = {
-            isReady: false,
-            authInfo: initialAuth,
-            boardInfo: []
-        }
-    }
+    const [isReady, setIsReady] = useState<boolean>(false);
+    const [authInfo, setAuthinfo] = useState<AuthType>(initialAuth);
+    const history = useHistory();
 
-    componentDidMount() {
-        if(navigator.userAgent.toLowerCase().indexOf('msie') !== -1 ) {
+    useEffect(() => {
+        if (navigator.userAgent.toLowerCase().indexOf('msie') !== -1) {
             alert("MicroSoft Internet Explorer에서는 홈페이지가 정상 동작하지 않을 수 있습니다.")
         }
-        else if ( (navigator.appName == 'Netscape' && navigator.userAgent.search('Trident') != -1)) {
+        else if ((navigator.appName == 'Netscape' && navigator.userAgent.search('Trident') != -1)) {
             alert("MicroSoft Internet Explorer에서는 홈페이지가 정상 동작하지 않을 수 있습니다.")
         }
         else {
-            
-        }
-        this.checkToken();
-    }
 
-    checkToken = async () => {
+        }
+        checkToken();
+    }, [])
+
+    const checkToken = async () => {
         const accessToken = getToken();
-        const { history } = this.props;
+
         if (!accessToken) {
             //토큰이 없으면 logout
             history.replace({
                 pathname: '/login',
-                state: { accessPath: history.location.pathname }
+                state: {
+                    accessLocation: history.location
+                }
             })
-            this.authLogout();
-            this.setState({
-                isReady: true
-            })
+            authLogout();
+            setIsReady(true)
         }
         else {
             // 서버에 토큰 확인 , invalid => logout, valid => 로그인 유지(연장)
             await AuthService.checkToken()
                 .then((res: any) => {
                     const { token, userInfo, autoLogin } = res.data;
-                    this.authLogin(token, autoLogin, userInfo)
+                    authLogin(token, autoLogin, userInfo)
                 })
                 .catch((err: Error) => {
                     console.error(err);
-                    alert("토큰이 만료되어 로그아웃 됩니다.")
+                    console.log('expired token')
                     history.replace({
                         pathname: '/login',
-                        state: { accessPath: history.location.pathname }
+                        state: {
+                            accessLocation: history.location
+                        }
                     })
-                    this.authLogout();
+                    authLogout();
                 })
         }
     }
 
-    authLogin = (token: string, autoLogin: boolean, userInfo: UserType) => {
+    const authLogin = (token: string, autoLogin: boolean, userInfo: UserType) => {
         setToken(token, autoLogin);
-        this.setState({
-            isReady: true,
-            authInfo: {
-                isLoggedIn: true,
-                user: userInfo
-            }
+        setIsReady(true);
+        setAuthinfo({
+            isLoggedIn: true,
+            user: userInfo
         })
     }
 
-    authLogout = () => {
+    const authLogout = () => {
         removeToken();
-        this.setState({
-            isReady: true,
-            authInfo: initialAuth
-        })
+        setIsReady(true)
+        setAuthinfo(initialAuth)
     }
 
-    render() {
-        console.log(`[${TAG}] render...`);
-        let { isReady, authInfo } = this.state;
-        return (
-            <div className="snuaaa-wrapper">
-                <AuthContext.Provider value={{
-                    authInfo: authInfo,
-                    authLogin: this.authLogin,
-                    authLogout: this.authLogout
-                }}>
-                    {(() => {
-                        if (!isReady) {
-                            return <Loading />
-                        }
-                        else if (!authInfo.isLoggedIn && !(window.location.pathname === '/page/login' || window.location.pathname === '/page/signup')) {
-                            return <Redirect to='/login' />
-                        }
-                        else {
-                            return (
-                                <Section />
-                            )
-                        }
-                    })()}
-                </AuthContext.Provider>
-            </div>
-        );
-    }
+    return (
+        <div className="snuaaa-wrapper">
+            <AuthContext.Provider value={{
+                authInfo: authInfo,
+                authLogin: authLogin,
+                authLogout: authLogout
+            }}>
+                {(() => {
+                    if (!isReady) {
+                        return <Loading />
+                    }
+                    else if (!authInfo.isLoggedIn && !(window.location.pathname === '/page/login' || window.location.pathname === '/page/signup')) {
+                        return <Redirect to='/login' />
+                    }
+                    else {
+                        return (
+                            <Section />
+                        )
+                    }
+                })()}
+            </AuthContext.Provider>
+        </div>
+    )
 }
-
 
 export default withRouter(App);

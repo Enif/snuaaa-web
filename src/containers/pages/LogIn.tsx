@@ -4,7 +4,6 @@ import LogInComponent from '../../components/Login/LogInComponent';
 import Loading from '../../components/Common/Loading';
 import PopUp from '../../components/Common/PopUp';
 import FullScreenPortal from '../../containers/FullScreenPortal';
-// import history from '../../common/history';
 import FindIdPw from '../Login/FindIdPw';
 import AuthService from '../../services/AuthService';
 import AuthContext from '../../contexts/AuthContext';
@@ -58,25 +57,18 @@ function LogIn() {
 
     const userLogIn = async () => {
 
-        // const { id, password, autoLogin } = this.state;
-        // const { onAuthLogin } = this.props;
         setIsLoading(true);
-        // this.setState({
-        //     isLoading: true
-        // })
-        // authContext
+
         await AuthService.logIn(loginInfo)
             .then((res: any) => {
-                // this.setState({
-                //     isLoading: false
-                // })
+
                 const { token, userInfo, autoLogin } = res.data;
-                // onAuthLogin(user_id, nickname, level, profile_path, token, autoLogin);
+
                 authContext.authLogin(token, autoLogin, userInfo)
-                // console.log('[%s] Log In Success', TAG)
+
                 setIsLoading(false);
-                if (location.state && location.state.accessPath) {
-                    history.push(location.state.accessPath)
+                if (location.state && location.state.accessLocation) {
+                    history.push(location.state.accessLocation)
                 }
                 else {
                     history.push('/');
