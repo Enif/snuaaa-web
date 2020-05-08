@@ -5,7 +5,7 @@ import Loading from '../../components/Common/Loading';
 import SelectBox from '../../components/Common/SelectBox';
 import Paginator from '../../components/Common/Paginator';
 import DocuList from '../../components/Document/DocuList';
-import CreateDocu from '../DocuBoard/CreateDocu';
+import CreateDocu from './CreateDocu';
 import BoardStateEnum from '../../common/BoardStateEnum';
 import history from '../../common/history';
 import BoardName from '../../components/Board/BoardName';

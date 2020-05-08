@@ -2,17 +2,17 @@ import React, { useState, useEffect, ChangeEvent, useContext } from 'react';
 import { Redirect, match } from 'react-router';
 
 import ContentStateEnum from '../../common/ContentStateEnum';
-import Comment from '../../containers/Comment';
-import Loading from '../../components/Common/Loading';
-import PostComponent from '../../components/Post/PostComponent';
-import EditPost from '../../components/Post/EditPost';
+import Comment from '../Comment/Comment';
+import Loading from '../Common/Loading';
+import PostComponent from './PostComponent';
+import EditPost from './EditPost';
 import history from '../../common/history';
-import BoardName from '../../components/Board/BoardName';
+import BoardName from '../Board/BoardName';
 import PostService from '../../services/PostService';
 import ContentService from '../../services/ContentService';
 import ContentType from '../../types/ContentType';
 import AuthContext from '../../contexts/AuthContext';
-import ProgressBar from '../../components/Common/ProgressBar';
+import ProgressBar from '../Common/ProgressBar';
 import FileService from '../../services/FileService';
 
 const TAG = 'POST'

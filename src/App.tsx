@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Redirect, withRouter, useHistory } from 'react-router';
+import { Redirect, useHistory } from 'react-router';
 
 import './App.scss';
-import 'react-quill/dist/quill.snow.css';
-import 'react-quill/dist/quill.bubble.css';
-import 'react-quill/dist/quill.core.css';
 
 import Section from './containers/Section';
 import Loading from './components/Common/Loading';
@@ -49,7 +46,6 @@ function App() {
 
     const checkToken = async () => {
         const accessToken = getToken();
-
         if (!accessToken) {
             //토큰이 없으면 logout
             history.replace({
@@ -84,17 +80,17 @@ function App() {
 
     const authLogin = (token: string, autoLogin: boolean, userInfo: UserType) => {
         setToken(token, autoLogin);
-        setIsReady(true);
         setAuthinfo({
             isLoggedIn: true,
             user: userInfo
         })
+        setIsReady(true);
     }
 
     const authLogout = () => {
         removeToken();
-        setIsReady(true)
         setAuthinfo(initialAuth)
+        setIsReady(true)
     }
 
     return (
@@ -122,4 +118,4 @@ function App() {
     )
 }
 
-export default withRouter(App);
+export default App;

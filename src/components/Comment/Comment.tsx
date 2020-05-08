@@ -1,9 +1,9 @@
 import React, { ChangeEvent, useState, useEffect, useContext, useRef } from 'react';
 
-import CommentList from '../components/Comment/CommentList';
-import CommentService from '../services/CommentService';
-import AuthContext from '../contexts/AuthContext';
-import CommentType from '../types/CommentType';
+import CommentList from './CommentList';
+import CommentService from '../../services/CommentService';
+import AuthContext from '../../contexts/AuthContext';
+import CommentType from '../../types/CommentType';
 
 const TAG = 'COMMENT'
 

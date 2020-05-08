@@ -6,10 +6,10 @@ import { convertDateWithDay } from '../../utils/convertDate'
 import BoardService from '../../services/BoardService';
 import BoardName from '../../components/Board/BoardName';
 import Image from '../../components/Common/AaaImage';
-import CreateExhibition from '../../containers/ExhibitBoard/CreateExhibition';
 import BoardType from '../../types/BoardType';
 import AuthContext from '../../contexts/AuthContext';
 import ExhibitionType from '../../types/ExhibitionType';
+import CreateExhibition from '../ExhibitBoard/CreateExhibition';
 
 const TAG = 'EXHIBITBOARD'
 

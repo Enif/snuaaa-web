@@ -1,6 +1,6 @@
 import React from 'react';
 import ContentStateEnum from 'common/ContentStateEnum';
-import Comment from 'containers/Comment.tsx';
+import Comment from '../Comment/Comment';
 import ProfileMini from '../Common/ProfileMini';
 import DownloadFile from '../Post/DownloadFile';
 import { convertFullDate } from 'utils/convertDate';

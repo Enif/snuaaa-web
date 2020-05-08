@@ -5,8 +5,8 @@ import DefaultRoute from '../containers/DefaultRoute';
 import { Location } from 'history';
 
 // Don't load lazy. scroll is reset when initial loading.
-import Photo from './pages/Photo';
-import ExhibitPhoto from './pages/ExhibitPhoto';
+import Photo from '../components/Photo/Photo';
+import ExhibitPhoto from '../components/ExhibitPhoto/ExhibitPhoto';
 import BoardType from '../types/BoardType';
 import BoardService from '../services/BoardService';
 import BoardContext from '../contexts/BoardContext';
@@ -15,23 +15,23 @@ import AuthContext from '../contexts/AuthContext';
 import RiseSetType from '../types/RiseSetType';
 import HomeService from '../services/HomeService';
 
-const Home = lazy(() => import('./pages/Home'));
-const About = lazy(() => import('./pages/About'));
-const Board = lazy(() => import('./pages/Board'));
-const Post = lazy(() => import('./pages/Post'));
-const Album = lazy(() => import('./pages/Album'));
+const Home = lazy(() => import('../components/Home/Home'));
+const About = lazy(() => import('../components/About/About'));
+const Board = lazy(() => import('../components/Board/Board'));
+const Post = lazy(() => import('../components/Post/Post'));
+const Album = lazy(() => import('../components/Album/Album'));
 // const Photo = lazy(() => import('./pages/Photo'));
-const Docu = lazy(() => import('./pages/Document'));
-const Exhibition = lazy(() => import('./pages/Exhibition'));
+const Docu = lazy(() => import('../components/Document/Document'));
+const Exhibition = lazy(() => import('../components/Exhibition/Exhibition'));
 // const ExhibitPhoto = lazy(() => import('./pages/ExhibitPhoto'));
-const SignUp = lazy(() => import('./pages/SignUp'));
-const LogIn = lazy(() => import('./pages/LogIn'));
-const MyPage = lazy(() => import('./pages/MyPage'));
-const UserPage = lazy(() => import('./pages/UserPage'));
-const AllPosts = lazy(() => import('./pages/AllPosts'));
-const AllComments = lazy(() => import('./pages/AllComments'));
-const MightyCalculator = lazy(() => import('./pages/MightyCalculator'));
-const MgtUser = lazy(() => import('./pages/MgtUser'));
+const SignUp = lazy(() => import('../components/Signup/SignUp'));
+const LogIn = lazy(() => import('../components/Login/LogIn'));
+const MyPage = lazy(() => import('../components/MyPage/MyPage'));
+const UserPage = lazy(() => import('../components/UserPage/UserPage'));
+const AllPosts = lazy(() => import('../components/AllPosts/AllPosts'));
+const AllComments = lazy(() => import('../components/AllComments/AllComments'));
+const MightyCalculator = lazy(() => import('../components/MightyCalculator/MightyCalculator'));
+const MgtUser = lazy(() => import('../components/MgtUser/MgtUser'));
 
 const defaultRiseSet: RiseSetType = {
     aste: 0,

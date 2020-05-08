@@ -1,6 +1,5 @@
 import React, { ChangeEvent } from 'react';
-import Editor from '../../containers/Common/Editor';
-import Editor2 from '../../containers/Common/Editor2';
+import Editor2 from '../Common/Editor2';
 import ContentType from '../../types/ContentType';
 import AttachFile from './AttachFile';
 import FileType from '../../types/FileType';

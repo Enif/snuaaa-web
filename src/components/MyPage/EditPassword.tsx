@@ -1,6 +1,6 @@
 import React, { useState, ChangeEvent } from 'react';
 import UserService from '../../services/UserService';
-import InputField from '../../components/Common/InputField';
+import InputField from '../Common/InputField';
 
 type InputFormat = {
     value: string;

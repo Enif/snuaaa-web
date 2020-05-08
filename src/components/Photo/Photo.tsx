@@ -7,7 +7,7 @@ import { Location } from 'history';
 import ContentStateEnum from '../../common/ContentStateEnum';
 import history from '../../common/history';
 
-import Comment from '../../containers/Comment';
+import Comment from '../Comment/Comment';
 import FullScreenPortal from '../../containers/FullScreenPortal';
 
 import Loading from '../../components/Common/Loading';

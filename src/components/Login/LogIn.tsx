@@ -1,10 +1,10 @@
 import React, { ChangeEvent, useState, useContext } from 'react';
 
-import LogInComponent from '../../components/Login/LogInComponent';
-import Loading from '../../components/Common/Loading';
-import PopUp from '../../components/Common/PopUp';
+import LogInComponent from './LogInComponent';
+import Loading from '../Common/Loading';
+import PopUp from '../Common/PopUp';
 import FullScreenPortal from '../../containers/FullScreenPortal';
-import FindIdPw from '../Login/FindIdPw';
+import FindIdPw from './FindIdPw';
 import AuthService from '../../services/AuthService';
 import AuthContext from '../../contexts/AuthContext';
 import { useHistory, Redirect, useLocation } from 'react-router';

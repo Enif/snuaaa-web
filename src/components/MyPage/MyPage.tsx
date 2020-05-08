@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import EditMyInfo from '../../containers/MyPage/EditMyInfo';
-import UserInfo from '../../containers/MyPage/UserInfo';
+import React from 'react';
+import EditMyInfo from './EditMyInfo';
+import UserInfo from './UserInfo';
 import { useParams } from 'react-router';
 
 const TAG = 'MYPAGE'

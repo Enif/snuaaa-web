@@ -2,36 +2,36 @@ import React from 'react';
 import { Location } from 'history';
 
 import HomeService from '../../services/HomeService';
-import Loading from '../../components/Common/Loading';
-import MyCommentList from '../../components/MyPage/MyCommentList';
-import Paginator from '../../components/Common/Paginator';
-import BoardName from '../../components/Board/BoardName';
+import Loading from '../Common/Loading';
+import AllPostList from '../Post/AllPostList';
+import Paginator from '../Common/Paginator';
+import BoardName from '../Board/BoardName';
 import BoardStateEnum from '../../common/BoardStateEnum';
 import history from '../../common/history';
-import CommentType from '../../types/CommentType';
+import ContentType from '../../types/ContentType';
 
 
-const TAG = 'ALLCOMMENTS'
-const COMMENTROWNUM = 10;
+const TAG = 'ALLPOST'
+const POSTROWNUM = 10;
 
-type AllCommentsProps = {
+type AllPostsProps = {
     location: Location;
 }
 
-type AllCommentsState = {
+type AllPostsState = {
     boardState: number;
 }
 
-class AllComments extends React.Component<AllCommentsProps, AllCommentsState> {
+class AllPosts extends React.Component<AllPostsProps, AllPostsState> {
 
-    comments: CommentType[];
-    commentCount: number;
+    posts: ContentType[];
+    postCount: number;
 
-    constructor(props: AllCommentsProps) {
+    constructor(props: AllPostsProps) {
         super(props);
         console.log(`[${TAG}] Constructor`)
-        this.comments = [];
-        this.commentCount = 0;
+        this.posts = [];
+        this.postCount = 0;
         // const hisState = history.location.state;
         this.state = {
             boardState: BoardStateEnum.LOADING,
@@ -41,6 +41,12 @@ class AllComments extends React.Component<AllCommentsProps, AllCommentsState> {
 
     componentDidMount() {
         this.fetch()
+    }
+
+    componentDidUpdate(prevProps: AllPostsProps) {
+        if (prevProps.location.state !== this.props.location.state) {
+            this.fetch();
+        }
     }
 
     // static getDerivedStateFromProps(props, state) {
@@ -57,12 +63,6 @@ class AllComments extends React.Component<AllCommentsProps, AllCommentsState> {
     //     }
     //     return true;
     // }
-
-    componentDidUpdate(prevProps: AllCommentsProps) {
-        if (prevProps.location.state !== this.props.location.state) {
-            this.fetch();
-        }
-    }
 
     clickPage = (idx: number) => {
         history.push({
@@ -82,11 +82,12 @@ class AllComments extends React.Component<AllCommentsProps, AllCommentsState> {
         const { location } = this.props;
         let pageIdx = (location.state && location.state.page) ? location.state.page : 1;
 
+
         this.setBoardState(BoardStateEnum.LOADING)
-        await HomeService.retrieveAllComments(pageIdx)
+        await HomeService.retrieveAllPosts(pageIdx)
             .then((res) => {
-                this.comments = res.data.commentInfo;
-                this.commentCount = res.data.commentCount;
+                this.posts = res.data.postInfo;
+                this.postCount = res.data.postCount;
                 this.setBoardState(BoardStateEnum.READY)
             })
             .catch((err: Error) => {
@@ -110,18 +111,12 @@ class AllComments extends React.Component<AllCommentsProps, AllCommentsState> {
                         else if (boardState === BoardStateEnum.READY || boardState === BoardStateEnum.WRITING) {
                             return (
                                 <div className="board-wrapper postboard-wrapper">
-                                    <BoardName board_name="전체 댓글" />
+                                    <BoardName board_name="전체 게시글" />
                                     {
                                         boardState === BoardStateEnum.READY &&
                                         <>
-                                            <MyCommentList comments={this.comments} />
-                                            {
-                                                this.commentCount > 0 &&
-                                                <Paginator
-                                                    pageIdx={pageIdx}
-                                                    pageNum={Math.ceil(this.commentCount / COMMENTROWNUM)}
-                                                    clickPage={this.clickPage} />
-                                            }
+                                            <AllPostList posts={this.posts} />
+                                            {this.postCount > 0 && <Paginator pageIdx={pageIdx} pageNum={Math.ceil(this.postCount / POSTROWNUM)} clickPage={this.clickPage} />}
                                         </>
                                     }
                                 </div>
@@ -137,4 +132,4 @@ class AllComments extends React.Component<AllCommentsProps, AllCommentsState> {
     }
 }
 
-export default AllComments;
+export default AllPosts;

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import Loading from '../../components/Common/Loading';
-import MyProfile from '../../components/MyPage/MyProfile';
-import MyPostList from '../../components/MyPage/MyPostList';
-import MyPhotoList from '../../components/MyPage/MyPhotoList';
-import MyCommentList from '../../components/MyPage/MyCommentList';
-import MyPageSelector from '../../components/MyPage/MyPageSelector';
+import Loading from '../Common/Loading';
+import MyProfile from './MyProfile';
+import MyPostList from './MyPostList';
+import MyPhotoList from './MyPhotoList';
+import MyCommentList from './MyCommentList';
+import MyPageSelector from './MyPageSelector';
 import MyPageViewEnum from '../../common/MyPageViewEnum';
 import UserService from '../../services/UserService';
 import UserType from '../../types/UserType';

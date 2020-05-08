@@ -3,7 +3,7 @@ import React, { ChangeEvent, KeyboardEvent, useState, useEffect } from 'react';
 import Loading from '../../components/Common/Loading';
 import PostList from '../../components/Post/PostList';
 import Paginator from '../../components/Common/Paginator';
-import CreatePost from '../PostBoard/CreatePost';
+import CreatePost from './CreatePost';
 import BoardStateEnum from '../../common/BoardStateEnum';
 import BoardName from '../../components/Board/BoardName';
 import SearchTypeEnum from '../../common/SearchTypeEnum';

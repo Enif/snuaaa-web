@@ -1,8 +1,8 @@
 import React, { useContext, useState, useEffect, ChangeEvent } from 'react';
 
 import UserService from '../../services/UserService';
-import Loading from '../../components/Common/Loading';
-import ProfileComponent from '../../components/MyPage/ProfileComponent';
+import Loading from '../Common/Loading';
+import ProfileComponent from './ProfileComponent';
 import AuthContext from '../../contexts/AuthContext';
 
 const TAG = 'PROFILE'

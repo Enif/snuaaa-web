@@ -1,12 +1,12 @@
 import React, { useState, useEffect, createRef } from 'react';
 import { Redirect, match, useLocation, useRouteMatch, useHistory } from 'react-router';
 import ExhibitPhotoService from '../../services/ExhibitPhotoService';
-import Loading from '../../components/Common/Loading';
+import Loading from '../Common/Loading';
 import ContentStateEnum from '../../common/ContentStateEnum';
 // import history from '../../common/history';
 import FullScreenPortal from '../../containers/FullScreenPortal';
-import Image from '../../components/Common/AaaImage';
-import ExhibitPhotoComponent from '../../components/ExhibitBoard/ExhibitPhotoComponent';
+import Image from '../Common/AaaImage';
+import ExhibitPhotoComponent from '../ExhibitBoard/ExhibitPhotoComponent';
 import { Location } from 'history';
 import { RecordOf, Record } from 'immutable';
 import AuthContext from '../../contexts/AuthContext';

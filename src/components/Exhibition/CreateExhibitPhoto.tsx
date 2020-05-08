@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent } from 'react';
 import ExhibitionService from '../../services/ExhibitionService';
 import UserService from '../../services/UserService';
-import CreateExhibitPhotoComponent from '../../components/ExhibitBoard/CreateExhibitPhotoComponent';
+import CreateExhibitPhotoComponent from '../ExhibitBoard/CreateExhibitPhotoComponent';
 import useBlockBackgroundScroll from '../../hooks/useBlockBackgroundScroll';
 import CrtExhibitPhotoType from '../../types/CrtExhibitPhotoType';
 import { List } from 'immutable';

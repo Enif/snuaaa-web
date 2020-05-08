@@ -2,9 +2,9 @@ import React, { useState, useEffect, ChangeEvent, useContext } from 'react';
 import { Redirect, useRouteMatch } from 'react-router';
 
 import ContentStateEnum from '../../common/ContentStateEnum';
-import Loading from '../../components/Common/Loading';
-import DocuComponent from '../../components/Document/DocuComponent';
-import EditDocu from '../../components/Document/EditDocu';
+import Loading from '../Common/Loading';
+import DocuComponent from './DocuComponent';
+import EditDocu from './EditDocu';
 import ContentService from '../../services/ContentService';
 import DocuService from '../../services/DocuService';
 import ContentType from '../../types/ContentType';

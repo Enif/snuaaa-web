@@ -3,7 +3,7 @@ import UserService from '../../services/UserService';
 import UserType from '../../types/UserType';
 import { convertFullDate, convertDateWithDay } from '../../utils/convertDate';
 import { UsersSearchType } from '../../types/SearchTypes';
-import Paginator from '../../components/Common/Paginator';
+import Paginator from '../Common/Paginator';
 import { useLocation, useHistory } from 'react-router';
 
 const USER_ROW_NUM = 20;
