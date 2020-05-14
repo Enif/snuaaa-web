@@ -196,19 +196,13 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
         if (direction === 1 && prevPhoto) {
             history.replace({
                 pathname: `/photo/${prevPhoto.content_id}`,
-                state: {
-                    modal: true,
-                    backgroundLocation: history.location.state.backgroundLocation
-                }
+                state: history.location.state
             })
         }
         else if (direction === -1 && nextPhoto) {
             history.replace({
                 pathname: `/photo/${nextPhoto.content_id}`,
-                state: {
-                    modal: true,
-                    backgroundLocation: history.location.state.backgroundLocation
-                }
+                state: history.location.state
             })
         }
         else {

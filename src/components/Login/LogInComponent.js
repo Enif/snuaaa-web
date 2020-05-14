@@ -37,7 +37,7 @@ const LogInComponent = ({ autoLogin, handleChange, userLogIn, guestLogIn, openFi
                     <button className="btn-guest" onClick={guestLogIn}>Guest</button>
                 </div>
                 <div className="menu-txt-wrapper">
-                    <Link to="/signup">
+                    <Link to="/auth/signup">
                         <p className="menu-txt-signup">회원가입</p>
                     </Link>
                     <p className="menu-txt-find" onClick={openFindPopUp}>아이디 | 비밀번호 찾기</p>

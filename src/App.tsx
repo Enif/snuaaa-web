@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Redirect, useHistory } from 'react-router';
+import { Redirect, useHistory, useLocation } from 'react-router';
 
 import './App.scss';
 
@@ -30,6 +30,7 @@ function App() {
     const [isReady, setIsReady] = useState<boolean>(false);
     const [authInfo, setAuthinfo] = useState<AuthType>(initialAuth);
     const history = useHistory();
+    const location = useLocation();
 
     useEffect(() => {
         if (navigator.userAgent.toLowerCase().indexOf('msie') !== -1) {
@@ -49,7 +50,7 @@ function App() {
         if (!accessToken) {
             //토큰이 없으면 logout
             history.replace({
-                pathname: '/login',
+                pathname: '/auth/login',
                 state: {
                     accessLocation: history.location
                 }
@@ -68,7 +69,7 @@ function App() {
                     console.error(err);
                     console.log('expired token')
                     history.replace({
-                        pathname: '/login',
+                        pathname: '/auth/login',
                         state: {
                             accessLocation: history.location
                         }
@@ -104,8 +105,8 @@ function App() {
                     if (!isReady) {
                         return <Loading />
                     }
-                    else if (!authInfo.isLoggedIn && !(window.location.pathname === '/page/login' || window.location.pathname === '/page/signup')) {
-                        return <Redirect to='/login' />
+                    else if (!authInfo.isLoggedIn && !(location.pathname === '/auth/login' || location.pathname === '/auth/signup')) {
+                        return <Redirect to='/auth/login' />
                     }
                     else {
                         return (
