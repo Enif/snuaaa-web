@@ -1,16 +1,27 @@
 import React from 'react';
-import ContentStateEnum from 'common/ContentStateEnum';
 import Comment from '../Comment/Comment';
 import ProfileMini from '../Common/ProfileMini';
 import DownloadFile from '../Post/DownloadFile';
-import { convertFullDate } from 'utils/convertDate';
-import { breakLine } from 'utils/breakLine';
+import { convertFullDate } from '../../utils/convertDate';
+import { breakLine } from '../../utils/breakLine';
 import ActionDrawer from '../Common/ActionDrawer';
-import history from 'common/history';
-import FileIcon from 'components/Common/FileIcon.tsx';
 
-const DocuComponent = ({ docData, my_id, setDocState, deleteDoc, likeDoc, isLiked }) => {
+import FileIcon from '../../components/Common/FileIcon';
+import ContentType from '../../types/ContentType';
+import { useHistory } from 'react-router';
 
+type DocuComponentProps = {
+    docData: ContentType;
+    my_id: number;
+    isLiked: boolean;
+    likeDoc: () => Promise<void>;
+    deleteDoc: () => Promise<void>;
+    setEditState: () => void;
+}
+
+const DocuComponent = ({ docData, my_id, setEditState, deleteDoc, likeDoc, isLiked }: DocuComponentProps) => {
+
+    const history = useHistory();
     let contentInfo = docData;
     let userInfo = docData.user;
     let filesInfo = docData.attachedFiles;
@@ -42,7 +53,7 @@ const DocuComponent = ({ docData, my_id, setDocState, deleteDoc, likeDoc, isLike
                 {
                     (my_id === userInfo.user_id) &&
                     <ActionDrawer
-                        clickEdit={() => setDocState(ContentStateEnum.EDITTING)}
+                        clickEdit={setEditState}
                         clickDelete={deleteDoc} />
                 }
             </div>
@@ -55,22 +66,30 @@ const DocuComponent = ({ docData, my_id, setDocState, deleteDoc, likeDoc, isLike
                 </div>
             </div>
             <div className="post-content">
-                {breakLine(contentInfo.text)}
+                <div className="doc-text-wrp">
+                    {breakLine(contentInfo.text)}
+                </div>
             </div>
             <div className="file-download-wrapper">
                 {makeFileList()}
             </div>
             <ProfileMini userInfo={userInfo} />
             <div className="enif-divider"></div>
-            <div className="nums-wrapper">
-                <div className="like-num-wrapper">
-                    <i className={`${isLiked ? 'ri-heart-fill' : 'ri-heart-line'} enif-f-1p5x enif-pointer`} onClick={() => likeDoc()}>
-                    </i>
-                    {contentInfo.like_num}
-                </div>
-                <div className="comment-num-wrapper">
-                    <i className="ri-message-2-fill enif-f-1p5x"></i>
-                    {contentInfo.comment_num}
+            <div className="actions-wrapper" >
+                <div className="nums-wrapper" >
+                    <div className="view-num-wrapper" >
+                        <i className="ri-eye-fill" > </i>
+                        {contentInfo.view_num}
+                    </div>
+                    < div className="like-num-wrapper" >
+                        <i className={`${isLiked ? 'ri-heart-fill' : 'ri-heart-line'} enif-f-1p5x enif-pointer`} onClick={() => likeDoc()}>
+                        </i>
+                        {contentInfo.like_num}
+                    </div>
+                    < div className="comment-num-wrapper" >
+                        <i className="ri-message-2-fill enif-f-1p5x" > </i>
+                        {contentInfo.comment_num}
+                    </div>
                 </div>
             </div>
             <Comment parent_id={contentInfo.content_id} />

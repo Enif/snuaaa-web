@@ -16,7 +16,7 @@ const MAX_SIZE = 20 * 1024 * 1024;
 
 function Docu() {
 
-    const match = useRouteMatch<{doc_id: string}>()
+    const match = useRouteMatch<{ doc_id: string }>()
     const [docuInfo, setDocuInfo] = useState<ContentType>();
     const [likeInfo, setLikeInfo] = useState<boolean>(false);
     const [docState, setDocState] = useState<number>(ContentStateEnum.LOADING);
@@ -46,7 +46,7 @@ function Docu() {
             })
     }
     const handleEditting = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        if(editingDocData && (e.target.name === 'title' || e.target.name === 'text')) {
+        if (editingDocData && (e.target.name === 'title' || e.target.name === 'text')) {
             setEditingDocData({
                 ...editingDocData,
                 [e.target.name]: e.target.value
@@ -59,15 +59,15 @@ function Docu() {
 
         try {
             await DocuService.updateDocument(doc_id, editingDocData)
-            if(attachedFiles.length > 0) {
-                for(let i = 0; i < attachedFiles.length; i++) {
+            if (attachedFiles.length > 0) {
+                for (let i = 0; i < attachedFiles.length; i++) {
                     let formData = new FormData();
                     formData.append('attachedFile', attachedFiles[i]);
                     await ContentService.createFile(doc_id, formData, uploadProgress)
                 }
             }
             if (removedFiles.length > 0) {
-                for(let i = 0; i < removedFiles.length; i++) {
+                for (let i = 0; i < removedFiles.length; i++) {
                     await FileService.deleteFile(removedFiles[i])
                 }
             }
@@ -93,22 +93,22 @@ function Docu() {
                 })
         }
     }
-    
+
     const likeDoc = async () => {
         let doc_id = Number(match.params.doc_id);
         await ContentService.likeContent(doc_id)
             .then(() => {
-                if(docuInfo) {
+                if (docuInfo) {
                     if (likeInfo) {
                         setDocuInfo({
                             ...docuInfo,
-                            like_num: docuInfo.like_num--
+                            like_num: docuInfo.like_num - 1
                         })
                     }
                     else {
                         setDocuInfo({
                             ...docuInfo,
-                            like_num: docuInfo.like_num++
+                            like_num: docuInfo.like_num + 1
                         })
                     }
                 }
@@ -179,7 +179,7 @@ function Docu() {
                     if (docState === ContentStateEnum.LOADING) {
                         return <Loading />
                     }
-                    else if (docState === ContentStateEnum.READY) {
+                    else if (docState === ContentStateEnum.READY && docuInfo) {
                         return (
                             <DocuComponent
                                 docData={docuInfo}
@@ -187,7 +187,8 @@ function Docu() {
                                 isLiked={likeInfo}
                                 likeDoc={likeDoc}
                                 deleteDoc={deleteDoc}
-                                setDocState={setDocState} />
+                                setEditState={() => setDocState(ContentStateEnum.EDITTING)}
+                            />
                         )
                     }
                     else if (docState === ContentStateEnum.EDITTING && editingDocData) {
@@ -201,9 +202,9 @@ function Docu() {
                                 removedFiles={removedFiles}
                                 removeFile={removeFile}
                                 cancelRemoveFile={cancelRemoveFile}
-                                cancel ={() => setDocState(ContentStateEnum.READY)}
+                                cancel={() => setDocState(ContentStateEnum.READY)}
                                 confirm={() => updateDoc()}
-                                />
+                            />
                         )
                     }
                     else if (docState === ContentStateEnum.DELETED && docuInfo)
