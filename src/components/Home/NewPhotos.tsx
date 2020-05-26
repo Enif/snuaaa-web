@@ -1,7 +1,6 @@
 import React from 'react'
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Image from '../Common/AaaImage';
-import ContentType from '../../types/ContentType';
 import PhotoType from '../../types/PhotoType';
 
 type NewPhotosProps = {
@@ -12,7 +11,7 @@ type NewPhotosProps = {
 
 function NewPhotos({ title, board_id, photos }: NewPhotosProps) {
 
-    const history = useHistory();
+    const location = useLocation();
     const makePhotoList = () => {
         if (photos) {
             return photos.map(content => {
@@ -22,7 +21,7 @@ function NewPhotos({ title, board_id, photos }: NewPhotosProps) {
                             pathname: `/photo/${content.content_id}`,
                             state: {
                                 modal: true,
-                                backgroundLocation: history.location
+                                backgroundLocation: location
                             }
                         }}>
                             {

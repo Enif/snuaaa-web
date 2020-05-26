@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Redirect, withRouter, useHistory } from 'react-router';
+import { Redirect, useHistory, useLocation } from 'react-router';
 
 import './App.scss';
-import 'react-quill/dist/quill.snow.css';
-import 'react-quill/dist/quill.bubble.css';
-import 'react-quill/dist/quill.core.css';
 
 import Section from './containers/Section';
 import Loading from './components/Common/Loading';
@@ -33,6 +30,7 @@ function App() {
     const [isReady, setIsReady] = useState<boolean>(false);
     const [authInfo, setAuthinfo] = useState<AuthType>(initialAuth);
     const history = useHistory();
+    const location = useLocation();
 
     useEffect(() => {
         if (navigator.userAgent.toLowerCase().indexOf('msie') !== -1) {
@@ -49,11 +47,10 @@ function App() {
 
     const checkToken = async () => {
         const accessToken = getToken();
-
         if (!accessToken) {
             //토큰이 없으면 logout
             history.replace({
-                pathname: '/login',
+                pathname: '/auth/login',
                 state: {
                     accessLocation: history.location
                 }
@@ -72,7 +69,7 @@ function App() {
                     console.error(err);
                     console.log('expired token')
                     history.replace({
-                        pathname: '/login',
+                        pathname: '/auth/login',
                         state: {
                             accessLocation: history.location
                         }
@@ -84,17 +81,17 @@ function App() {
 
     const authLogin = (token: string, autoLogin: boolean, userInfo: UserType) => {
         setToken(token, autoLogin);
-        setIsReady(true);
         setAuthinfo({
             isLoggedIn: true,
             user: userInfo
         })
+        setIsReady(true);
     }
 
     const authLogout = () => {
         removeToken();
-        setIsReady(true)
         setAuthinfo(initialAuth)
+        setIsReady(true)
     }
 
     return (
@@ -108,8 +105,8 @@ function App() {
                     if (!isReady) {
                         return <Loading />
                     }
-                    else if (!authInfo.isLoggedIn && !(window.location.pathname === '/page/login' || window.location.pathname === '/page/signup')) {
-                        return <Redirect to='/login' />
+                    else if (!authInfo.isLoggedIn && !(location.pathname === '/auth/login' || location.pathname === '/auth/signup')) {
+                        return <Redirect to='/auth/login' />
                     }
                     else {
                         return (
@@ -122,4 +119,4 @@ function App() {
     )
 }
 
-export default withRouter(App);
+export default App;

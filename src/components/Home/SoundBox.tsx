@@ -1,8 +1,7 @@
 import React from 'react'
-import ReactQuill from 'react-quill';
 import { Link } from 'react-router-dom';
 import ContentType from '../../types/ContentType';
-import Editor2 from '../../containers/Common/Editor2';
+import Editor2 from '../Common/Editor2';
 
 const SoundBox = ({ soundBoxInfo }: { soundBoxInfo: ContentType }) => {
 
@@ -18,7 +17,6 @@ const SoundBox = ({ soundBoxInfo }: { soundBoxInfo: ContentType }) => {
                                 <h5>{soundBoxInfo.title}</h5>
                             </Link>
                             <Editor2 text={soundBoxInfo.text} setText={()=>{}} readOnly />
-                            {/* <ReactQuill value={soundBoxInfo.text} readOnly={true} theme="bubble" /> */}
                         </>
                     }
                 </div>
