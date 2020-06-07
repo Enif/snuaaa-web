@@ -11,7 +11,7 @@ function SignUpSuccess() {
                     <p>가입을 환영합니다!"</p>
                 </div>
                 <div className="popup-confirm">
-                    <Link to="/login">
+                    <Link to="/auth/login">
                         <button>LOGIN</button>
                     </Link>
                 </div>

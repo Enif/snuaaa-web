@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactQuill from 'react-quill';
 
 import ProfileMini from '../Common/ProfileMini';
 import { convertFullDate } from '../../utils/convertDate';
@@ -9,7 +8,7 @@ import history from '../../common/history';
 import FileIcon from '../../components/Common/FileIcon';
 import ContentType from '../../types/ContentType';
 import FileType from '../../types/FileType';
-import Viewer from '../../containers/Common/Viewer';
+import Editor2 from '../Common/Editor2';
 
 type PostComponentProps = {
     content: ContentType,
@@ -78,8 +77,7 @@ function PostComponent(
                 </div>
             </div>
             <div className="post-content">
-                <Viewer text={content.text} />
-                {/* <ReactQuill value={content.text} readOnly={true} theme="bubble" /> */}
+                <Editor2 text={content.text} setText={() => {}} readOnly />
             </div>
             {makeFileList()}
             <ProfileMini userInfo={user} />
