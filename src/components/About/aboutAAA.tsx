@@ -10,7 +10,7 @@ function AboutAAA() {
                 <img className='img-right img-logo' src={logoImg} alt="logo" />
                 &nbsp; AAA(Amateur Astronomy Association)는 아마추어 천문활동을 사랑하는
                 회원들이 모여 구성한 서울대학교의 중앙 동아리입니다. 1980년 자연대 동아리로
-                시작하여 39년이 지난 현재까지 계속되어 온만큼 유구한 역사를 자랑합니다.
+                시작하여 40년이 지난 현재까지 계속되어 온만큼 유구한 역사를 자랑합니다.
                     <br /><br />&nbsp;
                 AAA의 활동은 주로 동아리방(별방)과 김태영 기념 관측소에서 이루어집니다. 매주
                 열리는 정기모임과 비정기적인 관측 활동을 비롯하여 신입생들을 위한 교육 프로그램까지,
