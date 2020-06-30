@@ -25,6 +25,9 @@ export function convertDateWithDay(date) {
 }
 
 export function convertFullDate(date) {
+    if(!date) {
+        return ""
+    }
     let convertedDate = new Date(date);
 
     let year = convertedDate.getFullYear();

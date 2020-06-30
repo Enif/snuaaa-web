@@ -16,6 +16,7 @@ interface UserType {
     level: number;
     login_at?: string;
     created_at?: string;
+    deleted_at?: string;
 }
 
 export default UserType;
