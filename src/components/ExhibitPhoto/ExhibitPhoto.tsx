@@ -13,14 +13,13 @@ import AuthContext from '../../contexts/AuthContext';
 import ExhibitPhotoType from '../../types/ExhibitPhotoType';
 import useBlockBackgroundScroll from '../../hooks/useBlockBackgroundScroll';
 
-type ExhibitPhotoProps = {
-    match: match<{ exhibitPhoto_id: string }>;
-    location: Location;
+type LocationState = {
+    backgroundLocation: string
 }
 
 
 function ExhibitPhoto() {
-    const location = useLocation();
+    const location = useLocation<LocationState>();
     const history = useHistory();
     const match = useRouteMatch<{ exhibitPhoto_id: string }>();
     const fullscreenRef = createRef<HTMLDivElement>();
@@ -80,7 +79,7 @@ function ExhibitPhoto() {
                         pathname: `/exhibitPhoto/${exhibitPhotosInfo[index + 1].content_id}`,
                         state: {
                             exhibitPhotoModal: true,
-                            backgroundLocation: history.location.state.backgroundLocation
+                            backgroundLocation: location.state.backgroundLocation
                         }
                     })
                 }
@@ -91,7 +90,7 @@ function ExhibitPhoto() {
                         pathname: `/exhibitPhoto/${exhibitPhotosInfo[index - 1].content_id}`,
                         state: {
                             exhibitPhotoModal: true,
-                            backgroundLocation: history.location.state.backgroundLocation
+                            backgroundLocation: location.state.backgroundLocation
                         }
                     })
                 }

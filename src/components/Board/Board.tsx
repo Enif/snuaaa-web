@@ -25,31 +25,23 @@ function Board() {
                 if (boardInfo) {
                     if (boardInfo.board_type === 'N') {
                         return (
-                            <PostBoard
-                                boardInfo={boardInfo} />
+                            <PostBoard boardInfo={boardInfo} />
                         )
                     }
                     else if (boardInfo.board_type === 'M') {
-                        return <Memory
-                            boardInfo={boardInfo}
-                            location={history.location} />
+                        return <Memory boardInfo={boardInfo} />
                     }
                     else if (boardInfo.board_type === 'A') {
-                        return <AstroPhoto
-                            boardInfo={boardInfo}
-                            location={history.location} />
+                        return <AstroPhoto boardInfo={boardInfo} />
                     }
                     else if (boardInfo.board_type === 'D') {
                         return (
-                            <DocuBoard
-                                boardInfo={boardInfo}
-                                location={history.location} />
+                            <DocuBoard boardInfo={boardInfo} />
                         )
                     }
                     else if (boardInfo.board_type === 'E') {
                         return (
-                            <ExhibitBoard
-                                boardInfo={boardInfo} />
+                            <ExhibitBoard boardInfo={boardInfo} />
                         )
                     }
                 }
