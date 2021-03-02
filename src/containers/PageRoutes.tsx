@@ -9,6 +9,7 @@ import TopUpButton from '../components/Common/TopUpButton';
 // Don't load lazy. scroll is reset when initial loading.
 import Photo from '../components/Photo/Photo';
 import ExhibitPhoto from '../components/ExhibitPhoto/ExhibitPhoto';
+import { Location } from 'history';
 
 const Home = lazy(() => import('../components/Home/Home'));
 const About = lazy(() => import('../components/About/About'));
@@ -26,13 +27,19 @@ const MightyCalculator = lazy(() => import('../components/MightyCalculator/Might
 const MgtUser = lazy(() => import('../components/MgtUser/MgtUser'));
 
 
+type LocationState = {
+    background: Location,
+    modal: boolean,
+    backgroundLocation: Location
+}
+
 function PageRoutes() {
 
-    const location = useLocation();
+    const location = useLocation<LocationState>();
 
-    let background = location.state && location.state.background
+    let background: Location = location.state && location.state.background
         ? location.state.background
-        : { pathname: '/', search: '', key: '', hash: '', state: '' }
+        : { pathname: '/', search: '', key: '', hash: '', state: '' };
     let isModal = false;
 
     if ((location.state && location.state.modal)
@@ -40,7 +47,7 @@ function PageRoutes() {
         || location.pathname.includes('/exhibitPhoto/')) {
         background = location.state && location.state.backgroundLocation
             ? location.state.backgroundLocation
-            : '/';
+            : { pathname: '/', search: '', key: '', hash: '', state: '' };
         isModal = true;
     }
 

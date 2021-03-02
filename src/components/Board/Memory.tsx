@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Location } from 'history';
 
 import CreateAlbum from '../Album/CreateAlbum';
@@ -13,72 +13,53 @@ import BoardType from '../../types/BoardType';
 import BoardName from '../../components/Board/BoardName';
 import AuthContext from '../../contexts/AuthContext';
 import AlbumType from '../../types/AlbumType';
+import { useHistory, useLocation } from 'react-router';
 
 const TAG = 'MEMORY'
 const ALBUMROWNUM = 12;
 
 type MemoryProps = {
     boardInfo: BoardType;
-    location: Location;
 }
 
-type MemoryState = {
-    popUpState: boolean;
-    isReady: boolean;
+type LocationState = {
+    page: number,
+    category: string
 }
 
-class Memory extends React.Component<MemoryProps, MemoryState> {
 
-    albums: AlbumType[];
-    albumCount: number;
+function Memory({ boardInfo }: MemoryProps) {
 
-    constructor(props: MemoryProps) {
-        super(props);
-        console.log('[%s] constructor', TAG);
-        this.albums = [];
-        this.albumCount = 0;
+    let albums: AlbumType[] = [];
+    let albumCount: number = 0;
 
-        this.state = {
-            popUpState: false,
-            isReady: false,
-        }
-    }
+    const [popUpState, setPopUpState] = useState<boolean>(false);
+    const [isReady, setIsReady] = useState<boolean>(false);
+    const history = useHistory();
+    const location = useLocation<LocationState>();
 
-    componentDidMount() {
-        this.fetch();
-    }
+    useEffect(() => {
+        fetch();
+    }, [location])
 
-    componentDidUpdate(prevProps: MemoryProps) {
-        if (prevProps.location !== this.props.location) {
-            this.fetch();
-        }
-    }
+    const fetch = async () => {
 
-    setIsReady = (isReady: boolean) => {
-        this.setState({
-            isReady: isReady
-        })
-    }
-
-    fetch = async () => {
-
-        const { boardInfo, location } = this.props;
         let pageIdx = location.state && location.state.page ? location.state.page : 1;
-        let category = (location.state && location.state.category) ? location.state.category : null
+        let category = (location.state && location.state.category) ? location.state.category : undefined
 
-        this.setIsReady(false);
+        setIsReady(false);
         await PhotoBoardService.retrieveAlbumsInPhotoBoard(boardInfo.board_id, pageIdx, category)
             .then((res: any) => {
-                this.albums = res.data.albumInfo;
-                this.albumCount = res.data.albumCount;
-                this.setIsReady(true);
+                albums = res.data.albumInfo;
+                albumCount = res.data.albumCount;
+                setIsReady(true);
             })
             .catch((err: Error) => {
                 console.error(`[${TAG}] Retrieve Photos Fail >> ${err}`)
             })
     }
 
-    clickCategory = (ctg_id: string) => {
+    const clickCategory = (ctg_id: string) => {
         history.push({
             state: {
                 category: ctg_id,
@@ -87,7 +68,7 @@ class Memory extends React.Component<MemoryProps, MemoryState> {
         })
     }
 
-    clickAll = () => {
+    const clickAll = () => {
         history.push({
             state: {
                 category: null,
@@ -96,15 +77,12 @@ class Memory extends React.Component<MemoryProps, MemoryState> {
         })
     }
 
-    togglePopUp = () => {
-        this.setState({
-            popUpState: !this.state.popUpState
-        })
+    const togglePopUp = () => {
+        setPopUpState(!popUpState);
     }
 
-    clickPage = (idx: number) => {
+    const clickPage = (idx: number) => {
 
-        const { location } = this.props;
         let category = (location.state && location.state.category) ? location.state.category : null
         history.push({
             state: {
@@ -114,73 +92,70 @@ class Memory extends React.Component<MemoryProps, MemoryState> {
         })
     }
 
-    render() {
-        const { boardInfo, location } = this.props;
-        const { isReady } = this.state;
-        let pageIdx = location.state && location.state.page ? location.state.page : 1;
-        let category = (location.state && location.state.category) ? location.state.category : null
+    let pageIdx = location.state && location.state.page ? location.state.page : 1;
+    let category = (location.state && location.state.category) ? location.state.category : undefined
 
-        return (
-            <AuthContext.Consumer>
-                {
-                    authContext => (
-                        <div className="board-wrapper photoboard-wrapper">
+    return (
+        <AuthContext.Consumer>
+            {
+                authContext => (
+                    <div className="board-wrapper photoboard-wrapper">
 
-                            <BoardName board_id={boardInfo.board_id} board_name={boardInfo.board_name} />
-                            <div className="board-desc">
-                                {boardInfo.board_desc}
-                            </div>
-                            <Category categories={boardInfo.categories} selected={category} clickAll={this.clickAll} clickCategory={this.clickCategory} />
-                            <div className="board-search-wrapper">
-                                <div className="board-search-input">
-                                    <i className="ri-search-line enif-f-1x"></i>
-                                    <input type="text" />
-                                </div>
-                                <div>
-                                    {
-                                        authContext.authInfo.user.grade <= boardInfo.lv_write &&
-                                        <button className="board-btn-write" onClick={() => this.togglePopUp()}>
-                                            <i className="ri-gallery-line enif-f-1p2x"></i>앨범 생성
-                                </button>
-                                    }
-                                </div>
-                            </div>
-
-                            {(() => {
-                                if (isReady) {
-                                    return (
-                                        <>
-                                            <div className="enif-divider"></div>
-                                            <AlbumList
-                                                board_id={boardInfo.board_id}
-                                                albums={this.albums} />
-                                            {
-                                                this.state.popUpState &&
-                                                <CreateAlbum
-                                                    board_id={boardInfo.board_id}
-                                                    categories={boardInfo.categories}
-                                                    fetch={this.fetch}
-                                                    togglePopUp={this.togglePopUp} />
-                                            }
-                                            {
-                                                this.albumCount > 0 &&
-                                                <Paginator
-                                                    pageIdx={pageIdx}
-                                                    pageNum={Math.ceil(this.albumCount / ALBUMROWNUM)}
-                                                    clickPage={this.clickPage} />
-                                            }
-                                        </>)
-                                }
-                                else {
-                                    return <Loading />
-                                }
-                            })()}
+                        <BoardName board_id={boardInfo.board_id} board_name={boardInfo.board_name} />
+                        <div className="board-desc">
+                            {boardInfo.board_desc}
                         </div>
-                    )
-                }
-            </AuthContext.Consumer>
-        );
-    }
+                        <Category categories={boardInfo.categories} selected={category} clickAll={clickAll} clickCategory={clickCategory} />
+                        <div className="board-search-wrapper">
+                            <div className="board-search-input">
+                                <i className="ri-search-line enif-f-1x"></i>
+                                <input type="text" />
+                            </div>
+                            <div>
+                                {
+                                    authContext.authInfo.user.grade <= boardInfo.lv_write &&
+                                    <button className="board-btn-write" onClick={() => togglePopUp()}>
+                                        <i className="ri-gallery-line enif-f-1p2x"></i>앨범 생성
+                                </button>
+                                }
+                            </div>
+                        </div>
+
+                        {(() => {
+                            if (isReady) {
+                                return (
+                                    <>
+                                        <div className="enif-divider"></div>
+                                        <AlbumList
+                                            board_id={boardInfo.board_id}
+                                            albums={albums} />
+                                        {
+                                            popUpState &&
+                                            <CreateAlbum
+                                                board_id={boardInfo.board_id}
+                                                categories={boardInfo.categories}
+                                                fetch={fetch}
+                                                togglePopUp={togglePopUp} />
+                                        }
+                                        {
+                                            albumCount > 0 &&
+                                            <Paginator
+                                                pageIdx={pageIdx}
+                                                pageNum={Math.ceil(albumCount / ALBUMROWNUM)}
+                                                clickPage={clickPage} />
+                                        }
+                                    </>)
+                            }
+                            else {
+                                return <Loading />
+                            }
+                        })()}
+                    </div>
+                )
+            }
+        </AuthContext.Consumer>
+    );
 }
+
 
 export default Memory;

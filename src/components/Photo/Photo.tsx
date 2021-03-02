@@ -28,8 +28,12 @@ import PhotoType from '../../types/PhotoType';
 const TAG = 'PHOTO'
 const VISIBLE_TIME = 3;
 
+type LocationState = {
+    backgroundLocation: string
+}
+
 type PhotoProps = {
-    match: match<{ photo_id: string }>
+    match: match<{ photo_id: string }>;
     my_id: number;
     location: Location;
 }
@@ -51,7 +55,7 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
 
     boardTagInfo: TagType[];
     fullscreenRef: RefObject<HTMLDivElement>;
-    timer?: NodeJS.Timer;
+    timer: NodeJS.Timer | undefined;
 
     constructor(props: PhotoProps) {
         super(props);
@@ -172,7 +176,7 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
                 pathname: `/photo/${prevAlbumPhoto.content_id}`,
                 state: {
                     modal: true,
-                    backgroundLocation: history.location.state.backgroundLocation
+                    // backgroundLocation: location.state.backgroundLocation
                 }
             })
         }
@@ -181,7 +185,7 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
                 pathname: `/photo/${nextAlbumPhoto.content_id}`,
                 state: {
                     modal: true,
-                    backgroundLocation: history.location.state.backgroundLocation
+                    // backgroundLocation: location.state.backgroundLocation
                 }
             })
         }

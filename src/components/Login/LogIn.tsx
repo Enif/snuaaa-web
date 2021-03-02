@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState, useContext } from 'react';
+import React, { ChangeEvent, useState, useContext, useEffect } from 'react';
 
 import LogInComponent from './LogInComponent';
 import Loading from '../Common/Loading';
@@ -11,6 +11,10 @@ import { useHistory, Redirect, useLocation } from 'react-router';
 
 const TAG = 'LOGIN'
 
+type LocationState = {
+    accessLocation: string
+}
+
 function LogIn() {
     const [loginInfo, setLoginInfo] = useState({ id: '', password: '', autoLogin: false });
     const [isLoading, setIsLoading] = useState(false);
@@ -18,12 +22,20 @@ function LogIn() {
     const [errPopUp, setErrPopUp] = useState(false);
     const [findPopUp, setFindPopUp] = useState(false);
     const history = useHistory();
-    const location = useLocation();
+    const location = useLocation<LocationState>();
     const authContext = useContext(AuthContext);
     const popUpTitle = '자동 로그인 기능을 사용하시겠습니까?';
     const popUpText = `자동 로그인 사용시 다음 접속부터는 로그인을 하실 필요가 없습니다.\n
             단, 게임방, 학교 등 공공장소에서 이용 시 개인정보가 유출될 수 있으니 주의해주세요.`;
     const errText = "로그인에 실패하였습니다.\n아이디나 비밀번호를 확인해주세요.";
+
+    useEffect(() => {
+        if (!errPopUp) return;
+        const timer = setTimeout(() => {
+            setErrPopUp(false);
+        }, 1500)
+        return () => clearTimeout(timer)
+    }, [errPopUp])
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setLoginInfo({
@@ -40,12 +52,12 @@ function LogIn() {
         });
     }
 
-    const makeErrPopUp = () => {
-        setErrPopUp(true);
-        setTimeout(() => {
-            setErrPopUp(false)
-        }, 1500)
-    }
+    // const makeErrPopUp = () => {
+    //     setErrPopUp(true);
+    //     setTimeout(() => {
+    //         setErrPopUp(false)
+    //     }, 1500)
+    // }
 
     const setAutoLogin = (isAuto: boolean) => {
         setLoginInfo({
@@ -77,7 +89,8 @@ function LogIn() {
             .catch((err: ErrorEvent) => {
                 console.error(err);
                 setIsLoading(false);
-                makeErrPopUp()
+                setErrPopUp(true);
+                // makeErrPopUp()
             })
     }
 
@@ -93,7 +106,8 @@ function LogIn() {
             .catch((err: ErrorEvent) => {
                 console.error(err);
                 setIsLoading(false);
-                makeErrPopUp()
+                setErrPopUp(true);
+                // makeErrPopUp()
             })
     }
 
@@ -101,7 +115,7 @@ function LogIn() {
 
         <>
             {isLoading && <Loading />}
-            {authContext.authInfo.isLoggedIn && <Redirect to='/'/>}
+            {authContext.authInfo.isLoggedIn && <Redirect to='/' />}
             {
                 findPopUp
                 && <FindIdPw

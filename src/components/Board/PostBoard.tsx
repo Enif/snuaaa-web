@@ -33,9 +33,17 @@ type PostBoardProps = {
     boardInfo: BoardType;
 }
 
+type LocationState = {
+    page: number,
+    searchInfo: {
+        type: string,
+        keyword: string
+    }
+}
+
 function PostBoard({ boardInfo }: PostBoardProps) {
 
-    const location = useLocation();
+    const location = useLocation<LocationState>();
     const history = useHistory();
     const [boardState, setBoardState] = useState<number>(BoardStateEnum.LOADING);
     const [posts, setPosts] = useState<ContentType[]>([]);
@@ -58,7 +66,7 @@ function PostBoard({ boardInfo }: PostBoardProps) {
     const clickPage = (idx: number) => {
         history.push({
             state: {
-                ...history.location.state,
+                ...location.state,
                 page: idx
             }
         })
@@ -66,7 +74,7 @@ function PostBoard({ boardInfo }: PostBoardProps) {
 
     const fetch = async () => {
 
-        let searchInfo = history.location.state && location.state.searchInfo;
+        let searchInfo = location.state && location.state.searchInfo;
         let pageIdx = location.state && location.state.page;
 
         if (!pageIdx) {
@@ -104,7 +112,7 @@ function PostBoard({ boardInfo }: PostBoardProps) {
         else {
             history.push({
                 state: {
-                    ...history.location.state,
+                    ...location.state,
                     page: 1,
                     searchInfo: searchInfo
                 }
@@ -135,7 +143,7 @@ function PostBoard({ boardInfo }: PostBoardProps) {
         }
     }
 
-    let pageIdx = history.location.state && history.location.state.page ? history.location.state.page : 1;
+    let pageIdx = location.state && location.state.page ? location.state.page : 1;
 
     return (
         <AuthContext.Consumer>

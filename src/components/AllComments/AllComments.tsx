@@ -1,5 +1,4 @@
-import React from 'react';
-import { Location } from 'history';
+import React, { useState, useEffect } from 'react';
 
 import HomeService from '../../services/HomeService';
 import Loading from '../Common/Loading';
@@ -7,64 +6,33 @@ import MyCommentList from '../MyPage/MyCommentList';
 import Paginator from '../Common/Paginator';
 import BoardName from '../Board/BoardName';
 import BoardStateEnum from '../../common/BoardStateEnum';
-import history from '../../common/history';
 import CommentType from '../../types/CommentType';
+import { useLocation, useHistory } from 'react-router';
 
 
 const TAG = 'ALLCOMMENTS'
 const COMMENTROWNUM = 10;
 
-type AllCommentsProps = {
-    location: Location;
+
+type LocationState = {
+    page: number
 }
 
-type AllCommentsState = {
-    boardState: number;
-}
+function AllComments() {
 
-class AllComments extends React.Component<AllCommentsProps, AllCommentsState> {
+    const [comments, setComments] = useState<CommentType[]>([]);
+    const [commentCount, setCommentCount] = useState<number>(0);
+    const [boardState, setBoardState] = useState<number>(BoardStateEnum.LOADING);
+    const history = useHistory();
+    const location = useLocation<LocationState>();
+    let pageIdx = (location.state && location.state.page) ? location.state.page : 1;
 
-    comments: CommentType[];
-    commentCount: number;
+    useEffect(() => {
+        fetch();
+    }, [location])
 
-    constructor(props: AllCommentsProps) {
-        super(props);
-        console.log(`[${TAG}] Constructor`)
-        this.comments = [];
-        this.commentCount = 0;
-        // const hisState = history.location.state;
-        this.state = {
-            boardState: BoardStateEnum.LOADING,
-            // pageIdx: (hisState && hisState.page) ? hisState.page : 1,
-        }
-    }
 
-    componentDidMount() {
-        this.fetch()
-    }
-
-    // static getDerivedStateFromProps(props, state) {
-    //     const hisState = history.location.state;
-    //     return {
-    //         pageIdx: (hisState && hisState.page) ? hisState.page : 1,
-    //     }
-    // }
-
-    // shouldComponentUpdate(nextProps, nextState) {
-    //     if (this.state.pageIdx !== nextState.pageIdx) {
-    //         this.fetch(nextState.pageIdx);
-    //         return true;
-    //     }
-    //     return true;
-    // }
-
-    componentDidUpdate(prevProps: AllCommentsProps) {
-        if (prevProps.location.state !== this.props.location.state) {
-            this.fetch();
-        }
-    }
-
-    clickPage = (idx: number) => {
+    const clickPage = (idx: number) => {
         history.push({
             state: {
                 page: idx
@@ -72,69 +40,54 @@ class AllComments extends React.Component<AllCommentsProps, AllCommentsState> {
         })
     }
 
-    setBoardState = (state: number) => {
-        this.setState({
-            boardState: state
-        })
-    }
+    const fetch = async () => {
 
-    fetch = async () => {
-        const { location } = this.props;
-        let pageIdx = (location.state && location.state.page) ? location.state.page : 1;
-
-        this.setBoardState(BoardStateEnum.LOADING)
+        setBoardState(BoardStateEnum.LOADING)
         await HomeService.retrieveAllComments(pageIdx)
             .then((res) => {
-                this.comments = res.data.commentInfo;
-                this.commentCount = res.data.commentCount;
-                this.setBoardState(BoardStateEnum.READY)
+                setComments(res.data.commentInfo)
+                setCommentCount(res.data.commentCount)
+                setBoardState(BoardStateEnum.READY)
             })
             .catch((err: Error) => {
                 console.error(err);
             })
     }
 
-    render() {
-        console.log(`[${TAG}] render.. `)
-        const { location } = this.props;
-        let pageIdx = (location.state && location.state.page) ? location.state.page : 1;
-        const { boardState } = this.state;
-
-        return (
-            <>
-                {
-                    (() => {
-                        if (boardState === BoardStateEnum.LOADING) {
-                            return <Loading />
-                        }
-                        else if (boardState === BoardStateEnum.READY || boardState === BoardStateEnum.WRITING) {
-                            return (
-                                <div className="board-wrapper postboard-wrapper">
-                                    <BoardName board_name="전체 댓글" />
-                                    {
-                                        boardState === BoardStateEnum.READY &&
-                                        <>
-                                            <MyCommentList comments={this.comments} />
-                                            {
-                                                this.commentCount > 0 &&
-                                                <Paginator
-                                                    pageIdx={pageIdx}
-                                                    pageNum={Math.ceil(this.commentCount / COMMENTROWNUM)}
-                                                    clickPage={this.clickPage} />
-                                            }
-                                        </>
-                                    }
-                                </div>
-                            )
-                        }
-                        else return (
-                            <div>ERROR PAGE</div>
+    return (
+        <>
+            {
+                (() => {
+                    if (boardState === BoardStateEnum.LOADING) {
+                        return <Loading />
+                    }
+                    else if (boardState === BoardStateEnum.READY || boardState === BoardStateEnum.WRITING) {
+                        return (
+                            <div className="board-wrapper postboard-wrapper">
+                                <BoardName board_name="전체 댓글" />
+                                {
+                                    boardState === BoardStateEnum.READY &&
+                                    <>
+                                        <MyCommentList comments={comments} />
+                                        {
+                                            commentCount > 0 &&
+                                            <Paginator
+                                                pageIdx={pageIdx}
+                                                pageNum={Math.ceil(commentCount / COMMENTROWNUM)}
+                                                clickPage={clickPage} />
+                                        }
+                                    </>
+                                }
+                            </div>
                         )
-                    })()
-                }
-            </>
-        );
-    }
+                    }
+                    else return (
+                        <div>ERROR PAGE</div>
+                    )
+                })()
+            }
+        </>
+    );
 }
 
 export default AllComments;
