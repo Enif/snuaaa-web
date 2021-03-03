@@ -30,11 +30,13 @@ type LocationState = {
 
 function Memory({ boardInfo }: MemoryProps) {
 
-    let albums: AlbumType[] = [];
-    let albumCount: number = 0;
+    // let albums: AlbumType[] = [];
+    // let albumCount: number = 0;
 
     const [popUpState, setPopUpState] = useState<boolean>(false);
     const [isReady, setIsReady] = useState<boolean>(false);
+    const [albums, setAlbums] = useState<AlbumType[]>([]);
+    const [albumCount, setAlbumCount] = useState<number>(0);
     const history = useHistory();
     const location = useLocation<LocationState>();
 
@@ -50,8 +52,8 @@ function Memory({ boardInfo }: MemoryProps) {
         setIsReady(false);
         await PhotoBoardService.retrieveAlbumsInPhotoBoard(boardInfo.board_id, pageIdx, category)
             .then((res: any) => {
-                albums = res.data.albumInfo;
-                albumCount = res.data.albumCount;
+                setAlbums(res.data.albumInfo);
+                setAlbumCount(res.data.albumCount);
                 setIsReady(true);
             })
             .catch((err: Error) => {
