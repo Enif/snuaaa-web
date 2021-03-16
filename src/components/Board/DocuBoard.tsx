@@ -29,12 +29,13 @@ type LocationState = {
 
 function DocuBoard({ boardInfo }: DocuBoardProps) {
 
-    let docCount: number = 0;
+    // let docCount: number = 0;
     const history = useHistory();
     const location = useLocation<LocationState>();
     
     const [boardState, setBoardState] = useState<number>(BoardStateEnum.LOADING);
     const [documents, setDocuments] = useState<ContentType[]>([]);
+    const [docCount, setDocCount] = useState<number>(0);
 
     useEffect(() => {
         fetch();
@@ -49,9 +50,9 @@ function DocuBoard({ boardInfo }: DocuBoardProps) {
         setBoardState(BoardStateEnum.LOADING);
         await DocuService.retrieveDocuments(pageIdx, category, generation)
             .then((res) => {
-                docCount = res.data.docCount;
-                setBoardState(BoardStateEnum.READY);
+                setDocCount(res.data.docCount)
                 setDocuments(res.data.docInfo);
+                setBoardState(BoardStateEnum.READY);
             })
             .catch((err) => {
                 console.error(err)
