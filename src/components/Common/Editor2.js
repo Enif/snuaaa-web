@@ -1,5 +1,5 @@
 import React from 'react';
-import CKEditor from '@ckeditor/ckeditor5-react';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
 
 import * as service from '../../services/index';
 import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
@@ -116,7 +116,7 @@ function Editor2({ text, setText, readOnly }) {
                 config={editorConfiguration}
                 data={text}
                 disabled={readOnly}
-                onInit={editor => {
+                onReady={editor => {
                     // You can store the "editor" and use when it is needed.
                     console.log('Editor is ready to use!', editor);
                 }}
