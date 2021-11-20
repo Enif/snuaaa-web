@@ -1,5 +1,31 @@
 [
     {
+        "year": 2021,
+        "occasion": [
+            {
+                "date": "12월 01일 ~ 12월 14일",
+                "name": "39회 천체 사진전 : For the STARved"
+            },
+            {
+                "date": "09월 25일",
+                "name": "Home Coming Day"
+            }
+        ]
+    },
+    {
+        "year": 2020,
+        "occasion": [
+            {
+                "date": "11월 23일 ~ 11월 26일",
+                "name": "38회 천체 사진전 : 몸은 멀리, 별은 가까이"
+            },
+            {
+                "date": "11월 21일",
+                "name": "Home Coming Day"
+            }
+        ]
+    },
+    {
         "year": 2019,
         "occasion": [
             {
