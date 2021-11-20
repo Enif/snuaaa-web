@@ -1,10 +1,10 @@
 SNUAAA HOMEPAGE
 ==========================
-[Homepage](https://www.snuaaa.net/)
+[Homepage](https://community.snuaaa.net/)
 
 # 1. About the Project
 
-This project is the front-end part of the [Seoul National University Amateur Astronomy Association](https://www.snuaaa.net/)'s website.
+This project is for the website community of the [Seoul National University Amateur Astronomy Association](https://www.snuaaa.net/).
 
 
 # 2. Development
