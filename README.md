@@ -1,6 +1,6 @@
 SNUAAA HOMEPAGE
 ==========================
-[Homepage](https://our.snuaaa.net/)
+[Homepage](https://community.snuaaa.net/)
 
 # 1. About the Project
 
