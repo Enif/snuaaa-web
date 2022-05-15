@@ -236,7 +236,7 @@ function CreateExhibitPhoto({ board_id, exhibition_id, exhibition_no, togglePopU
             checkForm={submit}
             togglePopUp={togglePopUp}
             imgIdx={imgIdx}
-            photoInfos={photoInfos.toJS()}
+            photoInfos={photoInfos.toJS() as CrtExhibitPhotoType[]}
             searchUsers={searchUsers}
             btnDisabled={btnDisabled}
         />

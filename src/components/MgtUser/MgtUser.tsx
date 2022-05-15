@@ -29,7 +29,7 @@ function MgtUser() {
         }
         catch (err) {
             console.error(err);
-            if (err.response && err.response.status === 403) {
+            if ((err as any).response && (err as any).response.status === 403) {
                 alert("권한이 없습니다.")
                 history.goBack();
             }
