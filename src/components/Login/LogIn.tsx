@@ -9,8 +9,6 @@ import AuthService from '../../services/AuthService';
 import AuthContext from '../../contexts/AuthContext';
 import { useHistory, Redirect, useLocation } from 'react-router';
 
-const TAG = 'LOGIN'
-
 type LocationState = {
     accessLocation: string
 }
@@ -75,10 +73,8 @@ function LogIn() {
             .then((res: any) => {
 
                 const { token, userInfo, autoLogin } = res.data;
-
-                authContext.authLogin(token, autoLogin, userInfo)
-
                 setIsLoading(false);
+                authContext.authLogin(token, autoLogin, userInfo)
                 if (location.state && location.state.accessLocation) {
                     history.push(location.state.accessLocation)
                 }
