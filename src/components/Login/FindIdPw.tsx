@@ -84,11 +84,8 @@ function FindIdPw({ cancel }: FindIdPwProps) {
                 email: idEmail
             }
             try {
-                let res = await UserService.findId(data);
-                if (res.data.success) {
-                    setFindState(FindStateEnum.IDFOUND);
-                }
-
+                await UserService.findId(data);
+                setFindState(FindStateEnum.IDFOUND);
             }
             catch (err) {
                 console.error(err);
@@ -102,11 +99,8 @@ function FindIdPw({ cancel }: FindIdPwProps) {
                 email: pwEmail
             }
             try {
-                let res = await UserService.findPw(data);
-                if (res.data.success) {
-                    setFindState(FindStateEnum.PWFOUND);
-                }
-
+                await UserService.findPw(data);
+                setFindState(FindStateEnum.PWFOUND);
             }
             catch (err) {
                 console.error(err);
@@ -154,10 +148,16 @@ function FindIdPw({ cancel }: FindIdPwProps) {
                 </div>
                 <div>{makeMessage()}</div>
                 <div className="popup-action">
-                    <button className="btn-ok" disabled={findState === FindStateEnum.LOADING} onClick={submit}>OK</button>
-                    <button className="btn-cancel" onClick={cancel}>CANCEL</button>
+                    {
+                        findState === FindStateEnum.IDFOUND || findState === FindStateEnum.PWFOUND ?
+                            <button className="btn-cancel" onClick={cancel}>닫기</button>
+                            :
+                            <>
+                                <button className="btn-ok" disabled={findState === FindStateEnum.LOADING} onClick={submit}>OK</button>
+                                <button className="btn-cancel" onClick={cancel}>CANCEL</button>
+                            </>
+                    }
                 </div>
-
             </div>
         </div>
     )
