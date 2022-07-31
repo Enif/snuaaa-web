@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useContext, RefObject } from 'react';
 import Image from '../Common/AaaImage';
 import { breakLine } from '../../utils/breakLine';
-import { convertFullDate, convertDynamicTime } from '../../utils/convertDate';
+import { convertDynamicTime } from '../../utils/convertDate';
 import defaultProfile from 'assets/img/common/profile.png';
 import UserActionDrawer from '../../components/Common/UserActionDrawer';
 import CommentType from '../../types/CommentType';
@@ -43,8 +43,8 @@ const CommentList = ({ my_id, comments, commentInEdit, editingContents, parentCo
             let commentList = comments.map(comment => {
                 let user = comment.user;
                 return (
-                    <>
-                        <div key={comment.comment_id} className="comment-wrapper">
+                    <React.Fragment key={comment.comment_id}>
+                        <div className="comment-wrapper">
                             <UserActionDrawer userInfo={user} className="profile">
                                 <Image className="comment-profile-img" imgSrc={user.profile_path} defaultImgSrc={defaultProfile} />
                             </UserActionDrawer>
@@ -104,7 +104,7 @@ const CommentList = ({ my_id, comments, commentInEdit, editingContents, parentCo
                                 <button onClick={createComment}>ENTER</button>
                             </div>
                         }
-                    </>
+                    </React.Fragment>
                 )
             })
             return commentList
