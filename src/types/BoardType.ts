@@ -1,5 +1,5 @@
-import TagType from "./TagType";
-import CategoryType from "./CategoryType";
+import TagType from './TagType';
+import CategoryType from './CategoryType';
 
 interface BoardType {
     board_id: string;

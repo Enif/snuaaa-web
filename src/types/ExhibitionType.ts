@@ -1,4 +1,4 @@
-import ContentType from "./ContentType";
+import ContentType from './ContentType';
 
 interface ExhibitionType extends ContentType {
     exhibition: {

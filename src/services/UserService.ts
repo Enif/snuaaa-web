@@ -1,4 +1,4 @@
-import { AaaService } from './index'
+import { AaaService } from './index';
 import UserType from '../types/UserType';
 import { AxiosPromise } from 'axios';
 import { UsersSearchType } from '../types/SearchTypes';
@@ -8,94 +8,94 @@ import PhotoType from '../types/PhotoType';
 
 const UserService = {
 
-    retrieveUserInfo: function (user_uuid?: string): AxiosPromise<{
+  retrieveUserInfo: function (user_uuid?: string): AxiosPromise<{
         userInfo: UserType
     }> {
-        if (user_uuid) {
-            return AaaService.get(`userinfo/${user_uuid}`)
-        }
-        else {
-            return AaaService.get(`userinfo`);
-        }
-    },
+    if (user_uuid) {
+      return AaaService.get(`userinfo/${user_uuid}`);
+    }
+    else {
+      return AaaService.get('userinfo');
+    }
+  },
 
-    updateUserInfo: function (data: any) {
-        return AaaService.patch('userinfo', data);
-    },
+  updateUserInfo: function (data: any) {
+    return AaaService.patch('userinfo', data);
+  },
 
-    deleteUserInfo: function () {
-        return AaaService.delete('userinfo');
-    },
+  deleteUserInfo: function () {
+    return AaaService.delete('userinfo');
+  },
 
-    retrieveUsers: function (sortOption?: UsersSearchType): AxiosPromise<{
+  retrieveUsers: function (sortOption?: UsersSearchType): AxiosPromise<{
         userInfo: UserType[],
         count: number
     }> {
-        let query = '';
-        if (sortOption) {
-            // query += '/sort?'
-            query += `?`
-            query += `sort=${sortOption.sort}&`;
-            query += `order=${sortOption.order}&`;
-            sortOption.limit && (query += `limit=${sortOption.limit}&`);
-            sortOption.offset && (query += `offset=${sortOption.offset}&`);
-            query.substring(query.length - 1)
-        }
+    let query = '';
+    if (sortOption) {
+      // query += '/sort?'
+      query += '?';
+      query += `sort=${sortOption.sort}&`;
+      query += `order=${sortOption.order}&`;
+      sortOption.limit && (query += `limit=${sortOption.limit}&`);
+      sortOption.offset && (query += `offset=${sortOption.offset}&`);
+      query.substring(query.length - 1);
+    }
 
-        return AaaService.get(`userinfo/all${query}`);
-    },
+    return AaaService.get(`userinfo/all${query}`);
+  },
 
-    retrieveUserPosts: function (user_uuid?: string): AxiosPromise<{
+  retrieveUserPosts: function (user_uuid?: string): AxiosPromise<{
         postList: ContentType[]
     }> {
-        if (user_uuid) {
-            return AaaService.get(`userinfo/${user_uuid}/posts`);
-        }
-        else {
-            return AaaService.get('userinfo/posts');
-        }
-    },
+    if (user_uuid) {
+      return AaaService.get(`userinfo/${user_uuid}/posts`);
+    }
+    else {
+      return AaaService.get('userinfo/posts');
+    }
+  },
 
-    retrieveUserPhotos: function (user_uuid?: string): AxiosPromise<{
+  retrieveUserPhotos: function (user_uuid?: string): AxiosPromise<{
         photoList: PhotoType[]
     }> {
-        if (user_uuid) {
-            return AaaService.get(`userinfo/${user_uuid}/photos`);
-        }
-        else {
-            return AaaService.get('userinfo/photos');
-        }
-    },
+    if (user_uuid) {
+      return AaaService.get(`userinfo/${user_uuid}/photos`);
+    }
+    else {
+      return AaaService.get('userinfo/photos');
+    }
+  },
 
-    retrieveUserComments: function (user_uuid?: string): AxiosPromise<{
+  retrieveUserComments: function (user_uuid?: string): AxiosPromise<{
         commentList: CommentType[]
     }> {
-        if (user_uuid) {
-            return AaaService.get(`userinfo/${user_uuid}/comments`);
-        }
-        else {
-            return AaaService.get(`userinfo/comments`);
-        }
-    },
-
-    updatePassword: function (data: any) {
-        return AaaService.patch(`userinfo/password`, data)
-    },
-
-    findId: function (data: any) {
-        return AaaService.post(`userinfo/find/id`, data)
-    },
-
-    findPw: function (data: any) {
-        return AaaService.post(`userinfo/find/pw`, data)
-    },
-
-    searchMini: function (name: string) {
-        if (name) {
-            return AaaService.get(`userinfo/search/mini?name=${name}`)
-        }
+    if (user_uuid) {
+      return AaaService.get(`userinfo/${user_uuid}/comments`);
     }
-}
+    else {
+      return AaaService.get('userinfo/comments');
+    }
+  },
+
+  updatePassword: function (data: any) {
+    return AaaService.patch('userinfo/password', data);
+  },
+
+  findId: function (data: any) {
+    return AaaService.post('userinfo/find/id', data);
+  },
+
+  findPw: function (data: any) {
+    return AaaService.post('userinfo/find/pw', data);
+  },
+
+  searchMini: function (name: string) {
+    if (name) {
+      return AaaService.get(`userinfo/search/mini?name=${name}`);
+    }
+  }
+};
 
 
 // class UserService extends AaaService<UserType> {

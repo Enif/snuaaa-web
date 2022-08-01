@@ -6,14 +6,14 @@ type PreviewImageProps = {
 
 function PreviewImage({ imgUrl }: PreviewImageProps) {
 
-    return (
-        <>
-            {
-                imgUrl &&
+  return (
+    <>
+      {
+        imgUrl &&
                 <img src={imgUrl} alt="previewImg" />
-            }
-        </>
-    )
+      }
+    </>
+  );
 }
 
 export default PreviewImage;

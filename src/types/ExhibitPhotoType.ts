@@ -1,6 +1,6 @@
-import ContentType from "./ContentType";
-import UserType from "./UserType";
-import ExhibitionType from "./ExhibitionType";
+import ContentType from './ContentType';
+import UserType from './UserType';
+import ExhibitionType from './ExhibitionType';
 
 interface ExhibitPhotoType extends ContentType {
     parent: ExhibitionType,

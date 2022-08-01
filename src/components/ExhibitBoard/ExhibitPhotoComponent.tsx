@@ -23,62 +23,62 @@ type ExhibitPhotoComponentProps = {
 }
 
 function ExhibitPhotoComponent({ contentInfo, my_id, isEditting, isFullscreen,
-    fullscreenRef, clickFullscreen, moveToPrev, moveToNext,
-    editPhoto, cancelEdit, deletePhoto, fetch, close }: ExhibitPhotoComponentProps) {
+  fullscreenRef, clickFullscreen, moveToPrev, moveToNext,
+  editPhoto, cancelEdit, deletePhoto, fetch, close }: ExhibitPhotoComponentProps) {
 
-    let exhibitionInfo = contentInfo
+  const exhibitionInfo = contentInfo
         && contentInfo.exhibitPhoto
         && contentInfo.parent
         && contentInfo.parent.exhibition;
-    let exhibitPhotoInfo = contentInfo;
-    let fullscreenClass = isFullscreen ? 'ri-fullscreen-exit-fill' : 'ri-fullscreen-fill';
+  const exhibitPhotoInfo = contentInfo;
+  const fullscreenClass = isFullscreen ? 'ri-fullscreen-exit-fill' : 'ri-fullscreen-fill';
 
-    return (
-        <>
-            <div className="enif-popup photo-popup" onClick={close}>
-                <div className="photo-section-wrapper" onClick={(e) => e.stopPropagation()}>
-                    <div className="photo-alb-title-wrp">
-                        <div className="photo-alb-title">
-                            <h5>{exhibitionInfo ? exhibitionInfo.slogan : "slogan"}</h5>&nbsp;
-                                        <i className="ri-image-2-line"></i>
-                            {exhibitPhotoInfo.exhibitPhoto.order}
-                        </div>
-                        <div className="enif-modal-close" onClick={close}>
-                            <i className="ri-close-fill enif-f-1p5x enif-pointer"></i>
-                        </div>
-                    </div>
-                    <div className="photo-section-bottom">
-                        <div className="photo-section-left">
-                            <div className="photo-img-wrapper" ref={fullscreenRef} >
-                                <div className="photo-move-action prev" onClick={moveToPrev}>
-                                    <i className="ri-arrow-left-s-line ri-icons enif-pointer"></i>
-                                </div>
-                                <Image imgSrc={contentInfo.exhibitPhoto.file_path} />
-                                <div className="photo-move-action next" onClick={moveToNext}>
-                                    <i className="ri-arrow-right-s-line ri-icons enif-pointer"></i>
-                                </div>
-                                <div className="photo-action-fullscreen-wrapper">
-                                    <i className={`${fullscreenClass} enif-pointer enif-f-1p2x`} onClick={clickFullscreen}></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="photo-section-right">
-                            {
-                                isEditting ?
-                                    <EditExhibitPhotoInfo
-                                        exhibitPhotoInfo={contentInfo}
-                                        fetch={fetch}
-                                        cancel={cancelEdit}
-                                    />
-                                    :
-                                    <ExhibitPhotoInfo
-                                        photoInfo={contentInfo}
-                                        my_id={my_id}
-                                        setEditState={editPhoto}
-                                        deletePhoto={deletePhoto}
-                                    />
-                            }
-                            {/* <div className="photo-contents-wrapper">
+  return (
+    <>
+      <div className="enif-popup photo-popup" onClick={close}>
+        <div className="photo-section-wrapper" onClick={(e) => e.stopPropagation()}>
+          <div className="photo-alb-title-wrp">
+            <div className="photo-alb-title">
+              <h5>{exhibitionInfo ? exhibitionInfo.slogan : 'slogan'}</h5>&nbsp;
+              <i className="ri-image-2-line"></i>
+              {exhibitPhotoInfo.exhibitPhoto.order}
+            </div>
+            <div className="enif-modal-close" onClick={close}>
+              <i className="ri-close-fill enif-f-1p5x enif-pointer"></i>
+            </div>
+          </div>
+          <div className="photo-section-bottom">
+            <div className="photo-section-left">
+              <div className="photo-img-wrapper" ref={fullscreenRef} >
+                <div className="photo-move-action prev" onClick={moveToPrev}>
+                  <i className="ri-arrow-left-s-line ri-icons enif-pointer"></i>
+                </div>
+                <Image imgSrc={contentInfo.exhibitPhoto.file_path} />
+                <div className="photo-move-action next" onClick={moveToNext}>
+                  <i className="ri-arrow-right-s-line ri-icons enif-pointer"></i>
+                </div>
+                <div className="photo-action-fullscreen-wrapper">
+                  <i className={`${fullscreenClass} enif-pointer enif-f-1p2x`} onClick={clickFullscreen}></i>
+                </div>
+              </div>
+            </div>
+            <div className="photo-section-right">
+              {
+                isEditting ?
+                  <EditExhibitPhotoInfo
+                    exhibitPhotoInfo={contentInfo}
+                    fetch={fetch}
+                    cancel={cancelEdit}
+                  />
+                  :
+                  <ExhibitPhotoInfo
+                    photoInfo={contentInfo}
+                    my_id={my_id}
+                    setEditState={editPhoto}
+                    deletePhoto={deletePhoto}
+                  />
+              }
+              {/* <div className="photo-contents-wrapper">
                                 {
                                     userInfo && (my_id === userInfo.user_id) &&
                                     <ActionDrawer
@@ -177,14 +177,14 @@ function ExhibitPhotoComponent({ contentInfo, my_id, isEditting, isFullscreen,
                                     </div>
                                 </div>
                             </div> */}
-                        </div>
-
-                    </div>
-                </div>
             </div>
 
-        </>
-    )
+          </div>
+        </div>
+      </div>
+
+    </>
+  );
 }
 
 export default ExhibitPhotoComponent;

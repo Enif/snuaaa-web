@@ -1,4 +1,4 @@
-import UserType from "./UserType";
+import UserType from './UserType';
 
 interface CrtExhibitPhotoType {
     title: string,

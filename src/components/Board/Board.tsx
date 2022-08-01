@@ -10,49 +10,49 @@ import Memory from '../Board/Memory';
 import AstroPhoto from '../Board/AstroPhoto';
 import BoardContext from '../../contexts/BoardContext';
 
-const TAG = 'BOARD'
+const TAG = 'BOARD';
 
 function Board() {
 
-    const boardContext = useContext(BoardContext);
-    const match = useRouteMatch<{ board_id: string }>()
+  const boardContext = useContext(BoardContext);
+  const match = useRouteMatch<{ board_id: string }>();
 
-    let boardInfo = boardContext.boardsInfo.find((board) => board.board_id === match.params.board_id)
+  const boardInfo = boardContext.boardsInfo.find((board) => board.board_id === match.params.board_id);
 
-    return (
-        <>
-            {(() => {
-                if (boardInfo) {
-                    if (boardInfo.board_type === 'N') {
-                        return (
-                            <PostBoard boardInfo={boardInfo} />
-                        )
-                    }
-                    else if (boardInfo.board_type === 'M') {
-                        return <Memory boardInfo={boardInfo} />
-                    }
-                    else if (boardInfo.board_type === 'A') {
-                        return <AstroPhoto boardInfo={boardInfo} />
-                    }
-                    else if (boardInfo.board_type === 'D') {
-                        return (
-                            <DocuBoard boardInfo={boardInfo} />
-                        )
-                    }
-                    else if (boardInfo.board_type === 'E') {
-                        return (
-                            <ExhibitBoard boardInfo={boardInfo} />
-                        )
-                    }
-                }
-                else {
-                    return (
-                        <Loading />
-                    )
-                }
-            })()}
-        </>
-    )
+  return (
+    <>
+      {(() => {
+        if (boardInfo) {
+          if (boardInfo.board_type === 'N') {
+            return (
+              <PostBoard boardInfo={boardInfo} />
+            );
+          }
+          else if (boardInfo.board_type === 'M') {
+            return <Memory boardInfo={boardInfo} />;
+          }
+          else if (boardInfo.board_type === 'A') {
+            return <AstroPhoto boardInfo={boardInfo} />;
+          }
+          else if (boardInfo.board_type === 'D') {
+            return (
+              <DocuBoard boardInfo={boardInfo} />
+            );
+          }
+          else if (boardInfo.board_type === 'E') {
+            return (
+              <ExhibitBoard boardInfo={boardInfo} />
+            );
+          }
+        }
+        else {
+          return (
+            <Loading />
+          );
+        }
+      })()}
+    </>
+  );
 }
 
-export default Board
+export default Board;

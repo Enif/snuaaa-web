@@ -16,7 +16,7 @@ import AlbumType from '../../types/AlbumType';
 import PhotoType from '../../types/PhotoType';
 import ExhibitionType from '../../types/ExhibitionType';
 
-const TAG = 'HOME'
+const TAG = 'HOME';
 
 type HomeInfo = {
     soundBoxData?: any;
@@ -30,85 +30,85 @@ type HomeInfo = {
 
 function Home() {
 
-    const [isReady, setIsReady] = useState<boolean>(false);
-    const [homeData, setHomeData] = useState<HomeInfo>({})
+  const [isReady, setIsReady] = useState<boolean>(false);
+  const [homeData, setHomeData] = useState<HomeInfo>({});
 
-    useEffect(() => {
-        fetch();
-    }, []);
+  useEffect(() => {
+    fetch();
+  }, []);
 
-    const fetch = async () => {
-        setIsReady(false);
+  const fetch = async () => {
+    setIsReady(false);
 
-        await Promise.all([
-            HomeService.retrieveSoundBox(),
-            HomeService.retrieveRecentPosts(),
-            HomeService.retrieveRecentComments(),
-            HomeService.retrieveRecentMemory(),
-            HomeService.retrieveRecentAstroPhoto(),
-            BoardService.retrieveExhibitionsInBoard('brd'),
-            // HomeService.retrieveRiseSet()
-        ])
-            .then((res) => {
-                setHomeData({
-                    soundBoxData: res[0].data,
-                    recentPosts: res[1].data,
-                    recentComments: res[2].data,
-                    recentMemory: res[3].data,
-                    recentAstrophoto: res[4].data,
-                    recentExhibitions: res[5].data
-                })
-                // this.riseSetInfo = res[6].data;
-                setIsReady(true);
-            })
-            .catch((err) => {
-                console.error(err)
-            })
-    }
+    await Promise.all([
+      HomeService.retrieveSoundBox(),
+      HomeService.retrieveRecentPosts(),
+      HomeService.retrieveRecentComments(),
+      HomeService.retrieveRecentMemory(),
+      HomeService.retrieveRecentAstroPhoto(),
+      BoardService.retrieveExhibitionsInBoard('brd'),
+      // HomeService.retrieveRiseSet()
+    ])
+      .then((res) => {
+        setHomeData({
+          soundBoxData: res[0].data,
+          recentPosts: res[1].data,
+          recentComments: res[2].data,
+          recentMemory: res[3].data,
+          recentAstrophoto: res[4].data,
+          recentExhibitions: res[5].data
+        });
+        // this.riseSetInfo = res[6].data;
+        setIsReady(true);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
 
-    // console.log(isReady && soundBoxData && recentPosts && recentComments && recentAstrophoto && recentMemory && recentExhibitions)
+  // console.log(isReady && soundBoxData && recentPosts && recentComments && recentAstrophoto && recentMemory && recentExhibitions)
 
-    return (
-        isReady ?
-            <div className="home-wrapper">
-                {
-                    homeData.soundBoxData &&
+  return (
+    isReady ?
+      <div className="home-wrapper">
+        {
+          homeData.soundBoxData &&
                     <SoundBox soundBoxInfo={homeData.soundBoxData} />
-                }
-                <div className="home-row-mobile">
-                    <RiseSetMobile />
-                    <ExtLinkMobile />
-                </div>
-                <div className="home-row">
-                    {
-                        homeData.recentPosts &&
+        }
+        <div className="home-row-mobile">
+          <RiseSetMobile />
+          <ExtLinkMobile />
+        </div>
+        <div className="home-row">
+          {
+            homeData.recentPosts &&
                         <NewPosts posts={homeData.recentPosts} />
-                    }
-                    {
-                        homeData.recentComments &&
+          }
+          {
+            homeData.recentComments &&
                         <NewComments comments={homeData.recentComments} />
-                    }
-                </div>
-                <div className="home-row">
-                    {
-                        homeData.recentAstrophoto &&
+          }
+        </div>
+        <div className="home-row">
+          {
+            homeData.recentAstrophoto &&
                         <NewPhotos title="New 별사진" board_id="brd32" photos={homeData.recentAstrophoto} />
-                    }
-                    {
-                        homeData.recentMemory &&
+          }
+          {
+            homeData.recentMemory &&
                         <NewAlbums title="New 추억만들기" board_id="brd31" albums={homeData.recentMemory} />
-                    }
-                </div>
-                <div className="home-row">
-                    {
-                        homeData.recentExhibitions &&
+          }
+        </div>
+        <div className="home-row">
+          {
+            homeData.recentExhibitions &&
                         <NewExhibitions board_id="brd41" exhibitions={homeData.recentExhibitions} />
-                    }
-                </div>
-            </div>
-            :
-            <Loading />
-    );
+          }
+        </div>
+      </div>
+      :
+      <Loading />
+  );
 }
 
 export default Home;

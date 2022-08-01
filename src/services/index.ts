@@ -13,28 +13,28 @@ interface IAaaService {
 export const AaaService: any = {
     
  
-    get: function(url: string) {
-        return axios.get(`${SERVER_URL}api/${url}`)
-    },
+  get: function(url: string) {
+    return axios.get(`${SERVER_URL}api/${url}`);
+  },
     
-    post: function(url: string, data: object): AxiosPromise {
-        return axios.post(`${SERVER_URL}api/${url}`, data)
-    },
+  post: function(url: string, data: object): AxiosPromise {
+    return axios.post(`${SERVER_URL}api/${url}`, data);
+  },
 
-    postWithProgress: function(url: string, data: object, cb: (pg: ProgressEvent)=> void) {
-        return axios.post(`${SERVER_URL}api/${url}`, data, {
-            onUploadProgress: cb
-        })
-    },
+  postWithProgress: function(url: string, data: object, cb: (pg: ProgressEvent)=> void) {
+    return axios.post(`${SERVER_URL}api/${url}`, data, {
+      onUploadProgress: cb
+    });
+  },
 
-    patch: function(url: string, data: object): AxiosPromise {
-        return axios.patch(`${SERVER_URL}api/${url}`, data)
-    },
+  patch: function(url: string, data: object): AxiosPromise {
+    return axios.patch(`${SERVER_URL}api/${url}`, data);
+  },
     
-    delete: function(url: string): AxiosPromise {
-        return axios.delete(`${SERVER_URL}api/${url}`)
-    }
-}
+  delete: function(url: string): AxiosPromise {
+    return axios.delete(`${SERVER_URL}api/${url}`);
+  }
+};
 
 
 // export class AaaService<T> {
@@ -58,5 +58,5 @@ export const AaaService: any = {
 
 
 export function createAttachedImage(data: any) {
-    return axios.post(SERVER_URL + `api/image`, data);
+  return axios.post(SERVER_URL + 'api/image', data);
 }

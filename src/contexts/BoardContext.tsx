@@ -5,8 +5,8 @@ const defaultBoards: {
     boardsInfo: BoardType[];
     setBoardsInfo: (boards: BoardType[]) => void;
 } = {
-    boardsInfo: [],
-    setBoardsInfo: () => {}
+  boardsInfo: [],
+  setBoardsInfo: () => {}
 };
 
 const BoardContext = React.createContext(defaultBoards);

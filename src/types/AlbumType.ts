@@ -1,5 +1,5 @@
-import ContentType from "./ContentType";
-import PhotoType from "./PhotoType";
+import ContentType from './ContentType';
+import PhotoType from './PhotoType';
 
 interface AlbumType extends ContentType {
     album: {

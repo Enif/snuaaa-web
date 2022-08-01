@@ -1,4 +1,4 @@
-import TagType from "./TagType";
+import TagType from './TagType';
 
 interface CrtPhotoType {
     board_id?: string,

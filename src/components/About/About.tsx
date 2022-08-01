@@ -15,16 +15,16 @@ type AboutProps = {
 
 function About(props: AboutProps) {
 
-        let aboutIdx = props.match.params.aaa;
+  const aboutIdx = props.match.params.aaa;
 
-        if (aboutIdx === 'aboutAAA') return (<AboutAAA />);
-        else if (aboutIdx === 'contact') return (<Contact />);
-        else if (aboutIdx === 'equipment') return (<Equipment />);
-        else if (aboutIdx === 'observation') return (<Observation />);
-        else if (aboutIdx === 'history') return (<AaaHistory />);
-        else if (aboutIdx === 'officers') return (<Officers />);
-        else if (aboutIdx === 'regulation') return (<Regulation />);
-        else return (<AboutAAA />);
+  if (aboutIdx === 'aboutAAA') return (<AboutAAA />);
+  else if (aboutIdx === 'contact') return (<Contact />);
+  else if (aboutIdx === 'equipment') return (<Equipment />);
+  else if (aboutIdx === 'observation') return (<Observation />);
+  else if (aboutIdx === 'history') return (<AaaHistory />);
+  else if (aboutIdx === 'officers') return (<Officers />);
+  else if (aboutIdx === 'regulation') return (<Regulation />);
+  else return (<AboutAAA />);
 }
 
-export default About
+export default About;

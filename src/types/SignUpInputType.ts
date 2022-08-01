@@ -1,4 +1,4 @@
-import InputFormatType from "./InputFormatType";
+import InputFormatType from './InputFormatType';
 
 interface SignUpInputType {
     id: InputFormatType,

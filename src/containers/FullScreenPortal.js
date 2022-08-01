@@ -1,9 +1,9 @@
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom';
 
 const FullScreenPortal = ({ children }) => {
-    const portalElement = document.getElementById('full-screen-root')
+  const portalElement = document.getElementById('full-screen-root');
 
-    return ReactDOM.createPortal(children, portalElement);
+  return ReactDOM.createPortal(children, portalElement);
 };
 
 export default FullScreenPortal;

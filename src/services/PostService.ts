@@ -5,25 +5,25 @@ import FileType from '../types/FileType';
 
 const PostService = {
 
-    retrievePost: function (post_id: number): AxiosPromise<{
+  retrievePost: function (post_id: number): AxiosPromise<{
         postInfo: ContentType,
         likeInfo: boolean,
         fileInfo: FileType[]
     }> {
-        return AaaService.get(`post/${post_id}`);
-    },
+    return AaaService.get(`post/${post_id}`);
+  },
 
-    updatePost: function (post_id: number, data: any) {
-        return AaaService.patch(`post/${post_id}`, data)
-    },
+  updatePost: function (post_id: number, data: any) {
+    return AaaService.patch(`post/${post_id}`, data);
+  },
 
-    deletePost: function (post_id: number) {
-        return AaaService.delete(`post/${post_id}`)
-    },
+  deletePost: function (post_id: number) {
+    return AaaService.delete(`post/${post_id}`);
+  },
 
-    createPost: function (board_id: string, data: any) {
-        return AaaService.post(`board/${board_id}/post`, data)
-    }
-}
+  createPost: function (board_id: string, data: any) {
+    return AaaService.post(`board/${board_id}/post`, data);
+  }
+};
 
 export default PostService;

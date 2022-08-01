@@ -35,62 +35,62 @@ type LocationState = {
 
 function PageRoutes() {
 
-    const location = useLocation<LocationState>();
+  const location = useLocation<LocationState>();
 
-    let background: Location = location.state && location.state.background
-        ? location.state.background
-        : { pathname: '/', search: '', key: '', hash: '', state: '' };
-    let isModal = false;
+  let background: Location = location.state && location.state.background
+    ? location.state.background
+    : { pathname: '/', search: '', key: '', hash: '', state: '' };
+  let isModal = false;
 
-    if ((location.state && location.state.modal)
+  if ((location.state && location.state.modal)
         || location.pathname.includes('/photo/')
         || location.pathname.includes('/exhibitPhoto/')) {
-        background = location.state && location.state.backgroundLocation
-            ? location.state.backgroundLocation
-            : { pathname: '/', search: '', key: '', hash: '', state: '' };
-        isModal = true;
-    }
+    background = location.state && location.state.backgroundLocation
+      ? location.state.backgroundLocation
+      : { pathname: '/', search: '', key: '', hash: '', state: '' };
+    isModal = true;
+  }
 
-    return (
-        <>
-            <Header />
-            <div className="section-wrapper">
-                <section>
-                    <div className="side-left">
-                        <RiseSet />
-                    </div>
-                    <SideBar />
-                    <Switch location={isModal ? background : location}>
-                        <Route exact path="/" component={Home} />
-                        <Route exact path="/about" component={About} />
-                        <Route path="/about/:aaa" component={About} />
-                        <Route path="/board/:board_id" component={Board} />
-                        <Route path="/post/:post_id" component={Post} />
-                        <Route path="/album/:album_id" component={Album} />
-                        <Route path="/document/:doc_id" component={Docu} />
-                        <Route path="/exhibition/:exhibition_id" component={Exhibition} />
-                        <Route path="/mypage/:index" component={MyPage} />
-                        <Route path="/userpage/:uuid" component={UserPage} />
-                        <Route path="/posts/all" component={AllPosts} />
-                        <Route path="/comments/all" component={AllComments} />
-                        <Route path="/mightyCalculator" component={MightyCalculator} />
-                        <Route path="/mgt/user" component={MgtUser} />
-                        <Route component={Home} />
-                    </Switch>
-                    {
-                        isModal &&
+  return (
+    <>
+      <Header />
+      <div className="section-wrapper">
+        <section>
+          <div className="side-left">
+            <RiseSet />
+          </div>
+          <SideBar />
+          <Switch location={isModal ? background : location}>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/about" component={About} />
+            <Route path="/about/:aaa" component={About} />
+            <Route path="/board/:board_id" component={Board} />
+            <Route path="/post/:post_id" component={Post} />
+            <Route path="/album/:album_id" component={Album} />
+            <Route path="/document/:doc_id" component={Docu} />
+            <Route path="/exhibition/:exhibition_id" component={Exhibition} />
+            <Route path="/mypage/:index" component={MyPage} />
+            <Route path="/userpage/:uuid" component={UserPage} />
+            <Route path="/posts/all" component={AllPosts} />
+            <Route path="/comments/all" component={AllComments} />
+            <Route path="/mightyCalculator" component={MightyCalculator} />
+            <Route path="/mgt/user" component={MgtUser} />
+            <Route component={Home} />
+          </Switch>
+          {
+            isModal &&
                         <Switch>
-                            <Route path="/photo/:photo_id" component={Photo} />
-                            <Route path="/exhibitPhoto/:exhibitPhoto_id" component={ExhibitPhoto} />
+                          <Route path="/photo/:photo_id" component={Photo} />
+                          <Route path="/exhibitPhoto/:exhibitPhoto_id" component={ExhibitPhoto} />
                         </Switch>
-                    }
-                </section>
-            </div>
-            <TopUpButton />
-            <Footer />
+          }
+        </section>
+      </div>
+      <TopUpButton />
+      <Footer />
 
-        </>
-    )
+    </>
+  );
 }
 
 export default PageRoutes;
