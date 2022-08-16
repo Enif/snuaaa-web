@@ -45,7 +45,7 @@ class Contact extends React.Component {
             {/* 08826<br /> */}
                         서울특별시 관악구 관악로 1,<br /> 서울대학교 학생회관 63동 611호 (08826)<br />
             {/* Seoul National University, Students' union, Building 63, 6F, 611<br /> */}
-                        Rm. 611, Bldg. 63 (Students' Union), Seoul National University<br />
+                        Rm. 611, Bldg. 63 (Students&apos; Union), Seoul National University<br />
                         1, Gwanak-ro, Gwanak-gu, Seoul 08826, KR<br />
             <br />
                         www.snuaaa.net<br />

@@ -22,17 +22,12 @@ function Navigation({ boards }: NavigationProps) {
     boards.forEach((board) => {
       if (board.menu === 1) {
         noticeBoards.push(board);
-      }
-      else if (board.menu === 2) {
+      } else if (board.menu === 2) {
         communityBoards.push(board);
-      }
-      else if (board.menu === 3) {
+      } else if (board.menu === 3) {
         officialBoards.push(board);
-      }
-      else if (board.menu === 4) {
+      } else if (board.menu === 4) {
         photoBoards.push(board);
-      }
-      else {
       }
     });
   }

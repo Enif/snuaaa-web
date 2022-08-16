@@ -137,7 +137,7 @@ function PostBoard({ boardInfo }: PostBoardProps) {
     if (boardInfo.categories && boardInfo.categories.length > 0) {
       return (
         <select>
-          {boardInfo.categories.map((cate) => (<option>{cate.category_name}</option>))}
+          {boardInfo.categories.map((cate) => (<option key={cate.category_id}>{cate.category_name}</option>))}
         </select>
       );
     }

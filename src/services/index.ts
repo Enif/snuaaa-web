@@ -17,17 +17,17 @@ export const AaaService: any = {
     return axios.get(`${SERVER_URL}api/${url}`);
   },
     
-  post: function(url: string, data: object): AxiosPromise {
+  post: function(url: string, data: unknown): AxiosPromise {
     return axios.post(`${SERVER_URL}api/${url}`, data);
   },
 
-  postWithProgress: function(url: string, data: object, cb: (pg: ProgressEvent)=> void) {
+  postWithProgress: function(url: string, data: unknown, cb: (pg: ProgressEvent)=> void) {
     return axios.post(`${SERVER_URL}api/${url}`, data, {
       onUploadProgress: cb
     });
   },
 
-  patch: function(url: string, data: object): AxiosPromise {
+  patch: function(url: string, data: unknown): AxiosPromise {
     return axios.patch(`${SERVER_URL}api/${url}`, data);
   },
     

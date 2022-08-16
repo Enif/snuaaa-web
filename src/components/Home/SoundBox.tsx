@@ -12,12 +12,12 @@ const SoundBox = ({ soundBoxInfo }: { soundBoxInfo: ContentType }) => {
         <div className="soundbox-contents">
           {
             soundBoxInfo &&
-                        <>
-                          <Link to={`/post/${soundBoxInfo.content_id}`}>
-                            <h5>{soundBoxInfo.title}</h5>
-                          </Link>
-                          <Editor2 text={soundBoxInfo.text} setText={()=>{}} readOnly />
-                        </>
+              <>
+                <Link to={`/post/${soundBoxInfo.content_id}`}>
+                  <h5>{soundBoxInfo.title}</h5>
+                </Link>
+                <Editor2 text={soundBoxInfo.text} setText={() => { return; }} readOnly />
+              </>
           }
         </div>
       </div>

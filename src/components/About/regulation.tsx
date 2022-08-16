@@ -1,6 +1,6 @@
 import React from 'react';
 import regulation from './regulation_tmp.json';
-import { breakLine } from '../../utils/breakLine.js';
+import { breakLine } from '../../utils/breakLine';
 
 type clause = {
     clause_no: number;
@@ -45,9 +45,9 @@ function Regulation() {
 
   function makeClauseList(clauses: clause[]) {
     if (clauses && clauses.length > 0) {
-      return clauses.map((clause: clause) => {
+      return clauses.map((clause: clause, idx: number) => {
         return (
-          <div className="clause-wrapper">
+          <div className="clause-wrapper" key={idx}>
             <h4>{makeClauseNumber(clause.clause_no)}</h4>
             <p>{breakLine(clause.text)}</p>
           </div>
@@ -58,13 +58,12 @@ function Regulation() {
 
   function makeArticleList(articles: article[]) {
     if (articles && articles.length > 0) {
-      return articles.map((article: article) => {
+      return articles.map((article: article, idx: number) => {
         return (
-          <div className="article-wrapper">
+          <div className="article-wrapper" key={idx}>
             <h3>제{article.article_no}조({article.article_title})</h3>
             {
-              article.clauses &&
-                            makeClauseList(article.clauses)
+              article.clauses && makeClauseList(article.clauses)
             }
             <h5>{breakLine(article.article_text)}</h5>
           </div>

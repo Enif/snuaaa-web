@@ -15,7 +15,7 @@ const initialAuth = {
   authLogin: (token: string, autoLogin: boolean, userInfo: UserType) => {
     console.log(token);
   },
-  authLogout: () => {}
+  authLogout: () => { return; }
 };
 
 const AuthContext = React.createContext(initialAuth);

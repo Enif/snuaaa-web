@@ -11,8 +11,6 @@ import AuthContext from './contexts/AuthContext';
 import AuthType from './types/AuthType';
 import UserType from './types/UserType';
 
-const TAG = 'App';
-
 const initialAuth: AuthType = {
   isLoggedIn: false,
   user: {
@@ -38,9 +36,6 @@ function App() {
     }
     else if ((navigator.appName == 'Netscape' && navigator.userAgent.search('Trident') != -1)) {
       alert('MicroSoft Internet Explorer에서는 홈페이지가 정상 동작하지 않을 수 있습니다.');
-    }
-    else {
-
     }
     checkToken();
   }, []);

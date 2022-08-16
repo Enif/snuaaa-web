@@ -21,6 +21,7 @@ import * as serviceWorker from './serviceWorker';
 if (process.env.NODE_ENV === 'production') {
   console.log('production mode');
   window.dataLayer = window.dataLayer || [];
+  // eslint-disable-next-line no-inner-declarations
   function gtag() { window.dataLayer.push(arguments); }
   gtag('js', new Date());
   gtag('config', 'UA-154430849-1');

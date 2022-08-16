@@ -1,15 +1,15 @@
 import React, { useState, SyntheticEvent, useEffect } from 'react';
 
 type ImageProps = {
-    imgSrc?: string;
-    defaultImgSrc?: string;
-    className?: string;
-    onClick?: () => void;
-    local?: boolean;
+  imgSrc?: string;
+  defaultImgSrc?: string;
+  className?: string;
+  onClick?: () => void;
+  local?: boolean;
 }
 
 
-function AaaImage ({ imgSrc, defaultImgSrc, className, onClick, local, ...rest }: ImageProps) {
+function AaaImage({ imgSrc, defaultImgSrc, className, onClick, local, ...rest }: ImageProps) {
 
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
 

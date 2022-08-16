@@ -19,10 +19,9 @@ type PostComponentProps = {
     deletePost: () => void;
 }
 
-function PostComponent(
-  { content, my_id, isLiked,
-    likePost, editPost, deletePost }: PostComponentProps
-) {
+const PostComponent: React.FC<PostComponentProps> = (
+  { content, my_id, isLiked, likePost, editPost, deletePost }
+) => {
 
   const user = content.user;
 
@@ -77,7 +76,7 @@ function PostComponent(
         </div>
       </div>
       <div className="post-content">
-        <Editor2 text={content.text} setText={() => {}} readOnly />
+        <Editor2 text={content.text} setText={() => { return; }} readOnly />
       </div>
       {makeFileList()}
       <ProfileMini userInfo={user} />
@@ -101,6 +100,6 @@ function PostComponent(
       </div>
     </div>
   );
-}
+};
 
 export default PostComponent;
